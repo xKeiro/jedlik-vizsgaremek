@@ -8,7 +8,7 @@ Database: PostgreSQL
 Backend: FastAPI  
 Frontend: Angular vagy React
 
-### Csapattagok
+## Csapattagok
 
-Németh Kevin
+Németh Kevin  
 Tercs Dávid
