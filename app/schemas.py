@@ -6,7 +6,13 @@ from pydantic import BaseModel, EmailStr, constr
 class UserBaseSchema(BaseModel):
     name: str
     email: EmailStr
-    photo: str
+    photo: str | None
+    phone: str | None
+    address: str
+    city: str
+    region: str
+    postal_code: str
+    country: str
 
     class Config:
         orm_mode = True
@@ -15,8 +21,7 @@ class UserBaseSchema(BaseModel):
 class CreateUserSchema(UserBaseSchema):
     password: constr(min_length=8)
     passwordConfirm: str
-    role: str = 'user'
-    verified: bool = False
+    is_admin: bool = False
 
 
 class LoginUserSchema(BaseModel):
