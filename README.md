@@ -1,6 +1,14 @@
 # jedlik-vizsgaremek
 
-Adatbázis modell: (kép/link helye)  
-Adatbázis: PostgreSQL  
+## IT Webshop project
+
+Documentation: (link helye)  
+Database model: (link helye)  
+Database: PostgreSQL  
 Backend: FastAPI  
 Frontend: Angular vagy React
+
+### Csapattagok
+
+Németh Kevin
+Tercs Dávid
