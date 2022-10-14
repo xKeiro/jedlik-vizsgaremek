@@ -2,13 +2,12 @@
 
 ## IT Webshop project
 
-Documentation: (link helye)  
-Database model: (link helye)  
-Database: PostgreSQL  
-Backend: FastAPI  
-Frontend: Angular vagy React
+- Documentation: [link](https://docs.google.com/document/d/1Yr7cOVb5YnQZE8FiTCjsjiG3QIeLOKl3hKt94gyOdZ8/edit?usp=sharing)
+- Database: PostgreSQL  
+- Backend: FastAPI  
+- Frontend: Angular vagy React
 
-## Csapattagok
+## Team members
 
-Németh Kevin  
-Tercs Dávid
+- Kevin Németh 
+- Dávid István Tercs
