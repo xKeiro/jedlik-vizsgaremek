@@ -23,28 +23,33 @@ REFRESH_TOKEN_EXPIRES_IN = settings.REFRESH_TOKEN_EXPIRES_IN
 
 
 @router.post('/register', status_code=status.HTTP_201_CREATED, response_model=schemas.UserResponse)
-async def create_user(payload: schemas.CreateUserSchema, db: Session = Depends(get_db)):
+async def create_user(user: schemas.CreateUserSchema, address: schemas.Address, db: Session = Depends(get_db)):
     # Check if user already exist
-    user = db.query(models.User).filter(
-        models.User.email == EmailStr(payload.email.lower())).first()
-    if user:
+    user_exists = db.query(models.User).filter(
+        models.User.email == EmailStr(user.email.lower())).first()
+    if user_exists:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,
                             detail='Account already exist')
     # Compare password and passwordConfirm
-    if payload.password != payload.passwordConfirm:
+    if user.password != user.passwordConfirm:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail='Passwords do not match')
     #  Hash the password
-    payload.password = util.hash_password(payload.password)
-    del payload.passwordConfirm
-    payload.role = 'user'
-    payload.verified = True
-    payload.email = EmailStr(payload.email.lower())
-    new_user = models.User(**payload.dict())
+    user.password = util.hash_password(user.password)
+    del user.passwordConfirm
+    user.is_admin = False
+    user.email = EmailStr(user.email.lower())
+    new_address = models.Address(**address.dict())
+    db.add(new_address)
+    db.commit()
+    db.refresh(new_address)
+    new_address = new_address.__dict__
+    user.address_id = new_address['id']
+    new_user = models.User(**user.dict())
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return new_user
+    return { "user": new_user.__dict__, "address": new_address }
 
 
 @router.post('/login')
@@ -56,11 +61,6 @@ def login(payload: schemas.LoginUserSchema, response: Response, db: Session = De
     if not user:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail='Incorrect Email or Password')
-
-    # Check if user verified his email
-    if not user.verified:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail='Please verify your email address')
 
     # Check if the password is valid
     if not util.verify_password(payload.password, user.password):
