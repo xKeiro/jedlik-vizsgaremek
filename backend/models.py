@@ -20,25 +20,25 @@ class Address(Base):
     __tablename__ = 'address'
     id = Column(UUID(as_uuid=True), primary_key=True, nullable=False,
                 default=uuid.uuid4)
-    address = Column(String, nullable=False)
-    city = Column(String, nullable=False)
-    region = Column(String, nullable=False)
-    postal_code = Column(String, nullable=False)
-    country = Column(String, nullable=False)
+    address = Column(String(50), nullable=False)
+    city = Column(String(50), nullable=False)
+    region = Column(String(50), nullable=False)
+    postal_code = Column(String(10), nullable=False)
+    country = Column(String(50), nullable=False)
 
 
 class User(Base):
     __tablename__ = 'user'
     id = Column(UUID(as_uuid=True), primary_key=True, nullable=False,
                 default=uuid.uuid4)
-    username = Column(String, unique=True, nullable=False)
-    first_name = Column(String, nullable=False)
-    last_name = Column(String, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-    password = Column(String, nullable=False)
-    phone = Column(String, nullable=True)
+    username = Column(String(25), unique=True, nullable=False)
+    first_name = Column(String(25), nullable=False)
+    last_name = Column(String(25), nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
+    password = Column(String(50), nullable=False)
+    phone = Column(String(20), nullable=True)
     address_id = Column(UUID(as_uuid=True), ForeignKey('address.id', ondelete='CASCADE'), nullable=False)
-    photo = Column(String, nullable=True)
+    photo = Column(String(250), nullable=True)
     is_admin = Column(Boolean, server_default='False', nullable=False)
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text("now()"))
@@ -49,10 +49,11 @@ class Supplier(Base):
     __tablename__ = 'supplier'
     id = Column(UUID(as_uuid=True), primary_key=True, nullable=False,
                 default=uuid.uuid4)
-    company_name = Column(String, nullable=False)
-    contact_name = Column(String, nullable=True)
-    phone = Column(String, nullable=False)
-    email = Column(String, unique=True, nullable=False)
+    company_name = Column(String(75), nullable=False)
+    contact_first_name = Column(String(25), nullable=True)
+    contact_last_name = Column(String(25), nullable=True)
+    phone = Column(String(20), nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
     address_id = Column(UUID(as_uuid=True), ForeignKey('address.id', ondelete='CASCADE'), nullable=False)
     address = relationship('Address')
 
@@ -61,9 +62,9 @@ class ProductCategory(Base):
     __tablename__ = 'product_category'
     id = Column(UUID(as_uuid=True), primary_key=True, nullable=False,
                 default=uuid.uuid4)
-    title = Column(String, nullable=False)
+    title = Column(String(150), nullable=False)
     description = Column(String, nullable=False)
-    photo = Column(String, nullable=True)
+    photo = Column(String(250), nullable=True)
 
 
 class Product(Base):
@@ -72,9 +73,9 @@ class Product(Base):
                 default=uuid.uuid4)
     category_id = Column(UUID(as_uuid=True), ForeignKey('product_category.id'), nullable=False)
     sale_price = Column(Numeric(12, 2), nullable=False)
-    title = Column(String, nullable=False)
+    title = Column(String(150), nullable=False)
     description = Column(String, nullable=False)
-    photo = Column(String, nullable=True)
+    photo = Column(String(250), nullable=True)
     stock = Column(Integer, nullable=False, server_default="0")
     discontinued = Column(Boolean, server_default="False")
     product_category = relationship('ProductCategory')
@@ -98,9 +99,9 @@ class Shipper(Base):
     __tablename__ = 'shipper'
     id = Column(UUID(as_uuid=True), primary_key=True, nullable=False,
                 default=uuid.uuid4)
-    phone = Column(String, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-    price = Column(String, nullable=False)
+    phone = Column(String(20), nullable=False)
+    email = Column(String(100), unique=True, nullable=False)
+    price = Column(Numeric(12, 2), nullable=False)
 
 
 class Order(Base):
@@ -110,11 +111,14 @@ class Order(Base):
     user_id = Column(UUID(as_uuid=True), ForeignKey('user.id'), nullable=False)
     shipper_id = Column(UUID(as_uuid=True), ForeignKey('shipper.id'), nullable=False)
     vat = Column(Numeric(2, 2), nullable=False, server_default="0")
-    status = Column(String, nullable=False)
+    status = Column(String(20), nullable=False)
     order_date = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text("now()"))
     user = relationship('User', foreign_keys=[user_id])
     shipper = relationship('Shipper', foreign_keys=[shipper_id])
+    __table_args__ = (
+        CheckConstraint("status IN ('in progress', 'under procurement', 'fulfilled', 'deleted')"),
+    )
 
 
 class ProductOrder(Base):
