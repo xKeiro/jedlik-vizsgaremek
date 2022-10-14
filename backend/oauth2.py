@@ -1,13 +1,16 @@
 import base64
 from typing import List
-from fastapi import Depends, HTTPException, status
+
+from fastapi import Depends
+from fastapi import HTTPException
+from fastapi import status
 from fastapi_jwt_auth import AuthJWT
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 
 from . import models
-from .database import get_db
-from sqlalchemy.orm import Session
 from .config import settings
+from .database import get_db
 
 
 class Settings(BaseModel):

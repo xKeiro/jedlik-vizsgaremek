@@ -1,14 +1,21 @@
 from datetime import timedelta
-from fastapi import APIRouter, Request, Response, status, Depends, HTTPException
+
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import HTTPException
+from fastapi import Request
+from fastapi import Response
+from fastapi import status
 from pydantic import EmailStr
-
-from app import oauth2
-from .. import schemas, models, util
 from sqlalchemy.orm import Session
-from ..database import get_db
-from app.oauth2 import AuthJWT
-from ..config import settings
 
+from backend import oauth2
+from backend.oauth2 import AuthJWT
+from .. import models
+from .. import schemas
+from .. import util
+from ..config import settings
+from ..database import get_db
 
 router = APIRouter()
 ACCESS_TOKEN_EXPIRES_IN = settings.ACCESS_TOKEN_EXPIRES_IN
@@ -41,7 +48,8 @@ async def create_user(payload: schemas.CreateUserSchema, db: Session = Depends(g
 
 
 @router.post('/login')
-def login(payload: schemas.LoginUserSchema, response: Response, db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
+def login(payload: schemas.LoginUserSchema, response: Response, db: Session = Depends(get_db),
+          Authorize: AuthJWT = Depends()):
     # Check if the user exist
     user = db.query(models.User).filter(
         models.User.email == EmailStr(payload.email.lower())).first()
