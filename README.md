@@ -37,3 +37,7 @@ uvicorn app.main:app --host localhost --port 8000 --reload
 alembic revision --autogenerate -m "creat users table"
 alembic upgrade head
 ```
+
+**Useful links:**
+- [Online RSA Key Generator](http://travistidwell.com/jsencrypt/demo/)
+- [Encode RSA Key to Base64](https://www.base64encode.org/)
