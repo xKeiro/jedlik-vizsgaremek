@@ -4,6 +4,7 @@ from datetime import datetime
 from pydantic import BaseModel
 from pydantic import EmailStr
 from pydantic import constr
+from pydantic import FilePath
 from pydantic import UUID4
 
 
@@ -21,7 +22,7 @@ class UserBaseSchema(BaseModel):
     first_name: constr(max_length=25)
     last_name: constr(max_length=25)
     email: EmailStr
-    photo: constr(max_length=250) | None
+    photo: FilePath | None
     phone: constr(max_length=20) | None
     class Config:
         orm_mode = True
@@ -35,7 +36,7 @@ class CreateUserSchema(UserBaseSchema):
 
 
 class LoginUserSchema(BaseModel):
-    email: EmailStr
+    identifier: EmailStr | constr(max_length=25)
     password: constr(min_length=8, max_length=50)
 
 

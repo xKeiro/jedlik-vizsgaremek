@@ -8,6 +8,7 @@ from fastapi import Response
 from fastapi import status
 from pydantic import EmailStr
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 
 from backend import oauth2
 from backend.oauth2 import AuthJWT
@@ -26,7 +27,7 @@ REFRESH_TOKEN_EXPIRES_IN = settings.REFRESH_TOKEN_EXPIRES_IN
 async def create_user(user: schemas.CreateUserSchema, address: schemas.Address, db: Session = Depends(get_db)):
     # Check if user already exist
     user_exists = db.query(models.User).filter(
-        models.User.email == EmailStr(user.email.lower())).first()
+        models.User.email == EmailStr(user.email.lower()), models.User.username == user.username).first()
     if user_exists:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,
                             detail='Account already exist')
@@ -39,12 +40,14 @@ async def create_user(user: schemas.CreateUserSchema, address: schemas.Address, 
     del user.passwordConfirm
     user.is_admin = False
     user.email = EmailStr(user.email.lower())
+    # Commit new address to the database and get its id
     new_address = models.Address(**address.dict())
     db.add(new_address)
     db.commit()
     db.refresh(new_address)
     new_address = new_address.__dict__
     user.address_id = new_address['id']
+    # Commit the new user to the database
     new_user = models.User(**user.dict())
     db.add(new_user)
     db.commit()
@@ -57,7 +60,7 @@ def login(payload: schemas.LoginUserSchema, response: Response, db: Session = De
           Authorize: AuthJWT = Depends()):
     # Check if the user exist
     user = db.query(models.User).filter(
-        models.User.email == EmailStr(payload.email.lower())).first()
+        or_(models.User.email == EmailStr(payload.identifier.lower()), models.User.username == payload.identifier)).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail='Incorrect Email or Password')
