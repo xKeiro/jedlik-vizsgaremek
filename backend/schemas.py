@@ -50,19 +50,22 @@ class UserResponse(BaseModel):
 # region  -------PRODUCT-------
 
 class Product(BaseModel):
-    id = UUID4
-    sale_price = Decimal
-    title = constr(max_length=150)
-    description = str
-    photo = FilePath | None
-    stock = int
+    id: UUID4
+    sale_price: Decimal
+    title: constr(max_length=150)
+    description: str
+    photo: FilePath | None
+    stock: int
 
 class ProductCategory(BaseModel):
-    id = UUID4
-    title = constr(max_length=150)
-    description = str
-    photo = FilePath | None
+    id: UUID4
+    title: constr(max_length=150)
+    description: str
+    photo: FilePath | None
 
 class ProductsResponse(BaseModel):
-    list[Product]
+    products:list[Product]
+
+class ProductsCategories(BaseModel):
+    categories:list[ProductCategory]
 # endregion

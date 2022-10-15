@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.config import settings
 from backend.routers import auth
 from backend.routers import user
+from backend.routers import product_categories
 
 app = FastAPI()
 
@@ -21,6 +22,7 @@ app.add_middleware(
 
 app.include_router(auth.router, tags=['Auth'], prefix='/api/auth')
 app.include_router(user.router, tags=['Users'], prefix='/api/users')
+app.include_router(product_categories.router, tags=['Product Categories'], prefix='/api/categories')
 
 
 @app.get('/api/healthchecker')

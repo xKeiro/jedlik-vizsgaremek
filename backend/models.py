@@ -77,7 +77,7 @@ class Product(Base):
     description = Column(String, nullable=False)
     photo = Column(String(250), nullable=True)
     stock = Column(Integer, nullable=False, server_default="0")
-    discontinued = Column(Boolean, server_default="False")
+    discontinued = Column(Boolean, server_default="False", nullable=False)
     product_category = relationship('ProductCategory')
 
 
