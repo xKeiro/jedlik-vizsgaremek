@@ -13,8 +13,8 @@
 
 # Requirements
 
-- Python 3.10+
-- Node 19.0+
+- Python 3.10.8+ [Link](https://www.python.org/downloads/)
+- Node 19.0+ [Link](https://nodejs.org/en/)
 
 ## Team members
 
@@ -23,10 +23,10 @@
 
 ## How to run the backend
 
-0. Download the latest python (min 3.10.8) [link](https://www.python.org/downloads/)
+0. Install the latest Python
 
 ```
-# OR in WSL:
+# or Set up WSL environment:
 
 sudo apt update && sudo apt upgrade
 # currently only installs python 3.8
@@ -98,9 +98,11 @@ alembic upgrade head
 
 ## How to run the frontend
 
-0. Set up environment (WSL)
+0. Install the latest Node.js
 
 ```
+# or Set up WSL environment:
+
 sudo apt update && sudo apt upgrade
 sudo apt-get install curl
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
