@@ -84,8 +84,8 @@ uvicorn backend.main:app --host localhost --port 8000 --reload
 
 **Userful commands:**
 
-- On database model change use alembic to create a new revision of the database
 - `python3 --version` Check current Python version in use
+- On database model change use alembic to create a new revision of the database:
 
 ```
 alembic revision --autogenerate -m "creat users table"
