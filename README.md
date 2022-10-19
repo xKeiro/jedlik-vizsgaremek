@@ -23,7 +23,6 @@ sudo apt install python3-pip
 sudo apt install python3-venv
 sudo apt install libpq-dev
 sudo apt install uvicorn
-cd ./backend/
 ```
 
 1. Create a copy of the `.env.sample` file, and fill out the fields.
@@ -57,7 +56,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 5. Run the app:
 
 ```
-uvicorn app.main:app --host localhost --port 8000 --reload
+uvicorn backend.main:app --host localhost --port 8000 --reload
 ```
 
 **Other userful commands:**
