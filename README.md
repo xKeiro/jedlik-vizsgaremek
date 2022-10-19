@@ -2,10 +2,19 @@
 
 ## IT Webshop project
 
-- Documentation: [link](https://docs.google.com/document/d/1Yr7cOVb5YnQZE8FiTCjsjiG3QIeLOKl3hKt94gyOdZ8/edit?usp=sharing)
-- Database: PostgreSQL
+# Content
+
+- Github: [Link](https://github.com/xKeiro/jedlik-vizsgaremek)
+- Documentation: [Link](https://docs.google.com/document/d/1Yr7cOVb5YnQZE8FiTCjsjiG3QIeLOKl3hKt94gyOdZ8/edit?usp=sharing)
+- Database: PostgreSQL v15
 - Backend: FastAPI
-- Frontend: React
+- Frontend: React v18
+- Design: Material UI v5
+
+# Requirements
+
+- Python 3.10+
+- Node 19.0+
 
 ## Team members
 
@@ -18,12 +27,11 @@
 
 ```
 sudo apt update && sudo apt upgrade
+# currently only installs python 3.8
 sudo apt upgrade python3
 sudo apt install python3-pip
 sudo apt install python3-dev
 sudo apt install python3-venv
-sudo apt install libpq-dev
-sudo apt install uvicorn
 
 # update python 3.8 to 3.10
 sudo add-apt-repository ppa:deadsnakes/ppa
@@ -34,6 +42,7 @@ sudo apt-get install python3.10-venv
 sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
 sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 2
 sudo update-alternatives --config python3
+# select python3.10
 python3 -V
 ```
 
