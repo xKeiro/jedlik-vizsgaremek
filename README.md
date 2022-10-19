@@ -23,9 +23,11 @@
 
 ## How to run the backend
 
-0. Set up environment (WSL)
+0. Download the latest python (min 3.10.8) [link](https://www.python.org/downloads/)
 
 ```
+# OR in WSL:
+
 sudo apt update && sudo apt upgrade
 # currently only installs python 3.8
 sudo apt upgrade python3
