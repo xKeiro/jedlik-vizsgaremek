@@ -26,7 +26,7 @@
 0. Install the latest Python
 
 ```
-# or Set up WSL environment:
+# or set up WSL environment:
 
 sudo apt update && sudo apt upgrade
 # currently only installs python 3.8
@@ -85,6 +85,7 @@ uvicorn backend.main:app --host localhost --port 8000 --reload
 **Userful commands:**
 
 - On database model change use alembic to create a new revision of the database
+- `python3 --version` Check current Python version in use
 
 ```
 alembic revision --autogenerate -m "creat users table"
@@ -101,7 +102,7 @@ alembic upgrade head
 0. Install the latest Node.js
 
 ```
-# or Set up WSL environment:
+# or set up WSL environment:
 
 sudo apt update && sudo apt upgrade
 sudo apt-get install curl
@@ -124,7 +125,7 @@ npm start
 
 **Userful commands:**
 
-- `nvm ls` List installed Node.js versions.
+- `nvm ls` List installed Node.js versions in Node Version Manager.
 - `node --version` Check current Node.js version in use.
 - `npm --version` Check current npm version in use.
 
