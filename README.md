@@ -13,20 +13,21 @@
 - Dávid István Tercs
 
 ## How to run the backend:
-1. Create a copy of the `.env.example` file, and fill out the fields.
-2. Create a new virtual environment 
+1. Download the latest python (min 3.10.8) [link](https://www.python.org/downloads/)
+2. Create a copy of the `.env.example` file, and fill out the fields.
+3. Create a new virtual environment 
 ```
 py -m venv env
 .\env\Scripts\activate
 ```
-3. Install the requirements `pip install -r .\requirements.txt`
-4. Create a new docker container for the database and install the UUID extension
+4. Install the requirements `pip install -r .\requirements.txt`
+5. Create a new docker container for the database and install the UUID extension
 ```
 docker-compose up -d
 docker exec -it postgres bash
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
-5. Run the app
+6. Run the app
 ```
 uvicorn app.main:app --host localhost --port 8000 --reload
 ```
