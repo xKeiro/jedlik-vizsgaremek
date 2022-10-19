@@ -2,7 +2,7 @@
 
 ## IT Webshop project
 
-# Content
+### Content
 
 - Github: [Link](https://github.com/xKeiro/jedlik-vizsgaremek)
 - Documentation: [Link](https://docs.google.com/document/d/1Yr7cOVb5YnQZE8FiTCjsjiG3QIeLOKl3hKt94gyOdZ8/edit?usp=sharing)
@@ -11,7 +11,7 @@
 - Frontend: React v18
 - Design: Material UI v5
 
-# Requirements
+### Requirements
 
 - Python 3.10.8+ [Link](https://www.python.org/downloads/)
 - Node 19.0+ [Link](https://nodejs.org/en/)
