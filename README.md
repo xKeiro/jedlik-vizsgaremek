@@ -12,7 +12,7 @@
 - Kevin Németh
 - Dávid István Tercs
 
-## How to run the backend:
+## How to run the backend
 
 0. Set up environment (WSL)
 
@@ -24,31 +24,28 @@ sudo apt install python3-venv
 sudo apt install libpq-dev
 sudo apt install uvicorn
 cd ./backend/
-
 ```
 
 1. Create a copy of the `.env.sample` file, and fill out the fields.
-2. Create a new virtual environment
+2. Create a new virtual environment:
 
 ```
 py -m venv env
 .\env\Scripts\activate
-```
 
-WSL
+# OR in WSL:
 
-```
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-3. Install the requirements
+3. Install the requirements:
 
 ```
 pip install -r requirements.txt
 ```
 
-4. Create a new docker container for the database and install the UUID extension
+4. Create a new docker container for the database and install the UUID extension:
 
 ```
 docker-compose up -d
@@ -57,7 +54,7 @@ psql -U postgres
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
 
-5. Run the app
+5. Run the app:
 
 ```
 uvicorn app.main:app --host localhost --port 8000 --reload
