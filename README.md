@@ -13,16 +13,19 @@
 - Dávid István Tercs
 
 ## How to run the backend
-- Download the latest python (min 3.10.8) [link](https://www.python.org/downloads/)
 
-0. Set up environment (WSL)
+0. Download the latest python (min 3.10.8) [link](https://www.python.org/downloads/)
 ```
+# OR in WSL:
+
 sudo apt update && sudo apt upgrade
-sudo apt upgrade python3
-sudo apt install python3-pip
-sudo apt install python3-venv
+sudo apt install software-properties-common -y
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sudo apt update
+sudo apt install python3.10 -y
+curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+sudo apt install python3.10-venv
 sudo apt install libpq-dev
-sudo apt install uvicorn
 ```
 
 1. Create a copy of the `.env.sample` file, and fill out the fields.
@@ -34,7 +37,7 @@ py -m venv env
 
 # OR in WSL:
 
-python3 -m venv .venv
+python3.10 -m venv .venv
 source .venv/bin/activate
 ```
 
