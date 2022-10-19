@@ -19,13 +19,22 @@
 # OR in WSL:
 
 sudo apt update && sudo apt upgrade
-sudo apt install software-properties-common -y
-sudo add-apt-repository ppa:deadsnakes/ppa -y
-sudo apt update
-sudo apt install python3.10 -y
-curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
-sudo apt install python3.10-venv
+sudo apt upgrade python3
+sudo apt install python3-pip
+sudo apt install python3-dev
+sudo apt install python3-venv
 sudo apt install libpq-dev
+
+# update python 3.8 to 3.10
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt-get update
+sudo apt-get install python3.10
+sudo apt-get install python3.10-dev
+sudo apt-get install python3.10-venv
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 2
+sudo update-alternatives --config python3
+python3 -V
 ```
 
 1. Create a copy of the `.env.sample` file, and fill out the fields.
@@ -37,14 +46,14 @@ py -m venv env
 
 # OR in WSL:
 
-python3.10 -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 
 3. Install the requirements:
 
 ```
-pip install -r requirements.txt
+pip install -r ./backend/requirements.txt
 ```
 
 4. Create a new docker container for the database and install the UUID extension:
