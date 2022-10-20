@@ -2,10 +2,19 @@
 
 ## IT Webshop project
 
-- Documentation: [link](https://docs.google.com/document/d/1Yr7cOVb5YnQZE8FiTCjsjiG3QIeLOKl3hKt94gyOdZ8/edit?usp=sharing)
-- Database: PostgreSQL
+### Content
+
+- Github: [Link](https://github.com/xKeiro/jedlik-vizsgaremek)
+- Documentation: [Link](https://docs.google.com/document/d/1Yr7cOVb5YnQZE8FiTCjsjiG3QIeLOKl3hKt94gyOdZ8/edit?usp=sharing)
+- Database: PostgreSQL v15
 - Backend: FastAPI
-- Frontend: React
+- Frontend: React v18
+- Design: Material UI v5
+
+### Requirements
+
+- Python 3.10.8+ [Link](https://www.python.org/downloads/)
+- Node 19.0+ [Link](https://nodejs.org/en/)
 
 ## Team members
 
@@ -14,16 +23,17 @@
 
 ## How to run the backend
 
-0. Download the latest python (min 3.10.8) [link](https://www.python.org/downloads/)
+0. Install the latest Python
+
 ```
-# OR in WSL:
+# or set up WSL environment:
 
 sudo apt update && sudo apt upgrade
+# currently only installs python 3.8
 sudo apt upgrade python3
 sudo apt install python3-pip
 sudo apt install python3-dev
 sudo apt install python3-venv
-sudo apt install libpq-dev
 
 # update python 3.8 to 3.10
 sudo add-apt-repository ppa:deadsnakes/ppa
@@ -34,6 +44,7 @@ sudo apt-get install python3.10-venv
 sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
 sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 2
 sudo update-alternatives --config python3
+# select python3.10
 python3 -V
 ```
 
@@ -73,7 +84,8 @@ uvicorn backend.main:app --host localhost --port 8000 --reload
 
 **Userful commands:**
 
-- On database model change use alembic to create a new revision of the database
+- `python3 --version` Check current Python version in use
+- On database model change use alembic to create a new revision of the database:
 
 ```
 alembic revision --autogenerate -m "name of the revision"
@@ -87,9 +99,11 @@ alembic upgrade head
 
 ## How to run the frontend
 
-0. Set up environment (WSL)
+0. Install the latest Node.js
 
 ```
+# or set up WSL environment:
+
 sudo apt update && sudo apt upgrade
 sudo apt-get install curl
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
@@ -111,7 +125,7 @@ npm start
 
 **Userful commands:**
 
-- `nvm ls` List installed Node.js versions.
+- `nvm ls` List installed Node.js versions in Node Version Manager.
 - `node --version` Check current Node.js version in use.
 - `npm --version` Check current npm version in use.
 
