@@ -76,7 +76,7 @@ uvicorn backend.main:app --host localhost --port 8000 --reload
 - On database model change use alembic to create a new revision of the database
 
 ```
-alembic revision --autogenerate -m "creat users table"
+alembic revision --autogenerate -m "name of the revision"
 alembic upgrade head
 ```
 
