@@ -1,8 +1,8 @@
 import React from "react";
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+//import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
-import { AuthContext } from "./contexts/AuthContext";
+//import { AuthContext } from "../contexts/AuthContext";
 import Loader from "./Loader";
 import AlertMessage from "./AlertMessage";
 
@@ -15,9 +15,6 @@ import InputLabel from "@mui/material/InputLabel";
 import { Link } from "@mui/material";
 
 export default function Registration() {
-  const navigate = useNavigate();
-  const auth = useContext(AuthContext);
-
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [successText, setSuccessText] = useState("");
@@ -27,7 +24,6 @@ export default function Registration() {
     first_name: "",
     last_name: "",
     email: "",
-    photo: "",
     phone: "",
     password: "",
     passwordConfirm: "",
@@ -97,10 +93,7 @@ export default function Registration() {
 
       clearInputs();
       setIsLoading(false);
-
       setSuccessText("Registration successful.");
-      // work in progress
-      // navigate("/");
     } catch (err) {
       console.log(err);
       setErrorText("Registration failed.");
@@ -114,7 +107,6 @@ export default function Registration() {
       first_name: "",
       last_name: "",
       email: "",
-      photo: "",
       phone: "",
       password: "",
       passwordConfirm: "",

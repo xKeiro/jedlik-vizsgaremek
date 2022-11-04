@@ -2,8 +2,8 @@ import "./App.css";
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import { AuthContext } from "./components/contexts/AuthContext";
-import { useAuth } from "./components/hooks/AuthHook";
+import { AuthContext } from "./contexts/AuthContext";
+import { useAuth } from "./hooks/AuthHook";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Products from "./components/Products";
