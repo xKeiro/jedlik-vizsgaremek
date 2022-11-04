@@ -6,13 +6,11 @@ import { Link as RouterLink } from "react-router-dom";
 import Loader from "./Loader";
 import AlertMessage from "./AlertMessage";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
 import { Link } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 export default function Registration() {
   const [isLoading, setIsLoading] = useState(false);
@@ -121,193 +119,222 @@ export default function Registration() {
   return (
     <div className="Registration">
       <div>
-        <h2>Registration</h2>
+        <h2>Registration Form</h2>
       </div>
-      {successText && <AlertMessage type="success" message={successText} />}
-      {errorText && <AlertMessage type="error" message={errorText} />}
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Box
-          className="Registration__Form"
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            flexDirection: "column",
-            alignContent: "center",
-          }}
+      <Box
+        className="Registration__Form"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
         >
-          <h3>User information</h3>
-          <FormControl sx={{ marginY: "10px" }}>
-            <InputLabel htmlFor="username">Username</InputLabel>
-            <Input
-              id="username"
-              name="username"
-              type="text"
-              aria-describedby="Enter username"
-              value={regState.username}
-              onChange={handleRegChange}
-            />
-            <FormHelperText id="helper-text">
-              This name will be shown under reviews.
-            </FormHelperText>
-          </FormControl>
+          <Grid item xs={11} md={8}>
+            {successText && (
+              <AlertMessage type="success" message={successText} />
+            )}
+            {errorText && <AlertMessage type="error" message={errorText} />}
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <Grid container spacing={1}>
+                <Grid item xs={12} md={12}>
+                  <span>User information</span>
+                </Grid>
 
-          <FormControl sx={{ marginY: "10px" }}>
-            <InputLabel htmlFor="first_name">First Name</InputLabel>
-            <Input
-              id="first_name"
-              name="first_name"
-              type="text"
-              aria-describedby="Enter first name"
-              value={regState.first_name}
-              onChange={handleRegChange}
-            />
-          </FormControl>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Username"
+                    id="username"
+                    name="username"
+                    type="text"
+                    helperText="This name will be shown under reviews."
+                    value={regState.username}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
 
-          <FormControl sx={{ marginY: "10px" }}>
-            <InputLabel htmlFor="last_name">Last Name</InputLabel>
-            <Input
-              id="last_name"
-              name="last_name"
-              type="text"
-              aria-describedby="Enter last name"
-              value={regState.last_name}
-              onChange={handleRegChange}
-            />
-          </FormControl>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="First Name"
+                    id="first_name"
+                    name="first_name"
+                    type="text"
+                    value={regState.first_name}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Last Name"
+                    id="last_name"
+                    name="last_name"
+                    type="text"
+                    value={regState.last_name}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
 
-          <FormControl sx={{ marginY: "10px" }}>
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              aria-describedby="Enter email"
-              value={regState.email}
-              onChange={handleRegChange}
-            />
-            <FormHelperText id="helper-text">
-              We'll never share your email address.
-            </FormHelperText>
-          </FormControl>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Email address"
+                    id="email"
+                    name="email"
+                    type="email"
+                    helperText="We'll never share your email address."
+                    value={regState.email}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
 
-          <FormControl sx={{ marginY: "10px" }}>
-            <InputLabel htmlFor="phone">Phone number</InputLabel>
-            <Input
-              id="phone"
-              name="phone"
-              type="text"
-              aria-describedby="Enter phone number"
-              value={regState.phone}
-              onChange={handleRegChange}
-            />
-          </FormControl>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Phone number"
+                    id="phone"
+                    name="phone"
+                    type="text"
+                    value={regState.phone}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
 
-          <FormControl sx={{ marginY: "20px" }}>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              aria-describedby="Enter password"
-              value={regState.password}
-              onChange={handleRegChange}
-            />
-            <FormHelperText id="helper-text">
-              Minimum 8 characters.
-            </FormHelperText>
-          </FormControl>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Password"
+                    id="password"
+                    name="password"
+                    type="password"
+                    helperText="Minimum 8 characters."
+                    value={regState.password}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
 
-          <FormControl sx={{ marginY: "20px" }}>
-            <InputLabel htmlFor="passwordConfirm">Confirm Password</InputLabel>
-            <Input
-              id="passwordConfirm"
-              name="passwordConfirm"
-              type="password"
-              aria-describedby="Confirm password"
-              value={regState.passwordConfirm}
-              onChange={handleRegChange}
-            />
-          </FormControl>
-          <h3>Address details</h3>
-          <FormControl sx={{ marginY: "20px" }}>
-            <InputLabel htmlFor="address">Address line</InputLabel>
-            <Input
-              id="address"
-              name="address"
-              type="text"
-              aria-describedby="Enter address line"
-              value={regState.address}
-              onChange={handleRegChange}
-            />
-          </FormControl>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Confirm Password"
+                    id="passwordConfirm"
+                    name="passwordConfirm"
+                    type="password"
+                    value={regState.passwordConfirm}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
 
-          <FormControl sx={{ marginY: "20px" }}>
-            <InputLabel htmlFor="city">City</InputLabel>
-            <Input
-              id="city"
-              name="city"
-              type="text"
-              aria-describedby="Enter city"
-              value={regState.city}
-              onChange={handleRegChange}
-            />
-          </FormControl>
+                <Grid item xs={12} md={12}>
+                  <span>Address details</span>
+                </Grid>
 
-          <FormControl sx={{ marginY: "20px" }}>
-            <InputLabel htmlFor="region">Region</InputLabel>
-            <Input
-              id="region"
-              name="region"
-              type="text"
-              aria-describedby="Enter region"
-              value={regState.region}
-              onChange={handleRegChange}
-            />
-          </FormControl>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Address line"
+                    id="address"
+                    name="address"
+                    type="text"
+                    value={regState.address}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
 
-          <FormControl sx={{ marginY: "20px" }}>
-            <InputLabel htmlFor="postal_code">Postal Code</InputLabel>
-            <Input
-              id="postal_code"
-              name="postal_code"
-              type="text"
-              aria-describedby="Enter postal code"
-              value={regState.postal_code}
-              onChange={handleRegChange}
-            />
-          </FormControl>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="City"
+                    id="city"
+                    name="city"
+                    type="text"
+                    value={regState.city}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
 
-          <FormControl sx={{ marginY: "20px" }}>
-            <InputLabel htmlFor="country">Country</InputLabel>
-            <Input
-              id="country"
-              name="country"
-              type="text"
-              aria-describedby="Enter country"
-              value={regState.country}
-              onChange={handleRegChange}
-            />
-          </FormControl>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Region"
+                    id="region"
+                    name="region"
+                    type="text"
+                    value={regState.region}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
 
-          <Button
-            variant="contained"
-            sx={{ margin: "20px", padding: "10px" }}
-            onClick={handleRegistration}
-          >
-            Register
-          </Button>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Postal Code"
+                    id="postal_code"
+                    name="postal_code"
+                    type="text"
+                    value={regState.postal_code}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
 
-          <div>
-            <span>Already have an account? </span>
-            <Link component={RouterLink} to={"/login"}>
-              Log in
-            </Link>
-            <span>.</span>
-          </div>
-        </Box>
-      )}
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Country"
+                    id="country"
+                    name="country"
+                    type="text"
+                    value={regState.country}
+                    onChange={handleRegChange}
+                  ></TextField>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{ marginY: "20px", paddingY: "10px" }}
+                    onClick={handleRegistration}
+                  >
+                    Register
+                  </Button>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <span>Already have an account? </span>
+                  <Link component={RouterLink} to={"/login"}>
+                    Log in
+                  </Link>
+                  <span>.</span>
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
+        </Grid>
+      </Box>
     </div>
   );
 }

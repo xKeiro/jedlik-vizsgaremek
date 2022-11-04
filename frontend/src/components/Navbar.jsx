@@ -39,7 +39,8 @@ export default function Navbar() {
 
   const pages = [
     { name: "Home", route: "/" },
-    { name: "Products", route: "/products" },
+    { name: "Categories", route: "/categories" },
+    { name: "Product list", route: "/products" },
     { name: "Contact", route: "/contact" },
     { name: "Register", route: "/registration" },
   ];

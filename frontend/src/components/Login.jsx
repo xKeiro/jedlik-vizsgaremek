@@ -6,13 +6,11 @@ import { AuthContext } from "../contexts/AuthContext";
 import Loader from "./Loader";
 import AlertMessage from "./AlertMessage";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-//import FormHelperText from "@mui/material/FormHelperText";
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
 import { Link } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -88,58 +86,77 @@ export default function Login() {
       <div>
         <h2>Login page</h2>
       </div>
-      {errorText && <AlertMessage type="error" message={errorText} />}
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Box
-          className="Login__Form"
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            flexDirection: "column",
-            alignContent: "center",
-          }}
+      <Box
+        className="Login__Form"
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          flexDirection: "column",
+          alignContent: "center",
+        }}
+      >
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
         >
-          <FormControl sx={{ paddingY: "10px" }}>
-            <InputLabel htmlFor="user">Email or Username</InputLabel>
-            <Input
-              id="user"
-              type="text"
-              aria-describedby="Enter email"
-              value={loginUser}
-              onChange={(e) => setLoginUser(e.target.value)}
-            />
-          </FormControl>
+          <Grid item xs={11} md={4}>
+            {errorText && <AlertMessage type="error" message={errorText} />}
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <Grid container spacing={1}>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Username / Email"
+                    id="user"
+                    name="user"
+                    type="text"
+                    value={loginUser}
+                    onChange={(e) => setLoginUser(e.target.value)}
+                  ></TextField>
+                </Grid>
 
-          <FormControl sx={{ marginY: "20px" }}>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              id="password"
-              type="password"
-              aria-describedby="Enter password"
-              value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
-            />
-          </FormControl>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Password"
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                  ></TextField>
+                </Grid>
 
-          <Button
-            variant="contained"
-            sx={{ margin: "20px", padding: "10px" }}
-            onClick={handleLogin}
-          >
-            Login
-          </Button>
+                <Grid item xs={12} md={12}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{ marginY: "20px", paddingY: "10px" }}
+                    onClick={handleLogin}
+                  >
+                    Login
+                  </Button>
+                </Grid>
 
-          <div>
-            <span>Don't have an account? </span>
-            <Link component={RouterLink} to={"/registration"}>
-              Register
-            </Link>
-            <span>.</span>
-          </div>
-        </Box>
-      )}
+                <Grid item xs={12} md={12}>
+                  <span>Don't have an account? </span>
+                  <Link component={RouterLink} to={"/registration"}>
+                    Register
+                  </Link>
+                  <span>.</span>
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
+        </Grid>
+      </Box>
     </div>
   );
 }

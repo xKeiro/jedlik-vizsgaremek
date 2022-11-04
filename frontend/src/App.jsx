@@ -6,6 +6,7 @@ import { AuthContext } from "./contexts/AuthContext";
 import { useAuth } from "./hooks/AuthHook";
 import Header from "./components/Header";
 import Home from "./components/Home";
+import Categories from "./components/Categories";
 import Products from "./components/Products";
 import Contact from "./components/Contact";
 import Login from "./components/Login";
@@ -14,6 +15,8 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
 import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 
 function App() {
   useEffect(() => {
@@ -37,14 +40,16 @@ function App() {
       <Container>
         <Header />
         <Navbar />
-        <div className="Content">
-          <Routes>
-            <Route path="products" element={<Products />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="registration" element={<Registration />} />
-            {!token && <Route path="/login" element={<Login />} />}
+        <Paper>
+          <Box className="Content" sx={{ minHeight: "60vh" }}>
+            <Routes>
+              <Route path="products" element={<Products />} />
+              <Route path="categories" element={<Categories />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="registration" element={<Registration />} />
+              {!token && <Route path="/login" element={<Login />} />}
 
-            {/* {token && (
+              {/* {token && (
               <>
                 <Route
                   path={`/user/${userId}/profile`}
@@ -58,10 +63,11 @@ function App() {
               </>
             )} */}
 
-            <Route path="/" element={<Home />} />
-            <Route path="*" element={<Navigate replace to="/" />} />
-          </Routes>
-        </div>
+              <Route path="/" element={<Home />} />
+              <Route path="*" element={<Navigate replace to="/" />} />
+            </Routes>
+          </Box>
+        </Paper>
         <Footer />
       </Container>
     </div>
