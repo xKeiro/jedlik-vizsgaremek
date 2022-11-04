@@ -20,6 +20,7 @@ export default function Registration() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
+  const [successText, setSuccessText] = useState("");
 
   const [regState, setRegState] = useState({
     username: "",
@@ -37,17 +38,24 @@ export default function Registration() {
     country: "",
   });
 
-  const handleRegChange = (e) => {
+  function handleRegChange(e) {
     const { name, value } = e.target;
     setRegState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  };
+  }
 
   async function handleRegistration() {
     setErrorText(null);
+    setSuccessText(null);
     setIsLoading(true);
+
+    if (regState.password !== regState.passwordConfirm) {
+      setErrorText("Password fields do not match");
+      setIsLoading(false);
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:8000/api/auth/register", {
@@ -62,12 +70,9 @@ export default function Registration() {
             first_name: regState.first_name,
             last_name: regState.last_name,
             email: regState.email,
-            //photo: "",
             phone: regState.phone,
             password: regState.password,
-            passwordConfirm: regState.password,
-            //is_admin: false,
-            //address_id: "",
+            passwordConfirm: regState.passwordConfirm,
           },
           address: {
             address: regState.address,
@@ -85,7 +90,6 @@ export default function Registration() {
         const errorMsg = responseData.detail[0].msg;
         console.log(errorMsg);
 
-        clearInputs();
         setIsLoading(false);
         setErrorText(errorMsg);
         return;
@@ -94,23 +98,40 @@ export default function Registration() {
       clearInputs();
       setIsLoading(false);
 
+      setSuccessText("Registration successful.");
       // work in progress
       // navigate("/");
     } catch (err) {
-      clearInputs();
-      setErrorText("Registration failed");
       console.log(err);
+      setErrorText("Registration failed.");
       setIsLoading(false);
     }
   }
 
-  function clearInputs() {}
+  function clearInputs() {
+    setRegState({
+      username: "",
+      first_name: "",
+      last_name: "",
+      email: "",
+      photo: "",
+      phone: "",
+      password: "",
+      passwordConfirm: "",
+      address: "",
+      city: "",
+      region: "",
+      postal_code: "",
+      country: "",
+    });
+  }
 
   return (
     <div className="Registration">
       <div>
         <h2>Registration</h2>
       </div>
+      {successText && <AlertMessage type="success" message={successText} />}
       {errorText && <AlertMessage type="error" message={errorText} />}
       {isLoading ? (
         <Loader />
@@ -179,6 +200,18 @@ export default function Registration() {
             </FormHelperText>
           </FormControl>
 
+          <FormControl sx={{ marginY: "10px" }}>
+            <InputLabel htmlFor="phone">Phone number</InputLabel>
+            <Input
+              id="phone"
+              name="phone"
+              type="text"
+              aria-describedby="Enter phone number"
+              value={regState.phone}
+              onChange={handleRegChange}
+            />
+          </FormControl>
+
           <FormControl sx={{ marginY: "20px" }}>
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
@@ -189,6 +222,9 @@ export default function Registration() {
               value={regState.password}
               onChange={handleRegChange}
             />
+            <FormHelperText id="helper-text">
+              Minimum 8 characters.
+            </FormHelperText>
           </FormControl>
 
           <FormControl sx={{ marginY: "20px" }}>
@@ -209,7 +245,7 @@ export default function Registration() {
               id="address"
               name="address"
               type="text"
-              aria-describedby="Enter address"
+              aria-describedby="Enter address line"
               value={regState.address}
               onChange={handleRegChange}
             />

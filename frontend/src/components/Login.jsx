@@ -71,9 +71,9 @@ export default function Login() {
       // auth.login(decodedToken.uid, decodedToken.username, responseData);
       // navigate("/");
     } catch (err) {
-      clearInputs();
-      setErrorText("Login failed");
       console.log(err);
+      clearInputs();
+      setErrorText("Login failed.");
       setIsLoading(false);
     }
   }
