@@ -14,7 +14,7 @@
 ### Requirements
 
 - Python 3.10.8+ [Link](https://www.python.org/downloads/)
-- Node 19.0+ [Link](https://nodejs.org/en/)
+- Node.js 18.12+ [Link](https://nodejs.org/en/)
 
 ## Team members
 
