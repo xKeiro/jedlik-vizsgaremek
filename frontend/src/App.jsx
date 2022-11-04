@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import { AuthContext } from "./contexts/AuthContext";
 import { useAuth } from "./hooks/AuthHook";
+import { ColorModeContext } from "./contexts/ColorModeContext";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Categories from "./components/Categories";
@@ -14,42 +15,73 @@ import Registration from "./components/Registration";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+//import customTheme from "./theme";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 
 function App() {
+  const { token, login, logout, userId, username } = useAuth();
+
   useEffect(() => {
     document.title = "ITwebshop";
   }, []);
 
-  const { token, login, logout, userId, username } = useAuth();
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const [mode, setMode] = React.useState(prefersDarkMode ? "dark" : "light");
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+      },
+    }),
+    []
+  );
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode]
+  );
 
   return (
     <div className="App">
-      <AuthContext.Provider
-        value={{
-          isLoggedIn: !!token,
-          token: token,
-          userId: userId,
-          username: username,
-          login: login,
-          logout: logout,
-        }}
-      ></AuthContext.Provider>
-      <Container>
-        <Header />
-        <Navbar />
-        <Paper>
-          <Box className="Content" sx={{ minHeight: "60vh" }}>
-            <Routes>
-              <Route path="products" element={<Products />} />
-              <Route path="categories" element={<Categories />} />
-              <Route path="contact" element={<Contact />} />
-              <Route path="registration" element={<Registration />} />
-              {!token && <Route path="/login" element={<Login />} />}
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <AuthContext.Provider
+            value={{
+              isLoggedIn: !!token,
+              token: token,
+              userId: userId,
+              username: username,
+              login: login,
+              logout: logout,
+            }}
+          >
+            <Container>
+              <Header />
+              <Navbar />
+              <Paper>
+                <Box className="Content" sx={{ minHeight: "60vh" }}>
+                  <Routes>
+                    <Route path="products" element={<Products />} />
+                    <Route path="categories" element={<Categories />} />
+                    <Route path="contact" element={<Contact />} />
+                    <Route path="registration" element={<Registration />} />
+                    {!token && <Route path="/login" element={<Login />} />}
 
-              {/* {token && (
+                    {/* {token && (
               <>
                 <Route
                   path={`/user/${userId}/profile`}
@@ -63,13 +95,16 @@ function App() {
               </>
             )} */}
 
-              <Route path="/" element={<Home />} />
-              <Route path="*" element={<Navigate replace to="/" />} />
-            </Routes>
-          </Box>
-        </Paper>
-        <Footer />
-      </Container>
+                    <Route path="/" element={<Home />} />
+                    <Route path="*" element={<Navigate replace to="/" />} />
+                  </Routes>
+                </Box>
+              </Paper>
+              <Footer />
+            </Container>
+          </AuthContext.Provider>
+        </ThemeProvider>
+      </ColorModeContext.Provider>
     </div>
   );
 }
