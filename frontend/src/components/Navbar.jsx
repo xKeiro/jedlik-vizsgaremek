@@ -41,6 +41,7 @@ export default function Navbar() {
     { name: "Home", route: "/" },
     { name: "Products", route: "/products" },
     { name: "Contact", route: "/contact" },
+    { name: "Register", route: "/registration" },
   ];
 
   const settings = [
@@ -58,8 +59,8 @@ export default function Navbar() {
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href="/"
+              component={RouterLink}
+              to="/"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -118,7 +119,8 @@ export default function Navbar() {
             <Typography
               variant="h5"
               noWrap
-              component="a"
+              component={RouterLink}
+              to={"/"}
               href=""
               sx={{
                 mr: 2,
@@ -151,7 +153,7 @@ export default function Navbar() {
                 <Typography textAlign="center">{auth.username}</Typography>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                    <Avatar alt={auth.username} src="" />
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -172,7 +174,7 @@ export default function Navbar() {
                 >
                   {settings.map((setting) => (
                     <MenuItem
-                      key={"setting-" + setting.name}
+                      key={"usermenu-" + setting.name}
                       onClick={handleCloseUserMenu}
                       component={RouterLink}
                       to={setting.route}
@@ -183,13 +185,15 @@ export default function Navbar() {
                 </Menu>
               </Box>
             ) : (
-              <Button
-                component={RouterLink}
-                to={"/login"}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {"Login"}
-              </Button>
+              <>
+                <Button
+                  component={RouterLink}
+                  to={"/login"}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {"Login"}
+                </Button>
+              </>
             )}
           </Toolbar>
         </Container>

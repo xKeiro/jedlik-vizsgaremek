@@ -9,7 +9,7 @@ import AlertMessage from "./AlertMessage";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
+//import FormHelperText from "@mui/material/FormHelperText";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import { Link } from "@mui/material";
@@ -20,6 +20,7 @@ export default function Login() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
+
   const [loginUser, setLoginUser] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
@@ -109,10 +110,8 @@ export default function Login() {
               value={loginUser}
               onChange={(e) => setLoginUser(e.target.value)}
             />
-            <FormHelperText id="my-helper-text">
-              We'll never share your email.
-            </FormHelperText>
           </FormControl>
+
           <FormControl sx={{ marginY: "20px" }}>
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
@@ -131,9 +130,14 @@ export default function Login() {
           >
             Login
           </Button>
-          <Link component={RouterLink} to={"/registration"}>
-            Registration
-          </Link>
+
+          <div>
+            <span>Don't have an account? </span>
+            <Link component={RouterLink} to={"/registration"}>
+              Register
+            </Link>
+            <span>.</span>
+          </div>
         </Box>
       )}
     </div>
