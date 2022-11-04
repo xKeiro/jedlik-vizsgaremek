@@ -19,6 +19,10 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+
+import grey from "@mui/material/colors/grey";
+import deepOrange from "@mui/material/colors/deepOrange";
+
 //import customTheme from "./theme";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -44,15 +48,29 @@ function App() {
     }),
     []
   );
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
-  );
+
+  const getDesignTokens = (mode) => ({
+    palette: {
+      mode,
+      ...(mode === "light"
+        ? {
+            // palette values for light mode
+            primary: deepOrange,
+            divider: deepOrange[700],
+            background: {
+              default: grey[300],
+              paper: grey[50],
+            },
+          }
+        : {
+            // palette values for dark mode
+            primary: deepOrange,
+            divider: deepOrange[700],
+          }),
+    },
+  });
+
+  const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   return (
     <div className="App">
