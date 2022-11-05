@@ -72,8 +72,13 @@ pip install -r ./backend/requirements.txt
 ```
 docker-compose up -d
 docker exec -it postgres bash
-psql -U postgres
+psql -U [username]  -d postgres
+CREATE DATABASE [dbname];
+\q
+psql -U [username]  -d [dbname]
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+\q
+exit
 ```
 
 5. Run the app:
@@ -88,7 +93,7 @@ uvicorn backend.main:app --host localhost --port 8000 --reload
 - On database model change use alembic to create a new revision of the database:
 
 ```
-alembic revision --autogenerate -m "name of the revision"
+alembic revision --autogenerate -m "[name of the revision]"
 alembic upgrade head
 ```
 
