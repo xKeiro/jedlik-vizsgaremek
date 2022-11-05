@@ -56,7 +56,7 @@ async def create_user(user: schemas.CreateUserSchema, address: schemas.Address, 
     return { "user": new_user, "address": new_address }
 
 
-@router.post('/login')
+@router.post('/login', response_model=schemas.LoginUserResponse)
 def login(payload: schemas.LoginUserSchema, response: Response, db: Session = Depends(get_db),
           Authorize: AuthJWT = Depends()):
     # Check if the user exist

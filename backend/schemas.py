@@ -49,6 +49,10 @@ class UserResponse(BaseModel):
     user: UserBaseSchema
     address: Address
 
+class LoginUserResponse(BaseModel):
+    status: str
+    access_token: str
+
 
 # endregion
 
