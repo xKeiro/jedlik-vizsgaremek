@@ -8,6 +8,7 @@ from fastapi_jwt_auth import AuthJWT
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
+from .util import error_response_message
 from . import models
 from .config import settings
 from .database import get_db
@@ -52,10 +53,10 @@ def require_user(db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
         print(error)
         if error == 'MissingTokenError':
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail='You are not logged in')
+                status_code=status.HTTP_401_UNAUTHORIZED, detail=error_response_message('You are not logged in'))
         if error == 'UserNotFound':
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail='User no longer exist')
+                status_code=status.HTTP_401_UNAUTHORIZED, detail=error_response_message('User no longer exist'))
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail='Token is invalid or has expired')
+            status_code=status.HTTP_401_UNAUTHORIZED, detail=error_response_message('Token is invalid or has expired'))
     return user_id

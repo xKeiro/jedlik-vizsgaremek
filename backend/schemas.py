@@ -30,15 +30,19 @@ class UserBaseSchema(BaseModel):
 
 
 class CreateUserSchema(UserBaseSchema):
-    password: constr(min_length=8, max_length=50)
-    passwordConfirm: constr(min_length=8, max_length=50)
-    is_admin: bool = False
+    password: constr(min_length=8, max_length=60)
+    passwordConfirm: constr(min_length=8, max_length=60)
+
+class CreateUserSchemaWithAddressId(CreateUserSchema):
     address_id: UUID4 | None
+
+    class Config:
+        orm_mode = True
 
 
 class LoginUserSchema(BaseModel):
     identifier: EmailStr | constr(max_length=25)
-    password: constr(min_length=8, max_length=50)
+    password: constr(min_length=8, max_length=60)
 
 
 class UserResponse(BaseModel):
