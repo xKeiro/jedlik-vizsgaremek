@@ -32,7 +32,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 
 function App() {
-  const { token, login, logout, userId, username } = useAuth();
+  const { token, user, login, logout } = useAuth();
 
   useEffect(() => {
     document.title = "ITwebshop";
@@ -79,10 +79,8 @@ function App() {
           <CssBaseline />
           <AuthContext.Provider
             value={{
-              isLoggedIn: !!token,
               token: token,
-              userId: userId,
-              username: username,
+              user: user,
               login: login,
               logout: logout,
             }}

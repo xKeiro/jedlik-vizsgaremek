@@ -151,10 +151,10 @@ export default function Navbar() {
             </Box>
             {auth.token ? (
               <Box sx={{ flexGrow: 0 }}>
-                <Typography textAlign="center">{auth.username}</Typography>
+                <Typography textAlign="center">{auth.user.name}</Typography>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt={auth.username} src="" />
+                    <Avatar alt={auth.user.name} src={auth.user.photo} />
                   </IconButton>
                 </Tooltip>
                 <Menu

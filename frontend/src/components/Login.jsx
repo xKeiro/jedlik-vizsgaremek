@@ -22,14 +22,6 @@ export default function Login() {
   const [loginUser, setLoginUser] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  function jwtDecode(jwtString) {
-    let token = {};
-    token.raw = jwtString;
-    token.header = JSON.parse(window.atob(jwtString.split(".")[0]));
-    token.payload = JSON.parse(window.atob(jwtString.split(".")[1]));
-    return token;
-  }
-
   async function handleLogin() {
     setErrorText(null);
     setIsLoading(true);
@@ -41,33 +33,30 @@ export default function Login() {
         headers: {
           "Content-type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           identifier: loginUser,
           password: loginPassword,
         }),
       });
-      const responseData = await response.json();
-      console.log(responseData);
+      const responseBody = await response.json();
+      console.log(responseBody);
 
       if (!response.ok) {
-        const errorMsg = responseData.detail[0].msg;
-        console.log(errorMsg);
+        const errorMessage = responseBody.detail[0].msg;
+        console.log(errorMessage);
 
         clearInputs();
         setIsLoading(false);
-        setErrorText(errorMsg);
+        setErrorText(errorMessage);
         return;
       }
-
-      const decodedToken = jwtDecode(responseData);
-      console.log(decodedToken);
 
       clearInputs();
       setIsLoading(false);
 
-      // work in progress
-      // auth.login(decodedToken.uid, decodedToken.username, responseData);
-      // navigate("/");
+      auth.login(responseBody.access_token);
+      navigate("/");
     } catch (err) {
       console.log(err);
       clearInputs();

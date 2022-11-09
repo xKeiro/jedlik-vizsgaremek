@@ -1,72 +1,138 @@
 import { useState, useCallback, useEffect } from "react";
+import Cookies from "js-cookie";
 
-let logoutTimer;
+let refreshTimer;
 
 export const useAuth = () => {
-  const [token, setToken] = useState(false);
-  const [userId, setUserId] = useState(false);
-  const [username, setUsername] = useState(false);
-  const [tokenExpirationDate, setTokenExpirationDate] = useState();
+  const [token, setToken] = useState(null);
+  const [tokenExpDate, setTokenExpDate] = useState(null);
+  const [user, setUser] = useState({
+    id: "",
+    name: "",
+    photo: "",
+  });
+
+  function updateUser(key, value) {
+    setUser((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  }
+
+  function resetUser() {
+    setUser({
+      id: "",
+      name: "",
+      photo: "",
+    });
+  }
+
+  async function getUserDetails() {
+    try {
+      const response = await fetch("http://localhost:8000/api/users/me", {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+      });
+      const responseBody = await response.json();
+      if (!response.ok) {
+        const errorMessage = responseBody.detail[0].msg;
+        console.log(errorMessage);
+        return;
+      }
+      return responseBody;
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  }
 
   const login = useCallback(
-    (loginId, loginName, loginToken, loginExpirationDate) => {
-      setToken(loginToken);
-      setUsername(loginName);
-      setUserId(loginId);
+    async (accessToken) => {
+      if (!accessToken) {
+        return;
+      }
 
-      const tokenExpirationDate =
-        loginExpirationDate || new Date(new Date().getTime() + 1000 * 60 * 10);
-      console.log(loginToken);
-      setTokenExpirationDate(tokenExpirationDate);
+      setToken(accessToken);
 
-      localStorage.setItem(
-        "userData",
-        JSON.stringify({
-          userId: loginId,
-          username: loginName,
-          token: loginToken,
-          expiration:
-            new Date(tokenExpirationDate.toISOString()) + 2 * 1000 * 60 * 60,
-        })
-      );
+      const decodedToken = jwtDecode(accessToken);
+      updateUser("id", decodedToken.payload.sub);
+      setTokenExpDate(decodedToken.payload.exp);
+
+      const userDetails = await getUserDetails();
+      if (userDetails) {
+        updateUser("name", userDetails.username);
+        updateUser("photo", userDetails.photo);
+      }
+
+      console.log(accessToken);
+      console.log(tokenExpDate);
+      console.log(userDetails);
     },
-    []
+    [tokenExpDate]
   );
 
   const logout = useCallback(() => {
     setToken(null);
-    setTokenExpirationDate(null);
-    setUserId(null);
-    setUsername(null);
-    localStorage.removeItem("userData");
+    setTokenExpDate(null);
+    resetUser();
+    Cookies.remove("logged_in");
   }, []);
 
-  useEffect(() => {
-    if (token && tokenExpirationDate) {
-      const remainingTime =
-        tokenExpirationDate.getTime() - new Date().getTime();
-
-      logoutTimer = setTimeout(logout, remainingTime);
-    } else {
-      clearTimeout(logoutTimer);
-    }
-  }, [token, logout, tokenExpirationDate]);
-
-  useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("userData"));
-    if (
-      storedData &&
-      storedData.token &&
-      new Date(storedData.expiration) > new Date()
-    ) {
-      login(
-        storedData.userId,
-        storedData.username,
-        storedData.token,
-        new Date(storedData.expiration)
-      );
-    }
+  const refreshLogin = useCallback(async () => {
+    const newToken = await refreshToken();
+    login(newToken);
   }, [login]);
 
-  return { token, login, logout, userId, username };
+  async function refreshToken() {
+    try {
+      const response = await fetch("http://localhost:8000/api/auth/refresh", {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+      });
+      const responseBody = await response.json();
+      if (!response.ok) {
+        const errorMessage = responseBody.detail[0].msg;
+        console.log(errorMessage);
+        return;
+      }
+      return responseBody;
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+
+  function jwtDecode(jwtString) {
+    let token = {};
+    token.raw = jwtString;
+    token.header = JSON.parse(window.atob(jwtString.split(".")[0]));
+    token.payload = JSON.parse(window.atob(jwtString.split(".")[1]));
+    return token;
+  }
+
+  useEffect(() => {
+    if (token && tokenExpDate) {
+      const remainingTime = tokenExpDate - new Date().getTime();
+      refreshTimer = setTimeout(refreshLogin, remainingTime);
+    } else {
+      clearTimeout(refreshTimer);
+    }
+  }, [token, refreshLogin, tokenExpDate]);
+
+  useEffect(() => {
+    // const loggedIn = Cookies.get("logged_in");
+    // if (loggedIn) {
+    //   login();
+    // }
+  }, [login]);
+
+  return { token, user, login, logout };
 };
