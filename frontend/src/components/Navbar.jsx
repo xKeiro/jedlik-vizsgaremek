@@ -22,11 +22,11 @@ export default function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+  const handleOpenNavMenu = (e) => {
+    setAnchorElNav(e.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+  const handleOpenUserMenu = (e) => {
+    setAnchorElUser(e.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -37,7 +37,7 @@ export default function Navbar() {
     setAnchorElUser(null);
   };
 
-  const pages = [
+  const mainMenu = [
     { name: "Home", route: "/" },
     { name: "Categories", route: "/categories" },
     { name: "Product list", route: "/products" },
@@ -45,9 +45,9 @@ export default function Navbar() {
     { name: "Register", route: "/registration" },
   ];
 
-  const settings = [
+  const userMenu = [
+    { name: auth.user.name, route: "/account" },
     { name: "Account", route: "/account" },
-    { name: "Settings", route: "/settings" },
     { name: "Logout", route: "/logout" },
   ];
 
@@ -104,7 +104,7 @@ export default function Navbar() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
+                {mainMenu.map((page) => (
                   <MenuItem
                     key={"menutext-" + page.name}
                     onClick={handleCloseNavMenu}
@@ -137,7 +137,7 @@ export default function Navbar() {
               IT Webshop
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
+              {mainMenu.map((page) => (
                 <Button
                   key={"menubutton-" + page.name}
                   onClick={handleCloseNavMenu}
@@ -150,41 +150,44 @@ export default function Navbar() {
               ))}
             </Box>
             {auth.token ? (
-              <Box sx={{ flexGrow: 0 }}>
-                <Typography textAlign="center">{auth.user.name}</Typography>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt={auth.user.name} src={auth.user.photo} />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem
-                      key={"usermenu-" + setting.name}
-                      onClick={handleCloseUserMenu}
-                      component={RouterLink}
-                      to={setting.route}
-                    >
-                      <Typography textAlign="center">{setting.name}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
+              <>
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title="Open user menu">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt={auth.user.name} src={auth.user.photo} />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {userMenu.map((setting) => (
+                      <MenuItem
+                        key={"usermenu-" + setting.name}
+                        onClick={handleCloseUserMenu}
+                        component={RouterLink}
+                        to={setting.route}
+                      >
+                        <Typography textAlign="center">
+                          {setting.name}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              </>
             ) : (
               <>
                 <Button

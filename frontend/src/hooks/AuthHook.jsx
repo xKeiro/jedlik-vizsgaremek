@@ -50,30 +50,23 @@ export const useAuth = () => {
     }
   }
 
-  const login = useCallback(
-    async (accessToken) => {
-      if (!accessToken) {
-        return;
-      }
+  const login = useCallback(async (accessToken) => {
+    if (!accessToken) {
+      return;
+    }
 
-      setToken(accessToken);
+    setToken(accessToken);
 
-      const decodedToken = jwtDecode(accessToken);
-      updateUser("id", decodedToken.payload.sub);
-      setTokenExpDate(decodedToken.payload.exp);
+    const decodedToken = jwtDecode(accessToken);
+    updateUser("id", decodedToken.payload.sub);
+    setTokenExpDate(decodedToken.payload.exp);
 
-      const userDetails = await getUserDetails();
-      if (userDetails) {
-        updateUser("name", userDetails.username);
-        updateUser("photo", userDetails.photo);
-      }
-
-      console.log(accessToken);
-      console.log(tokenExpDate);
-      console.log(userDetails);
-    },
-    [tokenExpDate]
-  );
+    const userDetails = await getUserDetails();
+    if (userDetails) {
+      updateUser("name", userDetails.user.username);
+      updateUser("photo", userDetails.user.photo);
+    }
+  }, []);
 
   const logout = useCallback(() => {
     setToken(null);
@@ -82,10 +75,14 @@ export const useAuth = () => {
     Cookies.remove("logged_in");
   }, []);
 
-  const refreshLogin = useCallback(async () => {
+  const refresh = useCallback(async () => {
     const newToken = await refreshToken();
-    login(newToken);
-  }, [login]);
+    if (newToken) {
+      login(newToken);
+    } else {
+      logout();
+    }
+  }, [login, logout]);
 
   async function refreshToken() {
     try {
@@ -103,7 +100,7 @@ export const useAuth = () => {
         console.log(errorMessage);
         return;
       }
-      return responseBody;
+      return responseBody.access_token;
     } catch (error) {
       console.log(error);
       return;
@@ -121,18 +118,11 @@ export const useAuth = () => {
   useEffect(() => {
     if (token && tokenExpDate) {
       const remainingTime = tokenExpDate - new Date().getTime();
-      refreshTimer = setTimeout(refreshLogin, remainingTime);
+      refreshTimer = setTimeout(refresh, remainingTime);
     } else {
       clearTimeout(refreshTimer);
     }
-  }, [token, refreshLogin, tokenExpDate]);
+  }, [token, refresh, tokenExpDate]);
 
-  useEffect(() => {
-    // const loggedIn = Cookies.get("logged_in");
-    // if (loggedIn) {
-    //   login();
-    // }
-  }, [login]);
-
-  return { token, user, login, logout };
+  return { token, user, login, logout, refresh };
 };

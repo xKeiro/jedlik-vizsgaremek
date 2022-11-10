@@ -1,6 +1,7 @@
 import "./App.css";
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import { AuthContext } from "./contexts/AuthContext";
 import { useAuth } from "./hooks/AuthHook";
@@ -32,11 +33,16 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 
 function App() {
-  const { token, user, login, logout } = useAuth();
+  const { token, user, login, logout, refresh } = useAuth();
 
   useEffect(() => {
     document.title = "ITwebshop";
-  }, []);
+
+    const alreadyLoggedIn = Cookies.get("logged_in");
+    if (alreadyLoggedIn) {
+      refresh();
+    }
+  }, [refresh]);
 
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [mode, setMode] = React.useState(prefersDarkMode ? "dark" : "light");
