@@ -42,12 +42,12 @@ export default function Navbar() {
     { name: "Categories", route: "/categories" },
     { name: "Product list", route: "/products" },
     { name: "Contact", route: "/contact" },
-    { name: "Register", route: "/registration" },
   ];
 
   const userMenu = [
     { name: auth.user.name, route: "/account" },
     { name: "Account", route: "/account" },
+    { name: "Orders", route: "/orders" },
     { name: "Logout", route: "/logout" },
   ];
 

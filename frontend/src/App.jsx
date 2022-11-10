@@ -7,15 +7,17 @@ import { AuthContext } from "./contexts/AuthContext";
 import { useAuth } from "./hooks/AuthHook";
 import { ColorModeContext } from "./contexts/ColorModeContext";
 import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Categories from "./components/Categories";
 import Products from "./components/Products";
 import Contact from "./components/Contact";
+import Registration from "./components/Registration";
 import Login from "./components/Login";
 import Logout from "./components/Logout";
-import Registration from "./components/Registration";
+import Account from "./components/Account";
+import Orders from "./components/Orders";
 import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -106,8 +108,8 @@ function App() {
 
                     {token && (
                       <>
-                        {/* <Route path={`/account`} element={<Account />} />
-                        <Route path={`/orders`} element={<Orders />} /> */}
+                        <Route path={`/account`} element={<Account />} />
+                        <Route path={`/orders`} element={<Orders />} />
                         <Route path={`/logout`} element={<Logout />} />
                       </>
                     )}
