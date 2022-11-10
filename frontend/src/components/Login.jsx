@@ -40,7 +40,6 @@ export default function Login() {
         }),
       });
       const responseBody = await response.json();
-      console.log(responseBody);
 
       if (!response.ok) {
         const errorMessage = responseBody.detail[0].msg;

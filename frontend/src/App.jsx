@@ -12,6 +12,7 @@ import Categories from "./components/Categories";
 import Products from "./components/Products";
 import Contact from "./components/Contact";
 import Login from "./components/Login";
+import Logout from "./components/Logout";
 import Registration from "./components/Registration";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -103,19 +104,13 @@ function App() {
                     <Route path="registration" element={<Registration />} />
                     {!token && <Route path="/login" element={<Login />} />}
 
-                    {/* {token && (
-              <>
-                <Route
-                  path={`/user/${userId}/profile`}
-                  element={<ProfilePage />}
-                />
-                <Route path={`/user/${userId}/orders`} element={<Orders />} />
-                <Route
-                  path={`/user/${userId}/orders/new`}
-                  element={<NewOrder />}
-                />
-              </>
-            )} */}
+                    {token && (
+                      <>
+                        {/* <Route path={`/account`} element={<Account />} />
+                        <Route path={`/orders`} element={<Orders />} /> */}
+                        <Route path={`/logout`} element={<Logout />} />
+                      </>
+                    )}
 
                     <Route path="/" element={<Home />} />
                     <Route path="*" element={<Navigate replace to="/" />} />
