@@ -16,6 +16,8 @@ class Address(BaseModel):
     postal_code: constr(max_length=10)
     country: constr(max_length=50)
 
+    class Config:
+        orm_mode = True
 
 class UserBaseSchema(BaseModel):
     username: constr(max_length=25)
@@ -48,6 +50,8 @@ class LoginUserSchema(BaseModel):
 class UserResponse(BaseModel):
     user: UserBaseSchema
     address: Address
+    class Config:
+        orm_mode = True
 
 class LoginUserResponse(BaseModel):
     status: str
