@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -7,15 +8,15 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 
 export default function ProductCard({ product }) {
   return (
-    <Card key={product.id} sx={{ maxWidth: 345 }}>
+    <Card key={product.id} sx={{ maxWidth: 350 }}>
       <CardActionArea component={RouterLink} to={"/product/" + product.id}>
         <CardMedia
           component="img"
-          height="140"
+          height="150"
           image={
             product.photo
               ? product.photo
-              : "https://via.placeholder.com/150x150.png"
+              : "https://via.placeholder.com/350x150.png"
           }
           alt={product.title}
         />
@@ -24,12 +25,22 @@ export default function ProductCard({ product }) {
             {product.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {product.sale_price}
+            {product.stock ? "In stock" : "Out of stock"}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {product.sale_price.toLocaleString("en-US", {
+              style: "currency",
+              currency: "HUF",
+            })}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button
+          size="small"
+          color="primary"
+          disabled={product.stock ? false : true}
+        >
           Add to cart
         </Button>
       </CardActions>
