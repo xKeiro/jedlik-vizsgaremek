@@ -10,7 +10,9 @@ import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Categories from "./components/Categories";
-import Products from "./components/Products";
+import Category from "./components/Category";
+import ProductList from "./components/ProductList";
+import Product from "./components/Product";
 import Contact from "./components/Contact";
 import Registration from "./components/Registration";
 import Login from "./components/Login";
@@ -100,17 +102,19 @@ function App() {
               <Paper>
                 <Box className="Content" sx={{ minHeight: "60vh" }}>
                   <Routes>
-                    <Route path="products" element={<Products />} />
-                    <Route path="categories" element={<Categories />} />
-                    <Route path="contact" element={<Contact />} />
-                    <Route path="registration" element={<Registration />} />
-                    {!token && <Route path="/login" element={<Login />} />}
+                    <Route path="/productlist/" element={<ProductList />} />
+                    <Route path="/product/:id" element={<Product />} />
+                    <Route path="/categories/" element={<Categories />} />
+                    <Route path="/category/:id" element={<Category />} />
+                    <Route path="/contact/" element={<Contact />} />
+                    <Route path="/registration/" element={<Registration />} />
+                    {!token && <Route path="/login/" element={<Login />} />}
 
                     {token && (
                       <>
-                        <Route path={`/account`} element={<Account />} />
-                        <Route path={`/orders`} element={<Orders />} />
-                        <Route path={`/logout`} element={<Logout />} />
+                        <Route path={"/account/"} element={<Account />} />
+                        <Route path={"/orders/"} element={<Orders />} />
+                        <Route path={"/logout/"} element={<Logout />} />
                       </>
                     )}
 

@@ -40,7 +40,7 @@ export default function Navbar() {
   const mainMenu = [
     { name: "Home", route: "/" },
     { name: "Categories", route: "/categories" },
-    { name: "Product list", route: "/products" },
+    { name: "Product list", route: "/productlist" },
     { name: "Contact", route: "/contact" },
   ];
 

@@ -119,8 +119,6 @@ export const useAuth = () => {
     if (token && tokenExpDate) {
       const fixedExpDate = tokenExpDate * 1000;
       const remainingTime = fixedExpDate - new Date().getTime();
-      console.log(fixedExpDate);
-      console.log(new Date().getTime());
       refreshTimer = setTimeout(refresh, remainingTime);
     } else {
       clearTimeout(refreshTimer);
