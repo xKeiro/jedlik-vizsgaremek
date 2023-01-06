@@ -5,6 +5,7 @@ from pydantic import EmailStr
 from pydantic import FilePath
 from pydantic import UUID4
 from pydantic import constr
+from pydantic import StrictBool
 
 
 # region  -------USER-------
@@ -26,6 +27,7 @@ class UserBaseSchema(BaseModel):
     email: EmailStr
     photo: FilePath | None
     phone: constr(max_length=20) | None
+    is_admin: StrictBool
 
     class Config:
         orm_mode = True
