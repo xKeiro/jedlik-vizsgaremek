@@ -99,6 +99,9 @@ class ProductCategory(BaseModel):
     description: str
     photo: FilePath | None
 
+    class Config:
+        orm_mode = True
+
 
 class ProductsResponse(BaseModel):
     products: list[Product]
