@@ -2,17 +2,15 @@ import React from "react";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
-import { AuthContext } from "./contexts/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 import Loader from "./Loader";
 import AlertMessage from "./AlertMessage";
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
 import { Link } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -20,16 +18,9 @@ export default function Login() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
+
   const [loginUser, setLoginUser] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-
-  function jwtDecode(jwtString) {
-    let token = {};
-    token.raw = jwtString;
-    token.header = JSON.parse(window.atob(jwtString.split(".")[0]));
-    token.payload = JSON.parse(window.atob(jwtString.split(".")[1]));
-    return token;
-  }
 
   async function handleLogin() {
     setErrorText(null);
@@ -42,37 +33,33 @@ export default function Login() {
         headers: {
           "Content-type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           identifier: loginUser,
           password: loginPassword,
         }),
       });
-      const responseData = await response.json();
-      console.log(responseData);
+      const responseBody = await response.json();
 
       if (!response.ok) {
-        const errorMsg = responseData.detail[0].msg;
-        console.log(errorMsg);
+        const errorMessage = responseBody.detail[0].msg;
+        console.log(errorMessage);
 
         clearInputs();
         setIsLoading(false);
-        setErrorText(errorMsg);
+        setErrorText(errorMessage);
         return;
       }
-
-      const decodedToken = jwtDecode(responseData);
-      console.log(decodedToken);
 
       clearInputs();
       setIsLoading(false);
 
-      // work in progress
-      // auth.login(decodedToken.uid, decodedToken.username, responseData);
-      // navigate("/");
+      auth.login(responseBody.access_token);
+      navigate("/");
     } catch (err) {
-      clearInputs();
-      setErrorText("Login failed");
       console.log(err);
+      clearInputs();
+      setErrorText("Login failed.");
       setIsLoading(false);
     }
   }
@@ -87,55 +74,77 @@ export default function Login() {
       <div>
         <h2>Login page</h2>
       </div>
-      {errorText && <AlertMessage type="error" message={errorText} />}
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Box
-          className="Login__Form"
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            flexDirection: "column",
-            alignContent: "center",
-          }}
+      <Box
+        className="Login__Form"
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          flexDirection: "column",
+          alignContent: "center",
+        }}
+      >
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
         >
-          <FormControl sx={{ paddingY: "10px" }}>
-            <InputLabel htmlFor="user">Email or Username</InputLabel>
-            <Input
-              id="user"
-              type="text"
-              aria-describedby="Enter email"
-              value={loginUser}
-              onChange={(e) => setLoginUser(e.target.value)}
-            />
-            <FormHelperText id="my-helper-text">
-              We'll never share your email.
-            </FormHelperText>
-          </FormControl>
-          <FormControl sx={{ marginY: "20px" }}>
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              id="password"
-              type="password"
-              aria-describedby="Enter password"
-              value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
-            />
-          </FormControl>
+          <Grid item xs={11} md={4}>
+            {errorText && <AlertMessage type="error" message={errorText} />}
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <Grid container spacing={1}>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Username / Email"
+                    id="user"
+                    name="user"
+                    type="text"
+                    value={loginUser}
+                    onChange={(e) => setLoginUser(e.target.value)}
+                  ></TextField>
+                </Grid>
 
-          <Button
-            variant="contained"
-            sx={{ margin: "20px", padding: "10px" }}
-            onClick={handleLogin}
-          >
-            Login
-          </Button>
-          <Link component={RouterLink} to={"/registration"}>
-            Registration
-          </Link>
-        </Box>
-      )}
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Password"
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                  ></TextField>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{ marginY: "20px", paddingY: "10px" }}
+                    onClick={handleLogin}
+                  >
+                    Login
+                  </Button>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <span>Don't have an account? </span>
+                  <Link component={RouterLink} to={"/registration"}>
+                    Register
+                  </Link>
+                  <span>.</span>
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
+        </Grid>
+      </Box>
     </div>
   );
 }

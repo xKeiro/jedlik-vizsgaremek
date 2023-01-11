@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { AuthContext } from "./contexts/AuthContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -22,11 +22,11 @@ export default function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+  const handleOpenNavMenu = (e) => {
+    setAnchorElNav(e.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+  const handleOpenUserMenu = (e) => {
+    setAnchorElUser(e.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -37,15 +37,17 @@ export default function Navbar() {
     setAnchorElUser(null);
   };
 
-  const pages = [
+  const mainMenu = [
     { name: "Home", route: "/" },
-    { name: "Products", route: "/products" },
+    { name: "Categories", route: "/categories" },
+    { name: "Product list", route: "/products" },
     { name: "Contact", route: "/contact" },
   ];
 
-  const settings = [
+  const userMenu = [
+    { name: auth.user.name, route: "/account" },
     { name: "Account", route: "/account" },
-    { name: "Settings", route: "/settings" },
+    { name: "Orders", route: "/orders" },
     { name: "Logout", route: "/logout" },
   ];
 
@@ -58,8 +60,8 @@ export default function Navbar() {
             <Typography
               variant="h6"
               noWrap
-              component="a"
-              href="/"
+              component={RouterLink}
+              to="/"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -102,7 +104,7 @@ export default function Navbar() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
+                {mainMenu.map((page) => (
                   <MenuItem
                     key={"menutext-" + page.name}
                     onClick={handleCloseNavMenu}
@@ -118,7 +120,8 @@ export default function Navbar() {
             <Typography
               variant="h5"
               noWrap
-              component="a"
+              component={RouterLink}
+              to={"/"}
               href=""
               sx={{
                 mr: 2,
@@ -134,7 +137,7 @@ export default function Navbar() {
               IT Webshop
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
+              {mainMenu.map((page) => (
                 <Button
                   key={"menubutton-" + page.name}
                   onClick={handleCloseNavMenu}
@@ -147,49 +150,54 @@ export default function Navbar() {
               ))}
             </Box>
             {auth.token ? (
-              <Box sx={{ flexGrow: 0 }}>
-                <Typography textAlign="center">{auth.username}</Typography>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="User" src="/static/images/avatar/2.jpg" />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem
-                      key={"setting-" + setting.name}
-                      onClick={handleCloseUserMenu}
-                      component={RouterLink}
-                      to={setting.route}
-                    >
-                      <Typography textAlign="center">{setting.name}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
+              <>
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title="Open user menu">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt={auth.user.name} src={auth.user.photo} />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {userMenu.map((setting) => (
+                      <MenuItem
+                        key={"usermenu-" + setting.name}
+                        onClick={handleCloseUserMenu}
+                        component={RouterLink}
+                        to={setting.route}
+                      >
+                        <Typography textAlign="center">
+                          {setting.name}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              </>
             ) : (
-              <Button
-                component={RouterLink}
-                to={"/login"}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {"Login"}
-              </Button>
+              <>
+                <Button
+                  component={RouterLink}
+                  to={"/login"}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {"Login"}
+                </Button>
+              </>
             )}
           </Toolbar>
         </Container>
