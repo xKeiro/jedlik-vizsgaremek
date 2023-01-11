@@ -49,7 +49,7 @@ export default function Logout() {
     handleLogout();
     auth.logout();
     navigate("/");
-  }, [handleLogout, auth, navigate]);
+  }, [auth, navigate]);
 
   return (
     <div className="Logout">
