@@ -77,7 +77,7 @@ export default function Product() {
               <Typography variant="body2" color="text.secondary">
                 {product.sale_price.toLocaleString("en-US", {
                   style: "currency",
-                  currency: "HUF",
+                  currency: "EUR",
                 })}
               </Typography>
             </CardContent>
