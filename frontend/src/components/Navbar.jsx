@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -19,8 +19,23 @@ import MenuItem from "@mui/material/MenuItem";
 export default function Navbar() {
   const auth = useContext(AuthContext);
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [mainMenu, setMainMenu] = useState([
+    { name: "Home", route: "/" },
+    { name: "Categories", route: "/categories" },
+    { name: "Product list", route: "/productlist" },
+    { name: "Contact", route: "/contact" },
+  ]);
+  const [userMenu, setUserMenu] = useState([
+    {
+      name: `${auth.user.name} (${auth.user.is_admin ? "Admin" : "User"})`,
+      route: "/account",
+    },
+    { name: "Account", route: "/account" },
+    { name: "Orders", route: "/orders" },
+    { name: "Logout", route: "/logout" },
+  ]);
 
   const handleOpenNavMenu = (e) => {
     setAnchorElNav(e.currentTarget);
@@ -37,19 +52,14 @@ export default function Navbar() {
     setAnchorElUser(null);
   };
 
-  const mainMenu = [
-    { name: "Home", route: "/" },
-    { name: "Categories", route: "/categories" },
-    { name: "Product list", route: "/productlist" },
-    { name: "Contact", route: "/contact" },
-  ];
-
-  const userMenu = [
-    { name: auth.user.name, route: "/account" },
-    { name: "Account", route: "/account" },
-    { name: "Orders", route: "/orders" },
-    { name: "Logout", route: "/logout" },
-  ];
+  useEffect(() => {
+    const adminPanel = { name: "Admin", route: "/admin" };
+    if (auth.token && auth.user.is_admin) {
+      setMainMenu((prevState) => [...prevState, adminPanel]);
+    } else {
+      setMainMenu(mainMenu.filter((item) => item.name !== "Admin"));
+    }
+  }, [auth.user.is_admin]);
 
   return (
     <div className="Navbar">
