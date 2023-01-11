@@ -28,10 +28,6 @@ export default function Navbar() {
     { name: "Contact", route: "/contact" },
   ]);
   const [userMenu, setUserMenu] = useState([
-    {
-      name: `${auth.user.name} (${auth.user.is_admin ? "Admin" : "User"})`,
-      route: "/account",
-    },
     { name: "Account", route: "/account" },
     { name: "Orders", route: "/orders" },
     { name: "Logout", route: "/logout" },
@@ -51,6 +47,18 @@ export default function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  useEffect(() => {
+    const userPanel = {
+      name: `${auth.user.name} (${auth.user.is_admin ? "Admin" : "User"})`,
+      route: "/account",
+    };
+    if (auth.token) {
+      setUserMenu((prevState) => [userPanel, ...prevState]);
+    } else {
+      setUserMenu(userMenu.filter((item) => !item.name.includes("(")));
+    }
+  }, [auth.user.name]);
 
   useEffect(() => {
     const adminPanel = { name: "Admin", route: "/admin" };
