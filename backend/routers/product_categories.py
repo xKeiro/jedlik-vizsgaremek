@@ -11,12 +11,12 @@ router = APIRouter()
 
 @router.get('/', response_model=schemas.ProductsCategories)
 async def get_products_by_categories(db: Session = Depends(get_db)):
-    product_categories = db.query(models.ProductCategory).all()
+    product_categories = db.query(models.ProductCategory).order_by(models.ProductCategory.title).all()
     return {"categories": product_categories}
 
 
 @router.get('/{category_id}', response_model=schemas.ProductsResponse)
 async def get_products_by_category_id(category_id: UUID4, db: Session = Depends(get_db)):
     products = db.query(models.Product).filter(models.Product.category_id == category_id,
-                                               models.Product.discontinued == False).all()
+                                               models.Product.discontinued == False).order_by(models.Product.title).all()
     return {"products": products}
