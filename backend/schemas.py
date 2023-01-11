@@ -5,6 +5,7 @@ from pydantic import EmailStr
 from pydantic import FilePath
 from pydantic import UUID4
 from pydantic import constr
+from pydantic import StrictBool
 
 
 # region  -------USER-------
@@ -19,6 +20,12 @@ class Address(BaseModel):
     class Config:
         orm_mode = True
 
+class OptionalAddress(BaseModel):
+    address: constr(max_length=50) = None
+    city: constr(max_length=50) = None
+    region: constr(max_length=50) = None
+    postal_code: constr(max_length=10) = None
+    country: constr(max_length=50) = None
 class UserBaseSchema(BaseModel):
     username: constr(max_length=25)
     first_name: constr(max_length=25)
@@ -26,6 +33,7 @@ class UserBaseSchema(BaseModel):
     email: EmailStr
     photo: FilePath | None
     phone: constr(max_length=20) | None
+    is_admin: StrictBool
 
     class Config:
         orm_mode = True
@@ -34,6 +42,16 @@ class UserBaseSchema(BaseModel):
 class CreateUserSchema(UserBaseSchema):
     password: constr(min_length=8, max_length=60)
     passwordConfirm: constr(min_length=8, max_length=60)
+
+class OptionalUserSchema(BaseModel):
+    first_name: constr(max_length=25) = None
+    last_name: constr(max_length=25) = None
+    email: EmailStr = None
+    photo: FilePath = None
+    phone: constr(max_length=20) = None
+    password: constr(min_length=8, max_length=60) = None
+    passwordConfirm: constr(min_length=8, max_length=60) = None
+
 
 class CreateUserSchemaWithAddressId(CreateUserSchema):
     address_id: UUID4 | None
