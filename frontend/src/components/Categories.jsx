@@ -30,7 +30,6 @@ export default function Categories() {
         console.log(errorMessage);
         return;
       }
-      console.log(responseBody);
       setCategories(responseBody.categories);
     } catch (error) {
       console.log(error);
@@ -38,51 +37,8 @@ export default function Categories() {
     }
   }
 
-  function getMockCategories() {
-    const mockObj = {
-      categories: [
-        {
-          id: 0,
-          title: "Mocked",
-          description:
-            "Warning: these data are just placeholder! Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur voluptatum odit cumque ratione impedit delectus rerum minus eligendi. Perferendis molestias maxime quidem labore molestiae inventore temporibus commodi reprehenderit eligendi! Sint.",
-          photo: "",
-        },
-        {
-          id: 1,
-          title: "Coolers",
-          description:
-            "Computer cooling is required to remove the waste heat produced by computer components, to keep components within permissible operating temperature limits.",
-          photo: "",
-        },
-        {
-          id: 2,
-          title: "Cpu",
-          description:
-            "A central processing unit (CPU), also called a central processor, main processor or just processor, is the electronic circuitry that executes instructions comprising a computer program.",
-          photo: "",
-        },
-        {
-          id: 3,
-          title: "Motherboards",
-          description:
-            "A motherboard (also called mainboard, main circuit board, mb, mboard, backplane board, base board, system board, logic board (only in Apple computers) or mobo) is the main printed circuit board (PCB) in general-purpose computers and other expandable systems",
-          photo: "",
-        },
-        {
-          id: 4,
-          title: "Memory",
-          description:
-            "In computing, memory is a device or system that is used to store information for immediate use in a computer or related computer hardware and digital electronic devices.",
-          photo: "",
-        },
-      ],
-    };
-    setCategories(mockObj.categories);
-  }
-
   useEffect(() => {
-    getMockCategories();
+    getCategories();
   }, []);
 
   return (

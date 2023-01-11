@@ -13,7 +13,7 @@ export default function Category() {
 
   async function getCategoryProducts() {
     if (!id) {
-      setProducts(null);
+      setProducts([]);
       return;
     }
     try {
@@ -34,7 +34,7 @@ export default function Category() {
         console.log(errorMessage);
         return;
       }
-      console.log(responseBody);
+
       setProducts(responseBody.products);
     } catch (error) {
       console.log(error);
@@ -42,61 +42,8 @@ export default function Category() {
     }
   }
 
-  function getMockProducts() {
-    const mockObj = {
-      products: [
-        {
-          id: "1",
-          sale_price: 10000,
-          title: "Sample Product 1",
-          description: "asd",
-          photo: "",
-          stock: 100,
-          discontinued: false,
-        },
-        {
-          id: "2",
-          sale_price: 100000,
-          title: "sample product 2",
-          description: "asd",
-          photo: "",
-          stock: 100,
-          discontinued: false,
-        },
-        {
-          id: "3",
-          sale_price: 1000000,
-          title: "sample product 3",
-          description: "asd",
-          photo: "",
-          stock: 100,
-          discontinued: false,
-        },
-        {
-          id: "4",
-          sale_price: 100,
-          title: "sample product 4",
-          description: "asd",
-          photo: "",
-          stock: 100,
-          discontinued: false,
-        },
-        {
-          id: "5",
-          sale_price: 480,
-          title: "outofstock product",
-          description: "asd",
-          photo: "",
-          stock: 0,
-          discontinued: false,
-        },
-      ],
-    };
-    setProducts(mockObj.products);
-  }
-
   useEffect(() => {
-    getMockProducts();
+    getCategoryProducts();
   }, []);
 
   return (
