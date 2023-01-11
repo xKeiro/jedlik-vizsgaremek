@@ -102,6 +102,11 @@ class ProductCategory(BaseModel):
     class Config:
         orm_mode = True
 
+class CreateProductCategory(BaseModel):
+    title: constr(max_length=150)
+    description: str
+    photo: FilePath | None
+
 
 class ProductsResponse(BaseModel):
     products: list[Product]
