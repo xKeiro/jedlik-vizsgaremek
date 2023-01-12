@@ -1,5 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
+import Featured from "./Featured";
 
 export default function Home() {
   return (
@@ -28,10 +29,7 @@ export default function Home() {
           </div>
         </Grid>
         <Grid item md={6} xs={12}>
-          <div>
-            <h3>Featured</h3>
-            <p>featured items...</p>
-          </div>
+          <Featured />
         </Grid>
       </Grid>
     </div>
