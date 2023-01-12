@@ -7,20 +7,21 @@ from pydantic import UUID4
 
 from .. import models
 from .. import oauth2
-from .. import schemas
+from ..schemas import user_schemas
+from ..schemas import address_schemas
 from ..database import get_db
 from ..util import error_response_message
 
 router = APIRouter()
 
 
-@router.get('/me', response_model=schemas.UserResponse)
+@router.get('/me', response_model=user_schemas.UserResponse)
 def get_me(db: Session = Depends(get_db), user_id: str = Depends(oauth2.require_user)):
     user = db.query(models.User).filter(models.User.id == user_id).first()
     address = db.query(models.Address).filter(models.User.id == user_id).first()
     return { "user": user, "address": address.__dict__ }
 
-@router.get('/{user_id}', response_model=schemas.UserResponse)
+@router.get('/{user_id}', response_model=user_schemas.UserResponse)
 async def get_products_by_category_id(user_id: UUID4, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if not user:
@@ -29,8 +30,8 @@ async def get_products_by_category_id(user_id: UUID4, db: Session = Depends(get_
     address = db.query(models.Address).filter(models.User.id == user_id).first()
     return {"user": user, "address": address.__dict__}
 
-@router.patch('/{user_id}', response_model=schemas.UserResponse)
-async def get_products_by_category_id(user_id: UUID4, user: schemas.OptionalUserSchema | None, address: schemas.OptionalAddress | None, db: Session = Depends(get_db)):
+@router.patch('/{user_id}', response_model=user_schemas.UserResponse)
+async def get_products_by_category_id(user_id: UUID4, user: user_schemas.UserInputPatch | None, address: address_schemas.RegisterAddressInputPost | None, db: Session = Depends(get_db)):
     user_query = db.query(models.User).filter(models.User.id == user_id)
     if not user_query.first():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
