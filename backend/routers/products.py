@@ -69,9 +69,16 @@ async def patch_product(product_id: UUID4, product: product_schemas.ProductInput
                             detail=error_response_message('Incorrect  category id!'))
     product_query.update(product.dict(exclude_unset=True))
     updated_product = product_query.first()
-    print(updated_product)
     db.commit()
     db.refresh(updated_product)
-    print(updated_product)
     return updated_product
 
+@router.delete('/{product_id}', response_model=product_schemas.ProductResponse)
+async def discontinue_product(product_id: UUID4, db: Session = Depends(get_db)):
+    product = db.query(models.Product).filter(models.Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=error_response_message('Incorrect product id!'))
+    product.discontinued = True
+    db.commit()
+    return product
