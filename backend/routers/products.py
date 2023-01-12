@@ -49,6 +49,9 @@ async def get_all_products(db: Session = Depends(get_db)):
 @router.get('/{product_id}', response_model=product_schemas.ProductResponse)
 async def get_product_by_product_id(product_id: UUID4, db: Session = Depends(get_db)):
     product = db.query(models.Product).filter(models.Product.id == product_id).first()
+    if not product:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=error_response_message('Incorrect product id!'))
     return product
 
 @router.patch('/{product_id}', response_model=product_schemas.ProductResponse)
