@@ -127,3 +127,6 @@ class ProductsCategories(BaseModel):
     class Config:
         orm_mode = True
 # endregion
+
+class DeletitionStatusResponse(BaseModel):
+    status: str
