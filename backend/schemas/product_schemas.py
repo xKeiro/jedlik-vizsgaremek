@@ -17,6 +17,20 @@ class ProductInputPost(BaseModel):
     class Config:
         orm_mode = True
 
+
+class ProductInputPatch(BaseModel):
+    category_id: UUID4 = None
+    sale_price: Decimal = None
+    title: constr(max_length=150) = None
+    description: str = None
+    photo: FilePath = None
+    stock: int = None
+    discontinued: bool = None
+    featured: bool = None
+
+    class Config:
+        orm_mode = True
+
 class ProductResponse(ProductInputPost):
     id: UUID4
 
