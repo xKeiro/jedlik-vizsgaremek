@@ -102,6 +102,12 @@ class ProductCategory(BaseModel):
     class Config:
         orm_mode = True
 
+class OptionalProductCategory(BaseModel):
+    title: constr(max_length=150) = None
+    description: str = None
+    photo: FilePath = None
+
+
 class CreateProductCategory(BaseModel):
     title: constr(max_length=150)
     description: str
