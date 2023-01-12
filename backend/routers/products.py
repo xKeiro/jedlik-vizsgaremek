@@ -50,3 +50,28 @@ async def get_all_products(db: Session = Depends(get_db)):
 async def get_product_by_product_id(product_id: UUID4, db: Session = Depends(get_db)):
     product = db.query(models.Product).filter(models.Product.id == product_id).first()
     return product
+
+@router.patch('/{product_id}', response_model=product_schemas.ProductResponse)
+async def patch_product(product_id: UUID4, product: product_schemas.ProductInputPatch, db: Session = Depends(get_db)):
+    product_query = db.query(models.Product)\
+        .filter(models.Product.id == product_id)
+    unmodified_product = product_query.first()
+    if not unmodified_product:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=error_response_message('Incorrect product id!'))
+    if not product.category_id:
+        product.category_id = unmodified_product.category_id
+    category = db.query(models.ProductCategory)\
+        .filter(models.ProductCategory.id == product.category_id)\
+        .first()
+    if not category:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                            detail=error_response_message('Incorrect  category id!'))
+    product_query.update(product.dict(exclude_unset=True))
+    updated_product = product_query.first()
+    print(updated_product)
+    db.commit()
+    db.refresh(updated_product)
+    print(updated_product)
+    return updated_product
+
