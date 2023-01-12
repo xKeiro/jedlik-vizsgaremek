@@ -15,6 +15,14 @@ async def get_products(db: Session = Depends(get_db)):
     products = db.query(models.Product).filter(models.Product.discontinued == False).all()
     return {"products": products}
 
+@router.get('/featured', response_model=product_schemas.ProductsResponse)
+async def get_featured_products(db: Session = Depends(get_db)):
+    products = db.query(models.Product)\
+        .filter(models.Product.discontinued == False)\
+        .filter(models.Product.featured == True)\
+        .all()
+    return {"products": products}
+
 
 @router.post('/', response_model=product_schemas.ProductResponse)
 async def get_products(db: Session = Depends(get_db)):
