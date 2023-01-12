@@ -13,7 +13,7 @@ from sqlalchemy import or_
 from backend import oauth2
 from backend.oauth2 import AuthJWT
 from .. import models
-from .. import schemas
+from ..schemas import user_schemas
 from .. import util
 from ..config import settings
 from ..database import get_db
@@ -24,9 +24,9 @@ ACCESS_TOKEN_EXPIRES_IN = settings.ACCESS_TOKEN_EXPIRES_IN
 REFRESH_TOKEN_EXPIRES_IN = settings.REFRESH_TOKEN_EXPIRES_IN
 
 
-@router.post('/register', status_code=status.HTTP_201_CREATED, response_model=schemas.UserResponse)
-async def create_user(user: schemas.CreateUserSchema, address: schemas.Address, db: Session = Depends(get_db)):
-    user = schemas.CreateUserSchemaWithAddressId.parse_obj(user)
+@router.post('/register', status_code=status.HTTP_201_CREATED, response_model=user_schemas.UserResponse)
+async def create_user(user: user_schemas.RegisterUserInputPost, address: user_schemas.RegisterUserInputPost, db: Session = Depends(get_db)):
+    user = user_schemas.RegisterUserInputPostExtended.parse_obj(user)
     # Check if user already exist
     user_exists = db.query(models.User).filter(
         models.User.email == EmailStr(user.email.lower()), models.User.username == user.username).first()
@@ -56,8 +56,8 @@ async def create_user(user: schemas.CreateUserSchema, address: schemas.Address, 
     return { "user": new_user, "address": new_address }
 
 
-@router.post('/login', response_model=schemas.LoginUserResponse)
-def login(payload: schemas.LoginUserSchema, response: Response, db: Session = Depends(get_db),
+@router.post('/login', response_model=user_schemas.LoginResponse)
+def login(payload: user_schemas.LoginInputPost, response: Response, db: Session = Depends(get_db),
           Authorize: AuthJWT = Depends()):
     # Check if the user exist
     user = db.query(models.User).filter(
