@@ -5,12 +5,14 @@ from pydantic import UUID4
 from pydantic import constr
 
 class ProductInputPost(BaseModel):
+    category_id: UUID4
     sale_price: Decimal
     title: constr(max_length=150)
     description: str
     photo: FilePath | None
     stock: int
     discontinued: bool
+    featured: bool
 
     class Config:
         orm_mode = True
