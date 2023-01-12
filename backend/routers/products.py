@@ -23,6 +23,11 @@ async def get_featured_products(db: Session = Depends(get_db)):
         .all()
     return {"products": products}
 
+@router.get('/all', response_model=product_schemas.ProductsResponse)
+async def get_all_products(db: Session = Depends(get_db)):
+    products = db.query(models.Product).all()
+    return {"products": products}
+
 
 @router.post('/', response_model=product_schemas.ProductResponse)
 async def get_products(db: Session = Depends(get_db)):
