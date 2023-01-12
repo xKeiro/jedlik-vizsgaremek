@@ -32,14 +32,14 @@ async def get_products_by_category_id(user_id: UUID4, db: Session = Depends(get_
 @router.patch('/{user_id}', response_model=schemas.UserResponse)
 async def get_products_by_category_id(user_id: UUID4, user: schemas.OptionalUserSchema | None, address: schemas.OptionalAddress | None, db: Session = Depends(get_db)):
     user_query = db.query(models.User).filter(models.User.id == user_id)
-    if not user_query:
+    if not user_query.first():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=error_response_message("The user does not exists!"))
     # update_user = user_.dict(exclude_unset=True)
     # updated_user = user.copy(update=update_user)
     # user = updated_user
     address_query = db.query(models.Address).filter(models.User.id == user_id)
-    if not address_query:
+    if not address_query.first():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=error_response_message("The user does not have an address!"))
     address_id = address_query.first().id
