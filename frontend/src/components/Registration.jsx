@@ -3,7 +3,6 @@ import { useState } from "react";
 //import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 //import { AuthContext } from "../contexts/AuthContext";
-import Loader from "./Loader";
 import AlertMessage from "./AlertMessage";
 
 import { Link } from "@mui/material";
@@ -11,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Registration() {
   const [isLoading, setIsLoading] = useState(false);
@@ -143,7 +143,7 @@ export default function Registration() {
             )}
             {errorText && <AlertMessage type="error" message={errorText} />}
             {isLoading ? (
-              <Loader />
+              <CircularProgress />
             ) : (
               <Grid container spacing={1}>
                 <Grid item xs={12} md={12}>

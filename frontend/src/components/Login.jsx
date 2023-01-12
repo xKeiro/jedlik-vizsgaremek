@@ -3,14 +3,14 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
-import Loader from "./Loader";
 import AlertMessage from "./AlertMessage";
 
-import { Link } from "@mui/material";
+import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ export default function Login() {
           <Grid item xs={11} md={4}>
             {errorText && <AlertMessage type="error" message={errorText} />}
             {isLoading ? (
-              <Loader />
+              <CircularProgress />
             ) : (
               <Grid container spacing={1}>
                 <Grid item xs={12} md={12}>

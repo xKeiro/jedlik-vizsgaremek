@@ -10,6 +10,7 @@ export const useAuth = () => {
     id: "",
     name: "",
     photo: "",
+    is_admin: false,
   });
 
   function updateUser(key, value) {
@@ -24,6 +25,7 @@ export const useAuth = () => {
       id: "",
       name: "",
       photo: "",
+      is_admin: false,
     });
   }
 
@@ -65,6 +67,7 @@ export const useAuth = () => {
     if (userDetails) {
       updateUser("name", userDetails.user.username);
       updateUser("photo", userDetails.user.photo);
+      updateUser("is_admin", userDetails.user.is_admin);
     }
   }, []);
 
@@ -119,8 +122,6 @@ export const useAuth = () => {
     if (token && tokenExpDate) {
       const fixedExpDate = tokenExpDate * 1000;
       const remainingTime = fixedExpDate - new Date().getTime();
-      console.log(fixedExpDate);
-      console.log(new Date().getTime());
       refreshTimer = setTimeout(refresh, remainingTime);
     } else {
       clearTimeout(refreshTimer);
