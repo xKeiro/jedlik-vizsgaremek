@@ -13,8 +13,8 @@ export default function ProductCard({ product }) {
         key={product.id}
         sx={
           product.featured
-            ? { maxWidth: 350, border: 1, borderColor: "primary.main" }
-            : { maxWidth: 350 }
+            ? { maxWidth: 400, border: 1, borderColor: "primary.main" }
+            : { maxWidth: 400 }
         }
       >
         <CardActionArea component={RouterLink} to={"/product/" + product.id}>
@@ -24,7 +24,7 @@ export default function ProductCard({ product }) {
             image={
               product.photo
                 ? product.photo
-                : "https://via.placeholder.com/350x150.png"
+                : "https://via.placeholder.com/400x150.png"
             }
             alt={product.title}
           />

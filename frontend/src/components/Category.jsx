@@ -6,6 +6,7 @@ import ProductCard from "./ProductCard";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
+import CategoryBar from "./CategoryBar";
 
 export default function Category() {
   const { id } = useParams();
@@ -44,13 +45,10 @@ export default function Category() {
 
   useEffect(() => {
     getCategoryProducts();
-  }, []);
+  }, [id]);
 
   return (
     <div className="Category">
-      <div>
-        <h2>{products ? "Category Name" : "Category"}</h2>
-      </div>
       <Box
         className="Categories__Box"
         sx={{
@@ -63,20 +61,31 @@ export default function Category() {
       >
         <Grid
           container
-          direction="row"
+          direction="row-reverse"
           justifyContent="center"
-          alignItems="center"
           spacing={2}
         >
-          {products ? (
-            products.map((product) => (
-              <Grid item key={product.id} xs={12} md={4}>
-                <ProductCard product={product} />
-              </Grid>
-            ))
-          ) : (
-            <CircularProgress />
-          )}
+          <Grid item xs={12} md={9}>
+            <div>
+              <h2>{products ? "Products in this category" : "Category"}</h2>
+            </div>
+            <Grid container direction="row" justifyContent="center" spacing={2}>
+              {products ? (
+                products.map((product) => (
+                  <Grid item key={product.id} xs={12} md={6}>
+                    <ProductCard product={product} />
+                  </Grid>
+                ))
+              ) : (
+                <CircularProgress />
+              )}
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <CategoryBar
+              currentCategoryId={products ? products[0].category_id : null}
+            />
+          </Grid>
         </Grid>
       </Box>
     </div>
