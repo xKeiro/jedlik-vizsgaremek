@@ -20,7 +20,7 @@ import Logout from "./components/Logout";
 import Account from "./components/Account";
 import Orders from "./components/Orders";
 import Footer from "./components/Footer";
-import Admin from "./components/Admin";
+import Admin from "./components/Admin/Admin";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -120,7 +120,7 @@ function App() {
                     )}
                     {token && user.is_admin && (
                       <>
-                        <Route path={"/admin/"} element={<Admin />} />
+                        <Route path={"/admin/*"} element={<Admin />} />
                       </>
                     )}
 

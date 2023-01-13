@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActions } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function Product() {
+export default function AdminProduct() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
@@ -45,9 +45,9 @@ export default function Product() {
   }, []);
 
   return (
-    <div className="Product">
+    <div className="AdminProduct">
       <div>
-        <h2>{product ? product.title : "Product"}</h2>
+        <h3>{product ? "Editor: " + product.title : "Admin Product"}</h3>
       </div>
       <div>
         {product ? (
@@ -70,7 +70,7 @@ export default function Product() {
                 {product.description}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {product.stock ? "In stock" : "Out of stock"}
+                {product.stock}
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 {product.sale_price.toLocaleString("en-US", {
@@ -85,7 +85,7 @@ export default function Product() {
                 color="primary"
                 disabled={product.stock ? false : true}
               >
-                Add to cart
+                Save
               </Button>
             </CardActions>
           </Card>
