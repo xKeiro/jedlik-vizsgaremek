@@ -88,7 +88,7 @@ function App() {
     <div className="App">
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
+          <CssBaseline enableColorScheme />
           <AuthContext.Provider
             value={{
               token: token,
