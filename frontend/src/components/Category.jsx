@@ -67,9 +67,9 @@ export default function Category() {
         >
           <Grid item xs={12} md={9}>
             <div>
-              <h2>{products ? "Products in this category" : "Category"}</h2>
+              <h2>{"Products in this category"}</h2>
             </div>
-            <Grid container direction="row" justifyContent="center" spacing={2}>
+            <Grid container direction="row" spacing={2}>
               {products ? (
                 products.map((product) => (
                   <Grid item key={product.id} xs={12} md={6}>
