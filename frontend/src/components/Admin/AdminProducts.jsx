@@ -74,7 +74,7 @@ export default function AdminProducts() {
                     <TableCell>Name</TableCell>
                     <TableCell align="right">Price</TableCell>
                     <TableCell align="right">Stock</TableCell>
-                    <TableCell align="right"></TableCell>
+                    <TableCell align="right">Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

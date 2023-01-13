@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 
 import Grid from "@mui/material/Grid";
@@ -18,11 +18,14 @@ export default function Admin() {
   const [adminMenu, setAdminMenu] = useState([
     { name: "Home", route: "/admin/" },
     { name: "Products", route: "/admin/products" },
-    { name: "Categories", route: "/admin/" },
-    { name: "Suppliers", route: "/admin/" },
-    { name: "Users", route: "/admin/" },
-    { name: "Reviews", route: "/admin/" },
+    { name: "Categories", route: "/admin/categories" },
+    { name: "Suppliers", route: "/admin/suppliers" },
+    { name: "Users", route: "/admin/users" },
+    { name: "Reviews", route: "/admin/reviews" },
   ]);
+
+  const location = useLocation();
+
   return (
     <div className="Admin">
       <div>
@@ -51,6 +54,7 @@ export default function Admin() {
                     {adminMenu.map((menuItem) => (
                       <ListItem key={menuItem.name} disablePadding>
                         <ListItemButton
+                          selected={menuItem.route === location.pathname}
                           component={RouterLink}
                           to={menuItem.route}
                         >
