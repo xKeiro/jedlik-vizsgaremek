@@ -11,7 +11,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Categories from "./components/Categories";
 import Category from "./components/Category";
-import ProductList from "./components/ProductList";
+import PriceList from "./components/PriceList";
 import Product from "./components/Product";
 import Contact from "./components/Contact";
 import Registration from "./components/Registration";
@@ -103,7 +103,7 @@ function App() {
               <Paper>
                 <Box className="Content" sx={{ minHeight: "60vh" }}>
                   <Routes>
-                    <Route path="/productlist/" element={<ProductList />} />
+                    <Route path="/pricelist/" element={<PriceList />} />
                     <Route path="/product/:id" element={<Product />} />
                     <Route path="/categories/" element={<Categories />} />
                     <Route path="/category/:id" element={<Category />} />

@@ -24,7 +24,7 @@ export default function Navbar() {
   const [mainMenu, setMainMenu] = useState([
     { name: "Home", route: "/" },
     { name: "Categories", route: "/categories" },
-    { name: "Product list", route: "/productlist" },
+    { name: "Price list", route: "/pricelist" },
     { name: "Contact", route: "/contact" },
   ]);
   const [userMenu, setUserMenu] = useState([
@@ -54,6 +54,7 @@ export default function Navbar() {
       route: "/account",
     };
     if (auth.token) {
+      setUserMenu(userMenu.filter((item) => !item.name.includes("(")));
       setUserMenu((prevState) => [userPanel, ...prevState]);
     } else {
       setUserMenu(userMenu.filter((item) => !item.name.includes("(")));
@@ -63,6 +64,7 @@ export default function Navbar() {
   useEffect(() => {
     const adminPanel = { name: "Admin", route: "/admin" };
     if (auth.token && auth.user.is_admin) {
+      setMainMenu(mainMenu.filter((item) => item.name !== "Admin"));
       setMainMenu((prevState) => [...prevState, adminPanel]);
     } else {
       setMainMenu(mainMenu.filter((item) => item.name !== "Admin"));

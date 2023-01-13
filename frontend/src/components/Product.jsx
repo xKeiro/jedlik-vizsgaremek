@@ -34,7 +34,6 @@ export default function Product() {
         console.log(errorMessage);
         return;
       }
-      console.log(responseBody);
       setProduct(responseBody);
     } catch (error) {
       console.log(error);

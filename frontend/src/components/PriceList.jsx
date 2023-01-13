@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TableContainer from "@mui/material/TableContainer";
@@ -13,7 +14,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function Products() {
+export default function PriceList() {
   const [products, setProducts] = useState(null);
 
   async function getProducts() {
@@ -46,7 +47,7 @@ export default function Products() {
   return (
     <div className="Products">
       <div>
-        <h2>Products</h2>
+        <h2>Price list</h2>
       </div>
       <Box
         className="Products__Box"
@@ -85,7 +86,12 @@ export default function Products() {
                         }}
                       >
                         <TableCell component="th" scope="row">
-                          {product.title}
+                          <Link
+                            component={RouterLink}
+                            to={"/product/" + product.id}
+                          >
+                            {product.title}
+                          </Link>
                         </TableCell>
                         <TableCell align="right">
                           {product.sale_price.toLocaleString("en-US", {
