@@ -100,6 +100,9 @@ class Shipper(Base):
     __tablename__ = 'shipper'
     id = Column(UUID(as_uuid=True), primary_key=True, nullable=False,
                 server_default=text("uuid_generate_v4()"))
+    company_name = Column(String(75), nullable=False)
+    contact_first_name = Column(String(25), nullable=True)
+    contact_last_name = Column(String(25), nullable=True)
     phone = Column(String(20), nullable=False)
     email = Column(String(100), unique=True, nullable=False)
     price = Column(Numeric(12, 2), nullable=False)
