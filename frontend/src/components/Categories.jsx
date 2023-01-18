@@ -77,7 +77,7 @@ export default function Categories() {
                       image={
                         category.photo
                           ? category.photo
-                          : "https://via.placeholder.com/150x600.png"
+                          : "https://via.placeholder.com/600x150.png"
                       }
                       alt={category.title}
                     />

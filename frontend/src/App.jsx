@@ -11,7 +11,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Categories from "./components/Categories";
 import Category from "./components/Category";
-import ProductList from "./components/ProductList";
+import PriceList from "./components/PriceList";
 import Product from "./components/Product";
 import Contact from "./components/Contact";
 import Registration from "./components/Registration";
@@ -20,7 +20,7 @@ import Logout from "./components/Logout";
 import Account from "./components/Account";
 import Orders from "./components/Orders";
 import Footer from "./components/Footer";
-import Admin from "./components/Admin";
+import Admin from "./components/Admin/Admin";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -88,7 +88,7 @@ function App() {
     <div className="App">
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
+          <CssBaseline enableColorScheme />
           <AuthContext.Provider
             value={{
               token: token,
@@ -103,7 +103,7 @@ function App() {
               <Paper>
                 <Box className="Content" sx={{ minHeight: "60vh" }}>
                   <Routes>
-                    <Route path="/productlist/" element={<ProductList />} />
+                    <Route path="/pricelist/" element={<PriceList />} />
                     <Route path="/product/:id" element={<Product />} />
                     <Route path="/categories/" element={<Categories />} />
                     <Route path="/category/:id" element={<Category />} />
@@ -120,7 +120,7 @@ function App() {
                     )}
                     {token && user.is_admin && (
                       <>
-                        <Route path={"/admin/"} element={<Admin />} />
+                        <Route path={"/admin/*"} element={<Admin />} />
                       </>
                     )}
 

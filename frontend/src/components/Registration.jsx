@@ -10,6 +10,10 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Registration() {
@@ -29,7 +33,7 @@ export default function Registration() {
     city: "",
     region: "",
     postal_code: "",
-    country: "",
+    country: "HU",
   });
 
   function handleRegChange(e) {
@@ -161,6 +165,7 @@ export default function Registration() {
                     helperText="This name will be shown under reviews."
                     value={regState.username}
                     onChange={handleRegChange}
+                    autoComplete="off"
                   ></TextField>
                 </Grid>
 
@@ -174,6 +179,7 @@ export default function Registration() {
                     type="text"
                     value={regState.first_name}
                     onChange={handleRegChange}
+                    autoComplete="off"
                   ></TextField>
                 </Grid>
                 <Grid item xs={12} md={6}>
@@ -186,6 +192,7 @@ export default function Registration() {
                     type="text"
                     value={regState.last_name}
                     onChange={handleRegChange}
+                    autoComplete="off"
                   ></TextField>
                 </Grid>
 
@@ -200,6 +207,7 @@ export default function Registration() {
                     helperText="We'll never share your email address."
                     value={regState.email}
                     onChange={handleRegChange}
+                    autoComplete="off"
                   ></TextField>
                 </Grid>
 
@@ -213,6 +221,7 @@ export default function Registration() {
                     type="text"
                     value={regState.phone}
                     onChange={handleRegChange}
+                    autoComplete="off"
                   ></TextField>
                 </Grid>
 
@@ -227,6 +236,7 @@ export default function Registration() {
                     helperText="Minimum 8 characters."
                     value={regState.password}
                     onChange={handleRegChange}
+                    autoComplete="new-password"
                   ></TextField>
                 </Grid>
 
@@ -240,6 +250,7 @@ export default function Registration() {
                     type="password"
                     value={regState.passwordConfirm}
                     onChange={handleRegChange}
+                    autoComplete="new-password"
                   ></TextField>
                 </Grid>
 
@@ -257,6 +268,7 @@ export default function Registration() {
                     type="text"
                     value={regState.address}
                     onChange={handleRegChange}
+                    autoComplete="off"
                   ></TextField>
                 </Grid>
 
@@ -270,6 +282,7 @@ export default function Registration() {
                     type="text"
                     value={regState.city}
                     onChange={handleRegChange}
+                    autoComplete="off"
                   ></TextField>
                 </Grid>
 
@@ -283,6 +296,7 @@ export default function Registration() {
                     type="text"
                     value={regState.region}
                     onChange={handleRegChange}
+                    autoComplete="off"
                   ></TextField>
                 </Grid>
 
@@ -296,20 +310,51 @@ export default function Registration() {
                     type="text"
                     value={regState.postal_code}
                     onChange={handleRegChange}
+                    autoComplete="off"
                   ></TextField>
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Country"
-                    id="country"
-                    name="country"
-                    type="text"
-                    value={regState.country}
-                    onChange={handleRegChange}
-                  ></TextField>
+                  <FormControl fullWidth required>
+                    <InputLabel id="country">Country</InputLabel>
+                    <Select
+                      labelId="country"
+                      id="country"
+                      name="country"
+                      value={regState.country}
+                      label="Country"
+                      onChange={handleRegChange}
+                      autoComplete="off"
+                    >
+                      <MenuItem value={"AT"}>Austria</MenuItem>
+                      <MenuItem value={"BE"}>Belgium</MenuItem>
+                      <MenuItem value={"BG"}>Bulgaria</MenuItem>
+                      <MenuItem value={"HR"}>Croatia</MenuItem>
+                      <MenuItem value={"CY"}>Cyprus</MenuItem>
+                      <MenuItem value={"CZ"}>Czechia</MenuItem>
+                      <MenuItem value={"DK"}>Denmark</MenuItem>
+                      <MenuItem value={"EE"}>Estonia</MenuItem>
+                      <MenuItem value={"FI"}>Finland</MenuItem>
+                      <MenuItem value={"FR"}>France</MenuItem>
+                      <MenuItem value={"DE"}>Germany</MenuItem>
+                      <MenuItem value={"GR"}>Greece</MenuItem>
+                      <MenuItem value={"HU"}>Hungary</MenuItem>
+                      <MenuItem value={"IE"}>Ireland</MenuItem>
+                      <MenuItem value={"IT"}>Italy</MenuItem>
+                      <MenuItem value={"LV"}>Latvia</MenuItem>
+                      <MenuItem value={"LT"}>Lithuania</MenuItem>
+                      <MenuItem value={"LU"}>Luxembourg</MenuItem>
+                      <MenuItem value={"MT"}>Malta</MenuItem>
+                      <MenuItem value={"NL"}>Netherlands</MenuItem>
+                      <MenuItem value={"PL"}>Poland</MenuItem>
+                      <MenuItem value={"PT"}>Portugal</MenuItem>
+                      <MenuItem value={"RO"}>Romania</MenuItem>
+                      <MenuItem value={"SK"}>Slovakia</MenuItem>
+                      <MenuItem value={"SI"}>Slovenia</MenuItem>
+                      <MenuItem value={"ES"}>Spain</MenuItem>
+                      <MenuItem value={"SE"}>Sweden</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
 
                 <Grid item xs={12} md={12}>
