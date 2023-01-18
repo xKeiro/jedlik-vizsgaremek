@@ -14,13 +14,13 @@ class UserBase(BaseModel):
     email: EmailStr
     photo: FilePath | None
     phone: constr(max_length=20) | None
-    is_admin: StrictBool
 
     class Config:
         orm_mode = True
 
 class UserBaseExtended(UserBase):
     id: UUID4
+    is_admin: StrictBool
     class Config:
         orm_mode = True
 
