@@ -1,40 +1,40 @@
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('3f6d3c24-2e1b-4f5a-9b1f-9c9d5f8a7b78', '5dc8f073-e7b0-43aa-81a7-367150963fe7', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 99.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('8c46da89-4af9-4875-872b-caf39b47a927', '841612cb-f6f1-43e0-852a-4d009a3fafe3', '8c46da89-4af9-4875-872b-caf39b47a927', 29.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('df68254e-89b3-4b6e-8e12-91ffbdd3c201', 'd7b01200-8ea1-4b7b-9a38-625906f6bd46', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 59.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('f835e522-8c5a-4518-8091-fec7a8abbbc6', 'f835e522-8c5a-4518-8091-fec7a8abbbc6', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 49.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('69654112-f32d-4573-a464-bb034ad367c4', '69654112-f32d-4573-a464-bb034ad367c4', '8c46da89-4af9-4875-872b-caf39b47a927', 99.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('4b146abd-2695-4209-9496-bc4cda222002', '4b146abd-2695-4209-9496-bc4cda222002', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 49.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('cdeaf541-2f1a-40a5-9f2d-d9c4d6b7efb0', 'cdeaf541-2f1a-40a5-9f2d-d9c4d6b7efb0', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 99.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('f55d7468-80a6-46ef-bd94-d9afbf3c3f5c', 'f55d7468-80a6-46ef-bd94-d9afbf3c3f5c', '8c46da89-4af9-4875-872b-caf39b47a927', 99.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('4fdf7197-b896-468e-837c-0d4fda29f102', '4fdf7197-b896-468e-837c-0d4fda29f102', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 49.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('62ad8de0-202a-4f77-bcbc-e5f21938a674', '62ad8de0-202a-4f77-bcbc-e5f21938a674', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 39.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('6d62ba55-14b0-4818-aa14-5bb33794d822', '6d62ba55-14b0-4818-aa14-5bb33794d822', '8c46da89-4af9-4875-872b-caf39b47a927', 49.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('caead01a-d526-4ba1-863e-04b43fd3e2bf', 'caead01a-d526-4ba1-863e-04b43fd3e2bf', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 39.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('1d20da37-26ff-4c28-9638-9309096c2174', '1d20da37-26ff-4c28-9638-9309096c2174', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 59.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('7c277f2b-a9b5-4f81-a438-e7630b4edf99', '7c277f2b-a9b5-4f81-a438-e7630b4edf99', '8c46da89-4af9-4875-872b-caf39b47a927', 79.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('5752de7b-d2bc-45e4-aa90-c308e2eedffd', '5752de7b-d2bc-45e4-aa90-c308e2eedffd', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 53.59);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('0fdce295-58f0-485d-a6cc-52e2583ceca9', '0fdce295-58f0-485d-a6cc-52e2583ceca9', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 10.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('2e792cee-e2e7-4b88-89ce-73c2d7db3d20', '2e792cee-e2e7-4b88-89ce-73c2d7db3d20', '8c46da89-4af9-4875-872b-caf39b47a927', 129.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('3a45c444-dd7a-4fc9-9c3d-d93d4f07dccc', '3a45c444-dd7a-4fc9-9c3d-d93d4f07dccc', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 149.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('d6a4903e-f81e-4fdd-abda-6b3f81fe7607', 'd6a4903e-f81e-4fdd-abda-6b3f81fe7607', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 169.99);
-INSERT INTO product_supplier (id, product_id, supplier_id, purchase_price)
-VALUES ('417daa2f-f0ed-4514-ac7c-f4889ac758d1', '417daa2f-f0ed-4514-ac7c-f4889ac758d1', '8c46da89-4af9-4875-872b-caf39b47a927', 189.99);
+INSERT INTO "product_supplier" VALUES ('0de82533-817d-4bd3-be56-e8aaf2095381', '67aeda50-2abd-4a76-aabf-372ff09d072a', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 75.00);
+INSERT INTO "product_supplier" VALUES ('6c5d607a-9c07-4d3a-95f7-f67207fc08cd', 'eed9e32a-ae3e-4c33-a9c6-054abd676f51', '8c46da89-4af9-4875-872b-caf39b47a927', 50.00);
+INSERT INTO "product_supplier" VALUES ('eff94e4f-31d6-4282-b51b-5774d59cbc18', '89084edd-2490-4fb4-9be6-65f1d7422bfb', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 250.00);
+INSERT INTO "product_supplier" VALUES ('86055f44-128c-46dc-abe3-225bfc9d9f7d', '629d2597-5133-4c1d-8863-f791039eb9d3', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 40.00);
+INSERT INTO "product_supplier" VALUES ('41cc0fac-1cef-4dc4-9dae-28c293e9fc02', 'e7c82b43-d2a8-4d4f-81e2-6ae94fda01ce', '8c46da89-4af9-4875-872b-caf39b47a927', 22.50);
+INSERT INTO "product_supplier" VALUES ('943960e4-904f-4ae1-919a-1bcf4981a6a9', '8044bbcb-505a-47bf-8df9-91c1813d3c8a', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 20.00);
+INSERT INTO "product_supplier" VALUES ('d6b9e2d9-b2fe-4ddb-9cc0-3d3f853ff7e6', '8235f279-198a-47e2-9f06-6f4a8cae3fd4', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 65.00);
+INSERT INTO "product_supplier" VALUES ('6a0ad18d-f78a-4364-b4a4-9caf0d16470d', 'ec00ff29-6bc3-4f0a-8521-302436366be3', '8c46da89-4af9-4875-872b-caf39b47a927', 25.00);
+INSERT INTO "product_supplier" VALUES ('eb478a28-3a8a-475b-8380-96b451652ab8', '1a5efc91-05fa-4856-858a-747393b5e012', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 200.00);
+INSERT INTO "product_supplier" VALUES ('1d4d0317-bb7d-4cc9-ae21-172f9bedcf27', '3f6ed9d0-02e9-43a7-a6d7-66a1249e0d7b', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 65.00);
+INSERT INTO "product_supplier" VALUES ('067d0743-ef8e-45e7-9e61-9d4085373b25', 'de41bf39-b753-4c74-a498-8b448226e28f', '8c46da89-4af9-4875-872b-caf39b47a927', 100.00);
+INSERT INTO "product_supplier" VALUES ('969dc762-6ccf-46a7-b02e-96d86372db3b', 'c7665b07-13b5-41d3-a7d0-0aeb6ed003db', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 45.00);
+INSERT INTO "product_supplier" VALUES ('a7a533c3-f673-4d6d-90ad-07810d7eed2a', '8d25a30d-eced-4f8f-8348-de90e6b21318', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 75.00);
+INSERT INTO "product_supplier" VALUES ('98a609c9-e9b8-4d29-9981-595992f57623', '3335e21e-159a-4c7d-80eb-13567863b7ab', '8c46da89-4af9-4875-872b-caf39b47a927', 225.00);
+INSERT INTO "product_supplier" VALUES ('83b88d2e-a06a-4ae8-9f59-490064f1a199', '3a22a80f-0f0a-4988-884b-d195b9f5c950', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 160.00);
+INSERT INTO "product_supplier" VALUES ('bc694a74-5e2b-409e-86e9-2377e6e1cd62', 'b0d94b01-bbc4-435d-819e-84abed18f23c', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 30.00);
+INSERT INTO "product_supplier" VALUES ('de091c73-9397-4a71-a3e9-8a0f97ec4fd9', '968c18b6-b53b-4f63-8f19-14d41911a6a2', '8c46da89-4af9-4875-872b-caf39b47a927', 45.00);
+INSERT INTO "product_supplier" VALUES ('a5444698-6e51-4abe-8680-dc0eac15223a', '38c0517b-f2fe-4f22-a149-1739357d436a', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 17.50);
+INSERT INTO "product_supplier" VALUES ('a1f7b82f-aac2-4227-bc20-5fad68ead03c', '8d113c60-cd53-4cfd-8c38-00eaeb6ec60c', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 32.50);
+INSERT INTO "product_supplier" VALUES ('890a2cde-87cc-4b34-942b-a13fef365e07', '9a49a772-353e-4a0f-b89f-fa7ded9d0016', '8c46da89-4af9-4875-872b-caf39b47a927', 15.00);
+INSERT INTO "product_supplier" VALUES ('be5d2385-e3d0-430c-9ffe-ef968df05cf2', '748ad3c9-7546-49c3-8238-056e2229c2ac', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 25.00);
+INSERT INTO "product_supplier" VALUES ('3b4ee290-c58d-414d-9df2-f69d90f766c8', '67d122b6-b28c-4084-a928-62ee33426cf0', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 50.00);
+INSERT INTO "product_supplier" VALUES ('09c4cd93-60f5-48b0-9699-d0a57e215906', '14591aa1-69fa-453a-b266-5f4e152e51cf', '8c46da89-4af9-4875-872b-caf39b47a927', 100.00);
+INSERT INTO "product_supplier" VALUES ('6cb4a4d9-f7dd-4f6c-aa77-0e4ae3bd9533', 'c39fc1dd-8c8e-46e1-8e64-597ada6e5985', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 20.00);
+INSERT INTO "product_supplier" VALUES ('3c3f12f4-ece6-4b91-bdb2-6e39b02a9d46', '14cec05d-2d35-4a1e-af9d-3ddeda9c0658', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 30.00);
+INSERT INTO "product_supplier" VALUES ('18076b2f-4fc9-4c50-94ce-3b2ea4e1d869', '53bbe0d1-1a75-4296-9549-d66841c95136', '8c46da89-4af9-4875-872b-caf39b47a927', 150.00);
+INSERT INTO "product_supplier" VALUES ('e7d257c8-20cf-4d09-9926-980ba4531170', 'ca74cffd-b386-46c8-8500-2074a1580450', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 165.00);
+INSERT INTO "product_supplier" VALUES ('243367af-84ef-4e09-a9f1-1b01715fd835', 'f2c7969d-9c0f-4428-aad9-8e657e8b4d9d', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 90.00);
+INSERT INTO "product_supplier" VALUES ('4d50b956-6302-4cf5-a08e-d56f3506b768', '57900864-60fb-4cb4-9297-03e0437300d9', '8c46da89-4af9-4875-872b-caf39b47a927', 40.00);
+INSERT INTO "product_supplier" VALUES ('03a2716e-61de-45f9-80ec-cfa665ae1d34', '1dab1648-b0c5-48d6-94b8-5892fc111cd2', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 300.00);
+INSERT INTO "product_supplier" VALUES ('ca3e1111-e4e8-4e88-b40f-16c68671519a', '67aeda50-2abd-4a76-aabf-372ff09d072a', '8c46da89-4af9-4875-872b-caf39b47a927', 79.49);
+INSERT INTO "product_supplier" VALUES ('8edb1af4-98d8-4593-a8b9-e134204b9aaf', 'eed9e32a-ae3e-4c33-a9c6-054abd676f51', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 52.99);
+INSERT INTO "product_supplier" VALUES ('75e55aff-5b1e-4f58-b023-57d45544ebe3', '89084edd-2490-4fb4-9be6-65f1d7422bfb', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 264.99);
+INSERT INTO "product_supplier" VALUES ('49d91caa-f147-44e8-a6d8-870e7a698fa8', '629d2597-5133-4c1d-8863-f791039eb9d3', '8c46da89-4af9-4875-872b-caf39b47a927', 42.39);
+INSERT INTO "product_supplier" VALUES ('34ab9732-209f-4b7a-b770-e59438b59da3', 'e7c82b43-d2a8-4d4f-81e2-6ae94fda01ce', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 23.84);
+INSERT INTO "product_supplier" VALUES ('b4db7fd4-3c67-48ac-a861-ea48da867f5b', '8044bbcb-505a-47bf-8df9-91c1813d3c8a', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 21.19);
+INSERT INTO "product_supplier" VALUES ('e333c841-4d43-45ef-9920-6d718a24f1d5', '8235f279-198a-47e2-9f06-6f4a8cae3fd4', '8c46da89-4af9-4875-872b-caf39b47a927', 68.89);
+INSERT INTO "product_supplier" VALUES ('74e2e073-5d98-4bed-9b8e-3e2d7b28a269', 'ec00ff29-6bc3-4f0a-8521-302436366be3', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 26.49);
+INSERT INTO "product_supplier" VALUES ('e46b78eb-8c49-4435-a9ee-e4597b3a3119', '1a5efc91-05fa-4856-858a-747393b5e012', '5fe3c5c3-d3d6-41c1-a9b7-2a9ed66b4504', 211.99);
+INSERT INTO "product_supplier" VALUES ('2660404b-82a0-440b-a130-b3aafb0a5df9', '3f6ed9d0-02e9-43a7-a6d7-66a1249e0d7b', '8c46da89-4af9-4875-872b-caf39b47a927', 68.89);
