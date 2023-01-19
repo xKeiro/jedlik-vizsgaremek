@@ -133,7 +133,7 @@ class ProductOrder(Base):
     product_id = Column(UUID(as_uuid=True), ForeignKey('product.id'), nullable=False)
     unit_price = Column(Numeric(12, 2), nullable=False)
     quantity = Column(Integer, nullable=False)
-    discount = Column(Numeric(12, 2), nullable=False)
+    discount = Column(Numeric(2, 2), nullable=False, server_default="0")
     order = relationship('Order', foreign_keys=[order_id])
     product = relationship('Product', foreign_keys=[product_id])
     __table_args__ = (
