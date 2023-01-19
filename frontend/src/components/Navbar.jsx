@@ -21,17 +21,21 @@ export default function Navbar() {
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [mainMenu, setMainMenu] = useState([
+
+  const mainMenu = [
     { name: "Home", route: "/" },
     { name: "Categories", route: "/categories" },
     { name: "Price list", route: "/pricelist" },
     { name: "Contact", route: "/contact" },
-  ]);
+  ];
+
   const [userMenu, setUserMenu] = useState([
     { name: "Account", route: "/account" },
     { name: "Orders", route: "/orders" },
     { name: "Logout", route: "/logout" },
   ]);
+
+  const adminMenu = [{ name: "Admin", route: "/admin" }];
 
   const handleOpenNavMenu = (e) => {
     setAnchorElNav(e.currentTarget);
@@ -50,26 +54,16 @@ export default function Navbar() {
 
   useEffect(() => {
     const userPanel = {
-      name: `${auth.user.name} (${auth.user.is_admin ? "Admin" : "User"})`,
+      name: `${auth.user.is_admin ? "Admin" : "User"}: ${auth.user.name}`,
       route: "/account",
     };
     if (auth.token) {
-      setUserMenu(userMenu.filter((item) => !item.name.includes("(")));
+      setUserMenu(userMenu.filter((item) => !item.name.includes(":")));
       setUserMenu((prevState) => [userPanel, ...prevState]);
     } else {
-      setUserMenu(userMenu.filter((item) => !item.name.includes("(")));
+      setUserMenu(userMenu.filter((item) => !item.name.includes(":")));
     }
   }, [auth.user.name]);
-
-  useEffect(() => {
-    const adminPanel = { name: "Admin", route: "/admin" };
-    if (auth.token && auth.user.is_admin) {
-      setMainMenu(mainMenu.filter((item) => item.name !== "Admin"));
-      setMainMenu((prevState) => [...prevState, adminPanel]);
-    } else {
-      setMainMenu(mainMenu.filter((item) => item.name !== "Admin"));
-    }
-  }, [auth.user.is_admin]);
 
   return (
     <div className="Navbar">
@@ -134,6 +128,21 @@ export default function Navbar() {
                     <Typography textAlign="center">{page.name}</Typography>
                   </MenuItem>
                 ))}
+
+                {auth.token && auth.user.is_admin
+                  ? adminMenu.map((page) => (
+                      <MenuItem
+                        key={"menutext-" + page.name}
+                        onClick={handleCloseNavMenu}
+                        component={RouterLink}
+                        to={page.route}
+                      >
+                        <Typography textAlign="center" color={"primary"}>
+                          {page.name}
+                        </Typography>
+                      </MenuItem>
+                    ))
+                  : ""}
               </Menu>
             </Box>
             {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
@@ -168,6 +177,20 @@ export default function Navbar() {
                   {page.name}
                 </Button>
               ))}
+
+              {auth.token && auth.user.is_admin
+                ? adminMenu.map((page) => (
+                    <Button
+                      key={"menubutton-" + page.name}
+                      onClick={handleCloseNavMenu}
+                      component={RouterLink}
+                      to={page.route}
+                      sx={{ my: 2, color: "primary", display: "block" }}
+                    >
+                      {page.name}
+                    </Button>
+                  ))
+                : ""}
             </Box>
             {auth.token ? (
               <>
