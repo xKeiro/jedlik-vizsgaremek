@@ -1,0 +1,11 @@
+INSERT INTO "order" VALUES ('0d04dcc4-e045-4285-82dd-06f13e1607c4', 'f874f7e5-f9a1-4c0e-9a7a-a86e5e5d5eb5', '3f6d3c24-2e1b-4f5a-9b1f-9c9d5f8a7b78', 0.00, 'fulfilled', '2023-01-15 16:05:56.049538+00');
+INSERT INTO "order" VALUES ('39c28826-aa06-4148-80e0-383c1a08e1a6', 'f874f7e5-f9a1-4c0e-9a7a-a86e5e5d5eb5', '3f6d3c24-2e1b-4f5a-9b1f-9c9d5f8a7b78', 0.00, 'deleted', '2023-01-16 17:05:56.049538+00');
+INSERT INTO "order" VALUES ('dc1fd79c-377c-4066-af10-5c8fbb18dfbd', 'f874f7e5-f9a1-4c0e-9a7a-a86e5e5d5eb5', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 0.00, 'in progress', '2023-01-19 16:05:56.049538+00');
+INSERT INTO "order" VALUES ('3c9ae89b-7ddc-4c3d-8d4a-b1a679dae7e4', '3a6a28e1-b1c4-4f8b-b4f4-4e947e9a8c8a', '8c46da89-4af9-4875-872b-caf39b47a927', 0.27, 'deleted', '2023-01-19 16:05:56.049538+00');
+INSERT INTO "order" VALUES ('e0456c6b-801b-405b-b11e-41f3ffe959d2', '3e5c3e77-7a9c-4f3e-9a18-1d7f1a4a8e45', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 0.27, 'fulfilled', '2023-01-19 18:06:56.049538+00');
+INSERT INTO "order" VALUES ('e4916e50-31b9-4fa5-a478-78a3852206ba', '3e5c3e77-7a9c-4f3e-9a18-1d7f1a4a8e45', '8c46da89-4af9-4875-872b-caf39b47a927', 0.27, 'under procurement', '2023-01-19 16:05:56.049538+00');
+INSERT INTO "order" VALUES ('e03b6ffc-be71-449c-bf1b-999d2b4cb2b0', 'cdc6b0a9-9c9f-4f09-b0f1-8e8d8d9d9c9c', '3f6d3c24-2e1b-4f5a-9b1f-9c9d5f8a7b78', 0.27, 'fulfilled', '2022-12-19 16:05:56.049538+00');
+INSERT INTO "order" VALUES ('a204072c-ad23-40d9-b76d-46ac896d02ad', 'cdc6b0a9-9c9f-4f09-b0f1-8e8d8d9d9c9c', '8c46da89-4af9-4875-872b-caf39b47a927', 0.27, 'fulfilled', '2023-01-10 12:05:56.049538+00');
+INSERT INTO "order" VALUES ('c26f6ff0-b5bc-4d8d-83da-21c2ef5c3c16', 'cdc6b0a9-9c9f-4f09-b0f1-8e8d8d9d9c9c', '8c46da89-4af9-4875-872b-caf39b47a927', 0.27, 'fulfilled', '2023-01-16 13:05:56.049538+00');
+INSERT INTO "order" VALUES ('908bface-54c9-42db-adf1-dc9ef82d80e2', 'cdc6b0a9-9c9f-4f09-b0f1-8e8d8d9d9c9c', '3f6d3c24-2e1b-4f5a-9b1f-9c9d5f8a7b78', 0.27, 'under procurement', '2023-01-17 16:05:56.049538+00');
+INSERT INTO "order" VALUES ('90d2002f-28d3-4e0a-8dae-829109d60a5b', 'cdc6b0a9-9c9f-4f09-b0f1-8e8d8d9d9c9c', 'df68254e-89b3-4b6e-8e12-91ffbdd3c201', 0.27, 'in progress', '2023-01-19 16:10:56.049538+00');
