@@ -22,4 +22,4 @@ class AddressInputPatch(BaseModel):
     city: constr(max_length=50) = None
     region: constr(max_length=50) = None
     postal_code: constr(max_length=10) = None
-    country: constr(max_length=50) = None
+    country: constr(max_length=4) = None

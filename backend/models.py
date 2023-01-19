@@ -24,7 +24,7 @@ class Address(Base):
     city = Column(String(50), nullable=False)
     region = Column(String(50), nullable=False)
     postal_code = Column(String(10), nullable=False)
-    country = Column(String(50), nullable=False)
+    country = Column(String(4), nullable=False)
 
 
 class User(Base):
