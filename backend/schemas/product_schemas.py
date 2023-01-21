@@ -1,8 +1,10 @@
 from decimal import Decimal
+
 from pydantic import BaseModel
 from pydantic import FilePath
 from pydantic import UUID4
 from pydantic import constr
+
 
 class ProductInputPost(BaseModel):
     category_id: UUID4
@@ -31,11 +33,13 @@ class ProductInputPatch(BaseModel):
     class Config:
         orm_mode = True
 
+
 class ProductResponse(ProductInputPost):
     id: UUID4
 
     class Config:
         orm_mode = True
+
 
 class ProductsResponse(BaseModel):
     products: list[ProductResponse]

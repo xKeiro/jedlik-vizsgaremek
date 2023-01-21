@@ -6,8 +6,8 @@ from pydantic import UUID4
 from pydantic import constr
 
 from .product_order_schemas import ProductOrderResponse
-from .user_schemas import UserResponse
 from .shipper_schemas import ShipperResponse
+from .user_schemas import UserResponse
 
 
 class OrderResponse(BaseModel):
