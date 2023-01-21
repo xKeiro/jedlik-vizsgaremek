@@ -7,16 +7,16 @@ from fastapi import Request
 from fastapi import Response
 from fastapi import status
 from pydantic import EmailStr
-from sqlalchemy.orm import Session
 from sqlalchemy import or_
+from sqlalchemy.orm import Session
 
 from backend import oauth2
 from backend.oauth2 import AuthJWT
 from .. import models
-from ..schemas import user_schemas, address_schemas
 from .. import util
 from ..config import settings
 from ..database import get_db
+from ..schemas import user_schemas
 from ..util import error_response_message
 
 router = APIRouter()
@@ -25,57 +25,52 @@ REFRESH_TOKEN_EXPIRES_IN = settings.REFRESH_TOKEN_EXPIRES_IN
 
 
 @router.post('/register', status_code=status.HTTP_201_CREATED, response_model=user_schemas.UserResponse)
-async def create_user(user: user_schemas.RegisterUserInputPost, address: address_schemas.RegisterAddressInputPost, db: Session = Depends(get_db)):
+async def create_user(user: user_schemas.RegisterUserInputPost, db: Session = Depends(get_db)):
     user = user_schemas.RegisterUserInputPostExtended.parse_obj(user)
-    # Check if user already exist
-    user_exists = db.query(models.User).filter(
-        models.User.email == EmailStr(user.email.lower()), models.User.username == user.username).first()
+    user_exists = db.query(models.User) \
+        .filter(models.User.email == EmailStr(user.email.lower()),
+                models.User.username == user.username) \
+        .first()
     if user_exists:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT,
                             detail=error_response_message('Account already exist'))
-    # Compare password and passwordConfirm
     if user.password != user.passwordConfirm:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=error_response_message('Passwords do not match'))
-    #  Hash the password
     user.password = util.hash_password(user.password)
-    del user.passwordConfirm
     user.email = EmailStr(user.email.lower())
-    # Commit new address to the database and get its id
-    new_address = models.Address(**address.dict())
+    new_address = models.Address(**user.address.dict())
     db.add(new_address)
     db.commit()
     db.refresh(new_address)
-    new_address = new_address.__dict__
-    user.address_id = new_address['id']
-    # Commit the new user to the database
+    user.address_id = new_address.id
+    del user.passwordConfirm
+    del user.address
     new_user = models.User(**user.dict())
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
-    return { "user": new_user, "address": new_address }
+    new_user.address = new_address
+    return new_user
 
 
 @router.post('/login', response_model=user_schemas.LoginResponse)
 def login(payload: user_schemas.LoginInputPost, response: Response, db: Session = Depends(get_db),
           Authorize: AuthJWT = Depends()):
-    # Check if the user exist
     user = db.query(models.User).filter(
-        or_(models.User.email == EmailStr(payload.identifier.lower()), models.User.username == payload.identifier)).first()
+        or_(models.User.email == EmailStr(payload.identifier.lower()),
+            models.User.username == payload.identifier)).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=error_response_message('Incorrect Email or Password'))
 
-    # Check if the password is valid
     if not util.verify_password(payload.password, user.password):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail=error_response_message('Incorrect Email or Password'))
 
-    # Create access token
     access_token = Authorize.create_access_token(
         subject=str(user.id), expires_time=timedelta(minutes=ACCESS_TOKEN_EXPIRES_IN))
 
-    # Create refresh token
     refresh_token = Authorize.create_refresh_token(
         subject=str(user.id), expires_time=timedelta(minutes=REFRESH_TOKEN_EXPIRES_IN))
 
@@ -87,7 +82,6 @@ def login(payload: user_schemas.LoginInputPost, response: Response, db: Session 
     response.set_cookie('logged_in', 'True', ACCESS_TOKEN_EXPIRES_IN * 60,
                         ACCESS_TOKEN_EXPIRES_IN * 60, '/', None, False, False, 'lax')
 
-    # Send both access
     return {'status': 'success', 'access_token': access_token}
 
 
