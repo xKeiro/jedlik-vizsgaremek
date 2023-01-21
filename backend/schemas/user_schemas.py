@@ -1,10 +1,13 @@
 from pydantic import BaseModel
 from pydantic import EmailStr
 from pydantic import FilePath
+from pydantic import StrictBool
 from pydantic import UUID4
 from pydantic import constr
-from pydantic import StrictBool
+
+from .address_schemas import AddressInputPatch
 from .address_schemas import AddressResponse
+from .address_schemas import RegisterAddressInputPost
 
 
 class UserBase(BaseModel):
@@ -18,16 +21,18 @@ class UserBase(BaseModel):
     class Config:
         orm_mode = True
 
+
 class UserBaseExtended(UserBase):
     id: UUID4
     is_admin: StrictBool
+
     class Config:
         orm_mode = True
 
 
-class UserResponse(BaseModel):
-    user: UserBaseExtended
+class UserResponse(UserBaseExtended):
     address: AddressResponse
+
     class Config:
         orm_mode = True
 
@@ -40,6 +45,7 @@ class UserInputPatch(BaseModel):
     phone: constr(max_length=20) = None
     password: constr(min_length=8, max_length=60) = None
     passwordConfirm: constr(min_length=8, max_length=60) = None
+    address: AddressInputPatch = None
 
     class Config:
         orm_mode = True
@@ -49,15 +55,21 @@ class LoginInputPost(BaseModel):
     identifier: EmailStr | constr(max_length=25)
     password: constr(min_length=8, max_length=60)
 
+
 class LoginResponse(BaseModel):
     status: str
     access_token: str
 
-class RegisterUserInputPost(UserBase):
 
+class RegisterUserInputPost(UserBase):
     password: constr(min_length=8, max_length=60)
     passwordConfirm: constr(min_length=8, max_length=60)
+    address: RegisterAddressInputPost
+
 
 class RegisterUserInputPostExtended(RegisterUserInputPost):
     id: UUID4 | None
     address_id: UUID4 | None
+
+    class Config:
+        orm_mode = True
