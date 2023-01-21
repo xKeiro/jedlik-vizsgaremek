@@ -14,3 +14,6 @@ class ShipperResponse(BaseModel):
     phone: constr(max_length = 20)
     email: EmailStr
     price: Decimal
+
+    class Config:
+        orm_mode = True

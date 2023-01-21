@@ -14,3 +14,6 @@ class ProductOrderResponse(BaseModel):
     unit_price: Decimal
     quantity: int
     discount: Decimal
+
+    class Config:
+        orm_mode = True
