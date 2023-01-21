@@ -9,10 +9,12 @@ class ProductCategoryInputPost(BaseModel):
     description: str
     photo: FilePath | None
 
+
 class ProductCategoryInputPatch(BaseModel):
     title: constr(max_length=150) = None
     description: str = None
     photo: FilePath = None
+
 
 class ProductCategoryResponse(ProductCategoryInputPost):
     id: UUID4

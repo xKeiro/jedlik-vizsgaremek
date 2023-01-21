@@ -1,5 +1,3 @@
-import uuid
-
 from sqlalchemy import Boolean
 from sqlalchemy import CheckConstraint
 from sqlalchemy import Column

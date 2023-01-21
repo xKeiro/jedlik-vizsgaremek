@@ -10,6 +10,7 @@ class RegisterAddressInputPost(BaseModel):
     postal_code: constr(max_length=10)
     country: constr(max_length=50)
 
+
 class AddressResponse(RegisterAddressInputPost):
     id: UUID4
 

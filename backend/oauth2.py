@@ -8,10 +8,10 @@ from fastapi_jwt_auth import AuthJWT
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from .util import error_response_message
 from . import models
 from .config import settings
 from .database import get_db
+from .util import error_response_message
 
 
 class Settings(BaseModel):
