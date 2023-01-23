@@ -1,18 +1,18 @@
-from decimal import Decimal
-
 from pydantic import BaseModel
 from pydantic import FilePath
 from pydantic import UUID4
 from pydantic import constr
+from pydantic import condecimal
 
 
 class ProductInputPost(BaseModel):
     category_id: UUID4
-    sale_price: Decimal
+    base_price: condecimal(decimal_places=12, max_digits=2)
     title: constr(max_length=150)
     description: str
     photo: FilePath | None
     stock: int
+    discount: condecimal(decimal_places=2, max_digits=2)
     discontinued: bool
     featured: bool
 
@@ -22,7 +22,7 @@ class ProductInputPost(BaseModel):
 
 class ProductInputPatch(BaseModel):
     category_id: UUID4 = None
-    sale_price: Decimal = None
+    base_price: condecimal(decimal_places=12, max_digits=2) = None
     title: constr(max_length=150) = None
     description: str = None
     photo: FilePath = None
