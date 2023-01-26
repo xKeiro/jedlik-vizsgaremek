@@ -163,7 +163,7 @@ export default function Registration() {
                     value={regState.username}
                     onChange={handleRegChange}
                     autoComplete="off"
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -177,7 +177,7 @@ export default function Registration() {
                     value={regState.first_name}
                     onChange={handleRegChange}
                     autoComplete="off"
-                  ></TextField>
+                  />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
@@ -190,7 +190,7 @@ export default function Registration() {
                     value={regState.last_name}
                     onChange={handleRegChange}
                     autoComplete="off"
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -205,7 +205,7 @@ export default function Registration() {
                     value={regState.email}
                     onChange={handleRegChange}
                     autoComplete="off"
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -219,7 +219,7 @@ export default function Registration() {
                     value={regState.phone}
                     onChange={handleRegChange}
                     autoComplete="off"
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -234,7 +234,7 @@ export default function Registration() {
                     value={regState.password}
                     onChange={handleRegChange}
                     autoComplete="new-password"
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -248,7 +248,7 @@ export default function Registration() {
                     value={regState.passwordConfirm}
                     onChange={handleRegChange}
                     autoComplete="new-password"
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={12}>
@@ -266,7 +266,7 @@ export default function Registration() {
                     value={regState.address}
                     onChange={handleRegChange}
                     autoComplete="off"
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -280,7 +280,7 @@ export default function Registration() {
                     value={regState.city}
                     onChange={handleRegChange}
                     autoComplete="off"
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -294,7 +294,7 @@ export default function Registration() {
                     value={regState.region}
                     onChange={handleRegChange}
                     autoComplete="off"
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -308,18 +308,19 @@ export default function Registration() {
                     value={regState.postal_code}
                     onChange={handleRegChange}
                     autoComplete="off"
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
                   <FormControl fullWidth required>
                     <InputLabel id="country">Country</InputLabel>
                     <Select
+                      sx={{ textAlign: "left" }}
                       labelId="country"
                       id="country"
                       name="country"
                       value={regState.country}
-                      label="Country"
+                      label="Countries"
                       onChange={handleRegChange}
                       autoComplete="off"
                     >
