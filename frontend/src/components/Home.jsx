@@ -28,7 +28,10 @@ export default function Home() {
                 high-quality PC components for all your building and upgrading
                 needs. We now have a good range of products from top brands,
                 including CPUs, motherboards, graphics cards, memory, storage,
-                and more. Whether you're building a budget-friendly system or a
+                and more.
+              </p>
+              <p>
+                Whether you're building a budget-friendly system or a
                 high-performance powerhouse, we have the parts you need to get
                 the job done. With our user-friendly website and fast shipping,
                 it's never been easier to find and purchase the PC parts you
@@ -45,15 +48,19 @@ export default function Home() {
                 task, which is why we strive to make the process as easy and
                 stress-free as possible. We carry a wide range of products from
                 top brands, including CPUs, motherboards, graphics cards,
-                memory, storage, and more. Our team of experts is constantly
-                researching and testing new products to ensure that we are
-                offering the latest and greatest in PC technology. Our
-                user-friendly website makes it easy to find the parts you need,
-                and our fast shipping ensures that you can get your hands on
-                them as soon as possible. We are dedicated to providing
+                memory, storage, and more.
+              </p>
+              <p>
+                Our team of experts is constantly testing new products to ensure
+                that we are offering the latest and greatest in PC technology.
+                Our user-friendly website makes it easy to find the parts you
+                need, and our fast shipping ensures that you can get your hands
+                on them as soon as possible. We are dedicated to providing
                 excellent customer service and are always here to answer any
-                questions you may have about building or upgrading your PC. We
-                are constantly looking for ways to improve our service and
+                questions you may have about building or upgrading your PC.
+              </p>
+              <p>
+                We are constantly looking for ways to improve our service and
                 welcome your feedback.
               </p>
             </Box>
