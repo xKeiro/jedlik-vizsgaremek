@@ -15,6 +15,7 @@
 
 - Python 3.10.8+ [Link](https://www.python.org/downloads/)
 - Node.js 18.12+ [Link](https://nodejs.org/en/)
+- Docker [Link](https://www.docker.com/)
 
 ## Team members
 
@@ -75,7 +76,7 @@ sudo update-alternatives --config python3
 python3 --version
 ```
 
-1. Create a copy of the `.env.sample` file, and fill out the fields.
+1. Create a copy of the `.env.sample` file as `.env` in the backend folder, and fill out the fields.
 2. Create a new virtual environment:
 
 ```
@@ -94,18 +95,10 @@ source .venv/bin/activate
 pip install -r ./backend/requirements.txt
 ```
 
-4. Create a new docker container for the database and install the UUID extension:
+4. Create a new docker container for the database, install the UUID extension, seed database:
 
 ```
-docker-compose up -d
-docker exec -it postgres bash
-psql -U [username]  -d postgres
-CREATE DATABASE [dbname];
-\q
-psql -U [username]  -d [dbname]
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-\q
-exit
+sh initdb.sh
 ```
 
 5. Run the app:
