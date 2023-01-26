@@ -121,7 +121,8 @@ export const useAuth = () => {
   useEffect(() => {
     if (token && tokenExpDate) {
       const fixedExpDate = tokenExpDate * 1000;
-      const remainingTime = fixedExpDate - new Date().getTime();
+      const offset = 10000;
+      const remainingTime = fixedExpDate - new Date().getTime() - offset;
       refreshTimer = setTimeout(refresh, remainingTime);
     } else {
       clearTimeout(refreshTimer);
