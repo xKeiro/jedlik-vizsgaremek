@@ -77,7 +77,7 @@ export default function Categories() {
                       image={
                         category.photo
                           ? category.photo
-                          : "https://via.placeholder.com/600x150.png"
+                          : "https://placeimg.com/600/150/tech"
                       }
                       alt={category.title}
                     />

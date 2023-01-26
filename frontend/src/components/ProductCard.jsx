@@ -24,7 +24,7 @@ export default function ProductCard({ product }) {
             image={
               product.photo
                 ? product.photo
-                : "https://via.placeholder.com/400x150.png"
+                : "https://placeimg.com/400/150/tech"
             }
             alt={product.title}
           />
