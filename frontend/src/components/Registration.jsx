@@ -63,15 +63,13 @@ export default function Registration() {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          user: {
-            username: regState.username,
-            first_name: regState.first_name,
-            last_name: regState.last_name,
-            email: regState.email,
-            phone: regState.phone,
-            password: regState.password,
-            passwordConfirm: regState.passwordConfirm,
-          },
+          username: regState.username,
+          first_name: regState.first_name,
+          last_name: regState.last_name,
+          email: regState.email,
+          phone: regState.phone,
+          password: regState.password,
+          passwordConfirm: regState.passwordConfirm,
           address: {
             address: regState.address,
             city: regState.city,
@@ -82,7 +80,6 @@ export default function Registration() {
         }),
       });
       const responseData = await response.json();
-      console.log(responseData);
 
       if (!response.ok) {
         const errorMsg = responseData.detail[0].msg;
