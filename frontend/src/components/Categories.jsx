@@ -56,13 +56,7 @@ export default function Categories() {
           alignContent: "center",
         }}
       >
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={2}
-        >
+        <Grid container direction="row" spacing={2}>
           {categories ? (
             categories.map((category) => (
               <Grid item key={category.id} xs={12} md={6}>
