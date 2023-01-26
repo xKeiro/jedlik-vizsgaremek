@@ -88,7 +88,9 @@ export default function Categories() {
               </Grid>
             ))
           ) : (
-            <CircularProgress />
+            <Grid item xs={12} md={12}>
+              <CircularProgress />
+            </Grid>
           )}
         </Grid>
       </Box>
