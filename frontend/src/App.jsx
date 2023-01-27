@@ -127,7 +127,8 @@ function App() {
                         <Route index element={<AdminHome />} />
                         <Route path="products" element={<AdminProducts />} />
                         <Route path="product/:id" element={<AdminProduct />} />
-                        <Route path="*" element={<Admin />} />
+                        <Route path="product" element={<AdminProduct />} />
+                        <Route path="*" element={<AdminHome />} />
                       </Route>
                     )}
                     <Route path="*" element={<Home />} />
