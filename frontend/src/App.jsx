@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import { AuthContext } from "./contexts/AuthContext";
@@ -21,6 +21,9 @@ import Account from "./components/Account";
 import Orders from "./components/Orders";
 import Footer from "./components/Footer";
 import Admin from "./components/Admin/Admin";
+import AdminHome from "./components/Admin/AdminHome";
+import AdminProducts from "./components/Admin/AdminProducts";
+import AdminProduct from "./components/Admin/AdminProduct";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -103,29 +106,32 @@ function App() {
               <Paper>
                 <Box className="Content" sx={{ minHeight: "60vh" }}>
                   <Routes>
-                    <Route path="/pricelist/" element={<PriceList />} />
-                    <Route path="/product/:id" element={<Product />} />
-                    <Route path="/categories/" element={<Categories />} />
-                    <Route path="/category/:id" element={<Category />} />
-                    <Route path="/contact/" element={<Contact />} />
-                    <Route path="/registration/" element={<Registration />} />
-                    {!token && <Route path="/login/" element={<Login />} />}
+                    <Route index element={<Home />} />
+                    <Route path="pricelist" element={<PriceList />} />
+                    <Route path="product/:id" element={<Product />} />
+                    <Route path="categories" element={<Categories />} />
+                    <Route path="category/:id" element={<Category />} />
+                    <Route path="contact" element={<Contact />} />
+                    <Route path="registration" element={<Registration />} />
+                    {!token && <Route path="login" element={<Login />} />}
 
                     {token && (
                       <>
-                        <Route path={"/account/"} element={<Account />} />
-                        <Route path={"/orders/"} element={<Orders />} />
-                        <Route path={"/logout/"} element={<Logout />} />
+                        <Route path="account" element={<Account />} />
+                        <Route path="orders" element={<Orders />} />
+                        <Route path="logout" element={<Logout />} />
                       </>
                     )}
                     {token && user.is_admin && (
-                      <>
-                        <Route path={"/admin/*"} element={<Admin />} />
-                      </>
+                      <Route path="admin" element={<Admin />}>
+                        <Route index element={<AdminHome />} />
+                        <Route path="products" element={<AdminProducts />} />
+                        <Route path="product/:id" element={<AdminProduct />} />
+                        <Route path="product" element={<AdminProduct />} />
+                        <Route path="*" element={<AdminHome />} />
+                      </Route>
                     )}
-
-                    <Route path="/" element={<Home />} />
-                    <Route path="*" element={<Navigate replace to="/" />} />
+                    <Route path="*" element={<Home />} />
                   </Routes>
                 </Box>
               </Paper>

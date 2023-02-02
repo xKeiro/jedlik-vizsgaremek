@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 
 import Grid from "@mui/material/Grid";
@@ -10,9 +10,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
-import AdminHome from "./AdminHome";
-import AdminProducts from "./AdminProducts";
-import AdminProduct from "./AdminProduct";
 
 export default function Admin() {
   const [adminMenu, setAdminMenu] = useState([
@@ -69,12 +66,7 @@ export default function Admin() {
             </div>
           </Grid>
           <Grid item md={9} xs={12}>
-            <Routes>
-              <Route path="/" element={<AdminHome />} />
-              <Route path="/products" element={<AdminProducts />} />
-              <Route path="/product/:id" element={<AdminProduct />} />
-              <Route path="*" element={<Navigate replace to="/admin" />} />
-            </Routes>
+            <Outlet />
           </Grid>
         </Grid>
       </Box>

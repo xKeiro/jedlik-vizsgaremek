@@ -106,7 +106,7 @@ export default function Login() {
                     type="text"
                     value={loginUser}
                     onChange={(e) => setLoginUser(e.target.value)}
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={12}>
@@ -119,7 +119,7 @@ export default function Login() {
                     type="password"
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
-                  ></TextField>
+                  />
                 </Grid>
 
                 <Grid item xs={12} md={12}>

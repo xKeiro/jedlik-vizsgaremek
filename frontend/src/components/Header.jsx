@@ -11,7 +11,7 @@ export default function Header() {
         <Box sx={{ marginY: 2 }}>
           <CardMedia
             component="img"
-            src="https://via.placeholder.com/1200x120.png?text=IT+Webshop+Main+Image+Placeholder"
+            src="https://placeimg.com/1200/120/tech"
           ></CardMedia>
         </Box>
       </Paper>

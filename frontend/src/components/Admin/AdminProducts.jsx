@@ -41,6 +41,33 @@ export default function AdminProducts() {
     }
   }
 
+  async function handleRemove(e) {
+    //const title = e.target.parentNode.parentNode.dataset.title;
+    const id = e.target.parentNode.parentNode.dataset.id;
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/products/${id}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+      });
+      const responseBody = await response.json();
+      console.log(responseBody);
+      if (!response.ok) {
+        const errorMessage = responseBody.detail[0].msg;
+        console.log(errorMessage);
+        return;
+      }
+      getAllProducts();
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -67,8 +94,17 @@ export default function AdminProducts() {
           spacing={2}
         >
           <Grid item xs={12} md={12}>
+            <Button
+              variant="outlined"
+              component={RouterLink}
+              to={"/admin/product"}
+            >
+              Add new
+            </Button>
+          </Grid>
+          <Grid item xs={12} md={12}>
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <Table sx={{ minWidth: 650 }} aria-label="table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
@@ -82,6 +118,8 @@ export default function AdminProducts() {
                     products.map((product) => (
                       <TableRow
                         key={product.id}
+                        data-id={product.id}
+                        data-title={product.title}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
@@ -111,7 +149,14 @@ export default function AdminProducts() {
                           >
                             Edit
                           </Button>
-                          <Button variant="outlined">Remove</Button>
+                          <Button
+                            variant="outlined"
+                            sx={{ marginLeft: 1 }}
+                            onClick={handleRemove}
+                            disabled={product.discontinued}
+                          >
+                            Remove
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))

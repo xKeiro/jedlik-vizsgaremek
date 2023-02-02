@@ -56,13 +56,7 @@ export default function Categories() {
           alignContent: "center",
         }}
       >
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          spacing={2}
-        >
+        <Grid container direction="row" spacing={2}>
           {categories ? (
             categories.map((category) => (
               <Grid item key={category.id} xs={12} md={6}>
@@ -77,7 +71,7 @@ export default function Categories() {
                       image={
                         category.photo
                           ? category.photo
-                          : "https://via.placeholder.com/600x150.png"
+                          : "https://placeimg.com/600/150/tech"
                       }
                       alt={category.title}
                     />
@@ -94,7 +88,9 @@ export default function Categories() {
               </Grid>
             ))
           ) : (
-            <CircularProgress />
+            <Grid item xs={12} md={12}>
+              <CircularProgress />
+            </Grid>
           )}
         </Grid>
       </Box>

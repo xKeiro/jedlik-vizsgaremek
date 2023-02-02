@@ -79,7 +79,7 @@ export default function Product() {
                       image={
                         product.photo
                           ? product.photo
-                          : "https://via.placeholder.com/1920x1080.png"
+                          : "https://placeimg.com/1920/1080/tech"
                       }
                       alt={product.title}
                     />

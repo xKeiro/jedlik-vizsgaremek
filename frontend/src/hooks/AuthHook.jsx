@@ -65,9 +65,9 @@ export const useAuth = () => {
 
     const userDetails = await getUserDetails();
     if (userDetails) {
-      updateUser("name", userDetails.user.username);
-      updateUser("photo", userDetails.user.photo);
-      updateUser("is_admin", userDetails.user.is_admin);
+      updateUser("name", userDetails.username);
+      updateUser("photo", userDetails.photo);
+      updateUser("is_admin", userDetails.is_admin);
     }
   }, []);
 
@@ -121,7 +121,8 @@ export const useAuth = () => {
   useEffect(() => {
     if (token && tokenExpDate) {
       const fixedExpDate = tokenExpDate * 1000;
-      const remainingTime = fixedExpDate - new Date().getTime();
+      const offset = 10000;
+      const remainingTime = fixedExpDate - new Date().getTime() - offset;
       refreshTimer = setTimeout(refresh, remainingTime);
     } else {
       clearTimeout(refreshTimer);
