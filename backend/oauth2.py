@@ -17,9 +17,14 @@ from .util import error_response_message
 class Settings(BaseModel):
     authjwt_algorithm: str = settings.JWT_ALGORITHM
     authjwt_decode_algorithms: List[str] = [settings.JWT_ALGORITHM]
+    authjwt_cookie_csrf_protect = False
+    authjwt_cookie_secure: bool = False
     authjwt_token_location: set = {'cookies', 'headers'}
     authjwt_access_cookie_key: str = 'access_token'
     authjwt_refresh_cookie_key: str = 'refresh_token'
+    authjwt_access_csrf_cookie_key: str = 'csrf_access_token'
+    authjwt_refresh_csrf_cookie_key: str = 'csrf_refresh_token'
+    authjwt_cookie_samesite: str = 'lax'
     authjwt_public_key: str = base64.b64decode(
         settings.JWT_PUBLIC_KEY).decode('utf-8')
     authjwt_private_key: str = base64.b64decode(
