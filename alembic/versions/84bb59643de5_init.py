@@ -1,8 +1,8 @@
-"""Init
+"""init
 
-Revision ID: 4abad2b28192
+Revision ID: 84bb59643de5
 Revises: 
-Create Date: 2023-01-21 13:26:59.576429
+Create Date: 2023-01-23 08:26:53.266361
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '4abad2b28192'
+revision = '84bb59643de5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,7 +24,7 @@ def upgrade() -> None:
     sa.Column('city', sa.String(length=50), nullable=False),
     sa.Column('region', sa.String(length=50), nullable=False),
     sa.Column('postal_code', sa.String(length=10), nullable=False),
-    sa.Column('country', sa.String(length=50), nullable=False),
+    sa.Column('country', sa.String(length=4), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('product_category',
@@ -48,11 +48,12 @@ def upgrade() -> None:
     op.create_table('product',
     sa.Column('id', postgresql.UUID(as_uuid=True), server_default=sa.text('uuid_generate_v4()'), nullable=False),
     sa.Column('category_id', postgresql.UUID(as_uuid=True), nullable=False),
-    sa.Column('sale_price', sa.Numeric(precision=12, scale=2), nullable=False),
+    sa.Column('base_price', sa.Numeric(precision=12, scale=2), nullable=False),
     sa.Column('title', sa.String(length=150), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
     sa.Column('photo', sa.String(length=250), nullable=True),
     sa.Column('stock', sa.Integer(), server_default='0', nullable=False),
+    sa.Column('discount', sa.Numeric(precision=2, scale=2), server_default='0', nullable=False),
     sa.Column('discontinued', sa.Boolean(), server_default='False', nullable=False),
     sa.Column('featured', sa.Boolean(), server_default='False', nullable=False),
     sa.ForeignKeyConstraint(['category_id'], ['product_category.id'], ),
@@ -92,7 +93,7 @@ def upgrade() -> None:
     sa.Column('user_id', postgresql.UUID(as_uuid=True), nullable=False),
     sa.Column('shipper_id', postgresql.UUID(as_uuid=True), nullable=False),
     sa.Column('vat', sa.Numeric(precision=2, scale=2), server_default='0', nullable=False),
-    sa.Column('status', sa.String(length=20), nullable=False),
+    sa.Column('status', sa.String(length=20), server_default='in progress', nullable=False),
     sa.Column('order_date', sa.TIMESTAMP(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.CheckConstraint("status IN ('in progress', 'under procurement', 'fulfilled', 'deleted')"),
     sa.ForeignKeyConstraint(['shipper_id'], ['shipper.id'], ),
@@ -125,9 +126,9 @@ def upgrade() -> None:
     sa.Column('id', postgresql.UUID(as_uuid=True), server_default=sa.text('uuid_generate_v4()'), nullable=False),
     sa.Column('order_id', postgresql.UUID(as_uuid=True), nullable=False),
     sa.Column('product_id', postgresql.UUID(as_uuid=True), nullable=False),
-    sa.Column('unit_price', sa.Numeric(precision=12, scale=2), nullable=False),
+    sa.Column('base_price', sa.Numeric(precision=12, scale=2), nullable=False),
     sa.Column('quantity', sa.Integer(), nullable=False),
-    sa.Column('discount', sa.Numeric(precision=12, scale=2), nullable=False),
+    sa.Column('discount', sa.Numeric(precision=2, scale=2), server_default='0', nullable=False),
     sa.ForeignKeyConstraint(['order_id'], ['order.id'], ),
     sa.ForeignKeyConstraint(['product_id'], ['product.id'], ),
     sa.PrimaryKeyConstraint('id'),

@@ -114,7 +114,7 @@ class Order(Base):
     user_id = Column(UUID(as_uuid=True), ForeignKey('user.id'), nullable=False)
     shipper_id = Column(UUID(as_uuid=True), ForeignKey('shipper.id'), nullable=False)
     vat = Column(Numeric(2, 2), nullable=False, server_default="0")
-    status = Column(String(20), nullable=False)
+    status = Column(String(20), nullable=False, server_default="in progress")
     order_date = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text("now()"))
     user = relationship('User', foreign_keys=[user_id])
