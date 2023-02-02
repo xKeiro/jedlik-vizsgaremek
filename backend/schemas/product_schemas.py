@@ -7,7 +7,7 @@ from pydantic import condecimal
 
 class ProductInputPost(BaseModel):
     category_id: UUID4
-    base_price: condecimal(decimal_places=12, max_digits=2)
+    base_price: condecimal(decimal_places=2, max_digits=12)
     title: constr(max_length=150)
     description: str
     photo: FilePath | None
@@ -22,7 +22,7 @@ class ProductInputPost(BaseModel):
 
 class ProductInputPatch(BaseModel):
     category_id: UUID4 = None
-    base_price: condecimal(decimal_places=12, max_digits=2) = None
+    base_price: condecimal(decimal_places=2, max_digits=12) = None
     title: constr(max_length=150) = None
     description: str = None
     photo: FilePath = None
