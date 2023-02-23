@@ -22,9 +22,12 @@ import UserAccount from "./components/User/UserAccount";
 import UserOrders from "./components/User/UserOrders";
 import Admin from "./components/Admin/Admin";
 import AdminHome from "./components/Admin/AdminHome";
+import AdminOrders from "./components/Admin/AdminOrders";
+import AdminOrder from "./components/Admin/AdminOrder";
 import AdminProducts from "./components/Admin/AdminProducts";
 import AdminProduct from "./components/Admin/AdminProduct";
 import AdminCategories from "./components/Admin/AdminCategories";
+import AdminCategory from "./components/Admin/AdminCategory";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -41,7 +44,6 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import AdminCategory from "./components/Admin/AdminCategory";
 
 function App() {
   const { token, user, login, logout, refresh } = useAuth();
@@ -127,12 +129,19 @@ function App() {
                     {token && user.is_admin && (
                       <Route path="admin" element={<Admin />}>
                         <Route index element={<AdminHome />} />
+                        <Route path="orders" element={<AdminOrders />} />
+                        <Route path="order/:id" element={<AdminOrder />} />
+                        <Route path="order" element={<AdminOrder />} />
                         <Route path="products" element={<AdminProducts />} />
                         <Route path="product/:id" element={<AdminProduct />} />
                         <Route path="product" element={<AdminProduct />} />
                         <Route
                           path="categories"
                           element={<AdminCategories />}
+                        />
+                        <Route
+                          path="category/:id"
+                          element={<AdminCategory />}
                         />
                         <Route path="category" element={<AdminCategory />} />
                         <Route path="*" element={<AdminHome />} />

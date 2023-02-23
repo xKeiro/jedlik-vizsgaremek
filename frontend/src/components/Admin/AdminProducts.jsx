@@ -78,7 +78,7 @@ export default function AdminProducts() {
         <h3>Products Editor</h3>
       </div>
       <Box
-        className="Products__Box"
+        className="AdminProducts__Box"
         sx={{
           margin: "20px",
           display: "flex",

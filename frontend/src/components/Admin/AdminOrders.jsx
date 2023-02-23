@@ -15,12 +15,12 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function AdminCategories() {
-  const [categories, setCategories] = useState(null);
+export default function AdminOrders() {
+  const [orders, setOrders] = useState(null);
 
-  async function getAllCategories() {
+  async function getOrders() {
     try {
-      const response = await fetch("http://localhost:8000/api/categories", {
+      const response = await fetch("http://localhost:8000/api/orders", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -34,8 +34,8 @@ export default function AdminCategories() {
         console.log(errorMessage);
         return;
       }
-      console.log(responseBody.categories);
-      setCategories(responseBody.categories);
+      console.log(responseBody.orders);
+      setOrders(responseBody.orders);
     } catch (error) {
       console.log(error);
       return;
@@ -43,16 +43,16 @@ export default function AdminCategories() {
   }
 
   useEffect(() => {
-    getAllCategories();
+    getOrders();
   }, []);
 
   return (
-    <div className="AdminCategories">
+    <div className="AdminOrders">
       <div>
-        <h3>Categories Editor</h3>
+        <h3>Orders</h3>
       </div>
       <Box
-        className="AdminCategories__Box"
+        className="AdminOrders__Box"
         sx={{
           margin: "20px",
           display: "flex",
@@ -68,31 +68,31 @@ export default function AdminCategories() {
           alignItems="center"
           spacing={2}
         >
-          <Grid item xs={12} md={12}>
+          {/* <Grid item xs={12} md={12}>
             <Button
               variant="outlined"
               component={RouterLink}
-              to={"/admin/category"}
+              to={"/admin/order/"}
             >
               Add new
             </Button>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} md={12}>
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="table">
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
+                    <TableCell align="right">Status</TableCell>
+                    <TableCell align="right">Date</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {categories ? (
-                    categories.map((category) => (
+                  {orders ? (
+                    orders.map((order) => (
                       <TableRow
-                        key={category.id}
-                        data-id={category.id}
-                        data-title={category.title}
+                        key={order.id}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
@@ -100,19 +100,24 @@ export default function AdminCategories() {
                         <TableCell component="th" scope="row">
                           <Link
                             component={RouterLink}
-                            to={"/category/" + category.id}
+                            to={"/admin/order/" + order.id}
                           >
-                            {category.title}
+                            {order.id}
                           </Link>
+                        </TableCell>
+                        <TableCell align="right">{order.status}</TableCell>
+                        <TableCell align="right">
+                          {new Date(
+                            Date.parse(order.order_date)
+                          ).toLocaleString()}
                         </TableCell>
                         <TableCell align="right">
                           <Button
                             variant="outlined"
                             component={RouterLink}
-                            to={"/admin/category/" + category.id}
-                            disabled={true} // todo: no category id endpoint
+                            to={"/admin/order/" + order.id}
                           >
-                            Edit (no category id endpoint yet)
+                            View
                           </Button>
                         </TableCell>
                       </TableRow>

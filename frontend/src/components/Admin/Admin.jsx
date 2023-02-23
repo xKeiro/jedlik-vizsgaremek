@@ -13,6 +13,7 @@ import Divider from "@mui/material/Divider";
 export default function Admin() {
   const adminMenu = [
     { name: "Home", route: "/admin/" },
+    { name: "Orders", route: "/admin/orders" },
     { name: "Products", route: "/admin/products" },
     { name: "Categories", route: "/admin/categories" },
     { name: "Suppliers", route: "/admin/suppliers" },
@@ -25,7 +26,7 @@ export default function Admin() {
   return (
     <div className="Admin">
       <div>
-        <h2>Admin Panel</h2>
+        <h2>Management Panel</h2>
       </div>
       <Box
         className="Admin__Box"
@@ -40,7 +41,7 @@ export default function Admin() {
         <Grid container direction="row" justifyContent="center" spacing={2}>
           <Grid item md={3} xs={12}>
             <div>
-              <h3>Admin Pages</h3>
+              <h3>Pages</h3>
               <Box
                 sx={{ width: "100%", bgcolor: "background.paper", marginY: 2 }}
               >

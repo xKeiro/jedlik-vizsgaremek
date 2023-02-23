@@ -35,7 +35,7 @@ export default function Navbar() {
     { name: "Logout", route: "/logout" },
   ]);
 
-  const adminMenu = [{ name: "Admin", route: "/admin" }];
+  const adminMenu = [{ name: "Manage", route: "/admin" }];
 
   const handleOpenNavMenu = (e) => {
     setAnchorElNav(e.currentTarget);
