@@ -1,10 +1,11 @@
 #!/usr/bin/env sh
 . ./backend/.env
 
-echo "Generating $POSTGRES_DB database..."
+echo "Database Initializer Script"
+echo "Generating '$POSTGRES_DB' database container with docker-compose..."
 docker-compose up -d
 
-echo "Waiting for postgres container..."
+echo "Waiting for docker container..."
 sleep 10
 
 echo "Adding extension..."
@@ -45,3 +46,5 @@ docker exec -u $POSTGRES_USER postgres psql $POSTGRES_DB postgres -f docker-entr
 
 docker cp ./fake_db_data/product_order.sql postgres:/docker-entrypoint-initdb.d/product_order.sql
 docker exec -u $POSTGRES_USER postgres psql $POSTGRES_DB postgres -f docker-entrypoint-initdb.d/product_order.sql
+
+echo "Done."
