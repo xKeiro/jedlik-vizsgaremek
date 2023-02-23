@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-export default function UserForm({ userForm, setUserForm }) {
+export default function UserForm({ userForm, setUserForm, isNew }) {
   function handleFormChange(e) {
     const { name, value } = e.target;
     setUserForm((prevState) => ({
@@ -17,7 +17,7 @@ export default function UserForm({ userForm, setUserForm }) {
   }
 
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={2}>
       <Grid item xs={12} md={12}>
         <span>User information</span>
       </Grid>
@@ -36,6 +36,69 @@ export default function UserForm({ userForm, setUserForm }) {
           autoComplete="off"
         />
       </Grid>
+
+      {isNew ? (
+        <>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              required
+              label="Password"
+              id="password"
+              name="password"
+              type="password"
+              helperText="Minimum 8 characters."
+              value={userForm.password}
+              onChange={handleFormChange}
+              autoComplete="new-password"
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              required
+              label="Confirm Password"
+              id="passwordConfirm"
+              name="passwordConfirm"
+              type="password"
+              value={userForm.passwordConfirm}
+              onChange={handleFormChange}
+              autoComplete="new-password"
+            />
+          </Grid>
+        </>
+      ) : (
+        <>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              disabled
+              label="id"
+              id="id"
+              name="id"
+              type="text"
+              helperText="For debug purposes only."
+              value={userForm.id}
+              onChange={handleFormChange}
+              autoComplete="off"
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              fullWidth
+              disabled
+              label="Privileges"
+              id="is_admin"
+              name="is_admin"
+              type="text"
+              value={userForm.is_admin ? "Admin" : "User"}
+              onChange={handleFormChange}
+              autoComplete="off"
+            />
+          </Grid>
+        </>
+      )}
 
       <Grid item xs={12} md={6}>
         <TextField
@@ -90,35 +153,6 @@ export default function UserForm({ userForm, setUserForm }) {
           value={userForm.phone}
           onChange={handleFormChange}
           autoComplete="off"
-        />
-      </Grid>
-
-      <Grid item xs={12} md={6}>
-        <TextField
-          fullWidth
-          required
-          label="Password"
-          id="password"
-          name="password"
-          type="password"
-          helperText="Minimum 8 characters."
-          value={userForm.password}
-          onChange={handleFormChange}
-          autoComplete="new-password"
-        />
-      </Grid>
-
-      <Grid item xs={12} md={6}>
-        <TextField
-          fullWidth
-          required
-          label="Confirm Password"
-          id="passwordConfirm"
-          name="passwordConfirm"
-          type="password"
-          value={userForm.passwordConfirm}
-          onChange={handleFormChange}
-          autoComplete="new-password"
         />
       </Grid>
 

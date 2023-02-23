@@ -15,7 +15,7 @@ export default function UserRegistration() {
   const [errorText, setErrorText] = useState("");
   const [successText, setSuccessText] = useState("");
 
-  const newRegistration = {
+  const emptyForm = {
     username: "",
     first_name: "",
     last_name: "",
@@ -30,15 +30,21 @@ export default function UserRegistration() {
     country: "HU",
   };
 
-  const [userForm, setUserForm] = useState(newRegistration);
+  const [userForm, setUserForm] = useState(emptyForm);
 
-  async function handleRegistration() {
+  async function handleUserRegistration() {
     setErrorText(null);
     setSuccessText(null);
     setIsLoading(true);
 
     if (userForm.password !== userForm.passwordConfirm) {
       setErrorText("Password fields do not match");
+      setIsLoading(false);
+      return;
+    }
+
+    if (userForm.password.length < 8) {
+      setErrorText("Password length must be at least 8 charaters");
       setIsLoading(false);
       return;
     }
@@ -89,7 +95,7 @@ export default function UserRegistration() {
   }
 
   function clearInputs() {
-    setUserForm(newRegistration);
+    setUserForm(emptyForm);
   }
 
   return (
@@ -122,13 +128,17 @@ export default function UserRegistration() {
               <CircularProgress />
             ) : (
               <Grid container spacing={1}>
-                <UserForm userForm={userForm} setUserForm={setUserForm} />
+                <UserForm
+                  userForm={userForm}
+                  setUserForm={setUserForm}
+                  isNew={true}
+                />
                 <Grid item xs={12} md={12}>
                   <Button
                     fullWidth
                     variant="contained"
                     sx={{ marginY: "20px", paddingY: "10px" }}
-                    onClick={handleRegistration}
+                    onClick={handleUserRegistration}
                   >
                     Register
                   </Button>
