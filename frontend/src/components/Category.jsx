@@ -12,38 +12,37 @@ export default function Category() {
   const { id } = useParams();
   const [products, setProducts] = useState(null);
 
-  async function getCategoryProducts() {
-    if (!id) {
-      setProducts([]);
-      return;
-    }
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/categories/${id}`,
-        {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-      const responseBody = await response.json();
-      if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
-        console.log(errorMessage);
+  useEffect(() => {
+    async function getCategoryProducts() {
+      if (!id) {
+        setProducts([]);
         return;
       }
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/categories/${id}`,
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+        const responseBody = await response.json();
+        if (!response.ok) {
+          const errorMessage = responseBody.detail[0].msg;
+          console.log(errorMessage);
+          return;
+        }
 
-      setProducts(responseBody.products);
-    } catch (error) {
-      console.log(error);
-      return;
+        setProducts(responseBody.products);
+      } catch (error) {
+        console.log(error);
+        return;
+      }
     }
-  }
-
-  useEffect(() => {
     getCategoryProducts();
   }, [id]);
 

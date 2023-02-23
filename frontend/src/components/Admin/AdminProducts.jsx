@@ -41,6 +41,10 @@ export default function AdminProducts() {
     }
   }
 
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+
   async function handleRemove(e) {
     //const title = e.target.parentNode.parentNode.dataset.title;
     const id = e.target.parentNode.parentNode.dataset.id;
@@ -68,9 +72,6 @@ export default function AdminProducts() {
     }
   }
 
-  useEffect(() => {
-    getAllProducts();
-  }, []);
   return (
     <div className="AdminProducts">
       <div>

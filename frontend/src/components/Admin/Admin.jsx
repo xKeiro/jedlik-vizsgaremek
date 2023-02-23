@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -12,14 +11,14 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 
 export default function Admin() {
-  const [adminMenu, setAdminMenu] = useState([
+  const adminMenu = [
     { name: "Home", route: "/admin/" },
     { name: "Products", route: "/admin/products" },
     { name: "Categories", route: "/admin/categories" },
     { name: "Suppliers", route: "/admin/suppliers" },
     { name: "Users", route: "/admin/users" },
     { name: "Reviews", route: "/admin/reviews" },
-  ]);
+  ];
 
   const location = useLocation();
 

@@ -21,7 +21,7 @@ export default function Registration() {
   const [errorText, setErrorText] = useState("");
   const [successText, setSuccessText] = useState("");
 
-  const [regState, setRegState] = useState({
+  const newReg = {
     username: "",
     first_name: "",
     last_name: "",
@@ -34,7 +34,9 @@ export default function Registration() {
     region: "",
     postal_code: "",
     country: "HU",
-  });
+  };
+
+  const [regState, setRegState] = useState(newReg);
 
   function handleRegChange(e) {
     const { name, value } = e.target;
@@ -101,20 +103,7 @@ export default function Registration() {
   }
 
   function clearInputs() {
-    setRegState({
-      username: "",
-      first_name: "",
-      last_name: "",
-      email: "",
-      phone: "",
-      password: "",
-      passwordConfirm: "",
-      address: "",
-      city: "",
-      region: "",
-      postal_code: "",
-      country: "",
-    });
+    setRegState(newReg);
   }
 
   return (

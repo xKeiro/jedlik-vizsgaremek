@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Link as RouterLink } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -16,36 +15,39 @@ export default function Product() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
-  async function getProduct() {
-    if (!id) {
-      setProduct(null);
-      return;
-    }
-    try {
-      const response = await fetch(`http://localhost:8000/api/products/${id}`, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
-      const responseBody = await response.json();
-      if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
-        console.log(errorMessage);
+  useEffect(() => {
+    async function getProduct() {
+      if (!id) {
+        setProduct(null);
         return;
       }
-      setProduct(responseBody);
-    } catch (error) {
-      console.log(error);
-      return;
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/products/${id}`,
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+        const responseBody = await response.json();
+        if (!response.ok) {
+          const errorMessage = responseBody.detail[0].msg;
+          console.log(errorMessage);
+          return;
+        }
+        setProduct(responseBody);
+      } catch (error) {
+        console.log(error);
+        return;
+      }
     }
-  }
 
-  useEffect(() => {
     getProduct();
-  }, []);
+  }, [id]);
 
   return (
     <div className="Product">

@@ -31,65 +31,75 @@ export default function AdminProduct() {
   const [product, setProduct] = useState(null);
   const [categories, setCategories] = useState(null);
 
-  async function getProduct() {
-    if (!id) {
-      setProduct({
-        id: "New product ID",
-        category_id: "select",
-        base_price: "",
-        title: "",
-        description: "",
-        photo: null,
-        stock: "",
-        discontinued: false,
-        featured: false,
-      });
-      return;
-    }
-    try {
-      const response = await fetch(`http://localhost:8000/api/products/${id}`, {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
-      const responseBody = await response.json();
-      if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
-        console.log(errorMessage);
-        return;
-      }
-      setProduct(responseBody);
-    } catch (error) {
-      console.log(error);
-      return;
-    }
-  }
+  useEffect(() => {
+    const newProduct = {
+      id: "New product ID",
+      category_id: "select",
+      base_price: "",
+      title: "",
+      description: "",
+      photo: null,
+      stock: "",
+      discontinued: false,
+      featured: false,
+    };
 
-  async function getCategories() {
-    try {
-      const response = await fetch("http://localhost:8000/api/categories", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
-      const responseBody = await response.json();
-      if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
-        console.log(errorMessage);
+    async function getProduct() {
+      if (!id) {
+        setProduct(newProduct);
         return;
       }
-      setCategories(responseBody.categories);
-    } catch (error) {
-      console.log(error);
-      return;
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/products/${id}`,
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+        const responseBody = await response.json();
+        if (!response.ok) {
+          const errorMessage = responseBody.detail[0].msg;
+          console.log(errorMessage);
+          return;
+        }
+        setProduct(responseBody);
+      } catch (error) {
+        console.log(error);
+        return;
+      }
     }
-  }
+
+    async function getCategories() {
+      try {
+        const response = await fetch("http://localhost:8000/api/categories", {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        });
+        const responseBody = await response.json();
+        if (!response.ok) {
+          const errorMessage = responseBody.detail[0].msg;
+          console.log(errorMessage);
+          return;
+        }
+        setCategories(responseBody.categories);
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    }
+
+    getProduct();
+    getCategories();
+  }, [id]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -163,11 +173,6 @@ export default function AdminProduct() {
       return;
     }
   }
-
-  useEffect(() => {
-    getProduct();
-    getCategories();
-  }, [id]);
 
   return (
     <div className="AdminProduct">

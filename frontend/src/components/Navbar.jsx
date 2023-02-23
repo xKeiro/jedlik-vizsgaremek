@@ -63,7 +63,7 @@ export default function Navbar() {
     } else {
       setUserMenu(userMenu.filter((item) => !item.name.includes(":")));
     }
-  }, [auth.user.name]);
+  }, [auth.user.name, auth.user.is_admin, auth.token, userMenu]);
 
   return (
     <div className="Navbar">
