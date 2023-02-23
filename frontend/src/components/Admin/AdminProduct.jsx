@@ -36,7 +36,7 @@ export default function AdminProduct() {
       setProduct({
         id: "New product ID",
         category_id: "select",
-        sale_price: "",
+        base_price: "",
         title: "",
         description: "",
         photo: null,
@@ -132,7 +132,7 @@ export default function AdminProduct() {
           credentials: "include",
           body: JSON.stringify({
             category_id: product.category_id,
-            sale_price: product.sale_price,
+            base_price: product.base_price,
             title: product.title,
             description: product.description,
             photo: product.photo,
@@ -306,11 +306,11 @@ export default function AdminProduct() {
                   <TextField
                     fullWidth
                     required
-                    label="Sale price"
-                    id="sale_price"
-                    name="sale_price"
+                    label="Base price"
+                    id="base_price"
+                    name="base_price"
                     type="number"
-                    value={product.sale_price}
+                    value={product.base_price}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"

@@ -36,7 +36,7 @@ export default function ProductCard({ product }) {
               {product.stock ? "In stock" : "Out of stock"}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {product.sale_price.toLocaleString("en-US", {
+              {product.base_price.toLocaleString("en-US", {
                 style: "currency",
                 currency: "EUR",
               })}

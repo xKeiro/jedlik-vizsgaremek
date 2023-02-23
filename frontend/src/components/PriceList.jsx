@@ -94,7 +94,7 @@ export default function PriceList() {
                           </Link>
                         </TableCell>
                         <TableCell align="right">
-                          {product.sale_price.toLocaleString("en-US", {
+                          {product.base_price.toLocaleString("en-US", {
                             style: "currency",
                             currency: "EUR",
                           })}
