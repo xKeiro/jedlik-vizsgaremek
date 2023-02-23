@@ -24,6 +24,7 @@ import Admin from "./components/Admin/Admin";
 import AdminHome from "./components/Admin/AdminHome";
 import AdminProducts from "./components/Admin/AdminProducts";
 import AdminProduct from "./components/Admin/AdminProduct";
+import AdminCategories from "./components/Admin/AdminCategories";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -40,6 +41,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import AdminCategory from "./components/Admin/AdminCategory";
 
 function App() {
   const { token, user, login, logout, refresh } = useAuth();
@@ -128,6 +130,11 @@ function App() {
                         <Route path="products" element={<AdminProducts />} />
                         <Route path="product/:id" element={<AdminProduct />} />
                         <Route path="product" element={<AdminProduct />} />
+                        <Route
+                          path="categories"
+                          element={<AdminCategories />}
+                        />
+                        <Route path="category" element={<AdminCategory />} />
                         <Route path="*" element={<AdminHome />} />
                       </Route>
                     )}

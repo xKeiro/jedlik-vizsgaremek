@@ -57,13 +57,13 @@ export default function Navbar() {
       name: `${auth.user.is_admin ? "Admin" : "User"}: ${auth.user.name}`,
       route: "/account",
     };
-    if (auth.token) {
+    if (auth.user.name) {
       setUserMenu(userMenu.filter((item) => !item.name.includes(":")));
       setUserMenu((prevState) => [userPanel, ...prevState]);
     } else {
       setUserMenu(userMenu.filter((item) => !item.name.includes(":")));
     }
-  }, [auth.user.name, auth.user.is_admin, auth.token, userMenu]);
+  }, [auth.user.name, auth.user.is_admin]);
 
   return (
     <div className="Navbar">

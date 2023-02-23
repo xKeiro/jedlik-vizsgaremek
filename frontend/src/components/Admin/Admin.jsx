@@ -16,8 +16,8 @@ export default function Admin() {
     { name: "Products", route: "/admin/products" },
     { name: "Categories", route: "/admin/categories" },
     { name: "Suppliers", route: "/admin/suppliers" },
-    { name: "Users", route: "/admin/users" },
     { name: "Reviews", route: "/admin/reviews" },
+    { name: "Users", route: "/admin/users" },
   ];
 
   const location = useLocation();
