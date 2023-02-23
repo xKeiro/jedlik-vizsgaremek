@@ -22,9 +22,7 @@ export default function ProductCard({ product }) {
             component="img"
             height="150"
             image={
-              product.photo
-                ? product.photo
-                : "https://placeimg.com/400/150/tech"
+              product.photo ? product.photo : "https://placehold.co/400x150/png"
             }
             alt={product.title}
           />

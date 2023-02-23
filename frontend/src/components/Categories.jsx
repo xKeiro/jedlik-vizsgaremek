@@ -71,7 +71,7 @@ export default function Categories() {
                       image={
                         category.photo
                           ? category.photo
-                          : "https://placeimg.com/600/150/tech"
+                          : "https://placehold.co/600x150/png"
                       }
                       alt={category.title}
                     />
