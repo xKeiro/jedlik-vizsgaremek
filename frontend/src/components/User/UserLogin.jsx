@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
-import AlertMessage from "./AlertMessage";
+import { AuthContext } from "../../contexts/AuthContext";
+import AlertMessage from "../AlertMessage";
 
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -12,7 +12,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function Login() {
+export default function UserLogin() {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
 

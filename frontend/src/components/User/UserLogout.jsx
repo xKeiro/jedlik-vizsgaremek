@@ -3,10 +3,10 @@ import { Box } from "@mui/system";
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
-import AlertMessage from "./AlertMessage";
+import { AuthContext } from "../../contexts/AuthContext";
+import AlertMessage from "../AlertMessage";
 
-export default function Logout() {
+export default function UserLogout() {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
 

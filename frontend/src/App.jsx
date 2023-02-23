@@ -8,18 +8,18 @@ import { useAuth } from "./hooks/AuthHook";
 import { ColorModeContext } from "./contexts/ColorModeContext";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./components/Home";
 import Categories from "./components/Categories";
 import Category from "./components/Category";
 import PriceList from "./components/PriceList";
 import Product from "./components/Product";
 import Contact from "./components/Contact";
-import Registration from "./components/Registration";
-import Login from "./components/Login";
-import Logout from "./components/Logout";
-import Account from "./components/Account";
-import Orders from "./components/Orders";
-import Footer from "./components/Footer";
+import UserLogin from "./components/User/UserLogin";
+import UserLogout from "./components/User/UserLogout";
+import UserRegistration from "./components/User/UserRegistration";
+import UserAccount from "./components/User/UserAccount";
+import UserOrders from "./components/User/UserOrders";
 import Admin from "./components/Admin/Admin";
 import AdminHome from "./components/Admin/AdminHome";
 import AdminProducts from "./components/Admin/AdminProducts";
@@ -114,14 +114,14 @@ function App() {
                     <Route path="categories" element={<Categories />} />
                     <Route path="category/:id" element={<Category />} />
                     <Route path="contact" element={<Contact />} />
-                    <Route path="registration" element={<Registration />} />
-                    {!token && <Route path="login" element={<Login />} />}
+                    <Route path="registration" element={<UserRegistration />} />
+                    {!token && <Route path="login" element={<UserLogin />} />}
 
                     {token && (
                       <>
-                        <Route path="account" element={<Account />} />
-                        <Route path="orders" element={<Orders />} />
-                        <Route path="logout" element={<Logout />} />
+                        <Route path="account" element={<UserAccount />} />
+                        <Route path="orders" element={<UserOrders />} />
+                        <Route path="logout" element={<UserLogout />} />
                       </>
                     )}
                     {token && user.is_admin && (

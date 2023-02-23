@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Orders() {
+export default function UserOrders() {
   return (
     <div className="Orders">
       <div>
