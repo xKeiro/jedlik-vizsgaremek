@@ -15,6 +15,7 @@ import Category from "./components/Category";
 import PriceList from "./components/PriceList";
 import Product from "./components/Product";
 import Contact from "./components/Contact";
+import Cart from "./components/Cart";
 import UserLogin from "./components/User/UserLogin";
 import UserLogout from "./components/User/UserLogout";
 import UserRegistration from "./components/User/UserRegistration";
@@ -28,6 +29,10 @@ import AdminProducts from "./components/Admin/AdminProducts";
 import AdminProduct from "./components/Admin/AdminProduct";
 import AdminCategories from "./components/Admin/AdminCategories";
 import AdminCategory from "./components/Admin/AdminCategory";
+import AdminSuppliers from "./components/Admin/AdminSuppliers";
+import AdminShippers from "./components/Admin/AdminShippers";
+import AdminReviews from "./components/Admin/AdminReviews";
+import AdminUsers from "./components/Admin/AdminUsers";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -117,6 +122,7 @@ function App() {
                     <Route path="category/:id" element={<Category />} />
                     <Route path="contact" element={<Contact />} />
                     <Route path="registration" element={<UserRegistration />} />
+                    <Route path="cart" element={<Cart />} />
                     {!token && <Route path="login" element={<UserLogin />} />}
 
                     {token && (
@@ -144,6 +150,10 @@ function App() {
                           element={<AdminCategory />}
                         />
                         <Route path="category" element={<AdminCategory />} />
+                        <Route path="suppliers" element={<AdminSuppliers />} />
+                        <Route path="shippers" element={<AdminShippers />} />
+                        <Route path="reviews" element={<AdminReviews />} />
+                        <Route path="users" element={<AdminUsers />} />
                         <Route path="*" element={<AdminHome />} />
                       </Route>
                     )}

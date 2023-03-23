@@ -16,9 +16,10 @@ export default function Admin() {
     { name: "Orders", route: "/admin/orders" },
     { name: "Products", route: "/admin/products" },
     { name: "Categories", route: "/admin/categories" },
-    { name: "Suppliers", route: "/admin/suppliers" },
-    { name: "Reviews", route: "/admin/reviews" },
-    { name: "Users", route: "/admin/users" },
+    { name: "Suppliers (WIP)", route: "/admin/suppliers" },
+    { name: "Shippers (WIP)", route: "/admin/shippers" },
+    { name: "Reviews (WIP)", route: "/admin/reviews" },
+    { name: "Users (WIP)", route: "/admin/users" },
   ];
 
   const location = useLocation();

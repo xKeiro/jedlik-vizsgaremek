@@ -1,4 +1,5 @@
 import React from "react";
+import Box from "@mui/material/Box";
 
 export default function Contact() {
   return (
@@ -6,7 +7,16 @@ export default function Contact() {
       <div>
         <h2>Contact Us</h2>
       </div>
-      <div>
+      <Box
+        className="Contact__Box"
+        sx={{
+          margin: "20px",
+          display: "flex",
+          flexWrap: "wrap",
+          flexDirection: "column",
+          alignContent: "center",
+        }}
+      >
         <div>
           <p>
             Thank you for visiting our webshop. We value your feedback and are
@@ -22,11 +32,11 @@ export default function Contact() {
         <p>Email address: info@itwebshop.hu</p>
         <p>Phone: +36555479368</p>
         <p>
-          Address: Mosonmagyaróvár, Some street 66.
+          Address: Győr, Some street 66.
           <br />
-          9200 Hungary
+          9000 Hungary
         </p>
-      </div>
+      </Box>
     </div>
   );
 }

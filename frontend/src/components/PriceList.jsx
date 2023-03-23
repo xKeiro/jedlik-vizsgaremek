@@ -45,12 +45,12 @@ export default function PriceList() {
   }, []);
 
   return (
-    <div className="Products">
+    <div className="PriceList">
       <div>
         <h2>Price list</h2>
       </div>
       <Box
-        className="Products__Box"
+        className="PriceList__Box"
         sx={{
           margin: "20px",
           display: "flex",

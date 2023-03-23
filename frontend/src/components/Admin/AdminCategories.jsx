@@ -112,7 +112,7 @@ export default function AdminCategories() {
                             to={"/admin/category/" + category.id}
                             disabled={true} // todo: no category id endpoint
                           >
-                            Edit (no category id endpoint yet)
+                            Edit (WIP)
                           </Button>
                         </TableCell>
                       </TableRow>

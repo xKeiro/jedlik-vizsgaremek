@@ -49,7 +49,7 @@ export default function Category() {
   return (
     <div className="Category">
       <Box
-        className="Categories__Box"
+        className="Category__Box"
         sx={{
           margin: "20px",
           display: "flex",

@@ -15,6 +15,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default function Navbar() {
   const auth = useContext(AuthContext);
@@ -192,10 +193,20 @@ export default function Navbar() {
                   ))
                 : ""}
             </Box>
+            <Box sx={{ flexGrow: 0 }} component={RouterLink} to={"/cart"}>
+              <IconButton
+                color="primary"
+                aria-label="cart"
+                component="span"
+                sx={{ px: 1, color: "inherit" }}
+              >
+                <ShoppingCartIcon />
+              </IconButton>
+            </Box>
             {auth.token ? (
               <>
                 <Box sx={{ flexGrow: 0 }}>
-                  <Tooltip title="Open user menu">
+                  <Tooltip title="Open User Menu">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar alt={auth.user.name} src={auth.user.photo} />
                     </IconButton>
@@ -233,13 +244,22 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Button
+                <Tooltip title="Login or Register">
+                  <IconButton
+                    component={RouterLink}
+                    to={"/login"}
+                    sx={{ p: 0 }}
+                  >
+                    <Avatar alt={""} src={""} />
+                  </IconButton>
+                </Tooltip>
+                {/* <Button
                   component={RouterLink}
                   to={"/login"}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
                   {"Login"}
-                </Button>
+                </Button> */}
               </>
             )}
           </Toolbar>
