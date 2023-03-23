@@ -1,9 +1,11 @@
 import { useState, useCallback, useEffect } from "react";
 import Cookies from "js-cookie";
 
+import AuthContext from "../contexts/AuthContext";
+
 let refreshTimer;
 
-export const useAuth = () => {
+const AuthService = (props) => {
   const [token, setToken] = useState(null);
   const [tokenExpDate, setTokenExpDate] = useState(null);
   const [user, setUser] = useState({
@@ -129,5 +131,18 @@ export const useAuth = () => {
     }
   }, [token, refresh, tokenExpDate]);
 
-  return { token, user, login, logout, refresh };
+  return (
+    <AuthContext.Provider
+      value={{
+        token: token,
+        user: user,
+        login: login,
+        logout: logout,
+      }}
+    >
+      {props.children}
+    </AuthContext.Provider>
+  );
 };
+
+export default AuthService;

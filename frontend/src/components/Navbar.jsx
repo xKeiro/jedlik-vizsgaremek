@@ -1,7 +1,8 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
+import AuthContext from "../contexts/AuthContext";
+import CartContext from "../contexts/CartContext";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,9 +17,11 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Badge from "@mui/material/Badge";
 
 export default function Navbar() {
   const auth = useContext(AuthContext);
+  const shop = useContext(CartContext);
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -198,9 +201,11 @@ export default function Navbar() {
                 color="primary"
                 aria-label="cart"
                 component="span"
-                sx={{ px: 1, color: "inherit" }}
+                sx={{ pr: 2, color: "white" }}
               >
-                <ShoppingCartIcon />
+                <Badge badgeContent={shop.cart.length} color="primary">
+                  <ShoppingCartIcon />
+                </Badge>
               </IconButton>
             </Box>
             {auth.token ? (
