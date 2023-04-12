@@ -13,8 +13,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import { grey } from "@mui/material/colors/";
-import { deepOrange } from "@mui/material/colors/";
+import { grey, blue } from "@mui/material/colors/";
 
 //import customTheme from "./theme";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -51,8 +50,8 @@ function App() {
       ...(mode === "light"
         ? {
             // palette values for light mode
-            primary: deepOrange,
-            divider: deepOrange[700],
+            primary: blue,
+            divider: blue[700],
             background: {
               default: grey[300],
               paper: grey[50],
@@ -60,8 +59,8 @@ function App() {
           }
         : {
             // palette values for dark mode
-            primary: deepOrange,
-            divider: deepOrange[700],
+            primary: blue,
+            divider: blue[700],
           }),
     },
   });

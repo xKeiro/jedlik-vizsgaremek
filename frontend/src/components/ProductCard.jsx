@@ -19,17 +19,24 @@ export default function ProductCard({ product }) {
         key={product.id}
         sx={
           product.featured
-            ? { maxWidth: 400, border: 1, borderColor: "primary.main" }
-            : { maxWidth: 400 }
+            ? {
+                border: "1px solid",
+                borderColor: "primary.main",
+                minWidth: 350,
+                maxWidth: 400,
+              }
+            : {
+                border: "1px solid transparent",
+                minWidth: 350,
+                maxWidth: 400,
+              }
         }
       >
         <CardActionArea component={RouterLink} to={"/product/" + product.id}>
           <CardMedia
             component="img"
             height="150"
-            image={
-              product.photo ? product.photo : "https://placehold.co/400x150/png"
-            }
+            image="/images/placeholder.png"
             alt={product.title}
           />
           <CardContent>

@@ -68,11 +68,7 @@ export default function Categories() {
                     <CardMedia
                       component="img"
                       height="150"
-                      image={
-                        category.photo
-                          ? category.photo
-                          : "https://placehold.co/600x150/png"
-                      }
+                      image="/images/placeholder.png"
                       alt={category.title}
                     />
                     <CardContent>

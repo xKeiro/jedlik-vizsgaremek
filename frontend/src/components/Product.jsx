@@ -75,17 +75,13 @@ export default function Product() {
               {product ? (
                 <>
                   <div>
-                    <h2>{product ? product.title : "Product"}</h2>
+                    <h2>Product</h2>
                   </div>
                   <Card key={product.id} sx={{ maxWidth: "800px" }}>
                     <CardMedia
+                      sx={{ height: 400 }}
                       component="img"
-                      height="400"
-                      image={
-                        product.photo
-                          ? product.photo
-                          : "https://placehold.co/800x400/png"
-                      }
+                      image={"/images/placeholder.png"}
                       alt={product.title}
                     />
                     <CardContent>

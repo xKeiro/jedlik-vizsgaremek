@@ -10,8 +10,9 @@ export default function Header() {
       <Paper>
         <Box sx={{ marginY: 2 }}>
           <CardMedia
+            height="150px"
             component="img"
-            src="https://placehold.co/1200x120/png"
+            image="/images/header.jpg"
           ></CardMedia>
         </Box>
       </Paper>
