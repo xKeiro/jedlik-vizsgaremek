@@ -1,6 +1,9 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
+import CategoryBar from "./CategoryBar";
+import CartContext from "../contexts/CartContext";
+
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -9,10 +12,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActions } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import CategoryBar from "./CategoryBar";
 
 export default function Product() {
   const { id } = useParams();
+  const cart = useContext(CartContext);
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -107,6 +110,7 @@ export default function Product() {
                         size="small"
                         color="primary"
                         disabled={product.stock ? false : true}
+                        onClick={() => cart.addProductToCart(product)}
                       >
                         Add to cart
                       </Button>

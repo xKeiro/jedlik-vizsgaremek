@@ -15,19 +15,19 @@ const CartService = (props) => {
   const addProductToCart = (product) => {
     setTimeout(() => {
       dispatch({ type: ADD_PRODUCT, product: product });
-    }, 10);
+    }, 100);
   };
 
   const removeProductFromCart = (productId) => {
     setTimeout(() => {
       dispatch({ type: REMOVE_PRODUCT, productId: productId });
-    }, 10);
+    }, 100);
   };
 
   const removeProductsFromCart = (productId) => {
     setTimeout(() => {
       dispatch({ type: REMOVE_PRODUCTS, productId: productId });
-    }, 10);
+    }, 100);
   };
 
   return (
