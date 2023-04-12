@@ -197,16 +197,18 @@ export default function Navbar() {
                 : ""}
             </Box>
             <Box sx={{ flexGrow: 0 }} component={RouterLink} to={"/cart"}>
-              <IconButton
-                color="primary"
-                aria-label="cart"
-                component="span"
-                sx={{ pr: 2, color: "white" }}
-              >
-                <Badge badgeContent={shop.cart.length} color="primary">
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
+              <Tooltip title="Cart">
+                <IconButton
+                  color="primary"
+                  aria-label="cart"
+                  component="span"
+                  sx={{ pr: 2, color: "white" }}
+                >
+                  <Badge badgeContent={shop.cart.length} color="primary">
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
             </Box>
             {auth.token ? (
               <>

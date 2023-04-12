@@ -13,8 +13,8 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import grey from "@mui/material/colors/grey";
-import deepOrange from "@mui/material/colors/deepOrange";
+import { grey } from "@mui/material/colors/";
+import { deepOrange } from "@mui/material/colors/";
 
 //import customTheme from "./theme";
 import useMediaQuery from "@mui/material/useMediaQuery";
