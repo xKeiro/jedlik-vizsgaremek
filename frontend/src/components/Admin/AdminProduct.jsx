@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import AlertMessage from "../AlertMessage";
 
+import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -176,9 +177,11 @@ export default function AdminProduct() {
 
   return (
     <div className="AdminProduct">
-      <div>
-        <h3>{id ? "Product Editor" : "Add new product"}</h3>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h3>{id ? "Product Editor" : "Add new product"}</h3>
+        </Paper>
+      </Box>
       <Box
         className="AdminProduct__Form"
         sx={{

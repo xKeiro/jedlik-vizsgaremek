@@ -4,7 +4,8 @@ import { Link as RouterLink } from "react-router-dom";
 import AlertMessage from "../AlertMessage";
 import UserForm from "./UserForm";
 
-import { Link } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -100,9 +101,11 @@ export default function UserRegistration() {
 
   return (
     <div className="Registration">
-      <div>
-        <h2>Registration Form</h2>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h2>Registration</h2>
+        </Paper>
+      </Box>
       <Box
         className="Registration__Form"
         sx={{
@@ -119,40 +122,42 @@ export default function UserRegistration() {
           alignItems="center"
           spacing={2}
         >
-          <Grid item xs={11} md={8}>
-            {successText && (
-              <AlertMessage type="success" message={successText} />
-            )}
-            {errorText && <AlertMessage type="error" message={errorText} />}
-            {isLoading ? (
-              <CircularProgress />
-            ) : (
-              <Grid container spacing={1}>
-                <UserForm
-                  userForm={userForm}
-                  setUserForm={setUserForm}
-                  isNew={true}
-                />
-                <Grid item xs={12} md={12}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{ marginY: "20px", paddingY: "10px" }}
-                    onClick={handleUserRegistration}
-                  >
-                    Register
-                  </Button>
-                </Grid>
+          <Grid item xs={11} md={9}>
+            <Paper elevation={2}>
+              {successText && (
+                <AlertMessage type="success" message={successText} />
+              )}
+              {errorText && <AlertMessage type="error" message={errorText} />}
+              {isLoading ? (
+                <CircularProgress />
+              ) : (
+                <Grid container spacing={0} padding={2} marginY={2}>
+                  <UserForm
+                    userForm={userForm}
+                    setUserForm={setUserForm}
+                    isNew={true}
+                  />
+                  <Grid item xs={12} md={12}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      sx={{ marginY: "20px", paddingY: "10px" }}
+                      onClick={handleUserRegistration}
+                    >
+                      Register
+                    </Button>
+                  </Grid>
 
-                <Grid item xs={12} md={12}>
-                  <span>Already have an account? </span>
-                  <Link component={RouterLink} to={"/login"}>
-                    Log in
-                  </Link>
-                  <span>.</span>
+                  <Grid item xs={12} md={12}>
+                    <span>Already have an account? </span>
+                    <Link component={RouterLink} to={"/login"}>
+                      Log in
+                    </Link>
+                    <span>.</span>
+                  </Grid>
                 </Grid>
-              </Grid>
-            )}
+              )}
+            </Paper>
           </Grid>
         </Grid>
       </Box>

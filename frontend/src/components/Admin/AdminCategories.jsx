@@ -48,9 +48,11 @@ export default function AdminCategories() {
 
   return (
     <div className="AdminCategories">
-      <div>
-        <h3>Categories Editor</h3>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h3>Categories Management</h3>
+        </Paper>
+      </Box>
       <Box
         className="AdminCategories__Box"
         sx={{

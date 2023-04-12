@@ -1,10 +1,12 @@
-import { CircularProgress } from "@mui/material";
-import { Box } from "@mui/system";
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import AlertMessage from "../AlertMessage";
+
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function UserLogout() {
   const navigate = useNavigate();
@@ -53,7 +55,11 @@ export default function UserLogout() {
 
   return (
     <div className="Logout">
-      <h2>Logging Out...</h2>
+      <Box>
+        <Paper elevation={2}>
+          <h2>Logging out...</h2>
+        </Paper>
+      </Box>
       <Box>
         {errorText && <AlertMessage type="error" message={errorText} />}
         {isLoading ? <CircularProgress /> : ""}

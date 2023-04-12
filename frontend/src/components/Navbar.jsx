@@ -189,7 +189,7 @@ export default function Navbar() {
                       onClick={handleCloseNavMenu}
                       component={RouterLink}
                       to={page.route}
-                      sx={{ my: 2, color: "primary", display: "block" }}
+                      sx={{ my: 2, color: "orange", display: "block" }}
                     >
                       {page.name}
                     </Button>

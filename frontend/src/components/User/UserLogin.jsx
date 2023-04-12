@@ -5,6 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import AlertMessage from "../AlertMessage";
 
+import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -71,9 +72,11 @@ export default function UserLogin() {
 
   return (
     <div className="Login">
-      <div>
-        <h2>Login page</h2>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h2>Login Page</h2>
+        </Paper>
+      </Box>
       <Box
         className="Login__Form"
         sx={{
@@ -90,58 +93,60 @@ export default function UserLogin() {
           alignItems="center"
           spacing={2}
         >
-          <Grid item xs={11} md={4}>
-            {errorText && <AlertMessage type="error" message={errorText} />}
-            {isLoading ? (
-              <CircularProgress />
-            ) : (
-              <Grid container spacing={1}>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Username / Email"
-                    id="user"
-                    name="user"
-                    type="text"
-                    value={loginUser}
-                    onChange={(e) => setLoginUser(e.target.value)}
-                  />
-                </Grid>
+          <Grid item xs={11} md={5}>
+            <Paper elevation={3}>
+              {errorText && <AlertMessage type="error" message={errorText} />}
+              {isLoading ? (
+                <CircularProgress />
+              ) : (
+                <Grid container spacing={2} padding={2} marginY={2}>
+                  <Grid item xs={12} md={12}>
+                    <TextField
+                      fullWidth
+                      required
+                      label="Username / Email"
+                      id="user"
+                      name="user"
+                      type="text"
+                      value={loginUser}
+                      onChange={(e) => setLoginUser(e.target.value)}
+                    />
+                  </Grid>
 
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Password"
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                  />
-                </Grid>
+                  <Grid item xs={12} md={12}>
+                    <TextField
+                      fullWidth
+                      required
+                      label="Password"
+                      id="password"
+                      name="password"
+                      type="password"
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
+                    />
+                  </Grid>
 
-                <Grid item xs={12} md={12}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{ marginY: "20px", paddingY: "10px" }}
-                    onClick={handleLogin}
-                  >
-                    Login
-                  </Button>
-                </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      sx={{ marginY: "20px", paddingY: "10px" }}
+                      onClick={handleLogin}
+                    >
+                      Login
+                    </Button>
+                  </Grid>
 
-                <Grid item xs={12} md={12}>
-                  <span>Don't have an account? </span>
-                  <Link component={RouterLink} to={"/registration"}>
-                    Register
-                  </Link>
-                  <span>.</span>
+                  <Grid item xs={12} md={12}>
+                    <span>Don't have an account? </span>
+                    <Link component={RouterLink} to={"/registration"}>
+                      Register
+                    </Link>
+                    <span>.</span>
+                  </Grid>
                 </Grid>
-              </Grid>
-            )}
+              )}
+            </Paper>
           </Grid>
         </Grid>
       </Box>

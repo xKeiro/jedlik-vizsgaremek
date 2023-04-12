@@ -34,7 +34,6 @@ export default function AdminOrders() {
         console.log(errorMessage);
         return;
       }
-      console.log(responseBody.orders);
       setOrders(responseBody.orders);
     } catch (error) {
       console.log(error);
@@ -48,9 +47,11 @@ export default function AdminOrders() {
 
   return (
     <div className="AdminOrders">
-      <div>
-        <h3>Orders</h3>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h3>Orders management</h3>
+        </Paper>
+      </Box>
       <Box
         className="AdminOrders__Box"
         sx={{

@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -11,7 +12,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function PriceList() {
@@ -46,9 +46,11 @@ export default function PriceList() {
 
   return (
     <div className="PriceList">
-      <div>
-        <h2>Price list</h2>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h2>Price List</h2>
+        </Paper>
+      </Box>
       <Box
         className="PriceList__Box"
         sx={{

@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import CartContext from "../contexts/CartContext";
 
+import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -22,48 +23,49 @@ export default function ProductCard({ product }) {
             ? {
                 border: "1px solid",
                 borderColor: "primary.main",
-                minWidth: 350,
                 maxWidth: 400,
+                width: "auto",
               }
             : {
                 border: "1px solid transparent",
-                minWidth: 350,
                 maxWidth: 400,
               }
         }
       >
-        <CardActionArea component={RouterLink} to={"/product/" + product.id}>
-          <CardMedia
-            component="img"
-            height="150"
-            image="/images/placeholder.png"
-            alt={product.title}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {product.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {product.stock ? "In stock" : "Out of stock"}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {product.base_price.toLocaleString("en-US", {
-                style: "currency",
-                currency: "EUR",
-              })}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button
-            size="small"
-            color="primary"
-            disabled={product.stock ? false : true}
-            onClick={() => cart.addProductToCart(product)}
-          >
-            Add to cart
-          </Button>
-        </CardActions>
+        <Paper elevation={3}>
+          <CardActionArea component={RouterLink} to={"/product/" + product.id}>
+            <CardMedia
+              component="img"
+              height="150"
+              image="/images/placeholder.png"
+              alt={product.title}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {product.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {product.stock ? "In stock" : "Out of stock"}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {product.base_price.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "EUR",
+                })}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Button
+              size="small"
+              color="primary"
+              disabled={product.stock ? false : true}
+              onClick={() => cart.addProductToCart(product)}
+            >
+              Add to cart
+            </Button>
+          </CardActions>
+        </Paper>
       </Card>
     </>
   );

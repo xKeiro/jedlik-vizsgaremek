@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ProductCard from "./ProductCard";
 
+import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -63,11 +64,14 @@ export default function Category() {
           direction="row-reverse"
           justifyContent="center"
           spacing={2}
+          sx={{ marginBottom: 3 }}
         >
           <Grid item xs={12} md={9}>
-            <div>
-              <h2>{"Products in this category"}</h2>
-            </div>
+            <Box>
+              <Paper elevation={2}>
+                <h3>Products in this category</h3>
+              </Paper>
+            </Box>
             <Grid container direction="row" spacing={2}>
               {products ? (
                 products.map((product) => (

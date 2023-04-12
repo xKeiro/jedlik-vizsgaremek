@@ -41,7 +41,7 @@ export default function Layout() {
     <Container>
       <Header />
       <Navbar />
-      <Paper>
+      <Paper elevation={1}>
         <Box className="Content" sx={{ minHeight: "60vh" }}>
           <Routes>
             <Route index element={<Home />} />

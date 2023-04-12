@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import CategoryBar from "./CategoryBar";
 import CartContext from "../contexts/CartContext";
 
+import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -70,47 +71,52 @@ export default function Product() {
             direction="row-reverse"
             justifyContent="center"
             spacing={2}
+            sx={{ marginBottom: 3 }}
           >
             <Grid item xs={12} md={9}>
               {product ? (
                 <>
-                  <div>
-                    <h2>Product</h2>
-                  </div>
-                  <Card key={product.id} sx={{ maxWidth: "800px" }}>
-                    <CardMedia
-                      sx={{ height: 400 }}
-                      component="img"
-                      image={"/images/placeholder.png"}
-                      alt={product.title}
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {product.title}
-                      </Typography>
-                      <Typography gutterBottom variant="h6" component="div">
-                        {product.description}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {product.stock ? "In stock" : "Out of stock"}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {product.base_price.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "EUR",
-                        })}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button
-                        size="small"
-                        color="primary"
-                        disabled={product.stock ? false : true}
-                        onClick={() => cart.addProductToCart(product)}
-                      >
-                        Add to cart
-                      </Button>
-                    </CardActions>
+                  <Box>
+                    <Paper elevation={2}>
+                      <h3>Product</h3>
+                    </Paper>
+                  </Box>
+                  <Card key={product.id}>
+                    <Paper elevation={3}>
+                      <CardMedia
+                        sx={{ height: 400 }}
+                        component="img"
+                        image={"/images/placeholder.png"}
+                        alt={product.title}
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {product.title}
+                        </Typography>
+                        <Typography gutterBottom variant="h6" component="div">
+                          {product.description}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {product.stock ? "In stock" : "Out of stock"}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {product.base_price.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                          })}
+                        </Typography>
+                      </CardContent>
+                      <CardActions>
+                        <Button
+                          size="small"
+                          color="primary"
+                          disabled={product.stock ? false : true}
+                          onClick={() => cart.addProductToCart(product)}
+                        >
+                          Add to cart
+                        </Button>
+                      </CardActions>
+                    </Paper>
                   </Card>
                 </>
               ) : (

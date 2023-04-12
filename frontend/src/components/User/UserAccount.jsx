@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import AlertMessage from "../AlertMessage";
 import UserForm from "./UserForm";
 
+import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -33,7 +34,6 @@ export default function UserAccount() {
           console.log(errorMessage);
           return;
         }
-        console.log(responseBody);
         setUser(responseBody);
       } catch (error) {
         console.log(error);
@@ -124,9 +124,11 @@ export default function UserAccount() {
 
   return (
     <div className="Account">
-      <div>
-        <h2>Account</h2>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h2>Your Account</h2>
+        </Paper>
+      </Box>
       <Box
         className="Account__Form"
         sx={{
@@ -143,34 +145,37 @@ export default function UserAccount() {
           alignItems="center"
           spacing={2}
         >
-          <Grid item xs={11} md={8}>
-            {successText && (
-              <AlertMessage type="success" message={successText} />
-            )}
-            {errorText && <AlertMessage type="error" message={errorText} />}
-            {isLoading ? (
-              <CircularProgress />
-            ) : (
-              <Grid container spacing={1}>
-                {userForm && (
-                  <UserForm
-                    userForm={userForm}
-                    setUserForm={setUserForm}
-                    isNew={false}
-                  />
-                )}
-                <Grid item xs={12} md={12}>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{ marginY: "20px", paddingY: "10px" }}
-                    onClick={handleUserUpdate}
-                  >
-                    Save
-                  </Button>
+          <Grid item xs={11} md={9}>
+            <Paper elevation={3}>
+              {" "}
+              {successText && (
+                <AlertMessage type="success" message={successText} />
+              )}
+              {errorText && <AlertMessage type="error" message={errorText} />}
+              {isLoading ? (
+                <CircularProgress />
+              ) : (
+                <Grid container spacing={0} padding={2} marginY={2}>
+                  {userForm && (
+                    <UserForm
+                      userForm={userForm}
+                      setUserForm={setUserForm}
+                      isNew={false}
+                    />
+                  )}
+                  <Grid item xs={12} md={12}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      sx={{ marginY: "20px", paddingY: "10px" }}
+                      onClick={handleUserUpdate}
+                    >
+                      Save
+                    </Button>
+                  </Grid>
                 </Grid>
-              </Grid>
-            )}
+              )}
+            </Paper>
           </Grid>
         </Grid>
       </Box>

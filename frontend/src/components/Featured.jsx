@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 
+import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -41,9 +42,11 @@ export default function Featured() {
 
   return (
     <div className="Featured">
-      <div>
-        <h3>Featured Products</h3>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h3>Featured Products</h3>
+        </Paper>
+      </Box>
       <div className="Category">
         <Box
           className="Featured__Box"
@@ -61,6 +64,7 @@ export default function Featured() {
             justifyContent="center"
             alignItems="center"
             spacing={2}
+            sx={{ maxWidth: 340 }}
           >
             {products ? (
               products.map((product) => (

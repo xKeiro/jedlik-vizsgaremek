@@ -1,14 +1,18 @@
 import React from "react";
+import Featured from "./Featured";
+
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Featured from "./Featured";
+import Paper from "@mui/material/Paper";
 
 export default function Home() {
   return (
     <div className="Home">
-      <div>
-        <h2>Welcome to the shop!</h2>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h2>Welcome to the shop!</h2>
+        </Paper>
+      </Box>
       <Box
         className="Home__Box"
         sx={{
@@ -20,9 +24,13 @@ export default function Home() {
         }}
       >
         <Grid container direction="row" justifyContent="center" spacing={2}>
-          <Grid item md={6} xs={12}>
+          <Grid item md={7} xs={12}>
             <Box>
-              <h3>ITWebshop News</h3>
+              <Paper elevation={2}>
+                <h3>ITWebshop News</h3>
+              </Paper>
+            </Box>
+            <Box>
               <p>
                 Welcome to our webshop, where we specialize in providing
                 high-quality PC components for all your building and upgrading
@@ -39,8 +47,12 @@ export default function Home() {
                 system!
               </p>
             </Box>
-            <Box marginY={20}>
-              <h3>About Us</h3>
+            <Box marginTop={20}>
+              <Paper elevation={2}>
+                <h3>About Us</h3>
+              </Paper>
+            </Box>
+            <Box>
               <p>
                 Our webshop is dedicated to providing PC enthusiasts with a wide
                 selection of high-quality components at competitive prices. We
@@ -65,7 +77,7 @@ export default function Home() {
               </p>
             </Box>
           </Grid>
-          <Grid item md={6} xs={12}>
+          <Grid item md={5} xs={12}>
             <Featured />
           </Grid>
         </Grid>

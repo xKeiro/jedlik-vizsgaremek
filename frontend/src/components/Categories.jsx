@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -43,9 +44,11 @@ export default function Categories() {
 
   return (
     <div className="Categories">
-      <div>
-        <h2>Categories</h2>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h2>Product Categories</h2>
+        </Paper>
+      </Box>
       <Box
         className="Categories__Box"
         sx={{
@@ -60,26 +63,28 @@ export default function Categories() {
           {categories ? (
             categories.map((category) => (
               <Grid item key={category.id} xs={12} md={6}>
-                <Card sx={{ maxWidth: 800, minHeight: 320 }}>
-                  <CardActionArea
-                    component={RouterLink}
-                    to={"/category/" + category.id}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="150"
-                      image="/images/placeholder.png"
-                      alt={category.title}
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {category.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {category.description}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
+                <Card>
+                  <Paper elevation={3}>
+                    <CardActionArea
+                      component={RouterLink}
+                      to={"/category/" + category.id}
+                    >
+                      <CardMedia
+                        component="img"
+                        height="150"
+                        image="/images/placeholder.png"
+                        alt={category.title}
+                      />
+                      <CardContent sx={{ minHeight: 160 }}>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {category.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {category.description}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Paper>
                 </Card>
               </Grid>
             ))

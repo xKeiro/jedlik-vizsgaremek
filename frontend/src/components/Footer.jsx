@@ -10,14 +10,15 @@ import { useTheme } from "@mui/material/styles";
 export default function Footer() {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
+  const currentYear = new Date().getFullYear();
   return (
     <div className="Footer">
       <Box sx={{ marginTop: "20px" }}>
-        <div>
+        <Box>
           <span>
-            <small>2022 ITwebshop Kft. All rights reserved.</small>
+            <small>{currentYear} ITwebshop Kft. All rights reserved.</small>
           </span>
-        </div>
+        </Box>
       </Box>
       <IconButton
         sx={{ ml: 1 }}

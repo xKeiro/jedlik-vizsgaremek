@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import AlertMessage from "../AlertMessage";
 
+import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -135,9 +136,11 @@ export default function AdminCategory() {
 
   return (
     <div className="AdminCategory">
-      <div>
-        <h3>{id ? "Category Editor" : "Add new category"}</h3>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h3>{id ? "Category Editor" : "Add new category"}</h3>
+        </Paper>
+      </Box>
       <Box
         className="AdminCategory__Form"
         sx={{

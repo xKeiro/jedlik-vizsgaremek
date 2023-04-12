@@ -74,9 +74,11 @@ export default function AdminProducts() {
 
   return (
     <div className="AdminProducts">
-      <div>
-        <h3>Products Editor</h3>
-      </div>
+      <Box>
+        <Paper elevation={2}>
+          <h3>Products Management</h3>
+        </Paper>
+      </Box>
       <Box
         className="AdminProducts__Box"
         sx={{
