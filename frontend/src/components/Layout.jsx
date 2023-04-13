@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
-
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-
 import AuthContext from "../contexts/AuthContext";
+
 import Header from "./Header";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -35,8 +32,17 @@ import AdminShippers from "./Admin/AdminShippers";
 import AdminReviews from "./Admin/AdminReviews";
 import AdminUsers from "./Admin/AdminUsers";
 
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+
 export default function Layout() {
   const auth = useContext(AuthContext);
+
+  useEffect(() => {
+    document.title = "ITwebshop";
+  }, []);
+
   return (
     <Container>
       <Header />

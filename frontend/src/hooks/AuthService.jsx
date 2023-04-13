@@ -80,15 +80,6 @@ const AuthService = (props) => {
     Cookies.remove("logged_in");
   }, []);
 
-  const refresh = useCallback(async () => {
-    const newToken = await refreshToken();
-    if (newToken) {
-      login(newToken);
-    } else {
-      logout();
-    }
-  }, [login, logout]);
-
   async function refreshToken() {
     try {
       const response = await fetch("http://localhost:8000/api/auth/refresh", {
@@ -112,6 +103,15 @@ const AuthService = (props) => {
     }
   }
 
+  const refresh = useCallback(async () => {
+    const newToken = await refreshToken();
+    if (newToken) {
+      login(newToken);
+    } else {
+      logout();
+    }
+  }, [login, logout]);
+
   function jwtDecode(jwtString) {
     let token = {};
     token.raw = jwtString;
@@ -119,6 +119,11 @@ const AuthService = (props) => {
     token.payload = JSON.parse(window.atob(jwtString.split(".")[1]));
     return token;
   }
+
+  useEffect(() => {
+    const loggedInCookieFound = Cookies.get("logged_in");
+    if (loggedInCookieFound) refresh();
+  }, [refresh]);
 
   useEffect(() => {
     if (token && tokenExpDate) {
