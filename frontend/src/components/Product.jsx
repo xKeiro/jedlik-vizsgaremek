@@ -90,16 +90,16 @@ export default function Product() {
                         alt={product.title}
                       />
                       <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h4" component="div">
                           {product.title}
                         </Typography>
                         <Typography gutterBottom variant="h6" component="div">
                           {product.description}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="h6" color="text.secondary">
                           {product.stock ? "In stock" : "Out of stock"}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="h6" color="text.secondary">
                           {product.base_price.toLocaleString("en-US", {
                             style: "currency",
                             currency: "EUR",
@@ -108,8 +108,9 @@ export default function Product() {
                       </CardContent>
                       <CardActions>
                         <Button
-                          size="small"
+                          fullWidth
                           color="primary"
+                          variant="outlined"
                           disabled={product.stock ? false : true}
                           onClick={() => shop.addProductToCart(product)}
                         >
