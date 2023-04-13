@@ -16,7 +16,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Product() {
   const { id } = useParams();
-  const cart = useContext(CartContext);
+  const shop = useContext(CartContext);
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -111,7 +111,7 @@ export default function Product() {
                           size="small"
                           color="primary"
                           disabled={product.stock ? false : true}
-                          onClick={() => cart.addProductToCart(product)}
+                          onClick={() => shop.addProductToCart(product)}
                         >
                           Add to cart
                         </Button>

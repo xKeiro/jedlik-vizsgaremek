@@ -13,7 +13,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardActions from "@mui/material/CardActions";
 
 export default function ProductCard({ product }) {
-  const cart = useContext(CartContext);
+  const shop = useContext(CartContext);
   return (
     <>
       <Card
@@ -60,7 +60,7 @@ export default function ProductCard({ product }) {
               size="small"
               color="primary"
               disabled={product.stock ? false : true}
-              onClick={() => cart.addProductToCart(product)}
+              onClick={() => shop.addProductToCart(product)}
             >
               Add to cart
             </Button>

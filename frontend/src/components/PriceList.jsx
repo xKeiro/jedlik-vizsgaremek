@@ -1,9 +1,11 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import CartContext from "../contexts/CartContext";
 
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
+import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TableContainer from "@mui/material/TableContainer";
@@ -15,6 +17,8 @@ import TableRow from "@mui/material/TableRow";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function PriceList() {
+  const shop = useContext(CartContext);
+
   const [products, setProducts] = useState(null);
 
   async function getProducts() {
@@ -70,12 +74,13 @@ export default function PriceList() {
         >
           <Grid item xs={12} md={12}>
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <Table sx={{ minWidth: 600 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
                     <TableCell align="right">Price</TableCell>
                     <TableCell align="right">Stock</TableCell>
+                    <TableCell align="right">Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -103,6 +108,16 @@ export default function PriceList() {
                         </TableCell>
                         <TableCell align="right">
                           {product.stock ? "In stock" : "Out of stock"}
+                        </TableCell>
+                        <TableCell align="right">
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            disabled={product.stock ? false : true}
+                            onClick={() => shop.addProductToCart(product)}
+                          >
+                            Add to cart
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))
