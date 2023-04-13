@@ -128,6 +128,7 @@ export default function Cart() {
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
+                        hover
                       >
                         <TableCell component="th" scope="row">
                           <Link
@@ -215,15 +216,18 @@ export default function Cart() {
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
+                        hover
                       >
                         <TableCell component="th" scope="row">
                           {shipper.title}
                         </TableCell>
                         <TableCell align="right">
-                          {shipper.price.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "EUR",
-                          })}
+                          {shipper.price !== 0.0
+                            ? shipper.price.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "EUR",
+                              })
+                            : "Free"}
                         </TableCell>
 
                         <TableCell align="right">

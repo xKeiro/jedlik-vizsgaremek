@@ -34,7 +34,6 @@ export default function AdminCategories() {
         console.log(errorMessage);
         return;
       }
-      console.log(responseBody.categories);
       setCategories(responseBody.categories);
     } catch (error) {
       console.log(error);
@@ -81,7 +80,7 @@ export default function AdminCategories() {
           </Grid>
           <Grid item xs={12} md={12}>
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="table">
+              <Table aria-label="table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
@@ -98,6 +97,7 @@ export default function AdminCategories() {
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
+                        hover
                       >
                         <TableCell component="th" scope="row">
                           <Link

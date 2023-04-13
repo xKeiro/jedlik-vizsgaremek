@@ -74,7 +74,11 @@ export default function PriceList() {
         >
           <Grid item xs={12} md={12}>
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 600 }} aria-label="simple table">
+              <Table
+                sx={{ minWidth: 600 }}
+                size="small"
+                aria-label="simple table"
+              >
                 <TableHead>
                   <TableRow>
                     <TableCell>Name</TableCell>
@@ -91,6 +95,7 @@ export default function PriceList() {
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
+                        hover
                       >
                         <TableCell component="th" scope="row">
                           <Link
@@ -112,6 +117,7 @@ export default function PriceList() {
                         <TableCell align="right">
                           <Button
                             variant="outlined"
+                            size="small"
                             color="primary"
                             disabled={product.stock ? false : true}
                             onClick={() => shop.addProductToCart(product)}
