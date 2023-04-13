@@ -23,11 +23,19 @@ export default function Cart() {
   const auth = useContext(AuthContext);
   const shop = useContext(CartContext);
 
+  const shippers = [
+    { id: 1, title: "Personal collection", price: 0.0 },
+    { id: 2, title: "Post", price: 9.99 },
+    { id: 3, title: "Courier", price: 14.99 },
+  ];
+
+  const [VAT, setVAT] = useState(0);
+  const [shipping, setShipping] = useState(0.0);
+  const [shipperId, setShipperId] = useState(1);
   const [amount, setAmount] = useState(0);
   const [subtotal, setSubtotal] = useState(0.0);
-  const [VAT, setVAT] = useState(0);
+  const [totalVAT, setTotalVAT] = useState(0.0);
   const [total, setTotal] = useState(0.0);
-  const [shipping, setShipping] = useState(0.0);
 
   useEffect(() => {
     setAmount(shop.cart.reduce((acc, curr) => acc + curr.quantity, 0));
@@ -39,11 +47,17 @@ export default function Cart() {
     setSubtotal(
       shop.cart.reduce((acc, curr) => acc + curr.base_price * curr.quantity, 0)
     );
-  }, [shop.cart, shop.cart.length, amount]);
+  }, [shop.cart, amount]);
 
   useEffect(() => {
-    setTotal(subtotal * (1 + VAT / 100) + shipping);
-  }, [shop.cart, shop.cart.length, amount, VAT, subtotal, shipping]);
+    setTotalVAT(
+      shop.cart.reduce(
+        (acc, curr) => acc + curr.base_price * (VAT / 100) * curr.quantity,
+        0
+      )
+    );
+    setTotal(subtotal + totalVAT + shipping);
+  }, [shop.cart, amount, VAT, totalVAT, subtotal, shipping]);
 
   function handleMinus(item) {
     shop.removeProductFromCart(item.id);
@@ -58,6 +72,11 @@ export default function Cart() {
   function handleRemove(item) {
     shop.removeProductsFromCart(item);
     setAmount((prev) => prev + item.quantity);
+  }
+
+  function handleShippingSelect(item) {
+    setShipperId(item.id);
+    setShipping(item.price);
   }
 
   return (
@@ -92,7 +111,7 @@ export default function Cart() {
             </Box>
 
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <Table sx={{ minWidth: 600 }} aria-label="items in cart">
                 <TableHead>
                   <TableRow>
                     <TableCell>Item</TableCell>
@@ -179,6 +198,65 @@ export default function Cart() {
                 <h3>Shipping (WIP)</h3>
               </Paper>
             </Box>
+            <TableContainer component={Paper}>
+              <Table size="small" aria-label="shiping">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Method</TableCell>
+                    <TableCell align="right">Price</TableCell>
+                    <TableCell align="right">Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {shippers.length > 0 ? (
+                    shippers.map((shipper) => (
+                      <TableRow
+                        key={shipper.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {shipper.title}
+                        </TableCell>
+                        <TableCell align="right">
+                          {shipper.price.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                          })}
+                        </TableCell>
+
+                        <TableCell align="right">
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={() => handleShippingSelect(shipper)}
+                            disabled={shipperId === shipper.id}
+                          >
+                            {shipperId === shipper.id ? "Selected" : "Select"}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        align="center"
+                        colSpan={4}
+                      >
+                        No shipping available.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Grid>
 
           <Grid item xs={12} md={12} paddingBottom={2}>
@@ -198,7 +276,7 @@ export default function Cart() {
               </p>
               <p>
                 + VAT:{" "}
-                {((subtotal * VAT) / 100).toLocaleString("en-US", {
+                {totalVAT.toLocaleString("en-US", {
                   style: "currency",
                   currency: "EUR",
                 })}{" "}
