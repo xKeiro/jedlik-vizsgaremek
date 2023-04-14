@@ -127,10 +127,8 @@ const AuthService = (props) => {
 
   useEffect(() => {
     if (token && tokenExpDate) {
-      const fixedExpDate = tokenExpDate * 1000;
-      const offset = 10000;
-      const remainingTime = fixedExpDate - new Date().getTime() - offset;
-      refreshTimer = setTimeout(refresh, remainingTime);
+      const refreshTime = 480000;
+      refreshTimer = setTimeout(refresh, refreshTime);
     } else {
       clearTimeout(refreshTimer);
     }
