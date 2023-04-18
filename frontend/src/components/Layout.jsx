@@ -35,6 +35,7 @@ import AdminUsers from "./Admin/AdminUsers";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import AdminUser from "./Admin/AdminUser";
 
 export default function Layout() {
   const auth = useContext(AuthContext);
@@ -84,6 +85,7 @@ export default function Layout() {
                 <Route path="shippers" element={<AdminShippers />} />
                 <Route path="reviews" element={<AdminReviews />} />
                 <Route path="users" element={<AdminUsers />} />
+                <Route path="user/:id" element={<AdminUser />} />
                 <Route path="*" element={<AdminHome />} />
               </Route>
             )}
