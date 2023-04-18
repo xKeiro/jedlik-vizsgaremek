@@ -74,7 +74,6 @@ export default function Layout() {
                 <Route index element={<AdminHome />} />
                 <Route path="orders" element={<AdminOrders />} />
                 <Route path="order/:id" element={<AdminOrder />} />
-                <Route path="order" element={<AdminOrder />} />
                 <Route path="products" element={<AdminProducts />} />
                 <Route path="product/:id" element={<AdminProduct />} />
                 <Route path="product" element={<AdminProduct />} />

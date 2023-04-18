@@ -34,6 +34,7 @@ export default function AdminOrders() {
         console.log(errorMessage);
         return;
       }
+      console.log(responseBody.orders);
       setOrders(responseBody.orders);
     } catch (error) {
       console.log(error);
@@ -83,7 +84,7 @@ export default function AdminOrders() {
               <Table sx={{ minWidth: 600 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
+                    <TableCell>ID</TableCell>
                     <TableCell align="right">Status</TableCell>
                     <TableCell align="right">Date</TableCell>
                     <TableCell align="right">Actions</TableCell>
@@ -119,7 +120,7 @@ export default function AdminOrders() {
                             component={RouterLink}
                             to={"/admin/order/" + order.id}
                           >
-                            View
+                            View (WIP)
                           </Button>
                         </TableCell>
                       </TableRow>

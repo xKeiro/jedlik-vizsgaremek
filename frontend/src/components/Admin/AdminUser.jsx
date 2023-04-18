@@ -22,6 +22,9 @@ export default function AdminUser() {
 
   useEffect(() => {
     async function getUser() {
+      if (!id) {
+        return;
+      }
       try {
         const response = await fetch(`http://localhost:8000/api/users/${id}`, {
           method: "GET",
@@ -126,14 +129,14 @@ export default function AdminUser() {
   }
 
   return (
-    <div className="Account">
+    <div className="AdminUser">
       <Box>
         <Paper elevation={2}>
           <h3>User</h3>
         </Paper>
       </Box>
       <Box
-        className="Account__Form"
+        className="AdminUser__Form"
         sx={{
           display: "flex",
           flexDirection: "column",
