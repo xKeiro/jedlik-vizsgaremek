@@ -31,7 +31,7 @@ export default function Contact() {
         </Box>
         <Paper elevation={3}>
           <Box sx={{ padding: 2 }}>
-            <h3>IT Webhop Kft.</h3>
+            <h3>IT Webshop Kft.</h3>
 
             <p>Email address: info@itwebshop.hu</p>
             <p>Phone: +36555479368</p>

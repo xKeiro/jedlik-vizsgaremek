@@ -1,9 +1,13 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { useParams } from "react-router";
 import CategoryBar from "./CategoryBar";
+import Reviews from "./Reviews";
+import AuthContext from "../contexts/AuthContext";
 import CartContext from "../contexts/CartContext";
 
+import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -11,11 +15,14 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActions } from "@mui/material";
+import Button from "@mui/material/Button";
+import CardActions from "@mui/material/CardActions";
 import CircularProgress from "@mui/material/CircularProgress";
+import UserReview from "./User/UserReview";
 
 export default function Product() {
   const { id } = useParams();
+  const auth = useContext(AuthContext);
   const shop = useContext(CartContext);
   const [product, setProduct] = useState(null);
 
@@ -55,83 +62,95 @@ export default function Product() {
 
   return (
     <div className="Product">
-      <div>
-        <Box
-          className="Product__Box"
-          sx={{
-            margin: "20px",
-            display: "flex",
-            flexWrap: "wrap",
-            flexDirection: "column",
-            alignContent: "center",
-          }}
+      <Box
+        className="Product__Box"
+        sx={{
+          margin: "20px",
+          display: "flex",
+          flexWrap: "wrap",
+          flexDirection: "column",
+          alignContent: "center",
+        }}
+      >
+        <Grid
+          container
+          direction="row-reverse"
+          justifyContent="center"
+          spacing={2}
+          sx={{ marginBottom: 3 }}
         >
-          <Grid
-            container
-            direction="row-reverse"
-            justifyContent="center"
-            spacing={2}
-            sx={{ marginBottom: 3 }}
-          >
-            <Grid item xs={12} md={9}>
-              {product ? (
-                <>
-                  <Box>
-                    <Paper elevation={2}>
-                      <h3>Product</h3>
-                    </Paper>
-                  </Box>
-                  <Card key={product.id}>
-                    <Paper elevation={3}>
-                      <CardMedia
-                        sx={{ height: 400 }}
-                        component="img"
-                        image={"/images/placeholder.png"}
-                        alt={product.title}
-                      />
-                      <CardContent>
+          <Grid item xs={12} md={9}>
+            {product ? (
+              <>
+                <Box>
+                  <Paper elevation={2}>
+                    <h3>Product</h3>
+                  </Paper>
+                </Box>
+                <Card key={product.id}>
+                  <Paper elevation={3}>
+                    <CardMedia
+                      sx={{ height: 400 }}
+                      component="img"
+                      image={"/images/placeholder.png"}
+                      alt={product.title}
+                    />
+                    <CardContent>
+                      <Paper elevation={3}>
                         <Typography gutterBottom variant="h4" component="div">
                           {product.title}
                         </Typography>
-                        <Typography gutterBottom variant="h6" component="div">
-                          {product.description}
-                        </Typography>
-                        <Typography variant="h6" color="text.secondary">
-                          {product.stock ? "In stock" : "Out of stock"}
-                        </Typography>
-                        <Typography variant="h6" color="text.secondary">
-                          {product.base_price.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "EUR",
-                          })}
-                        </Typography>
-                      </CardContent>
-                      <CardActions>
-                        <Button
-                          fullWidth
-                          color="primary"
-                          variant="outlined"
-                          disabled={product.stock ? false : true}
-                          onClick={() => shop.addProductToCart(product)}
-                        >
-                          Add to cart
-                        </Button>
-                      </CardActions>
-                    </Paper>
-                  </Card>
-                </>
-              ) : (
-                <CircularProgress />
-              )}
-            </Grid>
-            <Grid item md={3} xs={12}>
-              <CategoryBar
-                currentCategoryId={product ? product.category_id : null}
-              />
-            </Grid>
+                      </Paper>
+                      <Typography gutterBottom variant="h6" component="div">
+                        {product.description}
+                      </Typography>
+                      <Typography variant="h6" color="text.secondary">
+                        {product.stock ? "In stock" : "Out of stock"}
+                      </Typography>
+                      <Typography variant="h6" color="text.secondary">
+                        {product.base_price.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "EUR",
+                        })}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button
+                        fullWidth
+                        color="primary"
+                        variant="outlined"
+                        disabled={product.stock ? false : true}
+                        onClick={() => shop.addProductToCart(product)}
+                      >
+                        Add to cart
+                      </Button>
+                    </CardActions>
+                    <CardContent>
+                      <Reviews productId={product.id} />
+                      {auth.token ? (
+                        <UserReview productId={product.id} />
+                      ) : (
+                        <Box paddingY={2}>
+                          <Link component={RouterLink} to={"/login"}>
+                            Writing reviews requires sign-in.
+                          </Link>
+                        </Box>
+                      )}
+                    </CardContent>
+                  </Paper>
+                </Card>
+              </>
+            ) : (
+              <CircularProgress />
+            )}
           </Grid>
-        </Box>
-      </div>
+          <Grid item md={3} xs={12}>
+            <CategoryBar
+              currentCategoryId={product ? product.category_id : null}
+            />
+          </Grid>
+        </Grid>
+      </Box>
     </div>
   );
 }

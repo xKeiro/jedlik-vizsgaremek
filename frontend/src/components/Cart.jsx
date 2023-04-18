@@ -322,12 +322,10 @@ export default function Cart() {
                   </Box>
                 </>
               ) : (
-                <Box paddingY={1}>
-                  <p>
-                    <Link component={RouterLink} to={"/login"}>
-                      Checkout requires a signed in user.
-                    </Link>
-                  </p>
+                <Box paddingY={2}>
+                  <Link component={RouterLink} to={"/login"}>
+                    Checkout requires signing in.
+                  </Link>
                 </Box>
               )}
             </Paper>
