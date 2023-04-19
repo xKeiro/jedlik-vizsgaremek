@@ -29,13 +29,14 @@ import AdminCategories from "./Admin/AdminCategories";
 import AdminCategory from "./Admin/AdminCategory";
 import AdminSuppliers from "./Admin/AdminSuppliers";
 import AdminShippers from "./Admin/AdminShippers";
+import AdminShipper from "./Admin/AdminShipper";
 import AdminReviews from "./Admin/AdminReviews";
 import AdminUsers from "./Admin/AdminUsers";
+import AdminUser from "./Admin/AdminUser";
 
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import AdminUser from "./Admin/AdminUser";
 
 export default function Layout() {
   const auth = useContext(AuthContext);
@@ -82,6 +83,8 @@ export default function Layout() {
                 <Route path="category" element={<AdminCategory />} />
                 <Route path="suppliers" element={<AdminSuppliers />} />
                 <Route path="shippers" element={<AdminShippers />} />
+                <Route path="shipper/:id" element={<AdminShipper />} />
+                <Route path="shipper" element={<AdminShipper />} />
                 <Route path="reviews" element={<AdminReviews />} />
                 <Route path="users" element={<AdminUsers />} />
                 <Route path="user/:id" element={<AdminUser />} />

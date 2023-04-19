@@ -112,9 +112,9 @@ export default function AdminCategories() {
                             variant="outlined"
                             component={RouterLink}
                             to={"/admin/category/" + category.id}
-                            disabled={true} // todo: no category id endpoint
+                            disabled={false}
                           >
-                            Edit (WIP)
+                            Edit
                           </Button>
                         </TableCell>
                       </TableRow>

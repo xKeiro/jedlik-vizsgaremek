@@ -80,14 +80,6 @@ export default function AdminCategory() {
     }));
   }
 
-  //   function handleCheckboxChange(e) {
-  //     const { name, checked } = e.target;
-  //     setCategory((prevState) => ({
-  //       ...prevState,
-  //       [name]: checked,
-  //     }));
-  //   }
-
   async function handleCategoryUpdate() {
     setErrorText(null);
     setSuccessText(null);
@@ -138,7 +130,7 @@ export default function AdminCategory() {
     <div className="AdminCategory">
       <Box>
         <Paper elevation={2}>
-          <h3>{id ? "Category Editor" : "Add new category"}</h3>
+          <h3>{id ? "Category Editor" : "Add new category"} (WIP)</h3>
         </Paper>
       </Box>
       <Box
