@@ -1,10 +1,9 @@
-﻿namespace backend.Enums
+﻿namespace backend.Enums;
+
+public enum OrderStatus
 {
-    public enum OrderStatus
-    {
-        InProgress,
-        UnderProcurement,
-        Fulfilled,
-        Deleted
-    }
+    InProgress,
+    UnderProcurement,
+    Fulfilled,
+    Deleted
 }

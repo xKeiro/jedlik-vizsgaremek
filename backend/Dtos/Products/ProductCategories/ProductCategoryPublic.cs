@@ -1,7 +1,6 @@
-﻿namespace backend.Dtos.Products.ProductCategories
+﻿namespace backend.Dtos.Products.ProductCategories;
+
+public class ProductCategoryPublic: ProductCategoryWithoutId
 {
-    public class ProductCategoryPublic: ProductCategoryWithoutId
-    {
-        public required ulong Id { get; set; }
-    }
+    public required ulong Id { get; set; }
 }

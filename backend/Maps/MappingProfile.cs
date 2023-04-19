@@ -2,16 +2,15 @@
 using backend.Dtos.Products.ProductCategories;
 using backend.Models.Products;
 
-namespace backend.Maps
+namespace backend.Maps;
+
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile
+    public MappingProfile()
     {
-        public MappingProfile()
-        {
-            _ = CreateMap<ProductCategory, ProductCategoryPublic>();
-            _ = CreateMap<ProductCategoryPublic, ProductCategory>();
-            _ = CreateMap<ProductCategory, ProductCategoryWithoutId>();
-            _ = CreateMap<ProductCategoryWithoutId, ProductCategory>();
-        }
+        _ = CreateMap<ProductCategory, ProductCategoryPublic>();
+        _ = CreateMap<ProductCategoryPublic, ProductCategory>();
+        _ = CreateMap<ProductCategory, ProductCategoryWithoutId>();
+        _ = CreateMap<ProductCategoryWithoutId, ProductCategory>();
     }
 }
