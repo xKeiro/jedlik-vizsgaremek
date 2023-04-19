@@ -20,11 +20,11 @@ export default function AdminShippers() {
 
   const mockShippers = [
     {
-      company_name: "mock Inc.",
+      company_name: "mock shipper Inc.",
       contact_first_name: "John",
       contact_last_name: "Doe",
       email: "shipper1@example.com",
-      id: "3f6d3c24-2e1b-4f5a-9b1f-9c9d5f8a7b78",
+      id: "1",
       phone: "+36301111111",
       price: 9.99,
     },

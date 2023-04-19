@@ -28,6 +28,7 @@ import AdminProduct from "./Admin/AdminProduct";
 import AdminCategories from "./Admin/AdminCategories";
 import AdminCategory from "./Admin/AdminCategory";
 import AdminSuppliers from "./Admin/AdminSuppliers";
+import AdminSupplier from "./Admin/AdminSupplier";
 import AdminShippers from "./Admin/AdminShippers";
 import AdminShipper from "./Admin/AdminShipper";
 import AdminReviews from "./Admin/AdminReviews";
@@ -82,6 +83,8 @@ export default function Layout() {
                 <Route path="category/:id" element={<AdminCategory />} />
                 <Route path="category" element={<AdminCategory />} />
                 <Route path="suppliers" element={<AdminSuppliers />} />
+                <Route path="supplier/:id" element={<AdminSupplier />} />
+                <Route path="supplier" element={<AdminSupplier />} />
                 <Route path="shippers" element={<AdminShippers />} />
                 <Route path="shipper/:id" element={<AdminShipper />} />
                 <Route path="shipper" element={<AdminShipper />} />
