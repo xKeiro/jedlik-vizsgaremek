@@ -4,11 +4,11 @@ namespace backend.Models
 {
     public class User: BaseModel
     {
-        [MaxLength(25)]
+        [MinLength(3), MaxLength(25)]
         public required string Username { get; set; }
-        [MaxLength(25)]
+        [MinLength(3), MaxLength(25)]
         public required string FirstName { get; set; }
-        [MaxLength(25)]
+        [MinLength(3), MaxLength(25)]
         public required string LastName { get; set; }
         [EmailAddress]
         public required string Email { get; set; }
