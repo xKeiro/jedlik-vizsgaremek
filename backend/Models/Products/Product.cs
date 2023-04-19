@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models.Products
 {
@@ -19,6 +20,7 @@ namespace backend.Models.Products
         [Required]
         public required ProductCategory Category { get; set; }
         [Required]
+        [Precision(18, 2)]
         public required decimal BasePrice { get; set; }
         [MinLength(3), MaxLength(150)]
         public required string Title { get; set; }
