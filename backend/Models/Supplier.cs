@@ -23,5 +23,6 @@ namespace backend.Models
         public required string Email { get; set; }
         [Required]
         public required Address Address { get; set; }
+        public bool Disabled { get; set; } = false;
     }
 }

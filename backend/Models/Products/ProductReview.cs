@@ -12,5 +12,6 @@ namespace backend.Models.Products
         [Required]
         [MinLength(3), MaxLength(3000)]
         public required string Text { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }
