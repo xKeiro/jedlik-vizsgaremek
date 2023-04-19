@@ -16,12 +16,14 @@ namespace backend.Models
         public required string LastName { get; set; }
         [Required]
         [EmailAddress]
+        [MinLength(5), MaxLength(100)]
         public required string Email { get; set; }
         [Required]
         [MinLength(60), MaxLength(60)]
         public required string Password { get; set; }
         [Required]
         [Phone]
+        [MinLength(3), MaxLength(20)]
         public required string Phone { get; set; }
         [Required]
         public required bool IsAdmin { get; set; }

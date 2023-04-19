@@ -17,6 +17,7 @@ namespace backend.Models.Orders
         public required byte Vat { get; set; }
         [Required]
         [EnumDataType(typeof(OrderStatus))]
+        [MinLength(1), MaxLength(25)]
         public required OrderStatus Status { get; set; }
         [Required]
         public DateTime OrderDate { get; set; } = DateTime.Now;

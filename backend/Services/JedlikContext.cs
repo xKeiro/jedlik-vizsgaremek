@@ -38,7 +38,7 @@ namespace backend.Services
                 .Property(order => order.Status)
                 .HasConversion(new EnumToStringConverter<OrderStatus>());
             _ = modelBuilder.Entity<Order>().Navigation(o => o.ProductOrders).AutoInclude();
-            _ = modelBuilder.Entity<ProductSupplier>().Navigation(ps => ps.Product).AutoInclude();
+            _ = modelBuilder.Entity<ProductSupplier>().Navigation(ps => ps.Supplier).AutoInclude();
         }
     }
 }

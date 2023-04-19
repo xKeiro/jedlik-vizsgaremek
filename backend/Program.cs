@@ -1,4 +1,6 @@
+using backend.Services;
 using backend.Utils;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 DotNetEnv.Env.Load();
@@ -24,6 +26,8 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext<JedlikContext>(options =>
+    options.UseSqlServer(EnvironmentVariableHelper.ConnectionString));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

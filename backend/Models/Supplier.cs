@@ -15,9 +15,11 @@ namespace backend.Models
         public required string ContactLastName { get; set; }
         [Required]
         [Phone]
+        [MinLength(3), MaxLength(20)]
         public required string Phone { get; set; }
         [Required]
         [EmailAddress]
+        [MinLength(5), MaxLength(100)]
         public required string Email { get; set; }
         [Required]
         public required Address Address { get; set; }
