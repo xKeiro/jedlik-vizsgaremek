@@ -252,7 +252,7 @@ export default function Cart() {
                         component="th"
                         scope="row"
                         align="center"
-                        colSpan={4}
+                        colSpan={3}
                       >
                         No shipping available.
                       </TableCell>

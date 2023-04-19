@@ -129,7 +129,7 @@ export default function AdminCategories() {
                         component="th"
                         scope="row"
                         align="center"
-                        colSpan={3}
+                        colSpan={2}
                       >
                         <CircularProgress />
                       </TableCell>
