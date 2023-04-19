@@ -1,4 +1,5 @@
 using backend.Utils;
+using System.Text.Json.Serialization;
 
 DotNetEnv.Env.Load();
 
@@ -12,6 +13,15 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy",
         .AllowAnyHeader()
         .AllowCredentials()
         ));
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+);
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
