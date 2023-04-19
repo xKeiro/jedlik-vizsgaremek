@@ -1,4 +1,7 @@
+using backend.Dtos.Products.ProductCategories;
+using backend.Interfaces.Services;
 using backend.Maps;
+using backend.Models.Products;
 using backend.Services;
 using backend.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +34,9 @@ builder.Services.AddDbContext<JedlikContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddScoped<IStatusMessageService, StatusMessageService<ProductCategory>>();
 
 var app = builder.Build();
 
