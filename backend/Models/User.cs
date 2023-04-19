@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using backend.Models.Products;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models
 {
@@ -26,5 +27,6 @@ namespace backend.Models
         public required bool IsAdmin { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public required Address Address { get; set; }
+        public IQueryable<ProductReview> ProductReviews { get; set; } = new List<ProductReview>().AsQueryable();
     }
 }
