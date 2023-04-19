@@ -1,3 +1,4 @@
+using backend.Maps;
 using backend.Services;
 using backend.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -24,8 +25,7 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
-
-builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddDbContext<JedlikContext>(options =>
     options.UseSqlServer(EnvironmentVariableHelper.ConnectionString));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
