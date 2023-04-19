@@ -18,6 +18,7 @@ namespace backend.Models
         [MaxLength(10)]
         public required string PostalCode { get; set; }
         [Required]
+        [EnumDataType(typeof(OrderStatus))]
         public required CountryCode Country { get; set; }
     }
 }
