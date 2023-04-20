@@ -5,9 +5,8 @@ public interface IStatusMessageService
 {
     StatusMessage AlreadyExists();
     StatusMessage Deleted(ulong id);
-    StatusMessage NoneFound();
     StatusMessage NotFound(ulong id);
-    StatusMessage NotUnique();
+    StatusMessage NotUnique(List<string> notUniquePropertiesName);
     StatusMessage GenericError();
     StatusMessage ANotExistingIdProvided();
 }

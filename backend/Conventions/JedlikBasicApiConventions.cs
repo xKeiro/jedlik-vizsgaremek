@@ -9,15 +9,16 @@ public static class JedlikBasicApiConventions<TResponseDto, TRequestDto>
     where TRequestDto : class
 {
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(StatusMessage))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
 
     public static void GetAll()
     {
         // Method intentionally left empty.
     }
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(StatusMessage))]
-    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(StatusMessage))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public static void Add(
         [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)]
         TRequestDto requestDto)
@@ -25,16 +26,18 @@ public static class JedlikBasicApiConventions<TResponseDto, TRequestDto>
         // Method intentionally left empty.
     }
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(StatusMessage))]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(StatusMessage))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public static void Get(ulong id)
     {
         // Method intentionally left empty.
     }
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(StatusMessage))]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(StatusMessage))]
-    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(StatusMessage))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
     public static void Update(
         [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)]
         TResponseDto responseDto)
