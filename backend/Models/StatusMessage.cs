@@ -1,8 +1,7 @@
-﻿namespace backend.Models
+﻿namespace backend.Models;
+
+public class StatusMessage
 {
-    public class StatusMessage
-    {
-        public required string Message { get; set; }
-        public required int StatusCode { get; set; }
-    }
+    public required string Message { get; set; }
+    public required int StatusCode { get; set; }
 }

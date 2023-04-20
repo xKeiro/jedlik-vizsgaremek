@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models;
 
-public class Shipper: BaseModel
+public class Shipper : BaseModel
 {
     [Required]
     [MinLength(3), MaxLength(75)]

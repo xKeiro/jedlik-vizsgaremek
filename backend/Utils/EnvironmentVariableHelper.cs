@@ -4,9 +4,9 @@ namespace backend.Utils;
 
 public static class EnvironmentVariableHelper
 {
-    public static string ConnectionString { get => GetDbConnectionString(); }
-    public static string JwtTokenKey { get => Get("JWT_TOKEN_KEY"); }
-    public static string FrontendUrl { get => Get("FRONTEND_URL"); }
+    public static string ConnectionString => GetDbConnectionString();
+    public static string JwtTokenKey => Get("JWT_TOKEN_KEY");
+    public static string FrontendUrl => Get("FRONTEND_URL");
 
     private static string GetDbConnectionString()
     {

@@ -2,7 +2,7 @@
 
 namespace backend.Models;
 
-public class Supplier: BaseModel
+public class Supplier : BaseModel
 {
     [Required]
     [MinLength(3), MaxLength(75)]

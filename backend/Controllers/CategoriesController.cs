@@ -17,19 +17,19 @@ public class CategoriesController : ApiControllerBase
         _service = ingredientService;
     }
     [HttpGet]
-    public async Task<ActionResult<IAsyncEnumerable<ProductCategoryPublic>>> GetAll() 
+    public async Task<ActionResult<IAsyncEnumerable<ProductCategoryPublic>>> GetAll()
         => Ok(await _service.GetAll());
 
 
     [HttpPost]
     public async Task<ActionResult<ProductCategoryPublic>> Add(ProductCategoryWithoutId productCategoryWithoutId)
-        => (ActionResult)(await _service.Add(productCategoryWithoutId)).Match(Ok,Problem);
+        => (ActionResult)(await _service.Add(productCategoryWithoutId)).Match(Ok, Problem);
 
     [HttpGet("{id}")]
     public async Task<ActionResult<ProductCategoryPublic>> Get(ulong id)
-        =>  (ActionResult)(await _service.Find(id)).Match(Ok,Problem);
+        => (ActionResult)(await _service.Find(id)).Match(Ok, Problem);
 
     [HttpPut]
     public async Task<ActionResult<ProductCategoryPublic>> Update(ProductCategoryPublic productCategoryPublic)
-        =>  (ActionResult)(await _service.Update(productCategoryPublic)).Match(Ok, Problem);
+        => (ActionResult)(await _service.Update(productCategoryPublic)).Match(Ok, Problem);
 }

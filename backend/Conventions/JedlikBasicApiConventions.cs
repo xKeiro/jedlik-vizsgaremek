@@ -1,10 +1,9 @@
-﻿using backend.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace backend.Conventions;
 
-public static class JedlikBasicApiConventions<TResponseDto, TRequestDto> 
+public static class JedlikBasicApiConventions<TResponseDto, TRequestDto>
     where TResponseDto : class
     where TRequestDto : class
 {

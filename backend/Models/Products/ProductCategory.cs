@@ -2,7 +2,7 @@
 
 namespace backend.Models.Products;
 
-public class ProductCategory: BaseModel
+public class ProductCategory : BaseModel
 {
     [Required]
     [MinLength(3), MaxLength(150)]

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models;
 
-public class User: BaseModel
+public class User : BaseModel
 {
     [Required]
     [MinLength(3), MaxLength(25)]

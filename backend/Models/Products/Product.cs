@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models.Products;
 
-public class Product: BaseModel
+public class Product : BaseModel
 {
     [Required]
     public required ProductCategory Category { get; set; }

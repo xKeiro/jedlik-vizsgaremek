@@ -6,32 +6,23 @@ namespace backend.Services;
 
 public class StatusMessageService<TModel> : IStatusMessageService where TModel : class
 {
-    public StatusMessage AlreadyExists()
+    public StatusMessage AlreadyExists() => new()
     {
-        return new()
-        {
-            Message = $"{typeof(TModel).Name} already exists!",
-            StatusCode = StatusCodes.Status409Conflict
-        };
-    }
+        Message = $"{typeof(TModel).Name} already exists!",
+        StatusCode = StatusCodes.Status409Conflict
+    };
 
-    public StatusMessage NotFound(ulong id)
+    public StatusMessage NotFound(ulong id) => new()
     {
-        return new()
-        {
-            Message = $"{typeof(TModel).Name} with Id:'{id}' does not exist!",
-            StatusCode = StatusCodes.Status404NotFound
-        };
-    }
+        Message = $"{typeof(TModel).Name} with Id:'{id}' does not exist!",
+        StatusCode = StatusCodes.Status404NotFound
+    };
 
-    public StatusMessage Deleted(ulong id)
+    public StatusMessage Deleted(ulong id) => new()
     {
-        return new()
-        {
-            Message = $"{typeof(TModel).Name} with id:'{id}' was deleted and everything related to it!",
-            StatusCode = StatusCodes.Status200OK
-        };
-    }
+        Message = $"{typeof(TModel).Name} with id:'{id}' was deleted and everything related to it!",
+        StatusCode = StatusCodes.Status200OK
+    };
 
     public StatusMessage NotUnique(List<string> notUniquePropertiesName)
     {
@@ -47,21 +38,15 @@ public class StatusMessageService<TModel> : IStatusMessageService where TModel :
         };
     }
 
-    public StatusMessage GenericError()
+    public StatusMessage GenericError() => new()
     {
-        return new()
-        {
-            Message = "Internal server error occurred!",
-            StatusCode = StatusCodes.Status500InternalServerError
-        };
-    }
+        Message = "Internal server error occurred!",
+        StatusCode = StatusCodes.Status500InternalServerError
+    };
 
-    public StatusMessage ANotExistingIdProvided()
+    public StatusMessage ANotExistingIdProvided() => new()
     {
-        return new()
-        {
-            Message = "At least one Id was provided that does not exist in our system!",
-            StatusCode = StatusCodes.Status404NotFound
-        };
-    }
+        Message = "At least one Id was provided that does not exist in our system!",
+        StatusCode = StatusCodes.Status404NotFound
+    };
 }
