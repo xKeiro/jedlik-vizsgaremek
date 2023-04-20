@@ -1,3 +1,4 @@
+using backend.Data;
 using backend.Interfaces.Services;
 using backend.Maps;
 using backend.Models.Products;
@@ -51,5 +52,7 @@ app.UseCors("corspolicy");
 app.UseAuthorization();
 
 app.MapControllers();
+
+DbInitializer.Seed(app);
 
 app.Run();
