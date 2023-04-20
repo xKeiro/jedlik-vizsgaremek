@@ -1,13 +1,13 @@
-﻿using backend.Dtos.Products.ProductCategories;
+﻿using backend.Conventions;
+using backend.Dtos.Products.ProductCategories;
 using backend.Interfaces.Services;
-using backend.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[ApiConventionType(typeof(JedlikBasicApiConventions<ProductCategoryPublic, ProductCategoryWithoutId>))]
 public class CategoriesController : ControllerBase
 {
     private readonly IProductCategoryService _service;
@@ -20,11 +20,8 @@ public class CategoriesController : ControllerBase
         _service = ingredientService;
         _statusMessage = statusMessage;
     }
-    [AllowAnonymous]
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(StatusMessage))]
-    public async Task<ActionResult<IEnumerable<ProductCategoryPublic>>> GetAllProductCategories()
+    public async Task<ActionResult<IEnumerable<ProductCategoryPublic>>> GetAll()
     {
         try
         {
@@ -38,10 +35,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(StatusMessage))]
-    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(StatusMessage))]
-    public async Task<ActionResult<ProductCategoryPublic>> AddProductCategory(ProductCategoryWithoutId productCategoryWithoutId)
+    public async Task<ActionResult<ProductCategoryPublic>> Add(ProductCategoryWithoutId productCategoryWithoutId)
     {
         try
         {
@@ -56,10 +50,7 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(StatusMessage))]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(StatusMessage))]
-    public async Task<ActionResult<ProductCategoryPublic>> GetProductCategoryById(ulong id)
+    public async Task<ActionResult<ProductCategoryPublic>> Get(ulong id)
     {
         try
         {
@@ -74,23 +65,19 @@ public class CategoriesController : ControllerBase
         }
     }
 
-    [HttpPut("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(StatusMessage))]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(StatusMessage))]
-    [ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(StatusMessage))]
-    public async Task<ActionResult<ProductCategoryPublic>> UpdateProductCategoryById(ulong id, ProductCategoryWithoutId productCategoryWithoutId)
+    [HttpPut]
+    public async Task<ActionResult<ProductCategoryPublic>> Update(ProductCategoryPublic productCategoryPublic)
     {
         try
         {
-            ProductCategoryPublic? productCategoryPublicOriginal = await _service.Find(id);
+            ProductCategoryPublic? productCategoryPublicOriginal = await _service.Find(productCategoryPublic.Id);
             if (productCategoryPublicOriginal == null)
             {
-                return StatusCode(StatusCodes.Status404NotFound, _statusMessage.NotFound(id));
+                return StatusCode(StatusCodes.Status404NotFound, _statusMessage.NotFound(productCategoryPublic.Id));
             }
 
-            return await _service.IsUnique(productCategoryWithoutId)
-                ? StatusCode(StatusCodes.Status200OK, await _service.Update(id, productCategoryWithoutId))
+            return await _service.IsUnique(productCategoryPublic)
+                ? StatusCode(StatusCodes.Status200OK, await _service.Update(productCategoryPublic))
                 : StatusCode(StatusCodes.Status409Conflict, _statusMessage.NotUnique());
         }
         catch

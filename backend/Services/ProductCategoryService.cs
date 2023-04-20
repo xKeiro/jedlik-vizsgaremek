@@ -55,10 +55,10 @@ public class ProductCategoryService : IProductCategoryService
         return !await _context.ProductCategories.AnyAsync(c => c.Title.ToLower() == productCategory.Title.ToLower());
     }
 
-    public async Task<ProductCategoryPublic> Update(ulong id, ProductCategoryWithoutId productCategoryWithoutId)
+    public async Task<ProductCategoryPublic> Update(ProductCategoryPublic productCategoryPublic)
     {
-        ProductCategory productCategory = _mapper.Map<ProductCategoryWithoutId, ProductCategory>(productCategoryWithoutId);
-        productCategory.Id = id;
+        ProductCategory productCategory = _mapper.Map<ProductCategoryPublic, ProductCategory>(productCategoryPublic);
+        productCategory.Id = productCategoryPublic.Id;
         _ = _context.Update(productCategory);
         _ = await _context.SaveChangesAsync();
         return _mapper.Map<ProductCategory, ProductCategoryPublic>(productCategory);

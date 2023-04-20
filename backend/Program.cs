@@ -1,4 +1,3 @@
-using backend.Dtos.Products.ProductCategories;
 using backend.Interfaces.Services;
 using backend.Maps;
 using backend.Models.Products;
