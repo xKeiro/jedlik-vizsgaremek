@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models;
 
+[Index(nameof(CompanyName), IsUnique = true)]
 public class Shipper : BaseModel
 {
     [Required]

@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models;
 
+[Index(nameof(CompanyName), IsUnique = true)]
 public class Supplier : BaseModel
 {
     [Required]

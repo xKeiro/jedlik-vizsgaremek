@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models.Products;
 
+[Index(nameof(Title), IsUnique = true)]
 public class ProductCategory : BaseModel
 {
     [Required]

@@ -1,8 +1,11 @@
 ﻿using backend.Models.Products;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models;
 
+[Index(nameof(Username), IsUnique = true)]
+[Index(nameof(Email), IsUnique = true)]
 public class User : BaseModel
 {
     [Required]
