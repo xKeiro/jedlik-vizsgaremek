@@ -44,7 +44,7 @@ public class ProductCategoryServiceTest
         // Act
         var actual = await _productCategoryService.GetAll();
         // Assert
-        AssertByJson.AreEqual(expected, actual);
+        actual.Should().BeEquivalentTo(expected);
     }
 
     [Test]
@@ -68,6 +68,51 @@ public class ProductCategoryServiceTest
         // Act
         var actual = await _productCategoryService.Find(notExistingId);
         // Assert
+        actual.IsT0.Should().BeFalse();
+        actual.AsT1.Should().BeEquivalentTo(expected);
+    }
+
+    [Test]
+    public async Task Add_ShouldCreateNewProductCategoryAndReturnItInTheFormOfOneOfProductCategoryPublic()
+    {
+        // Arrange
+        var newProductCategory = new ProductCategoryWithoutId()
+        {
+            Title = "New Title",
+            Description = "New Description",
+        };
+        var expectedCount = TestData.productCategories.Count + 1;
+        var expectedId = (ulong)expectedCount;
+        var expected = new ProductCategoryPublic()
+        {
+            Id = expectedId,
+            Title = newProductCategory.Title,
+            Description = newProductCategory.Description,
+        };
+
+        // Act
+        var actual = await _productCategoryService.Add(newProductCategory);
+        // Assert
+        _context.ProductCategories.Should().HaveCount(expectedCount);
+        actual.AsT0.Should().BeEquivalentTo(expected);
+        actual.IsT1.Should().BeFalse();
+    }
+
+    [Test]
+    public async Task Add_ShouldReturnOneOfStatusMessageNotUniqueIfAlreadyExistingTitleProvidedAndShouldNotBeAddedToTheDatabase()
+    {
+        // Arrange
+        var newProductCategory = new ProductCategoryWithoutId()
+        {
+            Title = TestData.productCategories[0].Title,
+            Description = "New Description",
+        };
+        var expectedCount = TestData.productCategories.Count;
+        var expected = _statusMessage.NotUnique(new List<string>() { "Title" });
+        // Act
+        var actual = await _productCategoryService.Add(newProductCategory);
+        // Assert
+        _context.ProductCategories.Should().HaveCount(expectedCount);
         actual.IsT0.Should().BeFalse();
         actual.AsT1.Should().BeEquivalentTo(expected);
     }
