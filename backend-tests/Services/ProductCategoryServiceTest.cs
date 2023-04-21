@@ -4,9 +4,11 @@ using backend.Models.Products;
 using backend.Services;
 using backend_tests.Utils;
 using NUnit.Framework;
+using FluentAssertions;
 
 namespace backend_tests.Services;
 
+[TestFixture]
 public class ProductCategoryServiceTest
 {
     private JedlikContext _context;
@@ -43,5 +45,30 @@ public class ProductCategoryServiceTest
         var actual = await _productCategoryService.GetAll();
         // Assert
         AssertByJson.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public async Task Find_ShouldReturnOneOfProductCategory()
+    {
+        // Arrange
+        var expected = _mapper.Map<ProductCategory, ProductCategoryPublic>(TestData.productCategories[0]);
+        // Act
+        var actual = await _productCategoryService.Find(TestData.productCategories[0].Id);
+        // Assert
+        actual.AsT0.Should().BeEquivalentTo(expected);
+        actual.IsT1.Should().BeFalse();
+    }
+
+    [Test]
+    public async Task Find_ShouldReturnOneOfStatusMessageNotFoundIfNotExistingIdProvided()
+    {
+        // Arrange
+        ulong notExistingId = 999;
+        var expected = _statusMessage.NotFound(notExistingId);
+        // Act
+        var actual = await _productCategoryService.Find(notExistingId);
+        // Assert
+        actual.IsT0.Should().BeFalse();
+        actual.AsT1.Should().BeEquivalentTo(expected);
     }
 }
