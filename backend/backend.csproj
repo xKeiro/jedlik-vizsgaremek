@@ -11,9 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\NewFolder\**" />
     <Compile Remove="Interfaces\NewFolder\**" />
+    <Content Remove="Data\NewFolder\**" />
     <Content Remove="Interfaces\NewFolder\**" />
+    <EmbeddedResource Remove="Data\NewFolder\**" />
     <EmbeddedResource Remove="Interfaces\NewFolder\**" />
+    <None Remove="Data\NewFolder\**" />
     <None Remove="Interfaces\NewFolder\**" />
   </ItemGroup>
 
