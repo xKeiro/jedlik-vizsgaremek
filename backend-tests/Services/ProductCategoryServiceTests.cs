@@ -9,7 +9,7 @@ using FluentAssertions;
 namespace backend_tests.Services;
 
 [TestFixture]
-public class ProductCategoryServiceTest
+public class ProductCategoryServiceTests
 {
     private JedlikContext _context;
     private IMapper _mapper;
