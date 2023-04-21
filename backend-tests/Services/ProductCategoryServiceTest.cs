@@ -116,4 +116,58 @@ public class ProductCategoryServiceTest
         actual.IsT0.Should().BeFalse();
         actual.AsT1.Should().BeEquivalentTo(expected);
     }
+
+    [Test]
+    public async Task Update_ShouldUpdateProductCategoryAndReturnItInTheFormOfOneOfProductCategoryPublic()
+    {
+        // Arrange
+        var updatedProductCategory = new ProductCategoryPublic()
+        {
+            Id = 1,
+            Title = "Updated Title",
+            Description = "Updated Description",
+        };
+        var expected = _mapper.Map<ProductCategoryPublic, ProductCategory>(updatedProductCategory);
+        // Act
+        var actual = await _productCategoryService.Update(updatedProductCategory);
+        // Assert
+        actual.AsT0.Should().BeEquivalentTo(expected);
+        actual.IsT1.Should().BeFalse();
+    }
+
+    [Test]
+    public async Task Update_ShouldReturnOneOfStatusMessageNotFoundIfNotExistingIdProvided()
+    {
+        // Arrange
+        var updatedProductCategory = new ProductCategoryPublic()
+        {
+            Id = 999,
+            Title = "Updated Title",
+            Description = "Updated Description",
+        };
+        var expected = _statusMessage.NotFound(updatedProductCategory.Id);
+        // Act
+        var actual = await _productCategoryService.Update(updatedProductCategory);
+        // Assert
+        actual.IsT0.Should().BeFalse();
+        actual.AsT1.Should().BeEquivalentTo(expected);
+    }
+
+    [Test]
+    public async Task Update_ShouldReturnOneOfStatusMessageNotUniqueIfAlreadyExistingTitleProvided()
+    {
+        // Arrange
+        var updatedProductCategory = new ProductCategoryPublic()
+        {
+            Id = 1,
+            Title = TestData.productCategories[1].Title,
+            Description = "Updated Description",
+        };
+        var expected = _statusMessage.NotUnique(new List<string>() { "Title" });
+        // Act
+        var actual = await _productCategoryService.Update(updatedProductCategory);
+        // Assert
+        actual.IsT0.Should().BeFalse();
+        actual.AsT1.Should().BeEquivalentTo(expected);
+    }
 }
