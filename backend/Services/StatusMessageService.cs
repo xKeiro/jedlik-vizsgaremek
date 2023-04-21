@@ -4,27 +4,30 @@ using System.Text;
 
 namespace backend.Services;
 
-public class StatusMessageService<TModel> : IStatusMessageService where TModel : class
+public class StatusMessageService : IStatusMessageService
 {
-    public StatusMessage AlreadyExists() => new()
+    public StatusMessage AlreadyExists<TModel>() where TModel : class 
+        => new()
     {
         Message = $"{typeof(TModel).Name} already exists!",
         StatusCode = StatusCodes.Status409Conflict
     };
 
-    public StatusMessage NotFound(ulong id) => new()
+    public StatusMessage NotFound<TModel>(ulong id) where TModel : class 
+        => new()
     {
         Message = $"{typeof(TModel).Name} with Id:'{id}' does not exist!",
         StatusCode = StatusCodes.Status404NotFound
     };
 
-    public StatusMessage Deleted(ulong id) => new()
+    public StatusMessage Deleted<TModel>(ulong id) where TModel : class
+        => new()
     {
         Message = $"{typeof(TModel).Name} with id:'{id}' was deleted and everything related to it!",
         StatusCode = StatusCodes.Status200OK
     };
 
-    public StatusMessage NotUnique(List<string> notUniquePropertiesName)
+    public StatusMessage NotUnique<TModel>(List<string> notUniquePropertiesName) where TModel : class
     {
         var sb = new StringBuilder()
             .Append($"The ")
@@ -48,5 +51,11 @@ public class StatusMessageService<TModel> : IStatusMessageService where TModel :
     {
         Message = "At least one Id was provided that does not exist in our system!",
         StatusCode = StatusCodes.Status404NotFound
+    };
+
+    public StatusMessage ConfirmationPasswordMismatch() => new()
+    {
+        Message = "The confirmation password does not match the password!",
+        StatusCode = StatusCodes.Status400BadRequest
     };
 }

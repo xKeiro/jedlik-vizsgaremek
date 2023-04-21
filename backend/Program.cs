@@ -32,8 +32,8 @@ builder.Services.AddDbContext<JedlikContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IStatusMessageService, StatusMessageService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
-builder.Services.AddScoped<IStatusMessageService, StatusMessageService<ProductCategory>>();
 
 var app = builder.Build();
 
@@ -49,6 +49,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("corspolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
