@@ -12,14 +12,14 @@ public class CategoriesController : ApiControllerBase
 {
     private readonly IProductCategoryService _service;
 
-    public CategoriesController(IProductCategoryService ingredientService)
+    public CategoriesController(IProductCategoryService productCategoryService)
     {
-        _service = ingredientService;
+        _service = productCategoryService;
     }
+
     [HttpGet]
     public async Task<ActionResult<IAsyncEnumerable<ProductCategoryPublic>>> GetAll()
         => Ok(await _service.GetAll());
-
 
     [HttpPost]
     public async Task<ActionResult<ProductCategoryPublic>> Add(ProductCategoryWithoutId productCategoryWithoutId)
