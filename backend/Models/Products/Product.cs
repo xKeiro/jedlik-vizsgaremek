@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using backend.Models.Orders;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models.Products;
@@ -8,7 +9,7 @@ public class Product : BaseModel
 {
     [Required]
     public required ProductCategory Category { get; set; }
-    public IQueryable<ProductSupplier> ProductSuppliers { get; set; } = new List<ProductSupplier>().AsQueryable();
+    public ICollection<ProductSupplier>? ProductSuppliers { get; set; }
     [Required]
     [Precision(18, 2)]
     public required decimal BasePrice { get; set; }
@@ -25,4 +26,6 @@ public class Product : BaseModel
     public required bool Discontinued { get; set; }
     [Required]
     public required bool Featured { get; set; }
+    public ICollection<ProductReview>? ProductReviews { get; set; }
+    public ICollection<ProductOrder>? ProductOrders { get; set; }
 }

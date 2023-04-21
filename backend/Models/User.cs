@@ -1,6 +1,8 @@
-﻿using backend.Models.Products;
+﻿using backend.Models.Orders;
+using backend.Models.Products;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models;
 
@@ -31,6 +33,9 @@ public class User : BaseModel
     [Required]
     public required bool IsAdmin { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+    [Required]
+    [ForeignKey("AddressId")]
     public required Address Address { get; set; }
-    public IQueryable<ProductReview> ProductReviews { get; set; } = new List<ProductReview>().AsQueryable();
+    public ICollection<ProductReview>? ProductReviews { get; set; }
+    public ICollection<ProductOrder>? ProductOrders { get; set; }
 }

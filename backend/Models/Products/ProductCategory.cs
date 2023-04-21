@@ -12,4 +12,5 @@ public class ProductCategory : BaseModel
     [Required]
     [MinLength(3), MaxLength(2000)]
     public required string Description { get; set; }
+    public ICollection<Product>? Products { get; set; }
 }

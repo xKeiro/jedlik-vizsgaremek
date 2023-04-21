@@ -10,4 +10,6 @@ public class ProductSupplier : BaseModel
     [Required]
     [Precision(18, 2)]
     public required decimal PurchasePrice { get; set; }
+    [Required]
+    public required Product Product { get; set; }
 }

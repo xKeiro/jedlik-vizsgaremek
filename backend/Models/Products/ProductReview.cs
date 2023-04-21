@@ -13,4 +13,6 @@ public class ProductReview : BaseModel
     [MinLength(3), MaxLength(3000)]
     public required string Text { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+    [Required]
+    public User User { get; set; } = null!;
 }

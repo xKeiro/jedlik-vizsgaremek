@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Services;
 
@@ -11,9 +12,11 @@ using backend.Services;
 namespace backend.Migrations
 {
     [DbContext(typeof(JedlikContext))]
-    partial class JedlikContextModelSnapshot : ModelSnapshot
+    [Migration("20230421163607_UpdateConnections")]
+    partial class UpdateConnections
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,9 +71,6 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
 
-                    b.Property<decimal>("OrderAddressId")
-                        .HasColumnType("decimal(20,0)");
-
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
@@ -90,51 +90,11 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderAddressId")
-                        .IsUnique();
-
                     b.HasIndex("ShipperId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("backend.Models.Orders.OrderAddress", b =>
-                {
-                    b.Property<decimal>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(20,0)");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Id"));
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("Country")
-                        .HasMaxLength(4)
-                        .HasColumnType("int");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.Property<string>("Region")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OrderAddress");
                 });
 
             modelBuilder.Entity("backend.Models.Orders.ProductOrder", b =>
@@ -470,12 +430,6 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Orders.Order", b =>
                 {
-                    b.HasOne("backend.Models.Orders.OrderAddress", "OrderAddress")
-                        .WithOne("Order")
-                        .HasForeignKey("backend.Models.Orders.Order", "OrderAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("backend.Models.Shipper", "Shipper")
                         .WithMany()
                         .HasForeignKey("ShipperId")
@@ -487,8 +441,6 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("OrderAddress");
 
                     b.Navigation("Shipper");
 
@@ -599,11 +551,6 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Orders.Order", b =>
                 {
                     b.Navigation("ProductOrders");
-                });
-
-            modelBuilder.Entity("backend.Models.Orders.OrderAddress", b =>
-                {
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("backend.Models.Products.Product", b =>

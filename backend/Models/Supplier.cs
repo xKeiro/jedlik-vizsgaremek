@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models;
 
@@ -24,6 +25,7 @@ public class Supplier : BaseModel
     [MinLength(5), MaxLength(100)]
     public required string Email { get; set; }
     [Required]
+    [ForeignKey("AddressId")]
     public required Address Address { get; set; }
     public bool Disabled { get; set; } = false;
 }

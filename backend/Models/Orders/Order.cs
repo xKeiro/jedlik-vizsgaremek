@@ -1,5 +1,6 @@
 ﻿using backend.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models.Orders;
 
@@ -8,10 +9,13 @@ public class Order : BaseModel
     [Required]
     public required User User { get; set; }
     [Required]
+    [ForeignKey("OrderAddressId")]
+    public required OrderAddress OrderAddress { get; set; }
+    [Required]
     public required Shipper Shipper { get; set; }
     [Required]
     [MinLength(1)]
-    public required IQueryable<ProductOrder> ProductOrders { get; set; }
+    public ICollection<ProductOrder> ProductOrders { get; set; } = null!;
     [Required]
     [Range(0, 100)]
     public required byte Vat { get; set; }
