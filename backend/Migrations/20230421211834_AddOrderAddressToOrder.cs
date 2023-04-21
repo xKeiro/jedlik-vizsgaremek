@@ -18,7 +18,7 @@ namespace backend.Migrations
                 defaultValue: 0m);
 
             migrationBuilder.CreateTable(
-                name: "OrderAddress",
+                name: "OrderAddresses",
                 columns: table => new
                 {
                     Id = table.Column<decimal>(type: "decimal(20,0)", nullable: false)
@@ -31,7 +31,7 @@ namespace backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderAddress", x => x.Id);
+                    table.PrimaryKey("PK_OrderAddresses", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
@@ -41,10 +41,10 @@ namespace backend.Migrations
                 unique: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Orders_OrderAddress_OrderAddressId",
+                name: "FK_Orders_OrderAddresses_OrderAddressId",
                 table: "Orders",
                 column: "OrderAddressId",
-                principalTable: "OrderAddress",
+                principalTable: "OrderAddresses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -53,11 +53,11 @@ namespace backend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Orders_OrderAddress_OrderAddressId",
+                name: "FK_Orders_OrderAddresses_OrderAddressId",
                 table: "Orders");
 
             migrationBuilder.DropTable(
-                name: "OrderAddress");
+                name: "OrderAddresses");
 
             migrationBuilder.DropIndex(
                 name: "IX_Orders_OrderAddressId",

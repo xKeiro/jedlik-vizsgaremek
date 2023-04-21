@@ -12,7 +12,7 @@ using backend.Services;
 namespace backend.Migrations
 {
     [DbContext(typeof(JedlikContext))]
-    [Migration("20230421171021_AddOrderAddressToOrder")]
+    [Migration("20230421211834_AddOrderAddressToOrder")]
     partial class AddOrderAddressToOrder
     {
         /// <inheritdoc />
@@ -137,7 +137,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderAddress");
+                    b.ToTable("OrderAddresses");
                 });
 
             modelBuilder.Entity("backend.Models.Orders.ProductOrder", b =>

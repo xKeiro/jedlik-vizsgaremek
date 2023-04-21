@@ -134,7 +134,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderAddress");
+                    b.ToTable("OrderAddresses");
                 });
 
             modelBuilder.Entity("backend.Models.Orders.ProductOrder", b =>
