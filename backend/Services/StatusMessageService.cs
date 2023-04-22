@@ -58,4 +58,9 @@ public class StatusMessageService : IStatusMessageService
         Message = "The confirmation password does not match the password!",
         StatusCode = StatusCodes.Status400BadRequest
     };
+    public StatusMessage DoesNotExist(string nameOfNotExisting, string valueOfNotExisting) => new()
+    {
+        Message = $"{nameOfNotExisting} ({valueOfNotExisting}) does not exist in our database!",
+        StatusCode = StatusCodes.Status404NotFound
+    };
 }

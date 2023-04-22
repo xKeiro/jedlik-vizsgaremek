@@ -10,4 +10,5 @@ public interface IStatusMessageService
     StatusMessage GenericError();
     StatusMessage ANotExistingIdProvided();
     StatusMessage ConfirmationPasswordMismatch();
+    StatusMessage DoesNotExist(string nameOfNotExisting, string valueOfNotExisting);
 }
