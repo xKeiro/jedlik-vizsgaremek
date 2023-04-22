@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.Dtos.Addresses;
 using backend.Dtos.Auth;
+using backend.Dtos.Products;
 using backend.Dtos.Products.ProductCategories;
 using backend.Dtos.Users;
 using backend.Models;
@@ -22,5 +23,8 @@ public class MappingProfile : Profile
 
         _ = CreateMap<AddressPublic, Address>();
         _ = CreateMap<Address, AddressPublic>();
+
+        _ = CreateMap<ProductWithoutId, Product>();
+        _ = CreateMap<Product, ProductPublic>();
     }
 }
