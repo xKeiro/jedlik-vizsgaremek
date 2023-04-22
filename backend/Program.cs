@@ -37,6 +37,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IStatusMessageService, StatusMessageService>();
 builder.Services.AddSingleton<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 
 var app = builder.Build();
