@@ -63,6 +63,7 @@ public class UserService : IUserService
 
         _ = _context.Users.Update(user);
         _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
         return _mapper.Map<User, UserPublic>(user);
     }
 
@@ -83,6 +84,7 @@ public class UserService : IUserService
         user.IsAdmin = shouldBeAdmin;
         _ = _context.Users.Update(user);
         _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
         return _mapper.Map<User, UserPublic>(user);
     }
     private string GetHashedPassword(string password)

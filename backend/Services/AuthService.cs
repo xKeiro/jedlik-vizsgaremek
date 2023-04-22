@@ -45,6 +45,7 @@ public class AuthService : IAuthService
         user.Password = GetHashedPassword(user.Password);
         _ = await _context.Users.AddAsync(user);
         _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
         return new AuthResult()
         {
             JwtToken = _jwtTokenGeneratorService.GenerateToken(user),

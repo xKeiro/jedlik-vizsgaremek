@@ -24,13 +24,14 @@ public class ProductCategoryService : IProductCategoryService
     public async Task<OneOf<ProductCategoryPublic, StatusMessage>> Add(ProductCategoryWithoutId productCategoryWithoutId)
     {
         var productCategory = _mapper.Map<ProductCategoryWithoutId, ProductCategory>(productCategoryWithoutId);
-        (var Result, var NotUniquePropertyNames) = await IsUnique(productCategory);
-        if (!Result)
+        (var result, var notUniquePropertyNames) = await IsUnique(productCategory);
+        if (!result)
         {
-            return _statusMessage.NotUnique<ProductCategory>(NotUniquePropertyNames);
+            return _statusMessage.NotUnique<ProductCategory>(notUniquePropertyNames);
         }
         _ = await _context.ProductCategories.AddAsync(productCategory);
         _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
         return _mapper.Map<ProductCategory, ProductCategoryPublic>(productCategory);
     }
 
@@ -70,6 +71,7 @@ public class ProductCategoryService : IProductCategoryService
         productCategory.Id = productCategoryPublic.Id;
         _ = _context.Update(productCategory);
         _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
         return _mapper.Map<ProductCategory, ProductCategoryPublic>(productCategory);
     }
 
