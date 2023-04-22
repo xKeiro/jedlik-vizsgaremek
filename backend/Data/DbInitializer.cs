@@ -19,10 +19,44 @@ public static class DbInitializer
 
         _ = context.Database.EnsureCreated();
 
-        if (context.Products.Any())
+        if (context.Products.Any() || context.Addresses.Any())
         {
             return;
         }
+        #region CountriesWithVat
+        var countriesWithVat = new List<CountryWithVat>
+        {
+            new CountryWithVat { Country = "Austria", Vat = 20 },
+            new CountryWithVat { Country = "Belgium", Vat = 21 },
+            new CountryWithVat { Country = "Bulgaria", Vat = 20 },
+            new CountryWithVat { Country = "Croatia", Vat = 25 },
+            new CountryWithVat { Country = "Cyprus", Vat = 19 },
+            new CountryWithVat { Country = "Czechia", Vat = 21 },
+            new CountryWithVat { Country = "Denmark", Vat = 25 },
+            new CountryWithVat { Country = "Estonia", Vat = 20 },
+            new CountryWithVat { Country = "Finland", Vat = 24 },
+            new CountryWithVat { Country = "France", Vat = 20 },
+            new CountryWithVat { Country = "Germany", Vat = 19 },
+            new CountryWithVat { Country = "Greece", Vat = 24 },
+            new CountryWithVat { Country = "Hungary", Vat = 27 },
+            new CountryWithVat { Country = "Ireland", Vat = 23 },
+            new CountryWithVat { Country = "Italy", Vat = 22 },
+            new CountryWithVat { Country = "Latvia", Vat = 21 },
+            new CountryWithVat { Country = "Lithuania", Vat = 21 },
+            new CountryWithVat { Country = "Luxembourg", Vat = 17 },
+            new CountryWithVat { Country = "Malta", Vat = 18 },
+            new CountryWithVat { Country = "Netherlands", Vat = 21 },
+            new CountryWithVat { Country = "Poland", Vat = 23 },
+            new CountryWithVat { Country = "Portugal", Vat = 23 },
+            new CountryWithVat { Country = "Romania", Vat = 19 },
+            new CountryWithVat { Country = "Slovakia", Vat = 20 },
+            new CountryWithVat { Country = "Slovenia", Vat = 22 },
+            new CountryWithVat { Country = "Spain", Vat = 21 },
+            new CountryWithVat { Country = "Sweden", Vat = 25 }
+        };
+        #endregion
+        context.CountriesWithVat.AddRange(countriesWithVat);
+
         #region Addresses
         var addresses = new List<Address>
         {
@@ -32,7 +66,7 @@ public static class DbInitializer
                 City = "Vienna",
                 Region = "Lower Austria",
                 PostalCode = "1011",
-                Country = CountryCode.AT
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -40,7 +74,7 @@ public static class DbInitializer
                 City = "Sopron",
                 Region = "Győr-Moson-Sopron",
                 PostalCode = "9404",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -48,7 +82,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1111",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -56,7 +90,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1046",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -64,7 +98,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1086",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -72,7 +106,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1097",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -80,7 +114,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1194",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -88,7 +122,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1158",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -96,7 +130,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1239",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -104,7 +138,7 @@ public static class DbInitializer
                 City = "Sopron",
                 Region = "Győr-Moson-Sopron",
                 PostalCode = "9404",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -112,7 +146,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1024",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -120,7 +154,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1122",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -128,7 +162,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1046",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -136,7 +170,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1111",
-                Country = CountryCode.HU
+                CountryWithVat = countriesWithVat[0]
             },
             new Address()
             {
@@ -144,7 +178,7 @@ public static class DbInitializer
                 City = "Paris",
                 Region = "Île-de-France",
                 PostalCode = "75001",
-                Country = CountryCode.FR
+                CountryWithVat = countriesWithVat[9]
             },
 
             new Address()
@@ -153,7 +187,7 @@ public static class DbInitializer
                 City = "Warsaw",
                 Region = "Mazowieckie",
                 PostalCode = "00-123",
-                Country = CountryCode.PL
+                CountryWithVat = countriesWithVat[4]
             },
 
             new Address()
@@ -162,7 +196,7 @@ public static class DbInitializer
                 City = "Madrid",
                 Region = "Madrid",
                 PostalCode = "28014",
-                Country = CountryCode.ES
+                CountryWithVat = countriesWithVat[5]
             },
 
             new Address()
@@ -171,7 +205,7 @@ public static class DbInitializer
                 City = "Rome",
                 Region = "Lazio",
                 PostalCode = "00198",
-                Country = CountryCode.IT
+                CountryWithVat = countriesWithVat[3]
             },
 
             new Address()
@@ -180,7 +214,7 @@ public static class DbInitializer
                 City = "Berlin",
                 Region = "Berlin",
                 PostalCode = "10243",
-                Country = CountryCode.DE
+                CountryWithVat = countriesWithVat[7]
             },
             new Address()
             {
@@ -188,7 +222,7 @@ public static class DbInitializer
                 City = "Bari",
                 Region = "Puglia",
                 PostalCode = "70126",
-                Country = CountryCode.IT
+                CountryWithVat = countriesWithVat[3]
             },
 
             new Address()
@@ -197,7 +231,7 @@ public static class DbInitializer
                 City = "The Hague",
                 Region = "South Holland",
                 PostalCode = "2514 EE",
-                Country = CountryCode.NL
+                CountryWithVat = countriesWithVat[13]
             },
 
             new Address()
@@ -206,7 +240,7 @@ public static class DbInitializer
                 City = "Stockholm",
                 Region = "Stockholm",
                 PostalCode = "111 56",
-                Country = CountryCode.SE
+                CountryWithVat = countriesWithVat[14]
             },
 
             new Address()
@@ -215,7 +249,7 @@ public static class DbInitializer
                 City = "Viena",
                 Region = "Viena",
                 PostalCode = "1001",
-                Country = CountryCode.AT
+                CountryWithVat = countriesWithVat[0]
             },
 
             new Address()
@@ -224,7 +258,7 @@ public static class DbInitializer
                 City = "Lisbon",
                 Region = "Lisbon",
                 PostalCode = "1100-148",
-                Country = CountryCode.PT
+                CountryWithVat = countriesWithVat[15]
             },
             new Address()
             {
@@ -232,7 +266,7 @@ public static class DbInitializer
                 City = "Aslova",
                 Region = "Slva",
                 PostalCode = "98000",
-                Country = CountryCode.SK
+                CountryWithVat = countriesWithVat[18]
             },
 
             new Address()
@@ -241,7 +275,7 @@ public static class DbInitializer
                 City = "Leipzig",
                 Region = "Saxony",
                 PostalCode = "04107",
-                Country = CountryCode.DE
+                CountryWithVat = countriesWithVat[19]
             },
 
             new Address()
@@ -250,7 +284,7 @@ public static class DbInitializer
                 City = "Brussels",
                 Region = "Brussels-Capital",
                 PostalCode = "1050",
-                Country = CountryCode.BE
+                CountryWithVat = countriesWithVat[2]
             },
 
             new Address()
@@ -259,7 +293,7 @@ public static class DbInitializer
                 City = "Madrid",
                 Region = "Madrid",
                 PostalCode = "28046",
-                Country = CountryCode.ES
+                CountryWithVat = countriesWithVat[13]
             },
 
             new Address()
@@ -268,7 +302,7 @@ public static class DbInitializer
                 City = "Paris",
                 Region = "Île-de-France",
                 PostalCode = "75008",
-                Country = CountryCode.FR
+                CountryWithVat = countriesWithVat[12]
             }
         };
         context.AddRangeAsync(addresses);
