@@ -11,7 +11,7 @@ namespace backend.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [ApiConventionType(typeof(UserConventions<UserRegister>))]
-public class UsersController: ApiControllerBase
+public class UsersController : ApiControllerBase
 {
     private readonly IUserService _service;
 
@@ -43,6 +43,12 @@ public class UsersController: ApiControllerBase
         var users = _service.GetAll();
         return Ok(users);
     }
-
-
+    [HttpGet]
+    [Route("{userId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<UserPublic>> GetById(ulong userId)
+    {
+        var result = await _service.FindById(userId);
+        return result.Match(Ok, Problem);
+    }
 }
