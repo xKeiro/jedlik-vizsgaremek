@@ -39,6 +39,7 @@ builder.Services.AddSingleton<IJwtTokenGeneratorService, JwtTokenGeneratorServic
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 app.UseExceptionHandler("/Error");
