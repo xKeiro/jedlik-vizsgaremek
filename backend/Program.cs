@@ -1,7 +1,7 @@
 using backend.Data;
+using backend.Extensions;
 using backend.Interfaces.Services;
 using backend.Maps;
-using backend.Models.Products;
 using backend.Services;
 using backend.Utils;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +12,8 @@ DotNetEnv.Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+JwtTokenConfiguration.ConfigureJwtAuthentication(builder.Services);
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy",
     builder => builder.WithOrigins(EnvironmentVariableHelper.FrontendUrl)
@@ -33,6 +35,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IStatusMessageService, StatusMessageService>();
+builder.Services.AddSingleton<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 
 var app = builder.Build();
@@ -44,7 +48,7 @@ if (app.Environment.IsDevelopment())
     _ = app.UseSwaggerUI();
 }
 
-app.UseExceptionHandler("/Error");
+//app.UseExceptionHandler("/Error");
 app.UseHttpsRedirection();
 
 app.UseCors("corspolicy");

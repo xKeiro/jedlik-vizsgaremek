@@ -6,6 +6,9 @@ public static class EnvironmentVariableHelper
 {
     public static string ConnectionString => GetDbConnectionString();
     public static string JwtTokenKey => Get("JWT_TOKEN_KEY");
+    public static string JwtTokenIssuer => Get("JWT_TOKEN_ISSUER");
+    public static string JwtTokenAudience => Get("JWT_TOKEN_AUDIENCE");
+    public static int JwtTokenExpirationDay => int.Parse(Get("JWT_TOKEN_EXPIRATION_DAY"));
     public static string FrontendUrl => Get("FRONTEND_URL");
 
     private static string GetDbConnectionString()
