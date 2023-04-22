@@ -36,5 +36,13 @@ public class UsersController: ApiControllerBase
         var result = await _service.Update(userId, userRegister);
         return result.Match(Ok, Problem);
     }
+    [HttpGet]
+    [Authorize(Roles = "Admin")]
+    public ActionResult<IAsyncEnumerable<UserPublic>> GetAll()
+    {
+        var users = _service.GetAll();
+        return Ok(users);
+    }
+
 
 }

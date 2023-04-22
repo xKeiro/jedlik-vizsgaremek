@@ -8,7 +8,7 @@ using OneOf;
 
 namespace backend.Services;
 
-public class UserService: IUserService
+public class UserService : IUserService
 {
     private readonly JedlikContext _context;
     private readonly IMapper _mapper;
@@ -56,16 +56,23 @@ public class UserService: IUserService
         {
             return _statusMessage.NotUnique<User>(notUniquePropertyNames);
         }
-        _mapper.Map(userRegister, user);
+        _ = _mapper.Map(userRegister, user);
         user.Address.CountryWithVat = countryWithVat;
         user.Password = GetHashedPassword(user.Password);
 
-        
-        _context.Users.Update(user);
+
+        _ = _context.Users.Update(user);
         _ = await _context.SaveChangesAsync();
         return _mapper.Map<User, UserPublic>(user);
     }
 
+    public async IAsyncEnumerable<UserPublic> GetAll()
+    {
+        await foreach (var user in _context.Users.AsAsyncEnumerable())
+        {
+            yield return _mapper.Map<User, UserPublic>(user);
+        }
+    }
     private string GetHashedPassword(string password)
     {
         var salt = BCrypt.Net.BCrypt.GenerateSalt(12);
