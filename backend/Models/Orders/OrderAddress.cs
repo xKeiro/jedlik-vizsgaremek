@@ -18,8 +18,7 @@ public class OrderAddress: BaseModel
     [MaxLength(10)]
     public required string PostalCode { get; set; }
     [Required]
-    [EnumDataType(typeof(CountryCode))]
-    [MinLength(1), MaxLength(4)]
-    public required CountryCode Country { get; set; }
+    public required CountryWithVat CountryWithVat { get; set; }
     public Order? Order { get; set; }
+    public string Country => CountryWithVat.Country;
 }

@@ -17,13 +17,14 @@ public class Order : BaseModel
     [MinLength(1)]
     public ICollection<ProductOrder> ProductOrders { get; set; } = null!;
     [Required]
-    [Range(0, 100)]
-    public required byte Vat { get; set; }
+    public required CountryWithVat CountryWithVat { get; set; }
     [Required]
     [EnumDataType(typeof(OrderStatus))]
     [MinLength(1), MaxLength(25)]
     public required OrderStatus Status { get; set; }
     [Required]
     public DateTime OrderDate { get; set; } = DateTime.Now;
+    public byte Vat => OrderAddress.CountryWithVat.Vat;
     public decimal OrderTotal => ProductOrders.Sum(po => po.TotalPrice);
+    public decimal OrderTotalWithVat => OrderTotal * (1 + (Vat / 100));
 }

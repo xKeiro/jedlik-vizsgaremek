@@ -25,15 +25,20 @@ public class JedlikContext : DbContext
     public virtual DbSet<Supplier> Suppliers { get; set; }
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<OrderAddress> OrderAddresses{ get; set; }
+    public virtual DbSet<CountryWithVat> CountriesWithVat { get; set; }
 
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        _ = modelBuilder
-            .Entity<Address>()
-            .Property(address => address.Country)
-            .HasConversion(new EnumToStringConverter<CountryCode>());
+        modelBuilder.Entity<CountryWithVat>()
+            .HasMany(c => c.OrderAddress)
+            .WithOne(o => o.CountryWithVat)
+            .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<CountryWithVat>()
+            .HasMany(c => c.Addresses)
+            .WithOne(o => o.CountryWithVat)
+            .OnDelete(DeleteBehavior.Restrict);
         _ = modelBuilder
             .Entity<Order>()
             .Property(order => order.Status)
