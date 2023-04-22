@@ -1,17 +1,13 @@
-﻿using System.Text;
-using backend.Utils;
+﻿using backend.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace backend.Extensions;
 
 public static class JwtTokenConfiguration
 {
-    public static void ConfigureJwtAuthentication(this IServiceCollection services)
-    {
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    public static void ConfigureJwtAuthentication(this IServiceCollection services) => services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -25,15 +21,14 @@ public static class JwtTokenConfiguration
                     ValidAudience = EnvironmentVariableHelper.JwtTokenAudience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(EnvironmentVariableHelper.JwtTokenKey))
                 };
+                options.Events = new JwtBearerEvents
+                {
+                    // Set the bearer token from cookie
+                    OnMessageReceived = context =>
+                    {
+                        context.Token = context.Request.Cookies["token"];
+                        return Task.CompletedTask;
+                    }
+                };
             });
-
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy("Authenticated", policy =>
-            {
-                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-                policy.RequireAuthenticatedUser();
-            });
-        });
-    }
 }

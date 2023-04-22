@@ -40,6 +40,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 
 var app = builder.Build();
+app.UseExceptionHandler("/Error");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -48,7 +49,6 @@ if (app.Environment.IsDevelopment())
     _ = app.UseSwaggerUI();
 }
 
-//app.UseExceptionHandler("/Error");
 app.UseHttpsRedirection();
 
 app.UseCors("corspolicy");
