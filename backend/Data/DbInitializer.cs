@@ -69,7 +69,7 @@ public static class DbInitializer
                 City = "Sopron",
                 Region = "Győr-Moson-Sopron",
                 PostalCode = "9404",
-                Country = countriesWithVat[9]
+                CountryWithVat = countriesWithVat[9]
             },
             new Address()
             {
@@ -79,14 +79,6 @@ public static class DbInitializer
                 Region = "Lower Austria",
                 PostalCode = "1011",
                 CountryWithVat = countriesWithVat[0]
-            },
-            new Address()
-            {
-                Street = "7019 La Follette Terrace",
-                City = "Sopron",
-                Region = "Győr-Moson-Sopron",
-                PostalCode = "9404",
-                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -942,7 +934,7 @@ public static class DbInitializer
             City = "Sopron",
             Region = "Győr-Moson-Sopron",
             PostalCode = "9404",
-            Country = CountryCode.HU
+            CountryWithVat = countriesWithVat[9],
             },
         };
         context.AddRangeAsync(ordersAddresses);
@@ -961,7 +953,6 @@ public static class DbInitializer
                 User = context.Users.Where(x => x.Id == 2).First(),
                 Shipper = context.Shippers.Where(x => x.Id == 2).First(),
                 OrderAddress = context.OrderAddresses.Where(x => x.Id == 1).First(),
-                Vat = 27,
                 Status = OrderStatus.Fulfilled
             },
         };
