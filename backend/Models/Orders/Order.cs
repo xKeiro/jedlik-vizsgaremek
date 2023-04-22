@@ -17,8 +17,6 @@ public class Order : BaseModel
     [MinLength(1)]
     public ICollection<ProductOrder> ProductOrders { get; set; } = null!;
     [Required]
-    public required CountryWithVat CountryWithVat { get; set; }
-    [Required]
     [EnumDataType(typeof(OrderStatus))]
     [MinLength(1), MaxLength(25)]
     public required OrderStatus Status { get; set; }
