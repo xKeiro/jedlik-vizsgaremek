@@ -1,4 +1,5 @@
 ﻿using backend.Conventions;
+using backend.Dtos.Auth;
 using backend.Dtos.Users;
 using backend.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +10,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[ApiConventionType(typeof(UserConventions))]
+[ApiConventionType(typeof(UserConventions<UserRegister>))]
 public class UsersController: ApiControllerBase
 {
     private readonly IUserService _service;
@@ -25,6 +26,14 @@ public class UsersController: ApiControllerBase
     {
         var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var result = await _service.FindById(userId);
+        return result.Match(Ok, Problem);
+    }
+    [HttpPut("Me")]
+    [Authorize]
+    public async Task<ActionResult<UserPublic>> UpdateMe(UserRegister userRegister)
+    {
+        var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var result = await _service.Update(userId, userRegister);
         return result.Match(Ok, Problem);
     }
 
