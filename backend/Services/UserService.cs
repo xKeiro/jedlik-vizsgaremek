@@ -73,14 +73,14 @@ public class UserService : IUserService
             yield return _mapper.Map<User, UserPublic>(user);
         }
     }
-    public async Task<OneOf<UserPublic, StatusMessage>> MakeUserAdmin(ulong userId)
+    public async Task<OneOf<UserPublic, StatusMessage>> SetUserAdminStatus(ulong userId, bool shouldBeAdmin)
     {
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
         {
             return _statusMessage.NotFound<User>(userId);
         }
-        user.IsAdmin = true;
+        user.IsAdmin = shouldBeAdmin;
         _ = _context.Users.Update(user);
         _ = await _context.SaveChangesAsync();
         return _mapper.Map<User, UserPublic>(user);

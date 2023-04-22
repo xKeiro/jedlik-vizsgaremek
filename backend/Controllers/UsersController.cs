@@ -48,9 +48,13 @@ public class UsersController : ApiControllerBase
         => (await _service.FindById(userId)).Match(Ok, Problem);
 
     [HttpPatch]
-    [Route("MakeAdmin/{userId}")]
+    [Route("Promote/{userId}")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<UserPublic>> MakeAdmin(ulong userId)
-        => (await _service.MakeUserAdmin(userId)).Match(Ok, Problem);
-
+        => (await _service.SetUserAdminStatus(userId, true)).Match(Ok, Problem);
+    [HttpPatch]
+    [Route("Demote/{userId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<UserPublic>> LoseAdmin(ulong userId)
+        => (await _service.SetUserAdminStatus(userId, false)).Match(Ok, Problem);
 }
