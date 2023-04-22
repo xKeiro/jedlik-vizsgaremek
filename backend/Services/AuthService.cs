@@ -28,7 +28,7 @@ public class AuthService: IAuthService
     {
         if (userRegister.Password != userRegister.PasswordConfirm)
         {
-            return _statusMessage.GenericError();
+            return _statusMessage.ConfirmationPasswordMismatch();
         }
         var countryWithVat = await _context.CountriesWithVat.FirstOrDefaultAsync(cwv => cwv.Country == userRegister.Address.Country);
         if (countryWithVat is null)

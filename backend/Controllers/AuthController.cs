@@ -1,4 +1,6 @@
-﻿using backend.Dtos.Auth;
+﻿using backend.Conventions;
+using backend.Dtos.Auth;
+using backend.Dtos.Products.ProductCategories;
 using backend.Dtos.Users;
 using backend.Interfaces.Services;
 using backend.Utils;
@@ -9,6 +11,7 @@ using NuGet.Common;
 namespace backend.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[ApiConventionType(typeof(AuthConventions))]
 public class AuthController : ApiControllerBase
 {
     private readonly IAuthService _service;
@@ -24,7 +27,7 @@ public class AuthController : ApiControllerBase
         var result = await _service.Register(registerDto);
         if (result.IsT1)
         {
-            return (ActionResult)Problem(result.AsT1);
+            return Problem(result.AsT1);
         }
         var cookieOptions = new CookieOptions
         {
