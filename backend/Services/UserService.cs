@@ -73,6 +73,18 @@ public class UserService : IUserService
             yield return _mapper.Map<User, UserPublic>(user);
         }
     }
+    public async Task<OneOf<UserPublic, StatusMessage>> MakeUserAdmin(ulong userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null)
+        {
+            return _statusMessage.NotFound<User>(userId);
+        }
+        user.IsAdmin = true;
+        _ = _context.Users.Update(user);
+        _ = await _context.SaveChangesAsync();
+        return _mapper.Map<User, UserPublic>(user);
+    }
     private string GetHashedPassword(string password)
     {
         var salt = BCrypt.Net.BCrypt.GenerateSalt(12);

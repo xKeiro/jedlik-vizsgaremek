@@ -25,8 +25,7 @@ public class UsersController : ApiControllerBase
     public async Task<ActionResult<UserPublic>> GetMe()
     {
         var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var result = await _service.FindById(userId);
-        return result.Match(Ok, Problem);
+        return (await _service.FindById(userId)).Match(Ok, Problem);
     }
     [HttpPut("Me")]
     [Authorize]
@@ -36,19 +35,22 @@ public class UsersController : ApiControllerBase
         var result = await _service.Update(userId, userRegister);
         return result.Match(Ok, Problem);
     }
+
     [HttpGet]
     [Authorize(Roles = "Admin")]
     public ActionResult<IAsyncEnumerable<UserPublic>> GetAll()
-    {
-        var users = _service.GetAll();
-        return Ok(users);
-    }
+        => Ok(_service.GetAll());
+
     [HttpGet]
     [Route("{userId}")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<UserPublic>> GetById(ulong userId)
-    {
-        var result = await _service.FindById(userId);
-        return result.Match(Ok, Problem);
-    }
+        => (await _service.FindById(userId)).Match(Ok, Problem);
+
+    [HttpPatch]
+    [Route("MakeAdmin/{userId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<UserPublic>> MakeAdmin(ulong userId)
+        => (await _service.MakeUserAdmin(userId)).Match(Ok, Problem);
+
 }
