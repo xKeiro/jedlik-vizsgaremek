@@ -6,5 +6,5 @@ namespace backend.Controllers;
 [ApiController]
 public class ApiControllerBase : ControllerBase
 {
-    protected IActionResult Problem(StatusMessage error) => Problem(error.Message, null, error.StatusCode);
+    protected ActionResult Problem(StatusMessage error) => Problem(error.Message, null, error.StatusCode);
 }

@@ -1,6 +1,7 @@
 ﻿using backend.Conventions;
 using backend.Dtos.Products.ProductCategories;
 using backend.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
@@ -22,14 +23,16 @@ public class CategoriesController : ApiControllerBase
         => Ok(await _service.GetAll());
 
     [HttpPost]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductCategoryPublic>> Add(ProductCategoryWithoutId productCategoryWithoutId)
-        => (ActionResult)(await _service.Add(productCategoryWithoutId)).Match(Ok, Problem);
+        => (await _service.Add(productCategoryWithoutId)).Match(Ok, Problem);
 
     [HttpGet("{id}")]
     public async Task<ActionResult<ProductCategoryPublic>> Get(ulong id)
-        => (ActionResult)(await _service.Find(id)).Match(Ok, Problem);
+        => (await _service.Find(id)).Match(Ok, Problem);
 
     [HttpPut]
+    [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductCategoryPublic>> Update(ProductCategoryPublic productCategoryPublic)
-        => (ActionResult)(await _service.Update(productCategoryPublic)).Match(Ok, Problem);
+        => (await _service.Update(productCategoryPublic)).Match(Ok, Problem);
 }
