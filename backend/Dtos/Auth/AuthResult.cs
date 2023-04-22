@@ -7,7 +7,7 @@ public class AuthResult
 {
     public required string JwtToken { get; set; }
     public required UserPublic UserPublic { get; set; }
-    public CookieOptions cookieOptionForJwt => new CookieOptions()
+    public CookieOptions CookieOptions => new CookieOptions()
     {
         HttpOnly = true,
         SameSite = SameSiteMode.Strict,

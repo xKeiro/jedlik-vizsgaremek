@@ -2,7 +2,9 @@
 using backend.Dtos.Auth;
 using backend.Dtos.Users;
 using backend.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace backend.Controllers;
 [Route("api/[controller]")]
@@ -25,7 +27,7 @@ public class AuthController : ApiControllerBase
         {
             return Problem(result.AsT1);
         }
-        Response.Cookies.Append("token", result.AsT0.JwtToken, result.AsT0.cookieOptionForJwt);
+        Response.Cookies.Append("token", result.AsT0.JwtToken, result.AsT0.CookieOptions);
         return Ok(result.AsT0.UserPublic);
     }
 
@@ -37,7 +39,14 @@ public class AuthController : ApiControllerBase
         {
             return Problem(result.AsT1);
         }
-        Response.Cookies.Append("token", result.AsT0.JwtToken, result.AsT0.cookieOptionForJwt);
+        Response.Cookies.Append("token", result.AsT0.JwtToken, result.AsT0.CookieOptions);
         return Ok(result.AsT0.UserPublic);
+    }
+    [Authorize]
+    [HttpGet("Logout")]
+    public IActionResult Logout()
+    {
+        Response.Cookies.Delete("token");
+        return Ok();
     }
 }

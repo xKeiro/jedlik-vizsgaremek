@@ -5,6 +5,7 @@ using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
 using OneOf;
+using System.Security.Claims;
 
 namespace backend.Services;
 
@@ -67,7 +68,6 @@ public class AuthService : IAuthService
                 JwtToken = _jwtTokenGeneratorService.GenerateToken(user),
                 UserPublic = _mapper.Map<User, UserPublic>(user)
             };
-
     }
 
     private string GetHashedPassword(string password)
