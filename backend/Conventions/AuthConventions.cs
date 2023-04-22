@@ -17,6 +17,7 @@ public static class AuthConventions
     }
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public static void Login([ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] UserLogin loginDto)
     {

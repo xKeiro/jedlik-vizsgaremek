@@ -1,12 +1,8 @@
 ﻿using backend.Conventions;
 using backend.Dtos.Auth;
-using backend.Dtos.Products.ProductCategories;
 using backend.Dtos.Users;
 using backend.Interfaces.Services;
-using backend.Utils;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.Common;
 
 namespace backend.Controllers;
 [Route("api/[controller]")]
@@ -29,14 +25,19 @@ public class AuthController : ApiControllerBase
         {
             return Problem(result.AsT1);
         }
-        var cookieOptions = new CookieOptions
+        Response.Cookies.Append("token", result.AsT0.JwtToken, result.AsT0.cookieOptionForJwt);
+        return Ok(result.AsT0.UserPublic);
+    }
+
+    [HttpPost("Login")]
+    public async Task<ActionResult<UserPublic>> Login(UserLogin loginDto)
+    {
+        var result = await _service.Login(loginDto);
+        if (result.IsT1)
         {
-            HttpOnly = true,
-            SameSite = SameSiteMode.Strict,
-            Secure = true,
-            Expires = DateTime.Now.AddDays(EnvironmentVariableHelper.JwtTokenExpirationDay)
-        };
-        Response.Cookies.Append("token", result.AsT0.JwtToken, cookieOptions);
+            return Problem(result.AsT1);
+        }
+        Response.Cookies.Append("token", result.AsT0.JwtToken, result.AsT0.cookieOptionForJwt);
         return Ok(result.AsT0.UserPublic);
     }
 }

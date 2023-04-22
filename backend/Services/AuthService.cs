@@ -4,12 +4,11 @@ using backend.Dtos.Users;
 using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using OneOf;
 
 namespace backend.Services;
 
-public class AuthService: IAuthService
+public class AuthService : IAuthService
 {
     private readonly JedlikContext _context;
     private readonly IMapper _mapper;
@@ -43,13 +42,32 @@ public class AuthService: IAuthService
             return _statusMessage.NotUnique<User>(notUniquePropertyNames);
         }
         user.Password = GetHashedPassword(user.Password);
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-        return new AuthResult() 
+        _ = await _context.Users.AddAsync(user);
+        _ = await _context.SaveChangesAsync();
+        return new AuthResult()
         {
             JwtToken = _jwtTokenGeneratorService.GenerateToken(user),
             UserPublic = _mapper.Map<User, UserPublic>(user)
         };
+    }
+
+    public async Task<OneOf<AuthResult, StatusMessage>> Login(UserLogin userLogin)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u
+            => u.Username == userLogin.Identifier
+            || u.Email == userLogin.Identifier);
+        if (user is null)
+        {
+            return _statusMessage.LoginFailed();
+        }
+        return !BCrypt.Net.BCrypt.Verify(userLogin.Password, user.Password)
+            ? (OneOf<AuthResult, StatusMessage>)_statusMessage.LoginFailed()
+            : (OneOf<AuthResult, StatusMessage>)new AuthResult()
+            {
+                JwtToken = _jwtTokenGeneratorService.GenerateToken(user),
+                UserPublic = _mapper.Map<User, UserPublic>(user)
+            };
+
     }
 
     private string GetHashedPassword(string password)
@@ -72,10 +90,6 @@ public class AuthService: IAuthService
         {
             notUniquePropertyNames.Add(nameof(user.Email));
         }
-        if (notUniquePropertyNames.Any())
-        {
-            return (false, notUniquePropertyNames);
-        }
-        return (true, notUniquePropertyNames);
+        return notUniquePropertyNames.Any() ? ((bool result, List<string> notUniquePropertyNames))(false, notUniquePropertyNames) : ((bool result, List<string> notUniquePropertyNames))(true, notUniquePropertyNames);
     }
 }

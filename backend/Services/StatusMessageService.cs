@@ -63,4 +63,9 @@ public class StatusMessageService : IStatusMessageService
         Message = $"{nameOfNotExisting} ({valueOfNotExisting}) does not exist in our database!",
         StatusCode = StatusCodes.Status404NotFound
     };
+    public StatusMessage LoginFailed() => new()
+    {
+        Message = $"Authentication failed, please check your credentials!",
+        StatusCode = StatusCodes.Status401Unauthorized
+    };
 }

@@ -11,4 +11,5 @@ public interface IStatusMessageService
     StatusMessage ANotExistingIdProvided();
     StatusMessage ConfirmationPasswordMismatch();
     StatusMessage DoesNotExist(string nameOfNotExisting, string valueOfNotExisting);
+    StatusMessage LoginFailed();
 }

@@ -8,4 +8,5 @@ namespace backend.Interfaces.Services;
 public interface IAuthService
 {
     Task<OneOf<AuthResult, StatusMessage>> Register(UserRegister userRegister);
+    Task<OneOf<AuthResult, StatusMessage>> Login(UserLogin userLogin);
 }
