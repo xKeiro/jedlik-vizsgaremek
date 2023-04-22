@@ -1,6 +1,6 @@
 ﻿namespace backend.Dtos.Products;
 
-public class ProductPublic: ProductWithoutId
+public class ProductPublic: ProductRegister
 {
     public ulong Id { get; set; }
 }

@@ -24,7 +24,7 @@ public class MappingProfile : Profile
         _ = CreateMap<AddressPublic, Address>();
         _ = CreateMap<Address, AddressPublic>();
 
-        _ = CreateMap<ProductWithoutId, Product>();
+        _ = CreateMap<ProductRegister, Product>();
         _ = CreateMap<Product, ProductPublic>();
     }
 }

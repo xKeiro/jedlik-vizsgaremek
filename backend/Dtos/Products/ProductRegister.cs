@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace backend.Dtos.Products;
 
-public class ProductWithoutId
+public class ProductRegister
 {
     [Required]
-    public required ProductCategoryPublic Category { get; set; }
+    public required ulong CategoryId { get; set; }
     [Required]
     [Precision(18, 2)]
     public required decimal BasePrice { get; set; }
