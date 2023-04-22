@@ -24,6 +24,9 @@ public class ProductService : IProductService
     public IAsyncEnumerable<ProductPublic> GetNotDiscontinued()
         => _context.Products
             .Where(p => !p.Discontinued)
+            .OrderByDescending(p => p.ProductOrders!.Count)
+            .ThenBy(p => p.DiscountedPrice)
+            .ThenBy(p => p.Title)
             .Select(p => _mapper.Map<Product, ProductPublic>(p))
             .AsAsyncEnumerable();
     public async Task<OneOf<ProductPublic, StatusMessage>> Add(ProductRegister productRegister)

@@ -28,4 +28,5 @@ public class Product : BaseModel
     public required bool Featured { get; set; }
     public ICollection<ProductReview>? ProductReviews { get; set; }
     public ICollection<ProductOrder>? ProductOrders { get; set; }
+    public decimal DiscountedPrice => BasePrice - (BasePrice * Discount / 100);
 }
