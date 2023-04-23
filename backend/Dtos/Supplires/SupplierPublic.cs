@@ -8,6 +8,4 @@ namespace backend.Dtos.Supplires;
 public class SupplierPublic: SupplierRegister
 {
     public required ulong Id { get; set; }
-    [Required]
-    [MinLength(3), MaxLength(75)]
 }

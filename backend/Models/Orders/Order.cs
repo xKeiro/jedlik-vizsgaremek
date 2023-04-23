@@ -24,7 +24,7 @@ public class Order : BaseModel
     public DateTime OrderDate { get; set; } = DateTime.Now;
     public byte Vat => OrderAddress.CountryWithVat.Vat;
     public decimal OrderTotal => ProductOrders.Sum(po => po.TotalPrice);
-    public decimal OrderTotalWithVat => OrderTotal * (1 + (Vat / 100));
+    public decimal OrderTotalWithVat => OrderTotal * (1 + ((decimal)Vat / 100));
     public decimal OrderTotalWithShipping => OrderTotalWithVat + Shipper.Price;
 
 }
