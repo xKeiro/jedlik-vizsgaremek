@@ -6,6 +6,7 @@ using backend.Dtos.Orders.OrderAddresses;
 using backend.Dtos.Orders.ProductOrders;
 using backend.Dtos.Products;
 using backend.Dtos.Products.ProductCategories;
+using backend.Dtos.Shippers;
 using backend.Dtos.Users;
 using backend.Models;
 using backend.Models.Orders;
@@ -32,10 +33,13 @@ public class MappingProfile : Profile
         _ = CreateMap<Product, ProductPublic>().ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id));
 
         _ = CreateMap<OrderRegister, Order>();
-        _ = CreateMap<Order, OrderPublic>();
+        _ = CreateMap<Order, OrderPublic>().ForMember(dest => dest.ShipperId, opt => opt.MapFrom(src => src.Shipper.Id));
         _ = CreateMap<ProductOrderPublic, ProductOrder>();
         _ = CreateMap<ProductOrder, ProductOrderPublic>();
         _ = CreateMap<OrderAddressPublic, OrderAddress>();
         _ = CreateMap<OrderAddress, OrderAddressPublic>();
+
+        _ = CreateMap<ShipperRegister, Shipper>();
+        _ = CreateMap<Shipper, ShipperPublic>();
     }
 }
