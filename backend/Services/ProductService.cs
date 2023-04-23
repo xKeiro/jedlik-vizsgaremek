@@ -85,7 +85,9 @@ public class ProductService : IProductService
         var product = await _context.Products
             .Include(p => p.Category)
             .FirstOrDefaultAsync(p => p.Id == productId);
-        return product == null ? (OneOf<ProductPublic, StatusMessage>)_statusMessage.NotFound<Product>(productId) : (OneOf<ProductPublic, StatusMessage>)_mapper.Map<Product, ProductPublic>(product);
+        return product == null 
+            ? _statusMessage.NotFound<Product>(productId) 
+            : _mapper.Map<Product, ProductPublic>(product);
     }
     public async Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductRegister productRegister)
     {

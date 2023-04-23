@@ -1,5 +1,7 @@
-﻿using backend.Dtos.Products;
+﻿using backend.Conventions;
+using backend.Dtos.Products;
 using backend.Interfaces.Services;
+using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +10,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[ApiConventionType(typeof(ProductConvention<ProductRegister>))]
 public class ProductsController : ApiControllerBase
 {
     private readonly IProductService _service;
@@ -45,10 +48,10 @@ public class ProductsController : ApiControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductPublic>> Update(ulong productId, ProductRegister productRegister)
         => (await _service.Update(productId, productRegister)).Match(Ok, Problem);
-    [HttpDelete]
-    [Route("{productId}")]
+    [HttpPatch]
+    [Route("{productId}/Discontinue")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult> Discontinue(ulong productId)
+    public async Task<ActionResult<StatusMessage>> Discontinue(ulong productId)
     {
         var result = await _service.Discontinue(productId);
         if (result.StatusCode == StatusCodes.Status200OK)
