@@ -12,4 +12,5 @@ public interface IProductService
     IAsyncEnumerable<ProductPublic> GetFeatured();
     IAsyncEnumerable<ProductPublic> GetAll();
     Task<OneOf<ProductPublic, StatusMessage>> FindById(ulong productId);
+    Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductRegister productRegister);
 }

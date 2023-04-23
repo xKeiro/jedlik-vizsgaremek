@@ -40,4 +40,9 @@ public class ProductsController : ApiControllerBase
     [Route("{productId}")]
     public async Task<ActionResult<ProductPublic>> GetById(ulong productId)
         => (await _service.FindById(productId)).Match(Ok, Problem);
+    [HttpPut]
+    [Route("{productId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<ProductPublic>> Update(ulong productId, ProductRegister productRegister)
+        => (await _service.Update(productId, productRegister)).Match(Ok, Problem);
 }
