@@ -3,6 +3,7 @@ using backend.Models;
 using backend.Models.Orders;
 using backend.Models.Products;
 using backend.Services;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data;
@@ -28,36 +29,42 @@ public static class DbInitializer
         #region CountriesWithVat
         var countriesWithVat = new List<CountryWithVat>
         {
-            new CountryWithVat { Country = "Austria", Vat = 20 },
-            new CountryWithVat { Country = "Belgium", Vat = 21 },
-            new CountryWithVat { Country = "Bulgaria", Vat = 20 },
-            new CountryWithVat { Country = "Croatia", Vat = 25 },
-            new CountryWithVat { Country = "Cyprus", Vat = 19 },
-            new CountryWithVat { Country = "Czechia", Vat = 21 },
-            new CountryWithVat { Country = "Denmark", Vat = 25 },
-            new CountryWithVat { Country = "Estonia", Vat = 20 },
-            new CountryWithVat { Country = "Finland", Vat = 24 },
-            new CountryWithVat { Country = "France", Vat = 20 },
-            new CountryWithVat { Country = "Germany", Vat = 19 },
-            new CountryWithVat { Country = "Greece", Vat = 24 },
-            new CountryWithVat { Country = "Hungary", Vat = 27 },
-            new CountryWithVat { Country = "Ireland", Vat = 23 },
-            new CountryWithVat { Country = "Italy", Vat = 22 },
-            new CountryWithVat { Country = "Latvia", Vat = 21 },
-            new CountryWithVat { Country = "Lithuania", Vat = 21 },
-            new CountryWithVat { Country = "Luxembourg", Vat = 17 },
-            new CountryWithVat { Country = "Malta", Vat = 18 },
-            new CountryWithVat { Country = "Netherlands", Vat = 21 },
-            new CountryWithVat { Country = "Poland", Vat = 23 },
-            new CountryWithVat { Country = "Portugal", Vat = 23 },
-            new CountryWithVat { Country = "Romania", Vat = 19 },
-            new CountryWithVat { Country = "Slovakia", Vat = 20 },
-            new CountryWithVat { Country = "Slovenia", Vat = 22 },
-            new CountryWithVat { Country = "Spain", Vat = 21 },
-            new CountryWithVat { Country = "Sweden", Vat = 25 }
+            new CountryWithVat { Id = 1, Country = "Austria", Vat = 20 },
+            new CountryWithVat { Id = 2, Country = "Belgium", Vat = 21 },
+            new CountryWithVat { Id = 3, Country = "Bulgaria", Vat = 20 },
+            new CountryWithVat { Id = 4, Country = "Croatia", Vat = 25 },
+            new CountryWithVat { Id = 5, Country = "Cyprus", Vat = 19 },
+            new CountryWithVat { Id = 6, Country = "Czechia", Vat = 21 },
+            new CountryWithVat { Id = 7, Country = "Denmark", Vat = 25 },
+            new CountryWithVat { Id = 8, Country = "Estonia", Vat = 20 },
+            new CountryWithVat { Id = 9, Country = "Finland", Vat = 24 },
+            new CountryWithVat { Id = 10, Country = "France", Vat = 20 },
+            new CountryWithVat { Id = 11, Country = "Germany", Vat = 19 },
+            new CountryWithVat { Id = 12, Country = "Greece", Vat = 24 },
+            new CountryWithVat { Id = 13, Country = "Hungary", Vat = 27 },
+            new CountryWithVat { Id = 14, Country = "Ireland", Vat = 23 },
+            new CountryWithVat { Id = 15, Country = "Italy", Vat = 22 },
+            new CountryWithVat { Id = 16, Country = "Latvia", Vat = 21 },
+            new CountryWithVat { Id = 17, Country = "Lithuania", Vat = 21 },
+            new CountryWithVat { Id = 18, Country = "Luxembourg", Vat = 17 },
+            new CountryWithVat { Id = 19, Country = "Malta", Vat = 18 },
+            new CountryWithVat { Id = 20, Country = "Netherlands", Vat = 21 },
+            new CountryWithVat { Id = 21, Country = "Poland", Vat = 23 },
+            new CountryWithVat { Id = 22, Country = "Portugal", Vat = 23 },
+            new CountryWithVat { Id = 23, Country = "Romania", Vat = 19 },
+            new CountryWithVat { Id = 24, Country = "Slovakia", Vat = 20 },
+            new CountryWithVat { Id = 25, Country = "Slovenia", Vat = 22 },
+            new CountryWithVat { Id = 26, Country = "Spain", Vat = 21 },
+            new CountryWithVat { Id = 27, Country = "Sweden", Vat = 25 }
         };
         #endregion
-        context.CountriesWithVat.AddRange(countriesWithVat);
+        context.AddRangeAsync(countriesWithVat);
+        context.Database.OpenConnection();
+        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT CountriesWithVat ON");
+        context.SaveChanges();
+        context.Database.OpenConnection();
+        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT CountriesWithVat OFF");
+        context.SaveChanges();
 
         #region Addresses
         var addresses = new List<Address>
@@ -961,6 +968,240 @@ public static class DbInitializer
         context.SaveChanges();
         #endregion
 
+        #region ProductSuppliers
+        var productSuppliers = new List<ProductSupplier>(){
+            new(){
+                Id= 1,
+                Product = context.Products.Where(x => x.Id == 1).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 1).First().BasePrice*0.7m,
+            },
+            new(){
+                Id= 2,
+                Product = context.Products.Where(x => x.Id == 2).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 2).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 3,
+                Product = context.Products.Where(x => x.Id == 3).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 3).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 4,
+                Product = context.Products.Where(x => x.Id == 4).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 4).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 5,
+                Product = context.Products.Where(x => x.Id == 5).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 5).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 6,
+                Product = context.Products.Where(x => x.Id == 6).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 6).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 7,
+                Product = context.Products.Where(x => x.Id == 7).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 7).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 8,
+                Product = context.Products.Where(x => x.Id == 8).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 8).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 9,
+                Product = context.Products.Where(x => x.Id == 9).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 9).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 10,
+                Product = context.Products.Where(x => x.Id == 10).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 10).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 11,
+                Product = context.Products.Where(x => x.Id == 11).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 11).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 12,
+                Product = context.Products.Where(x => x.Id == 12).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 12).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 13,
+                Product = context.Products.Where(x => x.Id == 13).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 13).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 14,
+                Product = context.Products.Where(x => x.Id == 14).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 14).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 15,
+                Product = context.Products.Where(x => x.Id == 15).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 15).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 16,
+                Product = context.Products.Where(x => x.Id == 16).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 16).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 17,
+                Product = context.Products.Where(x => x.Id == 17).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 17).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 18,
+                Product = context.Products.Where(x => x.Id == 18).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 18).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 19,
+                Product = context.Products.Where(x => x.Id == 19).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 19).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 20,
+                Product = context.Products.Where(x => x.Id == 20).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 20).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 21,
+                Product = context.Products.Where(x => x.Id == 21).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 21).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 22,
+                Product = context.Products.Where(x => x.Id == 22).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 22).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 23,
+                Product = context.Products.Where(x => x.Id == 23).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 23).First().BasePrice*0.7m,
+            },
+            new()
+            {
+                Id= 24,
+                Product = context.Products.Where(x => x.Id == 24).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 24).First().BasePrice*0.8m,
+            },
+            new()
+            {
+                Id= 25,
+                Product = context.Products.Where(x => x.Id == 25).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 25).First().BasePrice*0.8m,
+            },
+            new()
+            {
+                Id= 26,
+                Product = context.Products.Where(x => x.Id == 26).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 26).First().BasePrice*0.8m,
+            },
+            new()
+            {
+                Id= 27,
+                Product = context.Products.Where(x => x.Id == 27).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 27).First().BasePrice*0.8m,
+            },
+            new()
+            {
+                Id= 28,
+                Product = context.Products.Where(x => x.Id == 28).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 28).First().BasePrice*0.8m,
+            },
+            new()
+            {
+                Id= 29,
+                Product = context.Products.Where(x => x.Id == 29).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 4).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 29).First().BasePrice*0.6m,
+            },
+            new()
+            {
+                Id= 30,
+                Product = context.Products.Where(x => x.Id == 30).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 4).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 30).First().BasePrice*0.6m,
+            },
+            new()
+            {
+                Id= 31,
+                Product = context.Products.Where(x => x.Id == 2).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 4).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 2).First().BasePrice*0.8m,
+            },
+            new()
+            {
+                Id= 32,
+                Product = context.Products.Where(x => x.Id == 1).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 4).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 1).First().BasePrice*0.6m,
+            },
+        };
+        context.AddRangeAsync(productSuppliers);
+        context.Database.OpenConnection();
+        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ProductSuppliers ON");
+        context.SaveChanges();
+        context.Database.OpenConnection();
+        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ProductSuppliers OFF");
+        context.SaveChanges();
+        #endregion
+
         #region ProductOrders
         var productOrders = new List<ProductOrder>(){
             new(){
@@ -970,6 +1211,7 @@ public static class DbInitializer
                 BasePrice = context.Products.Where(x => x.Id == 1).First().BasePrice,
                 Quantity = 2,
                 Discount = 0,
+                CostPrice = context.Products.Where(x => x.Id == 1).First().ProductSuppliers!.Min(ps => ps.PurchasePrice)
             },
             new(){
                 Id = 2,
@@ -978,6 +1220,7 @@ public static class DbInitializer
                 BasePrice = context.Products.Where(x => x.Id == 2).First().BasePrice,
                 Quantity = 3,
                 Discount = 0,
+                CostPrice = context.Products.Where(x => x.Id == 2).First().ProductSuppliers!.Min(ps => ps.PurchasePrice)
             },
         };
         context.AddRangeAsync(productOrders);
@@ -989,29 +1232,6 @@ public static class DbInitializer
         context.SaveChanges();
         #endregion
 
-        #region ProductSuppliers
-        var productSuppliers = new List<ProductSupplier>(){
-            new(){
-                Id= 1,
-                Product = context.Products.Where(x => x.Id == 3).First(),
-                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
-                PurchasePrice = 450,
-            },
-            new(){
-                Id= 2,
-                Product = context.Products.Where(x => x.Id == 4).First(),
-                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
-                PurchasePrice = 60,
-            }
-        };
-        context.AddRangeAsync(productSuppliers);
-        context.Database.OpenConnection();
-        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ProductSuppliers ON");
-        context.SaveChanges();
-        context.Database.OpenConnection();
-        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ProductSuppliers OFF");
-        context.SaveChanges();
-        #endregion
 
         #region ProductReviews
         var productReviews = new List<ProductReview>(){

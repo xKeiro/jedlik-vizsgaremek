@@ -12,6 +12,9 @@ public class ProductOrder : BaseModel
     [Precision(18, 2)]
     public required decimal BasePrice { get; set; }
     [Required]
+    [Precision(18, 2)]
+    public required decimal CostPrice { get; set; }
+    [Required]
     public required uint Quantity { get; set; }
     [Required]
     public required byte Discount { get; set; }

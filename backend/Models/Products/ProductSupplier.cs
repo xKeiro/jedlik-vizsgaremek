@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models.Products;
 
+[Index("SupplierId", "ProductId", IsUnique = true)]
 public class ProductSupplier : BaseModel
 {
     [Required]
