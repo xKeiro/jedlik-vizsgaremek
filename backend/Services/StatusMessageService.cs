@@ -73,4 +73,10 @@ public class StatusMessageService : IStatusMessageService
         Message = "Product cannot be discontinued and featured at the same time!",
         StatusCode = StatusCodes.Status400BadRequest
     };
+    public StatusMessage ProductDiscontinued(ulong id)
+        => new()
+        {
+            Message = $"The product with id:'{id}' is now discontinued!",
+            StatusCode = StatusCodes.Status200OK
+        };
 }

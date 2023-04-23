@@ -13,4 +13,5 @@ public interface IStatusMessageService
     StatusMessage DoesNotExist(string nameOfNotExisting, string valueOfNotExisting);
     StatusMessage LoginFailed();
     StatusMessage ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime();
+    StatusMessage ProductDiscontinued(ulong id);
 }

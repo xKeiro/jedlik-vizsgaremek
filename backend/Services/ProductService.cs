@@ -122,6 +122,21 @@ public class ProductService : IProductService
         _context.ChangeTracker.Clear();
         return _mapper.Map<Product, ProductPublic>(productToUpdate);
     }
+    public async Task<StatusMessage> Discontinue(ulong productId)
+    {
+        var product = await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == productId);
+        if (product == null)
+        {
+            return _statusMessage.NotFound<Product>(productId);
+        }
+        product.Discontinued = true;
+        product.Featured = false;
+        _ = _context.Products.Update(product);
+        _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return _statusMessage.ProductDiscontinued(productId);
+    }
 
 
     private bool IsDiscontinuedAndFeaturedAtTheSameTime(Product product)

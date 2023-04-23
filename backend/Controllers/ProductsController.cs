@@ -45,4 +45,19 @@ public class ProductsController : ApiControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductPublic>> Update(ulong productId, ProductRegister productRegister)
         => (await _service.Update(productId, productRegister)).Match(Ok, Problem);
+    [HttpDelete]
+    [Route("{productId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult> Discontinue(ulong productId)
+    {
+        var result = await _service.Discontinue(productId);
+        if (result.StatusCode == StatusCodes.Status200OK)
+        {
+            return Ok(result);
+        }
+        else
+        {
+            return Problem(result);
+        }
+    }
 }

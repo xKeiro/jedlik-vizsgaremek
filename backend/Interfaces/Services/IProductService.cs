@@ -13,4 +13,5 @@ public interface IProductService
     IAsyncEnumerable<ProductPublic> GetAll();
     Task<OneOf<ProductPublic, StatusMessage>> FindById(ulong productId);
     Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductRegister productRegister);
+    Task<StatusMessage> Discontinue(ulong productId);
 }
