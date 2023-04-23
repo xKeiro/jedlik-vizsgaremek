@@ -80,6 +80,17 @@ public class ProductService : IProductService
             .OrderBy(p => p.Title)
             .Select(p => _mapper.Map<Product, ProductPublic>(p))
             .AsAsyncEnumerable();
+    public async Task<OneOf<ProductPublic, StatusMessage>> FindById(ulong productId)
+    {
+        var product = await _context.Products
+            .Include(p => p.Category)
+            .FirstOrDefaultAsync(p => p.Id == productId);
+        if (product == null)
+        {
+            return _statusMessage.NotFound<Product>(productId);
+        }
+        return _mapper.Map<Product, ProductPublic>(product);
+    }
 
     private bool IsDiscontinuedAndFeaturedAtTheSameTime(Product product)
         => product.Discontinued && product.Featured;

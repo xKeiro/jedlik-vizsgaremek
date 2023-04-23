@@ -11,4 +11,5 @@ public interface IProductService
     IAsyncEnumerable<ProductPublic> GetNotDiscontinuedByCategoryId(ulong categoryId);
     IAsyncEnumerable<ProductPublic> GetFeatured();
     IAsyncEnumerable<ProductPublic> GetAll();
+    Task<OneOf<ProductPublic, StatusMessage>> FindById(ulong productId);
 }

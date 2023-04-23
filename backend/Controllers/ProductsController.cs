@@ -36,4 +36,8 @@ public class ProductsController : ApiControllerBase
     [Authorize(Roles = "Admin")]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetAll()
         => Ok(_service.GetAll());
+    [HttpGet]
+    [Route("{productId}")]
+    public async Task<ActionResult<ProductPublic>> GetById(ulong productId)
+        => (await _service.FindById(productId)).Match(Ok, Problem);
 }
