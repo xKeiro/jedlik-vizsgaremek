@@ -12,4 +12,5 @@ public interface IStatusMessageService
     StatusMessage ConfirmationPasswordMismatch();
     StatusMessage DoesNotExist(string nameOfNotExisting, string valueOfNotExisting);
     StatusMessage LoginFailed();
+    StatusMessage ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime();
 }

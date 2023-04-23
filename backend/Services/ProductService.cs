@@ -33,10 +33,14 @@ public class ProductService : IProductService
     public async Task<OneOf<ProductPublic, StatusMessage>> Add(ProductRegister productRegister)
     {
         var product = _mapper.Map<ProductRegister, Product>(productRegister);
-        (var result, var notUniquePropertyNames) = await IsUnique(product);
-        if (!result)
+        (var isUnique, var notUniquePropertyNames) = await IsUnique(product);
+        if (!isUnique)
         {
             return _statusMessage.NotUnique<Product>(notUniquePropertyNames);
+        }
+        if (IsDiscontinuedAndFeaturedAtTheSameTime(product))
+        {
+            return _statusMessage.ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime();
         }
         var category = await _context.ProductCategories
             .FirstOrDefaultAsync(c => c.Id == productRegister.CategoryId);
@@ -64,13 +68,15 @@ public class ProductService : IProductService
     public IAsyncEnumerable<ProductPublic> GetFeatured() 
         => _context.Products
             .Include(p => p.Category)
-            .Where(p => !p.Discontinued && p.Featured)
+            .Where(p => p.Featured)
             .OrderByDescending(p => p.ProductOrders!.Count)
             .ThenByDescending(p => p.BasePrice * (1 - p.Discount / 100))
             .ThenBy(p => p.Title)
             .Select(p => _mapper.Map<Product, ProductPublic>(p))
             .AsAsyncEnumerable();
 
+    private bool IsDiscontinuedAndFeaturedAtTheSameTime(Product product)
+        => product.Discontinued && product.Featured;
     private async Task<(bool result, List<string> notUniquePropertyNames)> IsUnique(Product Product)
     {
         List<string> notUniquePropertyNames = new();

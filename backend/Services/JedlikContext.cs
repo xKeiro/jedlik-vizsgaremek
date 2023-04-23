@@ -1,4 +1,5 @@
-﻿using backend.Enums;
+﻿using AutoMapper.Features;
+using backend.Enums;
 using backend.Models;
 using backend.Models.Orders;
 using backend.Models.Products;
@@ -39,7 +40,11 @@ public class JedlikContext : DbContext
             .HasMany(c => c.Addresses)
             .WithOne(o => o.CountryWithVat)
             .OnDelete(DeleteBehavior.Restrict);
-        _ = modelBuilder
+
+        modelBuilder.Entity<Product>()
+            .ToTable(t => t.HasCheckConstraint("CK_Products_Featured_Discontinued", "NOT (Featured=1 AND Discontinued=1)"));
+
+    _ = modelBuilder
             .Entity<Order>()
             .Property(order => order.Status)
             .HasConversion(new EnumToStringConverter<OrderStatus>());

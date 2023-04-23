@@ -68,4 +68,9 @@ public class StatusMessageService : IStatusMessageService
         Message = $"Authentication failed, please check your credentials!",
         StatusCode = StatusCodes.Status401Unauthorized
     };
+    public StatusMessage ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime() => new()
+    {
+        Message = "Product cannot be discontinued and featured at the same time!",
+        StatusCode = StatusCodes.Status400BadRequest
+    };
 }
