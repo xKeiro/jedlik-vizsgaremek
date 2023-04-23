@@ -27,4 +27,8 @@ public class ProductsController : ApiControllerBase
     [Route("Category/{categoryId}")]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetNotDiscontinuedByCategoryId(ulong categoryId)
         => Ok(_service.GetNotDiscontinuedByCategoryId(categoryId));
+    [HttpGet]
+    [Route("Featured")]
+    public ActionResult<IAsyncEnumerable<ProductPublic>> GetFeatured()
+        => Ok(_service.GetFeatured());
 }

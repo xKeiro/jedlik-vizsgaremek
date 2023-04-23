@@ -25,6 +25,6 @@ public class MappingProfile : Profile
         _ = CreateMap<Address, AddressPublic>();
 
         _ = CreateMap<ProductRegister, Product>();
-        _ = CreateMap<Product, ProductPublic>();
+        _ = CreateMap<Product, ProductPublic>().ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id));
     }
 }

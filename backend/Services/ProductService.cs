@@ -61,6 +61,16 @@ public class ProductService : IProductService
             .Select(p => _mapper.Map<Product, ProductPublic>(p))
             .AsAsyncEnumerable();
 
+    public IAsyncEnumerable<ProductPublic> GetFeatured() 
+        => _context.Products
+            .Include(p => p.Category)
+            .Where(p => !p.Discontinued && p.Featured)
+            .OrderByDescending(p => p.ProductOrders!.Count)
+            .ThenByDescending(p => p.BasePrice * (1 - p.Discount / 100))
+            .ThenBy(p => p.Title)
+            .Select(p => _mapper.Map<Product, ProductPublic>(p))
+            .AsAsyncEnumerable();
+
     private async Task<(bool result, List<string> notUniquePropertyNames)> IsUnique(Product Product)
     {
         List<string> notUniquePropertyNames = new();
