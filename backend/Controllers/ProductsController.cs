@@ -31,4 +31,9 @@ public class ProductsController : ApiControllerBase
     [Route("Featured")]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetFeatured()
         => Ok(_service.GetFeatured());
+    [HttpGet]
+    [Route("All")]
+    [Authorize(Roles = "Admin")]
+    public ActionResult<IAsyncEnumerable<ProductPublic>> GetAll()
+        => Ok(_service.GetAll());
 }

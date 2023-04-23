@@ -74,6 +74,12 @@ public class ProductService : IProductService
             .ThenBy(p => p.Title)
             .Select(p => _mapper.Map<Product, ProductPublic>(p))
             .AsAsyncEnumerable();
+    public IAsyncEnumerable<ProductPublic> GetAll()
+        => _context.Products
+            .Include(p => p.Category)
+            .OrderBy(p => p.Title)
+            .Select(p => _mapper.Map<Product, ProductPublic>(p))
+            .AsAsyncEnumerable();
 
     private bool IsDiscontinuedAndFeaturedAtTheSameTime(Product product)
         => product.Discontinued && product.Featured;

@@ -10,4 +10,5 @@ public interface IProductService
     Task<OneOf<ProductPublic, StatusMessage>> Add(ProductRegister productRegister);
     IAsyncEnumerable<ProductPublic> GetNotDiscontinuedByCategoryId(ulong categoryId);
     IAsyncEnumerable<ProductPublic> GetFeatured();
+    IAsyncEnumerable<ProductPublic> GetAll();
 }
