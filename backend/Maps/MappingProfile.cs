@@ -6,7 +6,9 @@ using backend.Dtos.Orders.OrderAddresses;
 using backend.Dtos.Orders.ProductOrders;
 using backend.Dtos.Products;
 using backend.Dtos.Products.ProductCategories;
+using backend.Dtos.Products.ProductSuppliers;
 using backend.Dtos.Shippers;
+using backend.Dtos.Supplires;
 using backend.Dtos.Users;
 using backend.Models;
 using backend.Models.Orders;
@@ -41,5 +43,11 @@ public class MappingProfile : Profile
 
         _ = CreateMap<ShipperRegister, Shipper>();
         _ = CreateMap<Shipper, ShipperPublic>();
+
+        _ = CreateMap<SupplierRegister, Supplier>();
+        _ = CreateMap<Supplier, SupplierPublic>();
+
+        _ = CreateMap<ProductSupplierPublic,  ProductSupplier>();
+        _ = CreateMap<ProductSupplier,  ProductSupplierPublic>();
     }
 }
