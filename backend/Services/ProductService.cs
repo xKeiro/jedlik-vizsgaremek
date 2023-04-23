@@ -23,9 +23,10 @@ public class ProductService : IProductService
 
     public IAsyncEnumerable<ProductPublic> GetNotDiscontinued()
         => _context.Products
+            .Include(p => p.Category)
             .Where(p => !p.Discontinued)
             .OrderByDescending(p => p.ProductOrders!.Count)
-            .ThenBy(p => p.DiscountedPrice)
+            .ThenByDescending(p => p.BasePrice * (1 - p.Discount / 100))
             .ThenBy(p => p.Title)
             .Select(p => _mapper.Map<Product, ProductPublic>(p))
             .AsAsyncEnumerable();
@@ -49,6 +50,16 @@ public class ProductService : IProductService
         _context.ChangeTracker.Clear();
         return _mapper.Map<Product, ProductPublic>(product);
     }
+
+    public IAsyncEnumerable<ProductPublic> GetNotDiscontinuedByCategoryId(ulong categoryId)
+        => _context.Products
+            .Include(p => p.Category)
+            .Where(p => !p.Discontinued && p.Category.Id == categoryId)
+            .OrderByDescending(p => p.ProductOrders!.Count)
+            .ThenByDescending(p => p.BasePrice * (1 - p.Discount / 100))
+            .ThenBy(p => p.Title)
+            .Select(p => _mapper.Map<Product, ProductPublic>(p))
+            .AsAsyncEnumerable();
 
     private async Task<(bool result, List<string> notUniquePropertyNames)> IsUnique(Product Product)
     {

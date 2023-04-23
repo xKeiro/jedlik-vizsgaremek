@@ -23,4 +23,8 @@ public class ProductsController : ApiControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductPublic>> Add(ProductRegister productRegister)
      => (await _service.Add(productRegister)).Match(Ok, Problem);
+    [HttpGet]
+    [Route("Category/{categoryId}")]
+    public ActionResult<IAsyncEnumerable<ProductPublic>> GetNotDiscontinuedByCategoryId(ulong categoryId)
+        => Ok(_service.GetNotDiscontinuedByCategoryId(categoryId));
 }
