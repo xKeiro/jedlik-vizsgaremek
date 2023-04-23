@@ -35,5 +35,14 @@ public class OrdersService: IOrdersService
             yield return _mapper.Map<Order, OrderPublic>(order);
         }
     }
+    public async Task<OneOf<OrderPublic, StatusMessage>> FindByOrderId(ulong orderId)
+    {
+        var order = await _context.Orders.FirstOrDefaultAsync(order => order.Id == orderId);
+        if (order is null)
+        {
+            return _statusMessage.NotFound<Order>(orderId);
+        }
+        return _mapper.Map<Order, OrderPublic>(order);
+    }
 
 }

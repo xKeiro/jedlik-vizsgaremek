@@ -1,8 +1,9 @@
 ﻿using backend.Dtos.Orders;
 using backend.Interfaces.Services;
+using backend.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OneOf;
 using System.Security.Claims;
 
 namespace backend.Controllers;
@@ -29,4 +30,9 @@ public class OrdersController : ApiControllerBase
         var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         return Ok(_service.GetAllByUserId(userId));
     }
+    [HttpGet]
+    [Route("{orderId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<OneOf<OrderPublic, StatusMessage>>> FindByOrderId(ulong orderId)
+        => (await _service.FindByOrderId(orderId)).Match(Ok, Problem);
 }
