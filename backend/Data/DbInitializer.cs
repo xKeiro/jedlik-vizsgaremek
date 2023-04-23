@@ -473,7 +473,6 @@ public static class DbInitializer
                 Phone = "+36301111114",
                 Email = "supplier1@example.com",
                 Address = context.Addresses.Where(x => x.Id == 11).First(),
-                Disabled = false,
             },
             new(){
                 Id = 2,
@@ -483,7 +482,6 @@ public static class DbInitializer
                 Phone = "+36301111115",
                 Email = "supplier2@example.com",
                 Address = context.Addresses.Where(x => x.Id == 12).First(),
-                Disabled = false,
             },
             new(){
                 Id = 3,
@@ -493,7 +491,6 @@ public static class DbInitializer
                 Phone = "+36301111116",
                 Email = "supplier3@example.com",
                 Address = context.Addresses.Where(x => x.Id == 13).First(),
-                Disabled = false,
             },
             new(){
                 Id = 4,
@@ -503,7 +500,6 @@ public static class DbInitializer
                 Phone = "+36301111117",
                 Email = "supplier4@example.com",
                 Address = context.Addresses.Where(x => x.Id == 14).First(),
-                Disabled = true,
             },
 
         };

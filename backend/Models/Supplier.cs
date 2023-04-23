@@ -27,5 +27,4 @@ public class Supplier : BaseModel
     [Required]
     [ForeignKey("AddressId")]
     public required Address Address { get; set; }
-    public bool Disabled { get; set; } = false;
 }
