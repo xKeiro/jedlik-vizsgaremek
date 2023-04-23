@@ -38,8 +38,10 @@ public class MappingProfile : Profile
         _ = CreateMap<Order, OrderPublic>().ForMember(dest => dest.ShipperId, opt => opt.MapFrom(src => src.Shipper.Id));
         _ = CreateMap<ProductOrderPublic, ProductOrder>();
         _ = CreateMap<ProductOrder, ProductOrderPublic>();
+        _ = CreateMap<ProductOrder, ProductOrderAdmin>();
         _ = CreateMap<OrderAddressPublic, OrderAddress>();
         _ = CreateMap<OrderAddress, OrderAddressPublic>();
+        _ = CreateMap<Order, OrderAdmin>();
 
         _ = CreateMap<ShipperRegister, Shipper>();
         _ = CreateMap<Shipper, ShipperPublic>();

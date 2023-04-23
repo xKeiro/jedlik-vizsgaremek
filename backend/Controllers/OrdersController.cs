@@ -1,4 +1,5 @@
 ﻿using backend.Dtos.Orders;
+using backend.Enums;
 using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -20,7 +21,7 @@ public class OrdersController : ApiControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public ActionResult<IAsyncEnumerable<OrderPublic>> GetAll()
+    public ActionResult<IAsyncEnumerable<OrderAdmin>> GetAll()
         => Ok(_service.GetAll());
     [HttpGet]
     [Route("Me")]
@@ -33,6 +34,11 @@ public class OrdersController : ApiControllerBase
     [HttpGet]
     [Route("{orderId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<OneOf<OrderPublic, StatusMessage>>> FindByOrderId(ulong orderId)
+    public async Task<ActionResult<OneOf<OrderAdmin, StatusMessage>>> FindByOrderId(ulong orderId)
         => (await _service.FindByOrderId(orderId)).Match(Ok, Problem);
+    [HttpPatch]
+    [Route("{orderId}/Status")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<OneOf<OrderAdmin, StatusMessage>>> SetOrderStatus(ulong orderId, OrderStatus status)
+        => (await _service.SetOrderStatus(orderId, status)).Match(Ok, Problem);
 }

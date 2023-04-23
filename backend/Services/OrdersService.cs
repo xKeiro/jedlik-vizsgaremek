@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.Dtos.Orders;
+using backend.Enums;
 using backend.Interfaces.Services;
 using backend.Models;
 using backend.Models.Orders;
@@ -21,11 +22,11 @@ public class OrdersService: IOrdersService
         _statusMessage = statusMessage;
     }
 
-    public async IAsyncEnumerable<OrderPublic> GetAll()
+    public async IAsyncEnumerable<OrderAdmin> GetAll()
     {
         await foreach (var order in _context.Orders.AsAsyncEnumerable())
         {
-            yield return _mapper.Map<Order, OrderPublic>(order);
+            yield return _mapper.Map<Order, OrderAdmin>(order);
         }
     }
     public async IAsyncEnumerable<OrderPublic> GetAllByUserId(ulong userId)
@@ -35,14 +36,26 @@ public class OrdersService: IOrdersService
             yield return _mapper.Map<Order, OrderPublic>(order);
         }
     }
-    public async Task<OneOf<OrderPublic, StatusMessage>> FindByOrderId(ulong orderId)
+    public async Task<OneOf<OrderAdmin, StatusMessage>> FindByOrderId(ulong orderId)
     {
         var order = await _context.Orders.FirstOrDefaultAsync(order => order.Id == orderId);
         if (order is null)
         {
             return _statusMessage.NotFound<Order>(orderId);
         }
-        return _mapper.Map<Order, OrderPublic>(order);
+        return _mapper.Map<Order, OrderAdmin>(order);
+    }
+    public async Task<OneOf<OrderAdmin, StatusMessage>> SetOrderStatus(ulong orderId, OrderStatus status)
+    {
+        var order = await _context.Orders.FirstOrDefaultAsync(order => order.Id == orderId);
+        if (order is null)
+        {
+            return _statusMessage.NotFound<Order>(orderId);
+        }
+        order.Status = status;
+        await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return _mapper.Map<Order, OrderAdmin>(order);
     }
 
 }

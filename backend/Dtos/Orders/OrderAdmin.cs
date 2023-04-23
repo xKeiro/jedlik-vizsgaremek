@@ -6,7 +6,7 @@ using backend.Dtos.Orders.ProductOrders;
 
 namespace backend.Dtos.Orders;
 
-public class OrderPublic
+public class OrderAdmin
 {
     [Required]
     public required UserPublic User { get; set; }
@@ -16,7 +16,7 @@ public class OrderPublic
     public required ulong ShipperId { get; set; }
     [Required]
     [MinLength(1)]
-    public ICollection<ProductOrderPublic> ProductOrders { get; set; } = null!;
+    public ICollection<ProductOrderAdmin> ProductOrders { get; set; } = null!;
     [Required]
     [EnumDataType(typeof(OrderStatus))]
     [MinLength(1), MaxLength(25)]
@@ -31,4 +31,6 @@ public class OrderPublic
     public required decimal OrderTotalWithVat { get; set; }
     [Required]
     public required decimal OrderTotalWithShipping { get; set; }
+    [Required]
+    public required decimal Profit { get; set; }
 }

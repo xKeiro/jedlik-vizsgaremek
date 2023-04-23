@@ -26,5 +26,7 @@ public class Order : BaseModel
     public decimal OrderTotal => ProductOrders.Sum(po => po.TotalPrice);
     public decimal OrderTotalWithVat => OrderTotal * (1 + ((decimal)Vat / 100));
     public decimal OrderTotalWithShipping => OrderTotalWithVat + Shipper.Price;
+    public decimal Profit
+        => OrderTotal - ProductOrders.Sum(po => po.CostPrice * po.Quantity);
 
 }
