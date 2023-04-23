@@ -28,6 +28,10 @@ public class OrderPublic
     public DateTime OrderDate { get; set; } = DateTime.Now;
     [Required]
     public required byte Vat { get; set; }
-    public decimal OrderTotal => ProductOrders.Sum(po => po.TotalPrice);
-    public decimal OrderTotalWithVat => OrderTotal * (1 + (Vat / 100));
+    [Required]
+    public required decimal OrderTotal { get; set; }
+    [Required]
+    public required decimal OrderTotalWithVat { get; set; }
+    [Required]
+    public required decimal OrderTotalWithShipping { get; set; }
 }
