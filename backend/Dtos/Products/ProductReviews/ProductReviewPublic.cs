@@ -5,6 +5,7 @@ namespace backend.Dtos.Products.ProductReviews;
 
 public class ProductReviewPublic
 {
+    public ulong Id { get; set; }
     [Required]
     public required ProductPublicLimited Product { get; set; }
     [Required]

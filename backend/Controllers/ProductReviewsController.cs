@@ -20,4 +20,8 @@ public class ProductReviewsController: ApiControllerBase
     [Authorize (Roles = "Admin")]
     public ActionResult<IAsyncEnumerable<ProductReviewPublic>> GetAll()
         => Ok(_service.GetAll());
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<ActionResult<ProductReviewPublic>> Get(ulong id)
+        => (await _service.Find(id)).Match(Ok, Problem);
 }
