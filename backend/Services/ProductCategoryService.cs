@@ -52,23 +52,23 @@ public class ProductCategoryService : IProductCategoryService
         .ToListAsync();
         return _mapper.Map<List<ProductCategory>, List<ProductCategoryPublic>>(productCategories);
     }
-    public async Task<OneOf<ProductCategoryPublic, StatusMessage>> Update(ProductCategoryPublic productCategoryPublic)
+    public async Task<OneOf<ProductCategoryPublic, StatusMessage>> Update(ulong productCategoryId, ProductCategoryWithoutId productCategoryWithoutId)
     {
         var productCategoryExists = _context.ProductCategories
             .AsNoTracking()
-            .Any(c => c.Id == productCategoryPublic.Id);
+            .Any(c => c.Id == productCategoryId);
         if (!productCategoryExists)
         {
-            return _statusMessage.NotFound404<ProductCategory>(productCategoryPublic.Id);
+            return _statusMessage.NotFound404<ProductCategory>(productCategoryId);
         }
 
-        var productCategory = _mapper.Map<ProductCategoryPublic, ProductCategory>(productCategoryPublic);
+        var productCategory = _mapper.Map<ProductCategoryWithoutId, ProductCategory>(productCategoryWithoutId);
         var (result, notUniquePropertyNames) = await IsUnique(productCategory);
         if (!result)
         {
             return _statusMessage.NotUnique409<ProductCategory>(notUniquePropertyNames);
         }
-        productCategory.Id = productCategoryPublic.Id;
+        productCategory.Id = productCategoryId;
         _ = _context.Update(productCategory);
         _ = await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();

@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace backend.Conventions;
 
-public static class JedlikBasicApiConventions<TResponseDto, TRequestDto>
-    where TResponseDto : class
-    where TRequestDto : class
+public static class ProductCategoryConventions<TProductWithoutId>
+    where TProductWithoutId : class
 {
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -23,7 +22,7 @@ public static class JedlikBasicApiConventions<TResponseDto, TRequestDto>
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public static void Add(
         [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)]
-        TRequestDto requestDto)
+        TProductWithoutId productWithoutId)
     {
         // Method intentionally left empty.
     }
@@ -44,7 +43,7 @@ public static class JedlikBasicApiConventions<TResponseDto, TRequestDto>
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public static void Update(
         [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)]
-        TResponseDto responseDto)
+        TProductWithoutId productWithoutId)
     {
         // Method intentionally left empty.
     }
