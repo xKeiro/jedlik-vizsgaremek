@@ -28,19 +28,19 @@ public class AuthService : IAuthService
     {
         if (userRegister.Password != userRegister.PasswordConfirm)
         {
-            return _statusMessage.ConfirmationPasswordMismatch();
+            return _statusMessage.ConfirmationPasswordMismatch400();
         }
         var countryWithVat = await _context.CountriesWithVat.FirstOrDefaultAsync(cwv => cwv.Country == userRegister.Address.Country);
         if (countryWithVat is null)
         {
-            return _statusMessage.DoesNotExist(nameof(userRegister.Address.Country), userRegister.Address.Country);
+            return _statusMessage.DoesNotExist404(nameof(userRegister.Address.Country), userRegister.Address.Country);
         }
         var user = _mapper.Map<UserRegister, User>(userRegister);
         user.Address.CountryWithVat = countryWithVat;
         var (isUnique, notUniquePropertyNames) = await IsUnique(user);
         if (!isUnique)
         {
-            return _statusMessage.NotUnique<User>(notUniquePropertyNames);
+            return _statusMessage.NotUnique409<User>(notUniquePropertyNames);
         }
         user.Password = GetHashedPassword(user.Password);
         _ = await _context.Users.AddAsync(user);
@@ -60,10 +60,10 @@ public class AuthService : IAuthService
             || u.Email == userLogin.Identifier);
         if (user is null)
         {
-            return _statusMessage.LoginFailed();
+            return _statusMessage.LoginFailed401();
         }
         return !BCrypt.Net.BCrypt.Verify(userLogin.Password, user.Password)
-            ? (OneOf<AuthResult, StatusMessage>)_statusMessage.LoginFailed()
+            ? (OneOf<AuthResult, StatusMessage>)_statusMessage.LoginFailed401()
             : (OneOf<AuthResult, StatusMessage>)new AuthResult()
             {
                 JwtToken = _jwtTokenGeneratorService.GenerateToken(user),

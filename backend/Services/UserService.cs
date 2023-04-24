@@ -23,7 +23,7 @@ public class UserService : IUserService
     {
         var user = await _context.Users.FindAsync(userId);
         return user == null
-            ? _statusMessage.NotFound<User>(userId)
+            ? _statusMessage.NotFound404<User>(userId)
             : _mapper.Map<User, UserPublic>(user);
     }
     public async Task<OneOf<UserPublic, StatusMessage>> Update(ulong userId, UserRegister userRegister)
@@ -31,16 +31,16 @@ public class UserService : IUserService
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
         {
-            return _statusMessage.NotFound<User>(userId);
+            return _statusMessage.NotFound404<User>(userId);
         }
         if (userRegister.Password != userRegister.PasswordConfirm)
         {
-            return _statusMessage.ConfirmationPasswordMismatch();
+            return _statusMessage.ConfirmationPasswordMismatch400();
         }
         var countryWithVat = await _context.CountriesWithVat.FirstOrDefaultAsync(cwv => cwv.Country == userRegister.Address.Country);
         if (countryWithVat is null)
         {
-            return _statusMessage.DoesNotExist(nameof(userRegister.Address.Country), userRegister.Address.Country);
+            return _statusMessage.DoesNotExist404(nameof(userRegister.Address.Country), userRegister.Address.Country);
         }
         List<string> propertiesToNotCheck = new();
         if (user.Username == userRegister.Username)
@@ -54,7 +54,7 @@ public class UserService : IUserService
         var (isUnique, notUniquePropertyNames) = await IsUnique(userRegister, propertiesToNotCheck);
         if (!isUnique)
         {
-            return _statusMessage.NotUnique<User>(notUniquePropertyNames);
+            return _statusMessage.NotUnique409<User>(notUniquePropertyNames);
         }
         _ = _mapper.Map(userRegister, user);
         user.Address.CountryWithVat = countryWithVat;
@@ -79,7 +79,7 @@ public class UserService : IUserService
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
         {
-            return _statusMessage.NotFound<User>(userId);
+            return _statusMessage.NotFound404<User>(userId);
         }
         user.IsAdmin = shouldBeAdmin;
         _ = _context.Users.Update(user);

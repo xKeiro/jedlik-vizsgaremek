@@ -15,5 +15,5 @@ public class ErrorsController : ApiControllerBase
 
     [Route("/Error")]
     [ApiExplorerSettings(IgnoreApi = true)]
-    public IActionResult Error() => Problem(_statusMessage.GenericError());
+    public IActionResult Error() => Problem(_statusMessage.GenericError500());
 }
