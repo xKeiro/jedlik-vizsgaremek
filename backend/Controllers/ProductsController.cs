@@ -10,7 +10,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[ApiConventionType(typeof(ProductConvention<ProductRegister>))]
+[ApiConventionType(typeof(ProductConventions<ProductRegister>))]
 public class ProductsController : ApiControllerBase
 {
     private readonly IProductService _service;
@@ -21,11 +21,11 @@ public class ProductsController : ApiControllerBase
     }
     [HttpGet]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetNotDiscontinued()
-        => Ok(_service.GetNotDiscontinued());
+        => Created(_service.GetNotDiscontinued());
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductPublic>> Add(ProductRegister productRegister)
-     => (await _service.Add(productRegister)).Match(Ok, Problem);
+     => (await _service.Add(productRegister)).Match(Created, Problem);
     [HttpGet]
     [Route("Category/{categoryId}")]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetNotDiscontinuedByCategoryId(ulong categoryId)

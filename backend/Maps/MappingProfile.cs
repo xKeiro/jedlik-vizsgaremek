@@ -6,6 +6,7 @@ using backend.Dtos.Orders.OrderAddresses;
 using backend.Dtos.Orders.ProductOrders;
 using backend.Dtos.Products;
 using backend.Dtos.Products.ProductCategories;
+using backend.Dtos.Products.ProductReviews;
 using backend.Dtos.Products.ProductSuppliers;
 using backend.Dtos.Shippers;
 using backend.Dtos.Supplires;
@@ -26,7 +27,9 @@ public class MappingProfile : Profile
         _ = CreateMap<ProductCategoryWithoutId, ProductCategory>();
 
         _ = CreateMap<UserRegister, User>();
+        _ = CreateMap<UserUpdate, User>();
         _ = CreateMap<User, UserPublic>();
+        _ = CreateMap<User, UserPublicLimited>();
 
         _ = CreateMap<AddressPublic, Address>();
         _ = CreateMap<Address, AddressPublic>();
@@ -34,6 +37,10 @@ public class MappingProfile : Profile
 
         _ = CreateMap<ProductRegister, Product>();
         _ = CreateMap<Product, ProductPublic>().ForMember(pb => pb.CategoryId, opt => opt.MapFrom(p => p.Category.Id));
+        _ = CreateMap<Product, ProductPublicLimited>();
+
+        _ = CreateMap<ProductReviewRegister, ProductReview>();
+        _ = CreateMap<ProductReview, ProductReviewPublic>();
 
         _ = CreateMap<OrderRegister, Order>();
         _ = CreateMap<Order, OrderPublic>().ForMember(op => op.ShipperId, opt => opt.MapFrom(o => o.Shipper.Id));

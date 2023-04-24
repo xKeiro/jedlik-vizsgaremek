@@ -1,4 +1,5 @@
-﻿using backend.Dtos.Orders;
+﻿using backend.Conventions;
+using backend.Dtos.Orders;
 using backend.Enums;
 using backend.Interfaces.Services;
 using backend.Models;
@@ -10,6 +11,7 @@ using System.Security.Claims;
 namespace backend.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[ApiConventionType(typeof(OrderConventions<OrderRegister>))]
 public class OrdersController : ApiControllerBase
 {
     private readonly IOrdersService _service;
@@ -54,7 +56,7 @@ public class OrdersController : ApiControllerBase
     public async Task<ActionResult<OneOf<OrderPublic, StatusMessage>>> Add(OrderRegister orderRegister)
     {
         var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return (await _service.Add(userId, orderRegister)).Match(Ok, Problem);
+        return (await _service.Add(userId, orderRegister)).Match(Created, Problem);
     }
 
 }

@@ -28,7 +28,7 @@ public class AuthController : ApiControllerBase
             return Problem(result.AsT1);
         }
         Response.Cookies.Append("token", result.AsT0.JwtToken, result.AsT0.CookieOptions);
-        return Ok(result.AsT0.UserPublic);
+        return Created(result.AsT0.UserPublic);
     }
 
     [HttpPost("Login")]

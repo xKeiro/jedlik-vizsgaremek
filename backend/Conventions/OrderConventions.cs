@@ -1,14 +1,33 @@
-﻿using backend.Dtos.Products;
+﻿using backend.Dtos.Orders;
+using backend.Enums;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 
 namespace backend.Conventions;
 
-public static class ProductConvention<TProductRegister> where TProductRegister : class
+public static class OrderConventions<TOrderRegister> where TOrderRegister: class
 {
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void GetNotDiscontinued()
+    public static void GetAll() 
+    {
+        // Method intentionally left empty.
+    }
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public static void GetAllOfMine()
+    {
+        // Method intentionally left empty.
+    }
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public static void FindMyOrder(ulong orderId)
     {
         // Method intentionally left empty.
     }
@@ -17,59 +36,32 @@ public static class ProductConvention<TProductRegister> where TProductRegister :
     [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void Add([ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] TProductRegister productRegister)
+    public static void FindByOrderId(ulong orderId)
     {
         // Method intentionally left empty.
     }
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void GetNotDiscontinuedByCategoryId([ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] ulong categoryId)
+    public static void SetOrderStatus(ulong orderId, OrderStatus status)
     {
         // Method intentionally left empty.
     }
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void GetFeatured()
+    public static void Add(TOrderRegister orderRegister)
+    {
+        // Method intentionally left empty.
+    }
 
-    {
-        // Method intentionally left empty.
-    }
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void GetAll()
-    {
-        // Method intentionally left empty.
-    }
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void GetById([ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] ulong productId)
-    {
-        // Method intentionally left empty.
-    }
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void Update([ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] ulong productId, [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] TProductRegister productRegister)
-    {
-        // Method intentionally left empty.
-    }
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    public static void Discontinue([ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] ulong productId)
-    {
-        // Method intentionally left empty.
-    }
+
 }

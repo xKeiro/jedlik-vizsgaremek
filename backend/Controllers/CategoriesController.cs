@@ -25,7 +25,7 @@ public class CategoriesController : ApiControllerBase
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductCategoryPublic>> Add(ProductCategoryWithoutId productCategoryWithoutId)
-        => (await _service.Add(productCategoryWithoutId)).Match(Ok, Problem);
+        => (await _service.Add(productCategoryWithoutId)).Match(Created, Problem);
 
     [HttpGet("{id}")]
     public async Task<ActionResult<ProductCategoryPublic>> Get(ulong id)

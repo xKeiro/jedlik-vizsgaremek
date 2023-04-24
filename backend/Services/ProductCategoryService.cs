@@ -27,7 +27,7 @@ public class ProductCategoryService : IProductCategoryService
         (var result, var notUniquePropertyNames) = await IsUnique(productCategory);
         if (!result)
         {
-            return _statusMessage.NotUnique<ProductCategory>(notUniquePropertyNames);
+            return _statusMessage.NotUnique409<ProductCategory>(notUniquePropertyNames);
         }
         _ = await _context.ProductCategories.AddAsync(productCategory);
         _ = await _context.SaveChangesAsync();
@@ -40,7 +40,7 @@ public class ProductCategoryService : IProductCategoryService
         var productCategory = await _context.ProductCategories
         .AsNoTracking()
         .FirstOrDefaultAsync(c => c.Id == id);
-        return productCategory == null ? (OneOf<ProductCategoryPublic, StatusMessage>)_statusMessage.NotFound<ProductCategory>(id) : (OneOf<ProductCategoryPublic, StatusMessage>)_mapper.Map<ProductCategory, ProductCategoryPublic>(productCategory);
+        return productCategory == null ? (OneOf<ProductCategoryPublic, StatusMessage>)_statusMessage.NotFound404<ProductCategory>(id) : (OneOf<ProductCategoryPublic, StatusMessage>)_mapper.Map<ProductCategory, ProductCategoryPublic>(productCategory);
     }
 
     public async Task<List<ProductCategoryPublic>> GetAll()
@@ -59,14 +59,14 @@ public class ProductCategoryService : IProductCategoryService
             .Any(c => c.Id == productCategoryPublic.Id);
         if (!productCategoryExists)
         {
-            return _statusMessage.NotFound<ProductCategory>(productCategoryPublic.Id);
+            return _statusMessage.NotFound404<ProductCategory>(productCategoryPublic.Id);
         }
 
         var productCategory = _mapper.Map<ProductCategoryPublic, ProductCategory>(productCategoryPublic);
         var (result, notUniquePropertyNames) = await IsUnique(productCategory);
         if (!result)
         {
-            return _statusMessage.NotUnique<ProductCategory>(notUniquePropertyNames);
+            return _statusMessage.NotUnique409<ProductCategory>(notUniquePropertyNames);
         }
         productCategory.Id = productCategoryPublic.Id;
         _ = _context.Update(productCategory);

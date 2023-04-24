@@ -43,7 +43,7 @@ public class OrdersService: IOrdersService
         var order = await _context.Orders.FirstOrDefaultAsync(order => order.User.Id == userId && order.Id == orderId);
         if (order is null)
         {
-            return _statusMessage.NotFound<Order>(orderId);
+            return _statusMessage.NotFound404<Order>(orderId);
         }
         return _mapper.Map<Order, OrderPublic>(order);
     }
@@ -52,7 +52,7 @@ public class OrdersService: IOrdersService
         var order = await _context.Orders.FirstOrDefaultAsync(order => order.Id == orderId);
         if (order is null)
         {
-            return _statusMessage.NotFound<Order>(orderId);
+            return _statusMessage.NotFound404<Order>(orderId);
         }
         return _mapper.Map<Order, OrderAdmin>(order);
     }
@@ -61,7 +61,7 @@ public class OrdersService: IOrdersService
         var order = await _context.Orders.FirstOrDefaultAsync(order => order.Id == orderId);
         if (order is null)
         {
-            return _statusMessage.NotFound<Order>(orderId);
+            return _statusMessage.NotFound404<Order>(orderId);
         }
         order.Status = status;
         await _context.SaveChangesAsync();
@@ -73,12 +73,12 @@ public class OrdersService: IOrdersService
         var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == userId);
         if (user is null)
         {
-            return _statusMessage.NotFound<User>(userId);
+            return _statusMessage.NotFound404<User>(userId);
         }
         var shipper = await _context.Shippers.FirstOrDefaultAsync(shipper => shipper.Id == orderRegister.ShipperId);
         if (shipper is null)
         {
-            return _statusMessage.NotFound<Shipper>(orderRegister.ShipperId);
+            return _statusMessage.NotFound404<Shipper>(orderRegister.ShipperId);
         }
         var productOrders = new List<ProductOrder>();
         var order = new Order
@@ -92,7 +92,7 @@ public class OrdersService: IOrdersService
             var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == productOrderRegister.ProductId);
             if (product is null)
             {
-                return _statusMessage.NotFound<Product>(productOrderRegister.ProductId);
+                return _statusMessage.NotFound404<Product>(productOrderRegister.ProductId);
             }
 
             var discount = product.Discount;

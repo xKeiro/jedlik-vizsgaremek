@@ -1,9 +1,7 @@
-﻿using backend.Dtos.Products.ProductCategories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace backend.Dtos.Products;
-
 public class ProductRegister
 {
     [Required]

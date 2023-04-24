@@ -36,17 +36,17 @@ public class ProductService : IProductService
         (var isUnique, var notUniquePropertyNames) = await IsUnique(product);
         if (!isUnique)
         {
-            return _statusMessage.NotUnique<Product>(notUniquePropertyNames);
+            return _statusMessage.NotUnique409<Product>(notUniquePropertyNames);
         }
         if (IsDiscontinuedAndFeaturedAtTheSameTime(product))
         {
-            return _statusMessage.ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime();
+            return _statusMessage.ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime400();
         }
         var category = await _context.ProductCategories
             .FirstOrDefaultAsync(c => c.Id == productRegister.CategoryId);
         if (category == null)
         {
-            return _statusMessage.NotFound<ProductCategory>(productRegister.CategoryId);
+            return _statusMessage.NotFound404<ProductCategory>(productRegister.CategoryId);
         }
         product.Category = category;
         _ = await _context.Products.AddAsync(product);
@@ -86,7 +86,7 @@ public class ProductService : IProductService
             .Include(p => p.Category)
             .FirstOrDefaultAsync(p => p.Id == productId);
         return product == null 
-            ? _statusMessage.NotFound<Product>(productId) 
+            ? _statusMessage.NotFound404<Product>(productId) 
             : _mapper.Map<Product, ProductPublic>(product);
     }
     public async Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductRegister productRegister)
@@ -96,7 +96,7 @@ public class ProductService : IProductService
             .FirstOrDefaultAsync(p => p.Id == productId);
         if (product == null)
         {
-            return _statusMessage.NotFound<Product>(productId);
+            return _statusMessage.NotFound404<Product>(productId);
         }
         if (productRegister.Title != product.Title)
         {
@@ -104,19 +104,19 @@ public class ProductService : IProductService
             (var isUnique, var notUniquePropertyNames) = await IsUnique(productToCheck);
             if (!isUnique)
             {
-                return _statusMessage.NotUnique<Product>(notUniquePropertyNames);
+                return _statusMessage.NotUnique409<Product>(notUniquePropertyNames);
             }
         }
         var productToUpdate = _mapper.Map(productRegister, product);
         if (IsDiscontinuedAndFeaturedAtTheSameTime(productToUpdate))
         {
-            return _statusMessage.ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime();
+            return _statusMessage.ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime400();
         }
         var category = await _context.ProductCategories
             .FirstOrDefaultAsync(c => c.Id == productRegister.CategoryId);
         if (category == null)
         {
-            return _statusMessage.NotFound<ProductCategory>(productRegister.CategoryId);
+            return _statusMessage.NotFound404<ProductCategory>(productRegister.CategoryId);
         }
         productToUpdate.Category = category;
         _ = _context.Products.Update(productToUpdate);
@@ -130,14 +130,14 @@ public class ProductService : IProductService
             .FirstOrDefaultAsync(p => p.Id == productId);
         if (product == null)
         {
-            return _statusMessage.NotFound<Product>(productId);
+            return _statusMessage.NotFound404<Product>(productId);
         }
         product.Discontinued = true;
         product.Featured = false;
         _ = _context.Products.Update(product);
         _ = await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
-        return _statusMessage.ProductDiscontinued(productId);
+        return _statusMessage.ProductDiscontinued200(productId);
     }
 
 
