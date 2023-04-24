@@ -1,5 +1,6 @@
 ﻿using backend.Dtos.Products.ProductReviews;
 using backend.Interfaces.Services;
+using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,7 +8,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ProductReviewsController: ApiControllerBase
+public class ProductReviewsController : ApiControllerBase
 {
     private readonly IProductReviewService _service;
 
@@ -17,11 +18,21 @@ public class ProductReviewsController: ApiControllerBase
     }
 
     [HttpGet]
-    [Authorize (Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public ActionResult<IAsyncEnumerable<ProductReviewPublic>> GetAll()
         => Ok(_service.GetAll());
     [HttpGet]
     [Route("{id}")]
     public async Task<ActionResult<ProductReviewPublic>> Get(ulong id)
         => (await _service.Find(id)).Match(Ok, Problem);
+    [HttpDelete]
+    [Route("{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<StatusMessage>> Delete(ulong id)
+    {
+        var result = await _service.Delete(id);
+        return result.StatusCode == 200
+            ? Ok(result)
+            : Problem(result);
+    }
 }

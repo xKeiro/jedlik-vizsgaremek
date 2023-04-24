@@ -41,4 +41,16 @@ public class ProductReviewService: IProductReviewService
         }
         return _mapper.Map<ProductReview, ProductReviewPublic>(productReview);
     }
+    public async Task<StatusMessage> Delete(ulong productReviewId)
+    {
+        var productReview = await _context.ProductReviews
+            .FirstOrDefaultAsync(pr => pr.Id == productReviewId);
+        if (productReview == null)
+        {
+            return _statusMessage.NotFound404<ProductReview>(productReviewId);
+        }
+        _context.ProductReviews.Remove(productReview);
+        _ = await _context.SaveChangesAsync();
+        return _statusMessage.Deleted200<ProductReview>(productReviewId);
+    }
 }
