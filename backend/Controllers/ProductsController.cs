@@ -21,7 +21,7 @@ public class ProductsController : ApiControllerBase
     }
     [HttpGet]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetNotDiscontinued()
-        => Created(_service.GetNotDiscontinued());
+        => Ok(_service.GetNotDiscontinued());
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductPublic>> Add(ProductRegister productRegister)

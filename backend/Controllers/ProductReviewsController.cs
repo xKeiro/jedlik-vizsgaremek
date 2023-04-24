@@ -45,6 +45,6 @@ public class ProductReviewsController : ApiControllerBase
     public async Task<ActionResult<ProductReviewPublic>> Add(ProductReviewRegister productReviewRegister)
     {
         var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return (await _service.Add(userId, productReviewRegister)).Match(Ok, Problem);
+        return (await _service.Add(userId, productReviewRegister)).Match(Created, Problem);
     }
 }
