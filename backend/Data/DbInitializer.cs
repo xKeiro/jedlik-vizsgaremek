@@ -949,6 +949,34 @@ public static class DbInitializer
         context.SaveChanges();
         #endregion
 
+        #region ProductOrders
+        var productOrders = new List<ProductOrder>(){
+            new(){
+                Id = 1,
+                Product = context.Products.Where(x => x.Id == 1).First(),
+                BasePrice = context.Products.Where(x => x.Id == 1).First().BasePrice,
+                Quantity = 2,
+                Discount = 0,
+                CostPrice = context.Products.Where(x => x.Id == 1).First().ProductSuppliers!.Min(ps => ps.PurchasePrice)
+            },
+            new(){
+                Id = 2,
+                Product = context.Products.Where(x => x.Id == 2).First(),
+                BasePrice = context.Products.Where(x => x.Id == 2).First().BasePrice,
+                Quantity = 3,
+                Discount = 0,
+                CostPrice = context.Products.Where(x => x.Id == 2).First().ProductSuppliers!.Min(ps => ps.PurchasePrice)
+            },
+        };
+        context.AddRangeAsync(productOrders);
+        context.Database.OpenConnection();
+        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ProductOrders ON");
+        context.SaveChanges();
+        context.Database.OpenConnection();
+        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ProductOrders OFF");
+        context.SaveChanges();
+        #endregion
+
         #region Orders
         var orders = new List<Order>(){
             new(){
@@ -956,7 +984,8 @@ public static class DbInitializer
                 User = context.Users.Where(x => x.Id == 2).First(),
                 Shipper = context.Shippers.Where(x => x.Id == 2).First(),
                 OrderAddress = context.OrderAddresses.Where(x => x.Id == 1).First(),
-                Status = OrderStatus.Fulfilled
+                Status = OrderStatus.Fulfilled,
+                ProductOrders = context.ProductOrders.Where(x => x.Id == 1 || x.Id == 2).ToList(),
             },
         };
         context.AddRangeAsync(orders);
@@ -1199,36 +1228,6 @@ public static class DbInitializer
         context.SaveChanges();
         context.Database.OpenConnection();
         context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ProductSuppliers OFF");
-        context.SaveChanges();
-        #endregion
-
-        #region ProductOrders
-        var productOrders = new List<ProductOrder>(){
-            new(){
-                Id = 1,
-                Product = context.Products.Where(x => x.Id == 1).First(),
-                Order = context.Orders.Where(x => x.Id == 1).First(),
-                BasePrice = context.Products.Where(x => x.Id == 1).First().BasePrice,
-                Quantity = 2,
-                Discount = 0,
-                CostPrice = context.Products.Where(x => x.Id == 1).First().ProductSuppliers!.Min(ps => ps.PurchasePrice)
-            },
-            new(){
-                Id = 2,
-                Product = context.Products.Where(x => x.Id == 2).First(),
-                Order = context.Orders.Where(x => x.Id == 1).First(),
-                BasePrice = context.Products.Where(x => x.Id == 2).First().BasePrice,
-                Quantity = 3,
-                Discount = 0,
-                CostPrice = context.Products.Where(x => x.Id == 2).First().ProductSuppliers!.Min(ps => ps.PurchasePrice)
-            },
-        };
-        context.AddRangeAsync(productOrders);
-        context.Database.OpenConnection();
-        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ProductOrders ON");
-        context.SaveChanges();
-        context.Database.OpenConnection();
-        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT ProductOrders OFF");
         context.SaveChanges();
         #endregion
 

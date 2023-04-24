@@ -16,7 +16,7 @@ public class OrderAdmin
     public required ulong ShipperId { get; set; }
     [Required]
     [MinLength(1)]
-    public ICollection<ProductOrderAdmin> ProductOrders { get; set; } = null!;
+    public required ICollection<ProductOrderAdmin> ProductOrders { get; set; }
     [Required]
     [EnumDataType(typeof(OrderStatus))]
     [MinLength(1), MaxLength(25)]

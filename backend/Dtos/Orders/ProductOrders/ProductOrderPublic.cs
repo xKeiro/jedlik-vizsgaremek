@@ -1,6 +1,4 @@
 ﻿using backend.Dtos.Products;
-using backend.Models.Orders;
-using backend.Models.Products;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 

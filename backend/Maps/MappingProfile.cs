@@ -30,12 +30,13 @@ public class MappingProfile : Profile
 
         _ = CreateMap<AddressPublic, Address>();
         _ = CreateMap<Address, AddressPublic>();
+        _ = CreateMap<Address, OrderAddress>().ForMember(oa => oa.Id, opt => opt.Ignore());
 
         _ = CreateMap<ProductRegister, Product>();
-        _ = CreateMap<Product, ProductPublic>().ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id));
+        _ = CreateMap<Product, ProductPublic>().ForMember(pb => pb.CategoryId, opt => opt.MapFrom(p => p.Category.Id));
 
         _ = CreateMap<OrderRegister, Order>();
-        _ = CreateMap<Order, OrderPublic>().ForMember(dest => dest.ShipperId, opt => opt.MapFrom(src => src.Shipper.Id));
+        _ = CreateMap<Order, OrderPublic>().ForMember(op => op.ShipperId, opt => opt.MapFrom(o => o.Shipper.Id));
         _ = CreateMap<ProductOrderPublic, ProductOrder>();
         _ = CreateMap<ProductOrder, ProductOrderPublic>();
         _ = CreateMap<ProductOrder, ProductOrderAdmin>();

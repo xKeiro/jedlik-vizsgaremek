@@ -20,6 +20,6 @@ public class ProductOrder : BaseModel
     public required byte Discount { get; set; }
     public decimal TotalPrice => BasePrice * Quantity * (1 - (Discount / 100));
     [Required]
-    public required Order Order { get; set; }
+    public Order Order { get; set; } = null!;
 
 }

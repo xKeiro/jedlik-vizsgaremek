@@ -10,11 +10,6 @@ public class OrderRegister
     public ulong ShipperId { get; set; }
     [Required]
     [MinLength(1)]
-    public ICollection<ProductOrderPublic> ProductOrders { get; set; } = null!;
-    [Required]
-    [EnumDataType(typeof(OrderStatus))]
-    [MinLength(1), MaxLength(25)]
-    public required OrderStatus Status { get; set; }
-    [Required]
-    public DateTime OrderDate { get; set; } = DateTime.Now;
+    public required ICollection<ProductOrderRegister> ProductOrders { get; set; }
+
 }

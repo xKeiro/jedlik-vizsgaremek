@@ -15,11 +15,11 @@ public class Order : BaseModel
     public required Shipper Shipper { get; set; }
     [Required]
     [MinLength(1)]
-    public ICollection<ProductOrder> ProductOrders { get; set; } = null!;
+    public required ICollection<ProductOrder> ProductOrders { get; set; }
     [Required]
     [EnumDataType(typeof(OrderStatus))]
     [MinLength(1), MaxLength(25)]
-    public required OrderStatus Status { get; set; }
+    public OrderStatus Status { get; set; } = OrderStatus.InProgress;
     [Required]
     public DateTime OrderDate { get; set; } = DateTime.Now;
     public byte Vat => OrderAddress.CountryWithVat.Vat;

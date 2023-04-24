@@ -32,6 +32,14 @@ public class OrdersController : ApiControllerBase
         return Ok(_service.GetAllByUserId(userId));
     }
     [HttpGet]
+    [Route("Me/{orderId}")]
+    [Authorize]
+    public async Task<ActionResult<OneOf<OrderPublic, StatusMessage>>> FindMyOrder(ulong orderId)
+    {
+        var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return (await _service.FindMyOrder(userId, orderId)).Match(Ok, Problem);
+    }
+    [HttpGet]
     [Route("{orderId}")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<OneOf<OrderAdmin, StatusMessage>>> FindByOrderId(ulong orderId)
@@ -41,4 +49,12 @@ public class OrdersController : ApiControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<OneOf<OrderAdmin, StatusMessage>>> SetOrderStatus(ulong orderId, OrderStatus status)
         => (await _service.SetOrderStatus(orderId, status)).Match(Ok, Problem);
+    [HttpPost("Checkout")]
+    [Authorize]
+    public async Task<ActionResult<OneOf<OrderPublic, StatusMessage>>> Add(OrderRegister orderRegister)
+    {
+        var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return (await _service.Add(userId, orderRegister)).Match(Ok, Problem);
+    }
+
 }

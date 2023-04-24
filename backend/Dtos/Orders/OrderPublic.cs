@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using backend.Dtos.Users;
 using backend.Dtos.Orders.OrderAddresses;
 using backend.Dtos.Orders.ProductOrders;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Dtos.Orders;
 
@@ -16,7 +17,7 @@ public class OrderPublic
     public required ulong ShipperId { get; set; }
     [Required]
     [MinLength(1)]
-    public ICollection<ProductOrderPublic> ProductOrders { get; set; } = null!;
+    public required ICollection<ProductOrderPublic> ProductOrders { get; set; }
     [Required]
     [EnumDataType(typeof(OrderStatus))]
     [MinLength(1), MaxLength(25)]
