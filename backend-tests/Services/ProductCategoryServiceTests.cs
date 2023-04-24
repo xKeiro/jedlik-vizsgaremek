@@ -174,4 +174,26 @@ public class ProductCategoryServiceTests
         actual.IsT0.Should().BeFalse();
         actual.AsT1.Should().BeEquivalentTo(expected);
     }
+    [Test]
+    public async Task Update_ShouldReturnOneOfProductCategoryPublicIfTheSameTitleProvidedAsTheOriginal()
+    {
+        // Arrange
+        var updatedProductCategory = new ProductCategoryWithoutId()
+        {
+            Title = TestData.productCategories[0].Title,
+            Description = "Updated Description",
+        };
+        ulong id = TestData.productCategories[0].Id;
+        var expected = new ProductCategoryPublic()
+        {
+            Id = id,
+            Title = updatedProductCategory.Title,
+            Description = updatedProductCategory.Description,
+        };
+        // Act
+        var actual = await _productCategoryService.Update(id, updatedProductCategory);
+        // Assert
+        actual.AsT0.Should().BeEquivalentTo(expected);
+        actual.IsT1.Should().BeFalse();
+    }
 }
