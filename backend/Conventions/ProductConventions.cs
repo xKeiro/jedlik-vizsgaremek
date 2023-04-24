@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace backend.Conventions;
 
-public static class ProductConvention<TProductRegister> where TProductRegister : class
+public static class ProductConventions<TProductRegister> where TProductRegister : class
 {
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]

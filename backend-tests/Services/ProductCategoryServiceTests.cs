@@ -64,7 +64,7 @@ public class ProductCategoryServiceTests
     {
         // Arrange
         ulong notExistingId = 999;
-        var expected = _statusMessage.NotFound<ProductCategory>(notExistingId);
+        var expected = _statusMessage.NotFound404<ProductCategory>(notExistingId);
         // Act
         var actual = await _productCategoryService.Find(notExistingId);
         // Assert
@@ -108,7 +108,7 @@ public class ProductCategoryServiceTests
             Description = "New Description",
         };
         var expectedCount = TestData.productCategories.Count;
-        var expected = _statusMessage.NotUnique<ProductCategory>(new List<string>() { "Title" });
+        var expected = _statusMessage.NotUnique409<ProductCategory>(new List<string>() { "Title" });
         // Act
         var actual = await _productCategoryService.Add(newProductCategory);
         // Assert
@@ -145,7 +145,7 @@ public class ProductCategoryServiceTests
             Title = "Updated Title",
             Description = "Updated Description",
         };
-        var expected = _statusMessage.NotFound<ProductCategory>(updatedProductCategory.Id);
+        var expected = _statusMessage.NotFound404<ProductCategory>(updatedProductCategory.Id);
         // Act
         var actual = await _productCategoryService.Update(updatedProductCategory);
         // Assert
@@ -163,7 +163,7 @@ public class ProductCategoryServiceTests
             Title = TestData.productCategories[1].Title,
             Description = "Updated Description",
         };
-        var expected = _statusMessage.NotUnique<ProductCategory>(new List<string>() { "Title" });
+        var expected = _statusMessage.NotUnique409<ProductCategory>(new List<string>() { "Title" });
         // Act
         var actual = await _productCategoryService.Update(updatedProductCategory);
         // Assert

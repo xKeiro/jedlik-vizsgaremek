@@ -10,7 +10,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[ApiConventionType(typeof(ProductConvention<ProductRegister>))]
+[ApiConventionType(typeof(ProductConventions<ProductRegister>))]
 public class ProductsController : ApiControllerBase
 {
     private readonly IProductService _service;
