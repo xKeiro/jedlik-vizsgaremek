@@ -35,4 +35,8 @@ public class ProductReviewsController : ApiControllerBase
             ? Ok(result)
             : Problem(result);
     }
+    [HttpGet]
+    [Route("Product/{productId}")]
+    public async Task<ActionResult<List<ProductReviewPublic>>> GetByProductId(ulong productId)
+        => (await _service.GetByProductId(productId)).Match(Ok, Problem);
 }

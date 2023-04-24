@@ -53,4 +53,20 @@ public class ProductReviewService: IProductReviewService
         _ = await _context.SaveChangesAsync();
         return _statusMessage.Deleted200<ProductReview>(productReviewId);
     }
+    public async Task<OneOf<List<ProductReviewPublic>, StatusMessage>> GetByProductId(ulong productId)
+    {
+        var product = await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == productId);
+        if (product == null)
+        {
+            return _statusMessage.NotFound404<Product>(productId);
+        }
+        var productReviews = _context.ProductReviews
+            .Where(pr => pr.Product.Id == productId)
+            .OrderByDescending(pr => pr.CreatedAt)
+            .Select(pr => _mapper.Map<ProductReview, ProductReviewPublic>(pr))
+            .ToListAsync();
+        return await productReviews;
+
+    }
 }
