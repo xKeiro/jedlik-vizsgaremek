@@ -9,6 +9,8 @@ namespace backend.Dtos.Orders;
 public class OrderAdmin
 {
     [Required]
+    public required ulong Id { get; set; }
+    [Required]
     public required UserPublicLimited User { get; set; }
     [Required]
     public required OrderAddressPublic OrderAddress { get; set; }
