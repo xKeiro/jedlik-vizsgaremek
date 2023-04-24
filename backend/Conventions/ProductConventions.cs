@@ -6,13 +6,13 @@ namespace backend.Conventions;
 
 public static class ProductConventions<TProductRegister> where TProductRegister : class
 {
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public static void GetNotDiscontinued()
     {
         // Method intentionally left empty.
     }
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]

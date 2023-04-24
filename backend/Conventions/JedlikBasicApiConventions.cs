@@ -8,14 +8,14 @@ public static class JedlikBasicApiConventions<TResponseDto, TRequestDto>
     where TResponseDto : class
     where TRequestDto : class
 {
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
 
     public static void GetAll()
     {
         // Method intentionally left empty.
     }
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
@@ -27,7 +27,7 @@ public static class JedlikBasicApiConventions<TResponseDto, TRequestDto>
     {
         // Method intentionally left empty.
     }
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
