@@ -3,6 +3,7 @@ using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace backend.Controllers;
 
@@ -39,4 +40,11 @@ public class ProductReviewsController : ApiControllerBase
     [Route("Product/{productId}")]
     public async Task<ActionResult<List<ProductReviewPublic>>> GetByProductId(ulong productId)
         => (await _service.GetByProductId(productId)).Match(Ok, Problem);
+    [HttpPost]
+    [Authorize]
+    public async Task<ActionResult<ProductReviewPublic>> Add(ProductReviewRegister productReviewRegister)
+    {
+        var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return (await _service.Add(userId, productReviewRegister)).Match(Ok, Problem);
+    }
 }

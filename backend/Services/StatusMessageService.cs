@@ -79,4 +79,10 @@ public class StatusMessageService : IStatusMessageService
             Message = $"The product with id:'{id}' is now discontinued!",
             StatusCode = StatusCodes.Status200OK
         };
+    public StatusMessage UserAlreadyHaveAReview(string username, string productTitle)
+        => new()
+        {
+            Message = $"User '{username}' already have a review for product '{productTitle}'!",
+            StatusCode = StatusCodes.Status409Conflict
+        };
 }

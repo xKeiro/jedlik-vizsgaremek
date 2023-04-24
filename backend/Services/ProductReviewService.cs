@@ -67,6 +67,33 @@ public class ProductReviewService: IProductReviewService
             .Select(pr => _mapper.Map<ProductReview, ProductReviewPublic>(pr))
             .ToListAsync();
         return await productReviews;
+    }
 
+    public async Task<OneOf<ProductReviewPublic, StatusMessage>> Add(ulong userId, ProductReviewRegister productReviewRegister)
+    {
+        var product = await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == productReviewRegister.ProductId);
+        if (product == null)
+        {
+            return _statusMessage.NotFound404<Product>(productReviewRegister.ProductId);
+        }
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Id == userId);
+        if (user == null)
+        {
+            return _statusMessage.NotFound404<User>(userId);
+        }
+        var isUnique = !await _context.ProductReviews
+            .AnyAsync(pr => pr.Product.Id == productReviewRegister.ProductId && pr.User.Id == userId);
+        if (!isUnique)
+        {
+            return _statusMessage.UserAlreadyHaveAReview(user.Username, product.Title);
+        }
+        var productReview = _mapper.Map<ProductReviewRegister, ProductReview>(productReviewRegister);
+        productReview.Product = product;
+        productReview.User = user;
+        _context.ProductReviews.Add(productReview);
+        _ = await _context.SaveChangesAsync();
+        return _mapper.Map<ProductReview, ProductReviewPublic>(productReview);
     }
 }

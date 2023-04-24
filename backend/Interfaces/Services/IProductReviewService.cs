@@ -10,4 +10,5 @@ public interface IProductReviewService
     Task<OneOf<ProductReviewPublic, StatusMessage>> Find(ulong productReviewId);
     Task<StatusMessage> Delete(ulong productReviewId);
     Task<OneOf<List<ProductReviewPublic>, StatusMessage>> GetByProductId(ulong productId);
+    Task<OneOf<ProductReviewPublic,StatusMessage>> Add(ulong userId, ProductReviewRegister productReviewRegister);
 }
