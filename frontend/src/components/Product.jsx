@@ -34,7 +34,7 @@ export default function Product() {
       }
       try {
         const response = await fetch(
-          `http://localhost:8000/api/products/${id}`,
+          `http://localhost:5000/api/products/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -46,7 +46,7 @@ export default function Product() {
         );
         const responseBody = await response.json();
         if (!response.ok) {
-          const errorMessage = responseBody.detail[0].msg;
+          const errorMessage = responseBody.title;
           console.log(errorMessage);
           return;
         }
@@ -108,7 +108,7 @@ export default function Product() {
                         {product.stock ? "In stock" : "Out of stock"}
                       </Typography>
                       <Typography variant="h6" color="text.secondary">
-                        {product.base_price.toLocaleString("en-US", {
+                        {product.basePrice.toLocaleString("en-US", {
                           style: "currency",
                           currency: "EUR",
                         })}
@@ -127,7 +127,7 @@ export default function Product() {
                     </CardActions>
                     <CardContent>
                       <Reviews productId={product.id} />
-                      {auth.token ? (
+                      {auth.loggedIn ? (
                         <UserReview productId={product.id} />
                       ) : (
                         <Box paddingY={2}>
@@ -146,7 +146,7 @@ export default function Product() {
           </Grid>
           <Grid item md={3} xs={12}>
             <CategoryBar
-              currentCategoryId={product ? product.category_id : null}
+              currentCategoryId={product ? product.categoryId : null}
             />
           </Grid>
         </Grid>

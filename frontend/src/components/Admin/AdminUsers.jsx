@@ -1,5 +1,5 @@
 import React from "react";
-//import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import Button from "@mui/material/Button";
@@ -15,28 +15,33 @@ import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function AdminUsers() {
-  //const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState(null);
 
-  const mockUsers = [
-    {
-      id: 1,
-      username: "Username A",
-      email: "test@mock.com",
-      is_admin: true,
-    },
-    {
-      id: 2,
-      username: "Username B",
-      email: "test@mock.com",
-      is_admin: false,
-    },
-    {
-      id: 3,
-      username: "Username C",
-      email: "test@mock.com",
-      is_admin: false,
-    },
-  ];
+  useEffect(() => {
+    async function getUsers() {
+      try {
+        const response = await fetch(`http://localhost:5000/api/users/`, {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        });
+        const responseBody = await response.json();
+        if (!response.ok) {
+          const errorMessage = responseBody.title;
+          console.log(errorMessage);
+          return;
+        }
+        setUsers(responseBody);
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    }
+    getUsers();
+  }, []);
   return (
     <div className="AdminUsers">
       <Box>
@@ -73,8 +78,8 @@ export default function AdminUsers() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {mockUsers ? (
-                    mockUsers.map((user) => (
+                  {users ? (
+                    users.map((user) => (
                       <TableRow
                         key={user.id}
                         sx={{
@@ -87,7 +92,7 @@ export default function AdminUsers() {
                         </TableCell>
                         <TableCell align="right">{user.email}</TableCell>
                         <TableCell align="right">
-                          {user.is_admin ? "Admin" : "User"}
+                          {user.isAdmin ? "Admin" : "User"}
                         </TableCell>
                         <TableCell align="right">
                           <Button

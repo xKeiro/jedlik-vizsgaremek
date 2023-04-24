@@ -20,7 +20,7 @@ export default function UserAccount() {
   useEffect(() => {
     async function getUser() {
       try {
-        const response = await fetch(`http://localhost:8000/api/users/me`, {
+        const response = await fetch(`http://localhost:5000/api/users/me`, {
           method: "GET",
           mode: "cors",
           headers: {
@@ -30,8 +30,9 @@ export default function UserAccount() {
         });
         const responseBody = await response.json();
         if (!response.ok) {
-          const errorMessage = responseBody.detail[0].msg;
+          const errorMessage = responseBody.title;
           console.log(errorMessage);
+          console.log(responseBody);
           return;
         }
         setUser(responseBody);
@@ -50,20 +51,20 @@ export default function UserAccount() {
     }
     setUserForm({
       username: user.username,
-      first_name: user.first_name,
-      last_name: user.last_name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       phone: user.phone,
 
       id: user.id,
-      is_admin: user.is_admin,
+      isAdmin: user.isAdmin,
       //password: "",
       //passwordConfirm: "",
 
-      address: user.address.address,
+      street: user.address.street,
       city: user.address.city,
       region: user.address.region,
-      postal_code: user.address.postal_code,
+      postalCode: user.address.postalCode,
       country: user.address.country,
     });
     setIsLoading(false);
@@ -75,38 +76,36 @@ export default function UserAccount() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:8000/api/users/" + user.id, //todo: /me PATCH endpoint
-        {
-          method: "PATCH",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
+      const response = await fetch("http://localhost:5000/api/users/me", {
+        method: "PUT",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          username: userForm.username,
+          firstName: userForm.firstName,
+          lastName: userForm.lastName,
+          email: userForm.email,
+          phone: userForm.phone,
+          //password: userForm.password,
+          //passwordConfirm: userForm.passwordConfirm,
+          address: {
+            street: userForm.street,
+            city: userForm.city,
+            region: userForm.region,
+            postalCode: userForm.postalCode,
+            country: userForm.country,
           },
-          credentials: "include",
-          body: JSON.stringify({
-            username: userForm.username,
-            first_name: userForm.first_name,
-            last_name: userForm.last_name,
-            email: userForm.email,
-            phone: userForm.phone,
-            password: userForm.password,
-            passwordConfirm: userForm.passwordConfirm,
-            address: {
-              address: userForm.address,
-              city: userForm.city,
-              region: userForm.region,
-              postal_code: userForm.postal_code,
-              country: userForm.country,
-            },
-          }),
-        }
-      );
-      const responseData = await response.json();
+        }),
+      });
+      const responseBody = await response.json();
 
       if (!response.ok) {
-        const errorMsg = responseData.detail[0].msg;
+        const errorMsg = responseBody.title;
         console.log(errorMsg);
+        console.log(responseBody);
 
         setIsLoading(false);
         setErrorText(errorMsg);

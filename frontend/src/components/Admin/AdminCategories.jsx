@@ -20,7 +20,7 @@ export default function AdminCategories() {
 
   async function getAllCategories() {
     try {
-      const response = await fetch("http://localhost:8000/api/categories", {
+      const response = await fetch("http://localhost:5000/api/categories", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -30,11 +30,11 @@ export default function AdminCategories() {
       });
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
         return;
       }
-      setCategories(responseBody.categories);
+      setCategories(responseBody);
     } catch (error) {
       console.log(error);
       return;

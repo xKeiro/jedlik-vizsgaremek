@@ -26,7 +26,7 @@ export default function AdminUser() {
         return;
       }
       try {
-        const response = await fetch(`http://localhost:8000/api/users/${id}`, {
+        const response = await fetch(`http://localhost:5000/api/users/${id}`, {
           method: "GET",
           mode: "cors",
           headers: {
@@ -36,7 +36,7 @@ export default function AdminUser() {
         });
         const responseBody = await response.json();
         if (!response.ok) {
-          const errorMessage = responseBody.detail[0].msg;
+          const errorMessage = responseBody.title;
           console.log(errorMessage);
           return;
         }
@@ -56,33 +56,35 @@ export default function AdminUser() {
     }
     setUserForm({
       username: user.username,
-      first_name: user.first_name,
-      last_name: user.last_name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       phone: user.phone,
 
       id: user.id,
-      is_admin: user.is_admin,
+      isAdmin: user.isAdmin,
       //password: "",
       //passwordConfirm: "",
 
-      address: user.address.address,
+      street: user.address.street,
       city: user.address.city,
       region: user.address.region,
-      postal_code: user.address.postal_code,
+      postalCode: user.address.postalCode,
       country: user.address.country,
     });
     setIsLoading(false);
   }, [user]);
 
-  async function handleUserUpdate() {
-    setErrorText(null);
-    setSuccessText(null);
+  async function handleUserPromote() {
+    setErrorText("");
+    setSuccessText("");
     setIsLoading(true);
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/users/${user.id}`,
+        user.isAdmin
+          ? `http://localhost:5000/api/users/demote/${user.id}`
+          : `http://localhost:5000/api/users/promote/${user.id}`,
         {
           method: "PATCH",
           mode: "cors",
@@ -90,35 +92,19 @@ export default function AdminUser() {
             "Content-type": "application/json",
           },
           credentials: "include",
-          body: JSON.stringify({
-            username: userForm.username,
-            first_name: userForm.first_name,
-            last_name: userForm.last_name,
-            email: userForm.email,
-            phone: userForm.phone,
-            password: userForm.password,
-            passwordConfirm: userForm.passwordConfirm,
-            address: {
-              address: userForm.address,
-              city: userForm.city,
-              region: userForm.region,
-              postal_code: userForm.postal_code,
-              country: userForm.country,
-            },
-          }),
         }
       );
       const responseData = await response.json();
 
       if (!response.ok) {
-        const errorMsg = responseData.detail[0].msg;
+        const errorMsg = responseData.title;
         console.log(errorMsg);
 
         setIsLoading(false);
         setErrorText(errorMsg);
         return;
       }
-
+      setUser(responseData);
       setIsLoading(false);
       setSuccessText("Update successful.");
     } catch (err) {
@@ -153,7 +139,6 @@ export default function AdminUser() {
         >
           <Grid item xs={11} md={9}>
             <Paper elevation={3}>
-              {" "}
               {successText && (
                 <AlertMessage type="success" message={successText} />
               )}
@@ -174,10 +159,10 @@ export default function AdminUser() {
                       fullWidth
                       variant="contained"
                       sx={{ marginY: "20px", paddingY: "10px" }}
-                      onClick={handleUserUpdate}
+                      onClick={handleUserPromote}
                     >
-                      Save
-                    </Button>
+                      Toggle Privileges
+                    </Button>{" "}
                   </Grid>
                 </Grid>
               )}

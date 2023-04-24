@@ -31,7 +31,7 @@ export default function AdminSuppliers() {
 
   async function getAllSuppliers() {
     try {
-      const response = await fetch("http://localhost:8000/api/suppliers", {
+      const response = await fetch("http://localhost:5000/api/suppliers", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -41,7 +41,7 @@ export default function AdminSuppliers() {
       });
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
         return;
       }
@@ -62,9 +62,9 @@ export default function AdminSuppliers() {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/suppliers/${id}`,
+        `http://localhost:5000/api/suppliers/${id}/disable`,
         {
-          method: "DELETE",
+          method: "PATCH",
           mode: "cors",
           headers: {
             "Content-type": "application/json",
@@ -75,7 +75,7 @@ export default function AdminSuppliers() {
       const responseBody = await response.json();
       console.log(responseBody);
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
         return;
       }

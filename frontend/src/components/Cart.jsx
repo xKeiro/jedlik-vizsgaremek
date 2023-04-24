@@ -45,14 +45,14 @@ export default function Cart() {
 
   useEffect(() => {
     setSubtotal(
-      shop.cart.reduce((acc, curr) => acc + curr.base_price * curr.quantity, 0)
+      shop.cart.reduce((acc, curr) => acc + curr.basePrice * curr.quantity, 0)
     );
   }, [shop.cart, amount]);
 
   useEffect(() => {
     setTotalVAT(
       shop.cart.reduce(
-        (acc, curr) => acc + curr.base_price * (VAT / 100) * curr.quantity,
+        (acc, curr) => acc + curr.basePrice * (VAT / 100) * curr.quantity,
         0
       )
     );
@@ -139,7 +139,7 @@ export default function Cart() {
                           </Link>
                         </TableCell>
                         <TableCell align="right">
-                          {item.base_price.toLocaleString("en-US", {
+                          {item.basePrice.toLocaleString("en-US", {
                             style: "currency",
                             currency: "EUR",
                           })}
@@ -263,73 +263,77 @@ export default function Cart() {
             </TableContainer>
           </Grid>
 
-          <Grid item xs={12} md={12} paddingBottom={2}>
-            <Paper elevation={3}>
-              <Box>
-                <Paper elevation={2}>
-                  <h3>Order Summary</h3>
-                </Paper>
-              </Box>
-              <p>Total amount of items: {amount}</p>
-              <p>
-                Subtotal:{" "}
-                {subtotal.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "EUR",
-                })}
-              </p>
-              <p>
-                + VAT:{" "}
-                {totalVAT.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "EUR",
-                })}{" "}
-                ({VAT}%)
-              </p>
-              <p>
-                + Shipping:{" "}
-                {shipping.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "EUR",
-                })}{" "}
-              </p>
-              <p>
-                <b>
-                  Total:{" "}
-                  {total.toLocaleString("en-US", {
+          {shop.cart.length > 0 ? (
+            <Grid item xs={12} md={12} paddingBottom={2}>
+              <Paper elevation={3}>
+                <Box>
+                  <Paper elevation={2}>
+                    <h3>Order Summary</h3>
+                  </Paper>
+                </Box>
+                <p>Total amount of items: {amount}</p>
+                <p>
+                  Subtotal:{" "}
+                  {subtotal.toLocaleString("en-US", {
                     style: "currency",
                     currency: "EUR",
                   })}
-                </b>
-              </p>
+                </p>
+                <p>
+                  + VAT:{" "}
+                  {totalVAT.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "EUR",
+                  })}{" "}
+                  ({VAT}%)
+                </p>
+                <p>
+                  + Shipping:{" "}
+                  {shipping.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "EUR",
+                  })}{" "}
+                </p>
+                <p>
+                  <b>
+                    Total:{" "}
+                    {total.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "EUR",
+                    })}
+                  </b>
+                </p>
 
-              {auth.token ? (
-                <>
-                  <Button
-                    disabled={shop.cart.length < 1}
-                    variant="contained"
-                    component={RouterLink}
-                    to={"/checkout"}
-                    sx={{ marginY: "10px", paddingY: "10px" }}
-                  >
-                    Checkout (WIP)
-                  </Button>
-                  <Box paddingY={1}>
-                    <p>
-                      Please note that clicking on the Checkout button entails
-                      payment obligation.
-                    </p>
+                {auth.loggedIn ? (
+                  <>
+                    <Button
+                      disabled={shop.cart.length < 1}
+                      variant="contained"
+                      component={RouterLink}
+                      to={"/checkout"}
+                      sx={{ marginY: "10px", paddingY: "10px" }}
+                    >
+                      Checkout (WIP)
+                    </Button>
+                    <Box paddingY={1}>
+                      <p>
+                        Please note that clicking on the Checkout button entails
+                        payment obligation.
+                      </p>
+                    </Box>
+                  </>
+                ) : (
+                  <Box paddingY={2}>
+                    <Link component={RouterLink} to={"/login"}>
+                      Checkout requires signing in.
+                    </Link>
                   </Box>
-                </>
-              ) : (
-                <Box paddingY={2}>
-                  <Link component={RouterLink} to={"/login"}>
-                    Checkout requires signing in.
-                  </Link>
-                </Box>
-              )}
-            </Paper>
-          </Grid>
+                )}
+              </Paper>
+            </Grid>
+          ) : (
+            ""
+          )}
         </Grid>
       </Box>
     </div>

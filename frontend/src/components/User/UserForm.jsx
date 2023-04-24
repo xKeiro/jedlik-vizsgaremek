@@ -8,6 +8,36 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
 export default function UserForm({ userForm, setUserForm, isNew }) {
+  const countries = [
+    "Austria",
+    "Belgium",
+    "Bulgaria",
+    "Croatia",
+    "Cyprus",
+    "Czechia",
+    "Denmark",
+    "Estonia",
+    "Finland",
+    "France",
+    "Germany",
+    "Greece",
+    "Hungary",
+    "Ireland",
+    "Italy",
+    "Latvia",
+    "Lithuania",
+    "Luxembourg",
+    "Malta",
+    "Netherlands",
+    "Poland",
+    "Portugal",
+    "Romania",
+    "Slovakia",
+    "Slovenia",
+    "Spain",
+    "Sweden",
+  ];
+
   function handleFormChange(e) {
     const { name, value } = e.target;
     setUserForm((prevState) => ({
@@ -89,10 +119,10 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
               fullWidth
               disabled
               label="Privileges"
-              id="is_admin"
-              name="is_admin"
+              id="isAdmin"
+              name="isAdmin"
               type="text"
-              value={userForm.is_admin ? "Admin" : "User"}
+              value={userForm.isAdmin ? "Admin" : "User"}
               onChange={handleFormChange}
               autoComplete="off"
             />
@@ -105,10 +135,10 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
           fullWidth
           required
           label="First Name"
-          id="first_name"
-          name="first_name"
+          id="firstName"
+          name="firstName"
           type="text"
-          value={userForm.first_name}
+          value={userForm.firstName}
           onChange={handleFormChange}
           autoComplete="off"
         />
@@ -118,10 +148,10 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
           fullWidth
           required
           label="Last Name"
-          id="last_name"
-          name="last_name"
+          id="lastName"
+          name="lastName"
           type="text"
-          value={userForm.last_name}
+          value={userForm.lastName}
           onChange={handleFormChange}
           autoComplete="off"
         />
@@ -135,7 +165,7 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
           id="email"
           name="email"
           type="email"
-          helperText="We'll never share your email address."
+          helperText="We'll never share your email address with third parties."
           value={userForm.email}
           onChange={handleFormChange}
           autoComplete="off"
@@ -164,11 +194,11 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
         <TextField
           fullWidth
           required
-          label="Address line"
-          id="address"
-          name="address"
+          label="Street"
+          id="street"
+          name="street"
           type="text"
-          value={userForm.address}
+          value={userForm.street}
           onChange={handleFormChange}
           autoComplete="off"
         />
@@ -207,10 +237,10 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
           fullWidth
           required
           label="Postal Code"
-          id="postal_code"
-          name="postal_code"
+          id="postalCode"
+          name="postalCode"
           type="text"
-          value={userForm.postal_code}
+          value={userForm.postalCode}
           onChange={handleFormChange}
           autoComplete="off"
         />
@@ -229,33 +259,11 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
             onChange={handleFormChange}
             autoComplete="off"
           >
-            <MenuItem value={"AT"}>Austria</MenuItem>
-            <MenuItem value={"BE"}>Belgium</MenuItem>
-            <MenuItem value={"BG"}>Bulgaria</MenuItem>
-            <MenuItem value={"HR"}>Croatia</MenuItem>
-            <MenuItem value={"CY"}>Cyprus</MenuItem>
-            <MenuItem value={"CZ"}>Czechia</MenuItem>
-            <MenuItem value={"DK"}>Denmark</MenuItem>
-            <MenuItem value={"EE"}>Estonia</MenuItem>
-            <MenuItem value={"FI"}>Finland</MenuItem>
-            <MenuItem value={"FR"}>France</MenuItem>
-            <MenuItem value={"DE"}>Germany</MenuItem>
-            <MenuItem value={"GR"}>Greece</MenuItem>
-            <MenuItem value={"HU"}>Hungary</MenuItem>
-            <MenuItem value={"IE"}>Ireland</MenuItem>
-            <MenuItem value={"IT"}>Italy</MenuItem>
-            <MenuItem value={"LV"}>Latvia</MenuItem>
-            <MenuItem value={"LT"}>Lithuania</MenuItem>
-            <MenuItem value={"LU"}>Luxembourg</MenuItem>
-            <MenuItem value={"MT"}>Malta</MenuItem>
-            <MenuItem value={"NL"}>Netherlands</MenuItem>
-            <MenuItem value={"PL"}>Poland</MenuItem>
-            <MenuItem value={"PT"}>Portugal</MenuItem>
-            <MenuItem value={"RO"}>Romania</MenuItem>
-            <MenuItem value={"SK"}>Slovakia</MenuItem>
-            <MenuItem value={"SI"}>Slovenia</MenuItem>
-            <MenuItem value={"ES"}>Spain</MenuItem>
-            <MenuItem value={"SE"}>Sweden</MenuItem>
+            {countries.map((country) => (
+              <MenuItem key={country} value={country}>
+                {country}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>

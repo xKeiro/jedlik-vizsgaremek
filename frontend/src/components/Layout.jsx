@@ -62,18 +62,18 @@ export default function Layout() {
             <Route path="contact" element={<Contact />} />
             <Route path="registration" element={<UserRegistration />} />
             <Route path="cart" element={<Cart />} />
-            {!auth.token && <Route path="login" element={<UserLogin />} />}
+            <Route path="logout" element={<UserLogout />} />
+            <Route path="login" element={<UserLogin />} />
 
-            {auth.token && (
+            {auth.loggedIn && (
               <>
                 <Route path="account" element={<UserAccount />} />
                 <Route path="orders" element={<UserOrders />} />
                 <Route path="order/:id" element={<UserOrder />} />
                 <Route path="checkout" element={<UserCheckout />} />
-                <Route path="logout" element={<UserLogout />} />
               </>
             )}
-            {auth.token && auth.user.is_admin && (
+            {auth.loggedIn && auth.user.isAdmin && (
               <Route path="admin" element={<Admin />}>
                 <Route index element={<AdminHome />} />
                 <Route path="orders" element={<AdminOrders />} />

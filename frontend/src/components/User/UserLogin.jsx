@@ -19,16 +19,16 @@ export default function UserLogin() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
+  const [successText, setSuccessText] = useState("");
 
   const [loginUser, setLoginUser] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
   async function handleLogin() {
-    setErrorText(null);
+    setErrorText("");
     setIsLoading(true);
-
     try {
-      const response = await fetch("http://localhost:8000/api/auth/login", {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         mode: "cors",
         headers: {
@@ -43,7 +43,7 @@ export default function UserLogin() {
       const responseBody = await response.json();
 
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
 
         clearInputs();
@@ -53,10 +53,13 @@ export default function UserLogin() {
       }
 
       clearInputs();
-      setIsLoading(false);
-
-      auth.login(responseBody.access_token);
-      navigate("/");
+      //setIsLoading(false);
+      console.log(responseBody);
+      auth.login(responseBody);
+      setSuccessText("Successfully logged in, redirecting...");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (err) {
       console.log(err);
       clearInputs();
@@ -95,6 +98,9 @@ export default function UserLogin() {
         >
           <Grid item xs={11} md={5}>
             <Paper elevation={3}>
+              {successText && (
+                <AlertMessage type="success" message={successText} />
+              )}
               {errorText && <AlertMessage type="error" message={errorText} />}
               {isLoading ? (
                 <CircularProgress />

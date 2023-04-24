@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
 import CartContext from "../contexts/CartContext";
@@ -33,11 +33,11 @@ export default function Navbar() {
     { name: "Contact", route: "/contact" },
   ];
 
-  const [userMenu, setUserMenu] = useState([
+  const userMenu = [
     { name: "Account", route: "/account" },
     { name: "Orders", route: "/orders" },
     { name: "Logout", route: "/logout" },
-  ]);
+  ];
 
   const adminMenu = [{ name: "Manage", route: "/admin/" }];
 
@@ -55,19 +55,6 @@ export default function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  useEffect(() => {
-    const userPanel = {
-      name: `${auth.user.is_admin ? "Admin" : "User"}: ${auth.user.name}`,
-      route: "/account",
-    };
-    if (auth.user.name) {
-      setUserMenu(userMenu.filter((item) => !item.name.includes(":")));
-      setUserMenu((prevState) => [userPanel, ...prevState]);
-    } else {
-      setUserMenu(userMenu.filter((item) => !item.name.includes(":")));
-    }
-  }, [auth.user.name, auth.user.is_admin]);
 
   return (
     <div className="Navbar">
@@ -133,7 +120,7 @@ export default function Navbar() {
                   </MenuItem>
                 ))}
 
-                {auth.token && auth.user.is_admin
+                {auth.loggedIn && auth.user.isAdmin
                   ? adminMenu.map((page) => (
                       <MenuItem
                         key={"menutext-" + page.name}
@@ -182,7 +169,7 @@ export default function Navbar() {
                 </Button>
               ))}
 
-              {auth.token && auth.user.is_admin
+              {auth.loggedIn && auth.user.isAdmin
                 ? adminMenu.map((page) => (
                     <Button
                       key={"menubutton-" + page.name}
@@ -210,12 +197,12 @@ export default function Navbar() {
                 </IconButton>
               </Tooltip>
             </Box>
-            {auth.token ? (
+            {auth.loggedIn ? (
               <>
                 <Box sx={{ flexGrow: 0 }}>
                   <Tooltip title="Open User Menu">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar alt={auth.user.name} src={auth.user.photo} />
+                      <Avatar alt={auth.user.username} src={auth.user.photo} />
                     </IconButton>
                   </Tooltip>
                   <Menu
@@ -234,6 +221,21 @@ export default function Navbar() {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                   >
+                    {auth.loggedIn ? (
+                      <MenuItem
+                        key={"usermenu-user"}
+                        onClick={handleCloseUserMenu}
+                        component={RouterLink}
+                        to={"/Account"}
+                      >
+                        <Typography textAlign="center">
+                          {auth.user.isAdmin === true ? "Admin" : "User"}:{" "}
+                          {auth.user.username}
+                        </Typography>
+                      </MenuItem>
+                    ) : (
+                      ""
+                    )}
                     {userMenu.map((setting) => (
                       <MenuItem
                         key={"usermenu-" + setting.name}

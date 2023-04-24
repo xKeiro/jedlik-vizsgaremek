@@ -40,7 +40,7 @@ export default function AdminSupplier() {
       }
       try {
         const response = await fetch(
-          `http://localhost:8000/api/suppliers/${id}`,
+          `http://localhost:5000/api/suppliers/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -52,7 +52,7 @@ export default function AdminSupplier() {
         );
         const responseBody = await response.json();
         if (!response.ok) {
-          const errorMessage = responseBody.detail[0].msg;
+          const errorMessage = responseBody.title;
           console.log(errorMessage);
           return;
         }
@@ -81,8 +81,8 @@ export default function AdminSupplier() {
     try {
       const response = await fetch(
         id
-          ? `http://localhost:8000/api/suppliers/${id}`
-          : `http://localhost:8000/api/suppliers/`,
+          ? `http://localhost:5000/api/suppliers/${id}`
+          : `http://localhost:5000/api/suppliers/`,
         {
           method: id ? "PATCH" : "POST",
           mode: "cors",
@@ -102,7 +102,7 @@ export default function AdminSupplier() {
       );
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
 
         setIsLoading(false);

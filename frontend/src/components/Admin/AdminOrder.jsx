@@ -30,7 +30,7 @@ export default function AdminOrder() {
         return;
       }
       try {
-        const response = await fetch(`http://localhost:8000/api/orders/${id}`, {
+        const response = await fetch(`http://localhost:5000/api/orders/${id}`, {
           method: "GET",
           mode: "cors",
           headers: {
@@ -40,7 +40,7 @@ export default function AdminOrder() {
         });
         const responseBody = await response.json();
         if (!response.ok) {
-          const errorMessage = responseBody.detail[0].msg;
+          const errorMessage = responseBody.title;
           console.log(errorMessage);
           return;
         }
@@ -61,35 +61,35 @@ export default function AdminOrder() {
     }));
   }
 
-  async function handleOrderUpdate() {
+  async function handleOrderStatusUpdate() {
     setErrorText(null);
     setSuccessText(null);
     setIsLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:8000/api/orders/${id}`, {
-        method: "PATCH",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          // TODO
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:8000/api/orders/${id}/Status`,
+        {
+          method: "PATCH",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(""), //todo
+        }
+      );
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
-
         setIsLoading(false);
         setErrorText(errorMessage);
         return;
       }
+      setOrder(responseBody);
       setSuccessText("Update request successful.");
       setIsLoading(false);
-      navigate("/admin/order/" + order.id);
     } catch (error) {
       console.log(error);
       setErrorText("Update request failed.");
@@ -171,10 +171,10 @@ export default function AdminOrder() {
                     multiline
                     minRows={5}
                     label="Order Date"
-                    id="dorder_date"
-                    name="order_date"
+                    id="dorderDate"
+                    name="orderDate"
                     type="text"
-                    value={order.order_date}
+                    value={order.orderDate}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
@@ -216,7 +216,7 @@ export default function AdminOrder() {
                 fullWidth
                 variant="contained"
                 disabled={isLoading}
-                onClick={handleOrderUpdate}
+                onClick={handleOrderStatusUpdate}
               >
                 Save Order (WIP)
               </Button>

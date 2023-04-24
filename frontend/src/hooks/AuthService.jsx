@@ -3,16 +3,14 @@ import Cookies from "js-cookie";
 
 import AuthContext from "../contexts/AuthContext";
 
-let refreshTimer;
-
 const AuthService = (props) => {
-  const [token, setToken] = useState(null);
-  const [tokenExpDate, setTokenExpDate] = useState(null);
+  const loggedInCookie = "logged_in";
+  const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({
     id: "",
-    name: "",
+    username: "",
     photo: "",
-    is_admin: false,
+    isAdmin: false,
   });
 
   function updateUser(key, value) {
@@ -25,15 +23,15 @@ const AuthService = (props) => {
   function resetUser() {
     setUser({
       id: "",
-      name: "",
+      username: "",
       photo: "",
-      is_admin: false,
+      isAdmin: false,
     });
   }
 
-  async function getUserDetails() {
+  async function refreshUser() {
     try {
-      const response = await fetch("http://localhost:8000/api/users/me", {
+      const response = await fetch("http://localhost:5000/api/users/me", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -43,7 +41,7 @@ const AuthService = (props) => {
       });
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.detail;
         console.log(errorMessage);
         return;
       }
@@ -54,90 +52,46 @@ const AuthService = (props) => {
     }
   }
 
-  const login = useCallback(async (accessToken) => {
-    if (!accessToken) {
-      return;
+  const login = useCallback(async (responseBody) => {
+    if (!responseBody.id) {
+      return false;
     }
-
-    setToken(accessToken);
-
-    const decodedToken = jwtDecode(accessToken);
-    updateUser("id", decodedToken.payload.sub);
-    setTokenExpDate(decodedToken.payload.exp);
-
-    const userDetails = await getUserDetails();
-    if (userDetails) {
-      updateUser("name", userDetails.username);
-      updateUser("photo", userDetails.photo);
-      updateUser("is_admin", userDetails.is_admin);
-    }
+    updateUser("id", responseBody.id);
+    updateUser("username", responseBody.username);
+    updateUser("photo", responseBody.photo);
+    updateUser("isAdmin", responseBody.isAdmin);
+    setLoggedIn(true);
+    Cookies.set(loggedInCookie, true, { expires: 7 });
+    console.log("User logged in.");
+    return true;
   }, []);
 
   const logout = useCallback(() => {
-    setToken(null);
-    setTokenExpDate(null);
+    setLoggedIn(false);
     resetUser();
-    Cookies.remove("logged_in");
+    Cookies.remove(loggedInCookie);
+    console.log("User logged out.");
+    return true;
   }, []);
 
-  async function refreshToken() {
-    try {
-      const response = await fetch("http://localhost:8000/api/auth/refresh", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
-      const responseBody = await response.json();
-      if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
-        console.log(errorMessage);
-        return;
-      }
-      return responseBody.access_token;
-    } catch (error) {
-      console.log(error);
-      return;
-    }
-  }
-
   const refresh = useCallback(async () => {
-    const newToken = await refreshToken();
-    if (newToken) {
-      login(newToken);
+    const responseBody = await refreshUser();
+    if (responseBody.id) {
+      login(responseBody);
     } else {
       logout();
     }
   }, [login, logout]);
 
-  function jwtDecode(jwtString) {
-    let token = {};
-    token.raw = jwtString;
-    token.header = JSON.parse(window.atob(jwtString.split(".")[0]));
-    token.payload = JSON.parse(window.atob(jwtString.split(".")[1]));
-    return token;
-  }
-
   useEffect(() => {
-    const loggedInCookieFound = Cookies.get("logged_in");
+    const loggedInCookieFound = Cookies.get(loggedInCookie);
     if (loggedInCookieFound) refresh();
   }, [refresh]);
-
-  useEffect(() => {
-    if (token && tokenExpDate) {
-      const refreshTime = 480000;
-      refreshTimer = setTimeout(refresh, refreshTime);
-    } else {
-      clearTimeout(refreshTimer);
-    }
-  }, [token, refresh, tokenExpDate]);
 
   return (
     <AuthContext.Provider
       value={{
-        token: token,
+        loggedIn: loggedIn,
         user: user,
         login: login,
         logout: logout,

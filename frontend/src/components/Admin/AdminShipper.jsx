@@ -41,7 +41,7 @@ export default function AdminShipper() {
       }
       try {
         const response = await fetch(
-          `http://localhost:8000/api/shippers/${id}`,
+          `http://localhost:5000/api/shippers/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -53,7 +53,7 @@ export default function AdminShipper() {
         );
         const responseBody = await response.json();
         if (!response.ok) {
-          const errorMessage = responseBody.detail[0].msg;
+          const errorMessage = responseBody.title;
           console.log(errorMessage);
           return;
         }
@@ -82,10 +82,10 @@ export default function AdminShipper() {
     try {
       const response = await fetch(
         id
-          ? `http://localhost:8000/api/shippers/${id}`
-          : `http://localhost:8000/api/shippers/`,
+          ? `http://localhost:5000/api/shippers/${id}`
+          : `http://localhost:5000/api/shippers/`,
         {
-          method: id ? "PATCH" : "POST",
+          method: id ? "PUT" : "POST",
           mode: "cors",
           headers: {
             "Content-type": "application/json",
