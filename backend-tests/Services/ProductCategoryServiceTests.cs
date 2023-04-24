@@ -121,15 +121,19 @@ public class ProductCategoryServiceTests
     public async Task Update_ShouldUpdateProductCategoryAndReturnItInTheFormOfOneOfProductCategoryPublic()
     {
         // Arrange
-        var updatedProductCategory = new ProductCategoryPublic()
+        var updatedProductCategory = new ProductCategoryWithoutId()
         {
-            Id = 1,
             Title = "Updated Title",
             Description = "Updated Description",
         };
-        var expected = _mapper.Map<ProductCategoryPublic, ProductCategory>(updatedProductCategory);
+        var expected = new ProductCategoryPublic()
+        {
+            Id = 1,
+            Title = updatedProductCategory.Title,
+            Description = updatedProductCategory.Description,
+        };
         // Act
-        var actual = await _productCategoryService.Update(updatedProductCategory);
+        var actual = await _productCategoryService.Update(expected.Id, updatedProductCategory);
         // Assert
         actual.AsT0.Should().BeEquivalentTo(expected);
         actual.IsT1.Should().BeFalse();
@@ -139,15 +143,15 @@ public class ProductCategoryServiceTests
     public async Task Update_ShouldReturnOneOfStatusMessageNotFoundIfNotExistingIdProvided()
     {
         // Arrange
-        var updatedProductCategory = new ProductCategoryPublic()
+        var updatedProductCategory = new ProductCategoryWithoutId()
         {
-            Id = 999,
             Title = "Updated Title",
             Description = "Updated Description",
         };
-        var expected = _statusMessage.NotFound404<ProductCategory>(updatedProductCategory.Id);
+        ulong nonExistingId = 999;
+        var expected = _statusMessage.NotFound404<ProductCategory>(nonExistingId);
         // Act
-        var actual = await _productCategoryService.Update(updatedProductCategory);
+        var actual = await _productCategoryService.Update(nonExistingId, updatedProductCategory);
         // Assert
         actual.IsT0.Should().BeFalse();
         actual.AsT1.Should().BeEquivalentTo(expected);
@@ -157,15 +161,15 @@ public class ProductCategoryServiceTests
     public async Task Update_ShouldReturnOneOfStatusMessageNotUniqueIfAlreadyExistingTitleProvided()
     {
         // Arrange
-        var updatedProductCategory = new ProductCategoryPublic()
+        var updatedProductCategory = new ProductCategoryWithoutId()
         {
-            Id = 1,
             Title = TestData.productCategories[1].Title,
             Description = "Updated Description",
         };
+        ulong id = 1;
         var expected = _statusMessage.NotUnique409<ProductCategory>(new List<string>() { "Title" });
         // Act
-        var actual = await _productCategoryService.Update(updatedProductCategory);
+        var actual = await _productCategoryService.Update(id, updatedProductCategory);
         // Assert
         actual.IsT0.Should().BeFalse();
         actual.AsT1.Should().BeEquivalentTo(expected);
