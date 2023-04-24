@@ -27,6 +27,7 @@ public class MappingProfile : Profile
 
         _ = CreateMap<UserRegister, User>();
         _ = CreateMap<User, UserPublic>();
+        _ = CreateMap<User, UserPublicLimited>();
 
         _ = CreateMap<AddressPublic, Address>();
         _ = CreateMap<Address, AddressPublic>();
@@ -34,6 +35,7 @@ public class MappingProfile : Profile
 
         _ = CreateMap<ProductRegister, Product>();
         _ = CreateMap<Product, ProductPublic>().ForMember(pb => pb.CategoryId, opt => opt.MapFrom(p => p.Category.Id));
+        _ = CreateMap<Product, ProductPublicLimited>();
 
         _ = CreateMap<OrderRegister, Order>();
         _ = CreateMap<Order, OrderPublic>().ForMember(op => op.ShipperId, opt => opt.MapFrom(o => o.Shipper.Id));
