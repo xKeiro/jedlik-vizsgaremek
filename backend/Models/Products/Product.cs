@@ -1,4 +1,5 @@
-﻿using backend.Models.Orders;
+﻿using backend.DataAnnotations;
+using backend.Models.Orders;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +10,7 @@ public class Product : BaseModel
 {
     [Required]
     public required ProductCategory Category { get; set; }
+    [NonDiscontinuedProductMustHaveSupplier]
     public ICollection<ProductSupplier>? ProductSuppliers { get; set; }
     [Required]
     [Precision(18, 2)]
