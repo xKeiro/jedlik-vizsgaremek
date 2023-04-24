@@ -27,6 +27,7 @@ public class MappingProfile : Profile
         _ = CreateMap<ProductCategoryWithoutId, ProductCategory>();
 
         _ = CreateMap<UserRegister, User>();
+        _ = CreateMap<UserUpdate, User>();
         _ = CreateMap<User, UserPublic>();
         _ = CreateMap<User, UserPublicLimited>();
 

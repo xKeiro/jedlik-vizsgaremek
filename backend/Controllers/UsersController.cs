@@ -29,10 +29,10 @@ public class UsersController : ApiControllerBase
     }
     [HttpPut("Me")]
     [Authorize]
-    public async Task<ActionResult<UserPublic>> UpdateMe(UserRegister userRegister)
+    public async Task<ActionResult<UserPublic>> UpdateMe(UserUpdate userUpdate)
     {
         var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var result = await _service.Update(userId, userRegister);
+        var result = await _service.Update(userId, userUpdate);
         return result.Match(Ok, Problem);
     }
 
