@@ -9,7 +9,7 @@ namespace backend.Dtos.Orders;
 public class OrderAdmin
 {
     [Required]
-    public required UserPublic User { get; set; }
+    public required UserPublicLimited User { get; set; }
     [Required]
     public required OrderAddressPublic OrderAddress { get; set; }
     [Required]
