@@ -15,7 +15,7 @@ public class Order : BaseModel
     public required Shipper Shipper { get; set; }
     [Required]
     [MinLength(1)]
-    public required ICollection<ProductOrder> ProductOrders { get; set; }
+    public ICollection<ProductOrder> ProductOrders { get; set; } = null!;
     [Required]
     [EnumDataType(typeof(OrderStatus))]
     [MinLength(1), MaxLength(25)]

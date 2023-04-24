@@ -81,6 +81,12 @@ public class OrdersService: IOrdersService
             return _statusMessage.NotFound<Shipper>(orderRegister.ShipperId);
         }
         var productOrders = new List<ProductOrder>();
+        var order = new Order
+        {
+            OrderAddress = _mapper.Map<Address, OrderAddress>(user.Address),
+            User = user,
+            Shipper = shipper,
+        };
         foreach (var productOrderRegister in orderRegister.ProductOrders)
         {
             var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == productOrderRegister.ProductId);
@@ -98,16 +104,11 @@ public class OrdersService: IOrdersService
                 Discount = discount,
                 CostPrice = costPrice,
                 BasePrice = product.BasePrice,
+                Order = order,
             };
             productOrders.Add(productOrder);
         }
-        var order = new Order
-        {
-            OrderAddress = _mapper.Map<Address, OrderAddress>(user.Address),
-            User = user,
-            Shipper = shipper,
-            ProductOrders = productOrders
-        };
+        order.ProductOrders = productOrders;
         await _context.Orders.AddAsync(order);
         await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
