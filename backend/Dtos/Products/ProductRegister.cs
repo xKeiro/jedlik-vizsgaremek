@@ -1,11 +1,7 @@
-﻿using backend.DataAnnotations;
-using backend.Dtos.Products.ProductCategories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace backend.Dtos.Products;
-
-[NonDiscontinuedProductMustHaveSupplier]
 public class ProductRegister
 {
     [Required]
