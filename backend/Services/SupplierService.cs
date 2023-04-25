@@ -38,13 +38,13 @@ public class SupplierService: ISupplierService
             return _statusMessage.NotUnique409<Supplier>(new List<string>() { nameof(supplierRegister.CompanyName) });
         }
         var countryWithVat = await _context.CountriesWithVat
-            .FirstOrDefaultAsync(cwv => cwv.Country.ToLower() == supplierRegister.Address.Country.ToLower());
+            .FirstOrDefaultAsync(cwv => cwv.Country.ToLower() == supplierRegister.Country.ToLower());
         if (countryWithVat == null)
         {
-            return _statusMessage.DoesNotExist404(nameof(supplierRegister.Address.Country), supplierRegister.Address.Country);
+            return _statusMessage.DoesNotExist404(nameof(supplierRegister.Country), supplierRegister.Country);
         }
         var supplier = _mapper.Map<SupplierRegister, Supplier>(supplierRegister);
-        supplier.Address.CountryWithVat = countryWithVat;
+        supplier.CountryWithVat = countryWithVat;
         _context.Suppliers.Add(supplier);
         _ = await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
@@ -75,13 +75,13 @@ public class SupplierService: ISupplierService
             return _statusMessage.NotUnique409<Supplier>(new List<string>() { nameof(supplierRegister.CompanyName) });
         }
         var countryWithVat = await _context.CountriesWithVat
-            .FirstOrDefaultAsync(cwv => cwv.Country.ToLower() == supplierRegister.Address.Country.ToLower());
+            .FirstOrDefaultAsync(cwv => cwv.Country.ToLower() == supplierRegister.Country.ToLower());
         if (countryWithVat == null)
         {
-            return _statusMessage.DoesNotExist404(nameof(supplierRegister.Address.Country), supplierRegister.Address.Country);
+            return _statusMessage.DoesNotExist404(nameof(supplierRegister.Country), supplierRegister.Country);
         }
         _mapper.Map(supplierRegister, supplier);
-        supplier.Address.CountryWithVat = countryWithVat;
+        supplier.CountryWithVat = countryWithVat;
         _context.Suppliers.Update(supplier);
         _ = await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();

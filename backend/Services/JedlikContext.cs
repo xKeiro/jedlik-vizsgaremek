@@ -21,11 +21,9 @@ public class JedlikContext : DbContext
     public virtual DbSet<ProductCategory> ProductCategories { get; set; }
     public virtual DbSet<ProductReview> ProductReviews { get; set; }
     public virtual DbSet<ProductSupplier> ProductSuppliers { get; set; }
-    public virtual DbSet<Address> Addresses { get; set; }
     public virtual DbSet<Shipper> Shippers { get; set; }
     public virtual DbSet<Supplier> Suppliers { get; set; }
     public virtual DbSet<User> Users { get; set; }
-    public virtual DbSet<OrderAddress> OrderAddresses{ get; set; }
     public virtual DbSet<CountryWithVat> CountriesWithVat { get; set; }
 
 
@@ -33,11 +31,15 @@ public class JedlikContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CountryWithVat>()
-            .HasMany(c => c.OrderAddress)
-            .WithOne(o => o.CountryWithVat)
+            .HasMany(c => c.Users)
+            .WithOne(u => u.CountryWithVat)
             .OnDelete(DeleteBehavior.Restrict);
         modelBuilder.Entity<CountryWithVat>()
-            .HasMany(c => c.Addresses)
+            .HasMany(c => c.Suppliers)
+            .WithOne(s => s.CountryWithVat)
+            .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<CountryWithVat>()
+            .HasMany(c => c.Orders)
             .WithOne(o => o.CountryWithVat)
             .OnDelete(DeleteBehavior.Restrict);
 
@@ -48,18 +50,16 @@ public class JedlikContext : DbContext
             .Entity<Order>()
             .Property(order => order.Status)
             .HasConversion(new EnumToStringConverter<OrderStatus>());
-        _ = modelBuilder.Entity<User>().Navigation(u => u.Address).AutoInclude();
-        _ = modelBuilder.Entity<Address>().Navigation(a => a.CountryWithVat).AutoInclude();
-        _ = modelBuilder.Entity<OrderAddress>().Navigation(oa => oa.CountryWithVat).AutoInclude();
+        _ = modelBuilder.Entity<User>().Navigation(u => u.CountryWithVat).AutoInclude();
         _ = modelBuilder.Entity<ProductOrder>().Navigation(po => po.Product).AutoInclude();
         _ = modelBuilder.Entity<ProductSupplier>().Navigation(ps => ps.Supplier).AutoInclude();
         _ = modelBuilder.Entity<Order>().Navigation(o => o.ProductOrders).AutoInclude();
-        _ = modelBuilder.Entity<Order>().Navigation(o => o.OrderAddress).AutoInclude();
         _ = modelBuilder.Entity<Order>().Navigation(o => o.User).AutoInclude();
         _ = modelBuilder.Entity<Order>().Navigation(o => o.Shipper).AutoInclude();
+        _ = modelBuilder.Entity<Order>().Navigation(o => o.CountryWithVat).AutoInclude();
         _ = modelBuilder.Entity<Product>().Navigation(p => p.Category).AutoInclude();
         _ = modelBuilder.Entity<ProductReview>().Navigation(pr => pr.Product).AutoInclude();
         _ = modelBuilder.Entity<ProductReview>().Navigation(pr => pr.User).AutoInclude();
-        _ = modelBuilder.Entity<Supplier>().Navigation(s => s.Address).AutoInclude();
+        _ = modelBuilder.Entity<Supplier>().Navigation(s => s.CountryWithVat).AutoInclude();
     }
 }

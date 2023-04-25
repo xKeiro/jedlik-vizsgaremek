@@ -33,10 +33,10 @@ public class UserService : IUserService
         {
             return _statusMessage.NotFound404<User>(userId);
         }
-        var countryWithVat = await _context.CountriesWithVat.FirstOrDefaultAsync(cwv => cwv.Country == userUpdate.Address.Country);
+        var countryWithVat = await _context.CountriesWithVat.FirstOrDefaultAsync(cwv => cwv.Country == userUpdate.Country);
         if (countryWithVat is null)
         {
-            return _statusMessage.DoesNotExist404(nameof(userUpdate.Address.Country), userUpdate.Address.Country);
+            return _statusMessage.DoesNotExist404(nameof(userUpdate.Country), userUpdate.Country);
         }
         List<string> propertiesToNotCheck = new();
         if (user.Username == userUpdate.Username)
@@ -53,7 +53,7 @@ public class UserService : IUserService
             return _statusMessage.NotUnique409<User>(notUniquePropertyNames);
         }
         _ = _mapper.Map(userUpdate, user);
-        user.Address.CountryWithVat = countryWithVat;
+        user.CountryWithVat = countryWithVat;
 
 
         _ = _context.Users.Update(user);

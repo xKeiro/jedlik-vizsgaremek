@@ -34,8 +34,20 @@ public class User : BaseModel
     public required bool IsAdmin { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     [Required]
-    [ForeignKey("AddressId")]
-    public required Address Address { get; set; }
+    [MinLength(3), MaxLength(50)]
+    public required string Street { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(50)]
+    public required string City { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(50)]
+    public required string Region { get; set; }
+    [Required]
+    [MaxLength(10)]
+    public required string PostalCode { get; set; }
+    [Required]
+    public required CountryWithVat CountryWithVat { get; set; }
+    public string Country => CountryWithVat.Country;
     public ICollection<ProductReview>? ProductReviews { get; set; }
     public ICollection<ProductOrder>? ProductOrders { get; set; }
 }

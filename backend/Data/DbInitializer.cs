@@ -3,7 +3,6 @@ using backend.Models;
 using backend.Models.Orders;
 using backend.Models.Products;
 using backend.Services;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data;
@@ -22,7 +21,7 @@ public static class DbInitializer
 
         _ = context.Database.EnsureCreated();
 
-        if (context.Products.Any() || context.Addresses.Any())
+        if (context.Products.Any())
         {
             return;
         }
@@ -65,292 +64,6 @@ public static class DbInitializer
         context.Database.OpenConnection();
         context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT CountriesWithVat OFF");
         context.SaveChanges();
-
-        #region Addresses
-        var addresses = new List<Address>
-        {
-            new Address()
-            {
-                Id = 1,
-                Street = "7019 Talicska utca",
-                City = "Sopron",
-                Region = "Győr-Moson-Sopron",
-                PostalCode = "9404",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 2,
-                Street = "4 Almo Center",
-                City = "Vienna",
-                Region = "Lower Austria",
-                PostalCode = "1011",
-                CountryWithVat = countriesWithVat[0]
-            },
-            new Address()
-            {
-                Id = 3,
-                Street = "28 Birchwood Road",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1111",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 4,
-                Street = "8 Vahlen Park",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1046",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 5,
-                Street = "8588 Moose Point",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1086",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 6,
-                Street = "88 Springview Drive",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1097",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 7,
-                Street = "1770 Sachtjen Road",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1194",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 8,
-                Street = "88898 Londonderry Street",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1158",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 9,
-                Street = "3686 Westridge Alley",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1239",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 10,
-                Street = "62 Amoth Trail",
-                City = "Sopron",
-                Region = "Győr-Moson-Sopron",
-                PostalCode = "9404",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 11,
-                Street = "82849 Memorial Court",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1024",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 12,
-                Street = "61988 Duke Circle",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1122",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 13,
-                Street = "010 Ridgeview Lane",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1046",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 14,
-                Street = "6 Marcy Plaza",
-                City = "Budapest",
-                Region = "Budapest",
-                PostalCode = "1111",
-                CountryWithVat = countriesWithVat[12]
-            },
-            new Address()
-            {
-                Id = 15,
-                Street = "23 Rue de la République",
-                City = "Paris",
-                Region = "Île-de-France",
-                PostalCode = "75001",
-                CountryWithVat = countriesWithVat[9]
-            },
-
-            new Address()
-            {
-                Id = 16,
-                Street = "Ul. Kraszewskiego 12/4",
-                City = "Warsaw",
-                Region = "Mazowieckie",
-                PostalCode = "00-123",
-                CountryWithVat = countriesWithVat[4]
-            },
-
-            new Address()
-            {
-                Id = 17,
-                Street = "Calle de Alcalá 54",
-                City = "Madrid",
-                Region = "Madrid",
-                PostalCode = "28014",
-                CountryWithVat = countriesWithVat[5]
-            },
-
-            new Address()
-            {
-                Id = 18,
-                Street = "Viale Regina Margherita 6",
-                City = "Rome",
-                Region = "Lazio",
-                PostalCode = "00198",
-                CountryWithVat = countriesWithVat[3]
-            },
-
-            new Address()
-            {
-                Id = 19,
-                Street = "Karl-Marx-Allee 90",
-                City = "Berlin",
-                Region = "Berlin",
-                PostalCode = "10243",
-                CountryWithVat = countriesWithVat[7]
-            },
-            new Address()
-            {
-                Id = 20,
-                Street = "Strada Statale 16 Km 23",
-                City = "Bari",
-                Region = "Puglia",
-                PostalCode = "70126",
-                CountryWithVat = countriesWithVat[3]
-            },
-
-            new Address()
-            {
-                Id = 21,
-                Street = "Lange Voorhout 34",
-                City = "The Hague",
-                Region = "South Holland",
-                PostalCode = "2514 EE",
-                CountryWithVat = countriesWithVat[13]
-            },
-
-            new Address()
-            {
-                Id = 22,
-                Street = "Kungsgatan 37",
-                City = "Stockholm",
-                Region = "Stockholm",
-                PostalCode = "111 56",
-                CountryWithVat = countriesWithVat[14]
-            },
-
-            new Address()
-            {
-                Id = 23,
-                Street = "Rruga e Kavajës 153",
-                City = "Viena",
-                Region = "Viena",
-                PostalCode = "1001",
-                CountryWithVat = countriesWithVat[0]
-            },
-
-            new Address()
-            {
-                Id = 24,
-                Street = "Praça do Comércio 12",
-                City = "Lisbon",
-                Region = "Lisbon",
-                PostalCode = "1100-148",
-                CountryWithVat = countriesWithVat[15]
-            },
-            new Address()
-            {
-                Id = 25,
-                Street = "Boulevard du Jardin Exotique 7",
-                City = "Aslova",
-                Region = "Slva",
-                PostalCode = "98000",
-                CountryWithVat = countriesWithVat[18]
-            },
-
-            new Address()
-            {
-                Id = 26,
-                Street = "Karl-Liebknecht-Straße 3",
-                City = "Leipzig",
-                Region = "Saxony",
-                PostalCode = "04107",
-                CountryWithVat = countriesWithVat[19]
-            },
-
-            new Address()
-            {
-                Id = 27,
-                Street = "Avenue Louise 231",
-                City = "Brussels",
-                Region = "Brussels-Capital",
-                PostalCode = "1050",
-                CountryWithVat = countriesWithVat[2]
-            },
-
-            new Address()
-            {
-                Id = 28,
-                Street = "Paseo de la Castellana 259",
-                City = "Madrid",
-                Region = "Madrid",
-                PostalCode = "28046",
-                CountryWithVat = countriesWithVat[13]
-            },
-
-            new Address()
-            {
-                Id = 29,
-                Street = "Rue du Faubourg Saint-Honoré 55",
-                City = "Paris",
-                Region = "Île-de-France",
-                PostalCode = "75008",
-                CountryWithVat = countriesWithVat[12]
-            }
-        };
-        context.AddRangeAsync(addresses);
-        context.Database.OpenConnection();
-        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Addresses ON");
-        context.SaveChanges();
-        context.Database.OpenConnection();
-        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT Addresses OFF");
-        context.SaveChanges();
-        #endregion Addresses
 
         #region ProductCategories 
         var productCategories = new List<ProductCategory>(){
@@ -479,7 +192,11 @@ public static class DbInitializer
                 ContactLastName = "Doe",
                 Phone = "+36301111114",
                 Email = "supplier1@example.com",
-                Address = context.Addresses.Where(x => x.Id == 11).First(),
+                Street = "7019 Talicska utca",
+                City = "Sopron",
+                Region = "Győr-Moson-Sopron",
+                PostalCode = "9404",
+                CountryWithVat = countriesWithVat[12]
             },
             new(){
                 Id = 2,
@@ -488,7 +205,12 @@ public static class DbInitializer
                 ContactLastName = "Williams",
                 Phone = "+36301111115",
                 Email = "supplier2@example.com",
-                Address = context.Addresses.Where(x => x.Id == 12).First(),
+                Street = "4 Almo Center",
+                City = "Vienna",
+                Region = "Lower Austria",
+                PostalCode = "1011",
+                CountryWithVat = countriesWithVat[0]
+
             },
             new(){
                 Id = 3,
@@ -497,7 +219,11 @@ public static class DbInitializer
                 ContactLastName = "Doe",
                 Phone = "+36301111116",
                 Email = "supplier3@example.com",
-                Address = context.Addresses.Where(x => x.Id == 13).First(),
+                Street = "28 Birchwood Road",
+                City = "Budapest",
+                Region = "Budapest",
+                PostalCode = "1111",
+                CountryWithVat = countriesWithVat[12]
             },
             new(){
                 Id = 4,
@@ -506,7 +232,11 @@ public static class DbInitializer
                 ContactLastName = "Kovács",
                 Phone = "+36301111117",
                 Email = "supplier4@example.com",
-                Address = context.Addresses.Where(x => x.Id == 14).First(),
+                Street = "8 Vahlen Park",
+                City = "Budapest",
+                Region = "Budapest",
+                PostalCode = "1046",
+                CountryWithVat = countriesWithVat[12]
             },
 
         };
@@ -530,7 +260,11 @@ public static class DbInitializer
                 Phone = "+36554445555",
                 Password = BCrypt.Net.BCrypt.HashPassword("password"),
                 IsAdmin = true,
-                Address = context.Addresses.Where(x => x.Id == 1).First(),
+                Street = "8588 Moose Point",
+                City = "Budapest",
+                Region = "Budapest",
+                PostalCode = "1086",
+                CountryWithVat = countriesWithVat[12]
             },
             new(){
                 Id = 2,
@@ -541,7 +275,11 @@ public static class DbInitializer
                 Phone = "+36551112222",
                 Password = BCrypt.Net.BCrypt.HashPassword("password"),
                 IsAdmin = false,
-                Address = context.Addresses.Where(x => x.Id == 2).First(),
+                Street = "88 Springview Drive",
+                City = "Budapest",
+                Region = "Budapest",
+                PostalCode = "1097",
+                CountryWithVat = countriesWithVat[12]
             },
             new(){
                 Id = 3,
@@ -552,7 +290,11 @@ public static class DbInitializer
                 Phone = "+36552221111",
                 Password = BCrypt.Net.BCrypt.HashPassword("password"),
                 IsAdmin = false,
-                Address = context.Addresses.Where(x => x.Id == 3).First(),
+                Street = "1770 Sachtjen Road",
+                City = "Budapest",
+                Region = "Budapest",
+                PostalCode = "1194",
+                CountryWithVat = countriesWithVat[12]
             },
             new(){
                 Id = 4,
@@ -563,7 +305,11 @@ public static class DbInitializer
                 Phone = "+36551113333",
                 Password = BCrypt.Net.BCrypt.HashPassword("password"),
                 IsAdmin = false,
-                Address = context.Addresses.Where(x => x.Id == 4).First(),
+                Street = "88898 Londonderry Street",
+                City = "Budapest",
+                Region = "Budapest",
+                PostalCode = "1158",
+                CountryWithVat = countriesWithVat[12]
             },
             new(){
                 Id = 5,
@@ -574,7 +320,11 @@ public static class DbInitializer
                 Phone = "+36551234561",
                 Password = BCrypt.Net.BCrypt.HashPassword("password"),
                 IsAdmin = false,
-                Address = context.Addresses.Where(x => x.Id == 5).First(),
+                Street = "3686 Westridge Alley",
+                City = "Budapest",
+                Region = "Budapest",
+                PostalCode = "1239",
+                CountryWithVat = countriesWithVat[12]
             },
         };
         context.AddRangeAsync(users);
@@ -1017,34 +767,18 @@ public static class DbInitializer
         context.SaveChanges();
         #endregion
 
-        #region OrderAddresses
-        var ordersAddresses = new List<OrderAddress>(){
-            new(){
-            Id = 1,
-            Street = "62 Amoth Trail",
-            City = "Sopron",
-            Region = "Győr-Moson-Sopron",
-            PostalCode = "9404",
-            CountryWithVat = countriesWithVat[12],
-            },
-        };
-        context.AddRangeAsync(ordersAddresses);
-        context.Database.OpenConnection();
-        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT OrderAddresses ON");
-        context.SaveChanges();
-        context.Database.OpenConnection();
-        context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT OrderAddresses OFF");
-        context.SaveChanges();
-        #endregion
-
         #region Orders
         var orders = new List<Order>(){
             new(){
                 Id = 1,
                 User = context.Users.Where(x => x.Id == 2).First(),
                 Shipper = context.Shippers.Where(x => x.Id == 2).First(),
-                OrderAddress = context.OrderAddresses.Where(x => x.Id == 1).First(),
                 Status = OrderStatus.Fulfilled,
+                Street = "62 Amoth Trail",
+                City = "Sopron",
+                Region = "Győr-Moson-Sopron",
+                PostalCode = "9404",
+                CountryWithVat = countriesWithVat[12]
             },
         };
         context.AddRangeAsync(orders);

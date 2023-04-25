@@ -83,7 +83,11 @@ public class OrdersService: IOrdersService
         var productOrders = new List<ProductOrder>();
         var order = new Order
         {
-            OrderAddress = _mapper.Map<Address, OrderAddress>(user.Address),
+            Street = user.Street,
+            City = user.City,
+            Region = user.Region,
+            PostalCode = user.PostalCode,
+            CountryWithVat = user.CountryWithVat,
             User = user,
             Shipper = shipper,
         };

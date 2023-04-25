@@ -1,5 +1,4 @@
-﻿using backend.Dtos.Addresses;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace backend.Dtos.Auth;
 
@@ -29,5 +28,18 @@ public class UserRegister
     [MinLength(3), MaxLength(20)]
     public required string Phone { get; set; }
     [Required]
-    public required AddressPublic Address { get; set; }
+    [MinLength(3), MaxLength(50)]
+    public required string Street { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(50)]
+    public required string City { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(50)]
+    public required string Region { get; set; }
+    [Required]
+    [MaxLength(10)]
+    public required string PostalCode { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(100)]
+    public required string Country { get; set; }
 }
