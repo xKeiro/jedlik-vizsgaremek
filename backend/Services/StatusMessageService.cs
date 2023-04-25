@@ -16,9 +16,15 @@ public class StatusMessageService : IStatusMessageService
     public StatusMessage NotFound404<TModel>(ulong id) where TModel : class 
         => new()
     {
-        Message = $"{typeof(TModel).Name} with Id:'{id}' does not exist!",
+        Message = $"{typeof(TModel).Name} with id:'{id}' does not exist!",
         StatusCode = StatusCodes.Status404NotFound
     };
+    public StatusMessage NotFound404<TModel>() where TModel : class
+        => new()
+        {
+            Message = $"{typeof(TModel).Name} was not found!",
+            StatusCode = StatusCodes.Status404NotFound
+        };
 
     public StatusMessage Deleted200<TModel>(ulong id) where TModel : class
         => new()
@@ -49,7 +55,7 @@ public class StatusMessageService : IStatusMessageService
 
     public StatusMessage ANotExistingIdProvided404() => new()
     {
-        Message = "At least one Id was provided that does not exist in our system!",
+        Message = "At least one id was provided that does not exist in our system!",
         StatusCode = StatusCodes.Status404NotFound
     };
 
@@ -60,7 +66,7 @@ public class StatusMessageService : IStatusMessageService
     };
     public StatusMessage DoesNotExist404(string nameOfNotExisting, string valueOfNotExisting) => new()
     {
-        Message = $"{nameOfNotExisting} ({valueOfNotExisting}) does not exist in our database!",
+        Message = $"{nameOfNotExisting} '{valueOfNotExisting}' does not exist in our database!",
         StatusCode = StatusCodes.Status404NotFound
     };
     public StatusMessage LoginFailed401() => new()
@@ -85,4 +91,11 @@ public class StatusMessageService : IStatusMessageService
             Message = $"User '{username}' already have a review for product '{productTitle}'!",
             StatusCode = StatusCodes.Status409Conflict
         };
+    public StatusMessage ProductAlreadyHaveThisSupplierRegistered409(ulong productId, ulong supplierId)
+        => new()
+        {
+            Message = $"Product with id:'{productId}' already have this supplier with this id '{supplierId}' registered!",
+            StatusCode = StatusCodes.Status409Conflict
+        };
+
 }

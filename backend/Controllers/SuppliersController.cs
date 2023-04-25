@@ -1,4 +1,6 @@
-﻿using backend.Dtos.Supplires;
+﻿using backend.Conventions;
+using backend.Dtos.Products.ProductSuppliers;
+using backend.Dtos.Supplires;
 using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -8,41 +10,65 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[ApiConventionType(typeof(SupplierConventions<SupplierRegister, ProductSupplierRegister, ProductSupplierUpdate>))]
 public class SuppliersController: ApiControllerBase
 {
-    private readonly ISupplierService _service;
+    private readonly ISupplierService _supplierService;
+    private readonly IProductSupplierService _productSupplierService;
 
-    public SuppliersController(ISupplierService service)
+    public SuppliersController(ISupplierService supplierService, IProductSupplierService productSupplierService)
     {
-        _service = service;
+        _supplierService = supplierService;
+        _productSupplierService = productSupplierService;
     }
     [HttpGet]
     [Authorize (Roles = "Admin")]
     public ActionResult<IAsyncEnumerable<SupplierPublic>> GetAll()
-        => Ok(_service.GetAll());
+        => Ok(_supplierService.GetAll());
     [HttpPost]
     [Authorize (Roles = "Admin")]
     public async Task<ActionResult<SupplierPublic>> Add(SupplierRegister supplierRegister)
-        => (await _service.Add(supplierRegister)).Match(Created, Problem);
+        => (await _supplierService.Add(supplierRegister)).Match(Created, Problem);
     [HttpGet]
     [Authorize (Roles = "Admin")]
     [Route("{id}")]
     public async Task<ActionResult<SupplierPublic>> Find(ulong id)
-        => (await _service.Find(id)).Match(Ok, Problem);
+        => (await _supplierService.Find(id)).Match(Ok, Problem);
     [HttpPut]
     [Authorize (Roles = "Admin")]
     [Route("{id}")]
     public async Task<ActionResult<SupplierPublic>> Update(ulong id, SupplierRegister supplierRegister)
-        => (await _service.Update(id, supplierRegister)).Match(Ok, Problem);
+        => (await _supplierService.Update(id, supplierRegister)).Match(Ok, Problem);
     [HttpDelete]
     [Authorize (Roles = "Admin")]
     [Route("{id}")]
     public async Task<ActionResult<StatusMessage>> Delete(ulong id)
     {
-        var result = await _service.Delete(id);
+        var result = await _supplierService.Delete(id);
         return result.StatusCode == 200
             ? Ok(result)
             : Problem(result);
     }
+    [HttpGet("Product/{productId}")]
+    [Authorize(Roles = "Admin")]
+    public ActionResult<IAsyncEnumerable<ProductSupplierLimited>> GetAllSuppliersForProduct(ulong productId)
+        => Ok(_productSupplierService.GetAllForProduct(productId));
+    [HttpPost("Product/{productId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<ProductSupplierLimited>> AddProductSupplier(ulong productId, ProductSupplierRegister productSupplierRegister)
+        => (await _productSupplierService.Add(productId, productSupplierRegister)).Match(Created, Problem);
+    [HttpDelete("{supplierId}/Product/{productId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<StatusMessage>> DeleteProductSupplier(ulong productId, ulong supplierId)
+    {
+        var result = await _productSupplierService.Delete(productId, supplierId);
+        return result.StatusCode == 200
+            ? Ok(result)
+            : Problem(result);
+    }
+    [HttpPatch("{supplierId}/Product/{productId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<ProductSupplierPublic>> UpdateProductSupplier(ulong productId, ulong supplierId, ProductSupplierUpdate productSupplierUpdate)
+        => (await _productSupplierService.Update(productId, supplierId, productSupplierUpdate)).Match(Ok, Problem);
 
 }

@@ -51,5 +51,6 @@ public class MappingProfile : Profile
 
         _ = CreateMap<ProductSupplierPublic,  ProductSupplier>();
         _ = CreateMap<ProductSupplier,  ProductSupplierPublic>();
+        _ = CreateMap<ProductSupplier,  ProductSupplierLimited>();
     }
 }
