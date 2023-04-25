@@ -62,5 +62,18 @@ public class ProductSupplierService: IProductSupplierService
         _context.ChangeTracker.Clear();
         return _mapper.Map<ProductSupplier, ProductSupplierLimited>(productSupplier);
     }
+    public async Task<StatusMessage> Delete(ulong productId, ulong supplierId)
+    {
+        var productSupplier = await _context.ProductSuppliers
+            .FirstOrDefaultAsync(ps => ps.Product.Id == productId && ps.Supplier.Id == supplierId);
+        if (productSupplier == null)
+        {
+            return _statusMessage.NotFound404<ProductSupplier>();
+        }
+        _context.ProductSuppliers.Remove(productSupplier);
+        _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return _statusMessage.Deleted200<ProductSupplier>(productSupplier.Id);
+    }
 
 }

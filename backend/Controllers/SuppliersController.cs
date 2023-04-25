@@ -55,5 +55,14 @@ public class SuppliersController: ApiControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductSupplierLimited>> AddProductSupplier(ulong productId, ProductSupplierRegister productSupplierRegister)
         => (await _productSupplierService.Add(productId, productSupplierRegister)).Match(Created, Problem);
+    [HttpDelete("{supplierId}/Product/{productId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<StatusMessage>> DeleteProductSupplier(ulong productId, ulong supplierId)
+    {
+        var result = await _productSupplierService.Delete(productId, supplierId);
+        return result.StatusCode == 200
+            ? Ok(result)
+            : Problem(result);
+    }
 
 }

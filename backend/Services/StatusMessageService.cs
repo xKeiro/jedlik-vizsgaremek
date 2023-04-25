@@ -19,6 +19,12 @@ public class StatusMessageService : IStatusMessageService
         Message = $"{typeof(TModel).Name} with id:'{id}' does not exist!",
         StatusCode = StatusCodes.Status404NotFound
     };
+    public StatusMessage NotFound404<TModel>() where TModel : class
+        => new()
+        {
+            Message = $"{typeof(TModel).Name} was not found!",
+            StatusCode = StatusCodes.Status404NotFound
+        };
 
     public StatusMessage Deleted200<TModel>(ulong id) where TModel : class
         => new()
