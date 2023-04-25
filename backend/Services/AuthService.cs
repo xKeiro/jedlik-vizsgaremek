@@ -30,13 +30,13 @@ public class AuthService : IAuthService
         {
             return _statusMessage.ConfirmationPasswordMismatch400();
         }
-        var countryWithVat = await _context.CountriesWithVat.FirstOrDefaultAsync(cwv => cwv.Country == userRegister.Address.Country);
+        var countryWithVat = await _context.CountriesWithVat.FirstOrDefaultAsync(cwv => cwv.Country == userRegister.Country);
         if (countryWithVat is null)
         {
-            return _statusMessage.DoesNotExist404(nameof(userRegister.Address.Country), userRegister.Address.Country);
+            return _statusMessage.DoesNotExist404(nameof(userRegister.Country), userRegister.Country);
         }
         var user = _mapper.Map<UserRegister, User>(userRegister);
-        user.Address.CountryWithVat = countryWithVat;
+        user.CountryWithVat = countryWithVat;
         var (isUnique, notUniquePropertyNames) = await IsUnique(user);
         if (!isUnique)
         {

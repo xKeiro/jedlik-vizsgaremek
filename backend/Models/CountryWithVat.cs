@@ -14,6 +14,7 @@ public class CountryWithVat: BaseModel
     [Required]
     [Range(0, 100)]
     public required byte Vat { get; set; }
-    public ICollection<Address>? Addresses { get; set; }
-    public ICollection<OrderAddress>? OrderAddress { get; set; }
+    public ICollection<Supplier>? Suppliers{ get; set; }
+    public ICollection<User>? Users { get; set; }
+    public ICollection<Order>? Orders { get; set; }
 }

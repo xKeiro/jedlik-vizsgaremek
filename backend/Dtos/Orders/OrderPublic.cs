@@ -1,9 +1,7 @@
 ﻿using backend.Enums;
 using System.ComponentModel.DataAnnotations;
 using backend.Dtos.Users;
-using backend.Dtos.Orders.OrderAddresses;
 using backend.Dtos.Orders.ProductOrders;
-using Microsoft.EntityFrameworkCore;
 
 namespace backend.Dtos.Orders;
 
@@ -13,8 +11,6 @@ public class OrderPublic
     public required ulong Id { get; set; }
     [Required]
     public required UserPublicLimited User { get; set; }
-    [Required]
-    public required OrderAddressPublic OrderAddress { get; set; }
     [Required]
     public required ulong ShipperId { get; set; }
     [Required]
@@ -34,4 +30,19 @@ public class OrderPublic
     public required decimal OrderTotalWithVat { get; set; }
     [Required]
     public required decimal OrderTotalWithShipping { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(50)]
+    public required string Street { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(50)]
+    public required string City { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(50)]
+    public required string Region { get; set; }
+    [Required]
+    [MaxLength(10)]
+    public required string PostalCode { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(100)]
+    public required string Country { get; set; }
 }

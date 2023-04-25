@@ -9,9 +9,6 @@ public class Order : BaseModel
     [Required]
     public required User User { get; set; }
     [Required]
-    [ForeignKey("OrderAddressId")]
-    public required OrderAddress OrderAddress { get; set; }
-    [Required]
     public required Shipper Shipper { get; set; }
     [Required]
     [MinLength(1)]
@@ -22,7 +19,22 @@ public class Order : BaseModel
     public OrderStatus Status { get; set; } = OrderStatus.InProgress;
     [Required]
     public DateTime OrderDate { get; set; } = DateTime.Now;
-    public byte Vat => OrderAddress.CountryWithVat.Vat;
+    [Required]
+    [MinLength(3), MaxLength(50)]
+    public required string Street { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(50)]
+    public required string City { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(50)]
+    public required string Region { get; set; }
+    [Required]
+    [MaxLength(10)]
+    public required string PostalCode { get; set; }
+    [Required]
+    public required CountryWithVat CountryWithVat { get; set; }
+    public string Country => CountryWithVat.Country;
+    public byte Vat => CountryWithVat.Vat;
     public decimal OrderTotal => ProductOrders.Sum(po => po.TotalPrice);
     public decimal OrderTotalWithVat => OrderTotal * (1 + ((decimal)Vat / 100));
     public decimal OrderTotalWithShipping => OrderTotalWithVat + Shipper.Price;
