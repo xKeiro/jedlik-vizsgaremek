@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
-import AlertMessage from "../AlertMessage";
+import AlertMessage from "../Shared/AlertMessage";
 
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";

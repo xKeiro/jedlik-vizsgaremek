@@ -46,7 +46,7 @@ export default function AdminUsers() {
     <div className="AdminUsers">
       <Box>
         <Paper elevation={2}>
-          <h3>Users Management (WIP)</h3>
+          <h3>Users Management</h3>
         </Paper>
       </Box>
       <Box

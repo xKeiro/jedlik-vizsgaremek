@@ -1,5 +1,6 @@
 import React from "react";
-//import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -14,36 +15,64 @@ import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function AdminReviews() {
-  //const [reviews, setReviews] = useState(null);
+  const [reviews, setReviews] = useState(null);
 
-  const mockReviews = [
-    {
-      id: 1,
-      productName: "Mock Product",
-      text: "Mock review 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a hendrerit justo, et auctor neque. Sed arcu ipsum, ullamcorper in quam at, aliquam pellentesque magna. Nam urna eros, laoreet ac libero nec, feugiat vehicula eros. Ut purus arcu, vestibulum a facilisis ac, ullamcorper non enim. Vivamus rutrum, felis sed blandit pharetra, nunc nulla tristique felis, vitae dapibus dui tortor sed nisi. Nam nec gravida mi. Etiam aliquet nec turpis vitae accumsan. Nunc sollicitudin elit id ipsum varius tincidunt.",
-      score: 5,
-      username: "Usernam A",
-    },
-    {
-      id: 2,
-      productName: "Mock Product",
-      text: "Mock review 2: Quisque semper vel sem nec porttitor. Donec commodo orci quam. Nunc velit elit, dapibus convallis dictum eget, tincidunt vitae odio. Phasellus ut erat ut velit varius ornare a et lacus. In rutrum viverra nibh nec finibus. Sed vehicula interdum nulla sit amet maximus. Ut non tempor nisl, ac mollis erat. Suspendisse sit amet ipsum diam. Sed nulla leo, rutrum non neque sed, commodo consectetur ipsum.",
-      score: 3,
-      username: "Username B",
-    },
-    {
-      id: 3,
-      productName: "Mock Product",
-      text: "Mock review 3: Nullam vel eleifend odio. Curabitur quis dapibus justo. Nullam nec tortor et neque pellentesque egestas. Aenean convallis leo in ante condimentum ornare nec et metus. Fusce egestas dolor vitae feugiat ullamcorper. Proin convallis velit in euismod venenatis. In blandit aliquam tellus vel varius. In convallis, sapien a cursus tincidunt, dolor libero fermentum mi, in posuere tortor tellus non sem. Quisque nec finibus arcu. Morbi at orci semper, egestas mauris ac, ullamcorper arcu. Aenean et nibh eleifend, condimentum magna at, elementum tortor. Sed interdum posuere diam. Mauris scelerisque neque risus. Integer dolor nulla, rhoncus in euismod sed, iaculis et ipsum. Nunc in nisi vel nunc eleifend porta.",
-      score: 2,
-      username: "Username C",
-    },
-  ];
+  async function getAllReviews() {
+    try {
+      const response = await fetch(`http://localhost:5000/api/reviews/`, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+      });
+      const responseBody = await response.json();
+      if (!response.ok) {
+        const errorMessage = responseBody.title;
+        console.log(errorMessage);
+        return;
+      }
+      setReviews(responseBody);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+
+  useEffect(() => {
+    getAllReviews();
+  }, []);
+
+  async function handleRemove(id) {
+    try {
+      const response = await fetch(`http://localhost:5000/api/reviews/${id}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+      });
+      const responseBody = await response.json();
+      console.log(responseBody);
+      if (!response.ok) {
+        const errorMessage = responseBody.title;
+        console.log(errorMessage);
+        return;
+      }
+      getAllReviews();
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+
   return (
     <div className="AdminReviews">
       <Box>
         <Paper elevation={2}>
-          <h3>Reviews Management (WIP)</h3>
+          <h3>Reviews Moderation</h3>
         </Paper>
       </Box>
       <Box
@@ -69,14 +98,14 @@ export default function AdminReviews() {
                 <TableHead>
                   <TableRow>
                     <TableCell>Product</TableCell>
-                    <TableCell align="right">Review</TableCell>
+                    <TableCell align="right">Date</TableCell>
                     <TableCell align="right">Score</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {mockReviews ? (
-                    mockReviews.map((review) => (
+                  {reviews ? (
+                    reviews.map((review) => (
                       <TableRow
                         key={review.id}
                         sx={{
@@ -85,12 +114,30 @@ export default function AdminReviews() {
                         hover
                       >
                         <TableCell component="th" scope="row">
-                          {review.productName}
+                          {review.product.title}
                         </TableCell>
-                        <TableCell align="right">{review.text}</TableCell>
+                        <TableCell align="right">
+                          {" "}
+                          {new Date(
+                            Date.parse(review.createdAt)
+                          ).toLocaleString()}
+                        </TableCell>
                         <TableCell align="right">{review.score} ☆</TableCell>
                         <TableCell align="right">
-                          <Button variant="outlined">Delete (WIP)</Button>
+                          <Button
+                            variant="outlined"
+                            component={RouterLink}
+                            to={"/admin/review/" + review.id}
+                          >
+                            View
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            sx={{ marginLeft: 1 }}
+                            onClick={() => handleRemove(review.id)}
+                          >
+                            Delete
+                          </Button>
                         </TableCell>
                       </TableRow>
                     ))

@@ -20,7 +20,7 @@ export default function AdminOrders() {
 
   async function getOrders() {
     try {
-      const response = await fetch("http://localhost:8000/api/orders/user/me", {
+      const response = await fetch("http://localhost:5000/api/orders/me", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -30,12 +30,12 @@ export default function AdminOrders() {
       });
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
         return;
       }
-      console.log(responseBody.orders);
-      setOrders(responseBody.orders);
+      console.log(responseBody);
+      setOrders(responseBody);
     } catch (error) {
       console.log(error);
       return;
@@ -75,8 +75,9 @@ export default function AdminOrders() {
               <Table sx={{ minWidth: 600 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>ID</TableCell>
+                    <TableCell>Order Number</TableCell>
                     <TableCell align="right">Status</TableCell>
+                    <TableCell align="right">Total</TableCell>
                     <TableCell align="right">Date</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
@@ -101,8 +102,17 @@ export default function AdminOrders() {
                         </TableCell>
                         <TableCell align="right">{order.status}</TableCell>
                         <TableCell align="right">
+                          {order.orderTotalWithShipping.toLocaleString(
+                            "en-US",
+                            {
+                              style: "currency",
+                              currency: "EUR",
+                            }
+                          )}
+                        </TableCell>
+                        <TableCell align="right">
                           {new Date(
-                            Date.parse(order.order_date)
+                            Date.parse(order.orderDate)
                           ).toLocaleString()}
                         </TableCell>
                         <TableCell align="right">
@@ -111,7 +121,7 @@ export default function AdminOrders() {
                             component={RouterLink}
                             to={"/order/" + order.id}
                           >
-                            View (WIP)
+                            View
                           </Button>
                         </TableCell>
                       </TableRow>

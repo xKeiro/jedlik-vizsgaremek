@@ -1,10 +1,10 @@
 import React from "react";
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
-import AlertMessage from "../AlertMessage";
-import UserForm from "./UserForm";
+import AlertMessage from "../Shared/AlertMessage";
+import UserForm from "../Shared/UserForm";
 
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";

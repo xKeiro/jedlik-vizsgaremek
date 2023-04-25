@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
-import AlertMessage from "../AlertMessage";
+import AlertMessage from "../Shared/AlertMessage";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";

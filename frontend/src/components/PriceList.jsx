@@ -119,7 +119,11 @@ export default function PriceList() {
                             variant="outlined"
                             size="small"
                             color="primary"
-                            disabled={product.stock ? false : true}
+                            disabled={
+                              product.stock && !product.discontinued
+                                ? false
+                                : true
+                            }
                             onClick={() => shop.addProductToCart(product)}
                           >
                             Add to cart

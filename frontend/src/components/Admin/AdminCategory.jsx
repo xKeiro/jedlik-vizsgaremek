@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import AlertMessage from "../AlertMessage";
+import AlertMessage from "../Shared/AlertMessage";
 
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -130,7 +130,7 @@ export default function AdminCategory() {
     <div className="AdminCategory">
       <Box>
         <Paper elevation={2}>
-          <h3>{id ? "Category Editor" : "Add new category"} (WIP)</h3>
+          <h3>{id ? "Category Editor" : "Add new category"}</h3>
         </Paper>
       </Box>
       <Box
