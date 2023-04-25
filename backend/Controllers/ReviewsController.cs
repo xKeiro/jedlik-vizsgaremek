@@ -11,11 +11,11 @@ namespace backend.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [ApiConventionType(typeof(ProductReviewConventions<ProductReviewRegister>))]
-public class ProductReviewsController : ApiControllerBase
+public class ReviewsController : ApiControllerBase
 {
     private readonly IProductReviewService _service;
 
-    public ProductReviewsController(IProductReviewService productReviewService)
+    public ReviewsController(IProductReviewService productReviewService)
     {
         _service = productReviewService;
     }
