@@ -87,7 +87,7 @@ public class ProductReviewService: IProductReviewService
             .AnyAsync(pr => pr.Product.Id == productReviewRegister.ProductId && pr.User.Id == userId);
         if (!isUnique)
         {
-            return _statusMessage.UserAlreadyHaveAReview(user.Username, product.Title);
+            return _statusMessage.UserAlreadyHaveAReview409(user.Username, product.Title);
         }
         var productReview = _mapper.Map<ProductReviewRegister, ProductReview>(productReviewRegister);
         productReview.Product = product;

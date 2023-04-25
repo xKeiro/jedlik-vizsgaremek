@@ -14,5 +14,5 @@ public interface IStatusMessageService
     StatusMessage LoginFailed401();
     StatusMessage ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime400();
     StatusMessage ProductDiscontinued200(ulong id);
-    StatusMessage UserAlreadyHaveAReview(string username, string productTitle);
+    StatusMessage UserAlreadyHaveAReview409(string username, string productTitle);
 }

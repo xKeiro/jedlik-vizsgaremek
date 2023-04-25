@@ -1,4 +1,5 @@
-﻿using backend.Dtos.Products.ProductReviews;
+﻿using backend.Conventions;
+using backend.Dtos.Products.ProductReviews;
 using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[ApiConventionType(typeof(ProductReviewConventions<ProductReviewRegister>))]
 public class ProductReviewsController : ApiControllerBase
 {
     private readonly IProductReviewService _service;
