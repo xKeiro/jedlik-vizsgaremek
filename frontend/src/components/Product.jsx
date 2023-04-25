@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState, useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useParams } from "react-router";
-import CategoryBar from "./CategoryBar";
+import CategoryBar from "./Shared/CategoryBar";
 import Reviews from "./Reviews";
 import AuthContext from "../contexts/AuthContext";
 import CartContext from "../contexts/CartContext";

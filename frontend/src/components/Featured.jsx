@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "./Shared/ProductCard";
 
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";

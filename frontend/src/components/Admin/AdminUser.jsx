@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import AlertMessage from "../AlertMessage";
-import UserForm from "../User/UserForm";
+import AlertMessage from "../Shared/AlertMessage";
+import UserForm from "../Shared/UserForm";
 
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";

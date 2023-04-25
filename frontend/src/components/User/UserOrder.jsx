@@ -1,14 +1,11 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { Link as RouterLink } from "react-router-dom";
-import AlertMessage from "../AlertMessage";
 import OrderForm from "../Shared/OrderForm";
 
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 //import CardMedia from "@mui/material/CardMedia";
@@ -18,7 +15,6 @@ import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function UserOrder() {
-  const navigate = useNavigate();
   const { id } = useParams();
 
   const [order, setOrder] = useState(null);
@@ -54,7 +50,7 @@ export default function UserOrder() {
       }
     }
     getOrder();
-  }, []);
+  }, [id]);
 
   return (
     <div className="AdminOrder">
