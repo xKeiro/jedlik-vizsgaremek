@@ -9,4 +9,5 @@ public interface ISupplierService
     IAsyncEnumerable<SupplierPublic> GetAll();
     Task<OneOf<SupplierPublic, StatusMessage>> Add(SupplierRegister supplierRegister);
     Task<OneOf<SupplierPublic, StatusMessage>> Find(ulong supplierId);
+    Task<OneOf<SupplierPublic, StatusMessage>> Update(ulong supplierId, SupplierRegister supplierRegister);
 }

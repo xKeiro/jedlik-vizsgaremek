@@ -60,4 +60,31 @@ public class SupplierService: ISupplierService
         }
         return _mapper.Map<Supplier, SupplierPublic>(supplier);
     }
+    public async Task<OneOf<SupplierPublic, StatusMessage>> Update(ulong supplierId, SupplierRegister supplierRegister)
+    {
+        var supplier = await _context.Suppliers
+            .FirstOrDefaultAsync(s => s.Id == supplierId);
+        if (supplier == null)
+        {
+            return _statusMessage.NotFound404<Supplier>(supplierId);
+        }
+        var isUnique = !await _context.Suppliers
+            .AnyAsync(s => s.CompanyName.ToLower() == supplierRegister.CompanyName.ToLower() && s.Id != supplierId);
+        if (!isUnique)
+        {
+            return _statusMessage.NotUnique409<Supplier>(new List<string>() { nameof(supplierRegister.CompanyName) });
+        }
+        var countryWithVat = await _context.CountriesWithVat
+            .FirstOrDefaultAsync(cwv => cwv.Country.ToLower() == supplierRegister.Address.Country.ToLower());
+        if (countryWithVat == null)
+        {
+            return _statusMessage.DoesNotExist404(nameof(supplierRegister.Address.Country), supplierRegister.Address.Country);
+        }
+        _mapper.Map(supplierRegister, supplier);
+        supplier.Address.CountryWithVat = countryWithVat;
+        _context.Suppliers.Update(supplier);
+        _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return _mapper.Map<Supplier, SupplierPublic>(supplier);
+    }
 }
