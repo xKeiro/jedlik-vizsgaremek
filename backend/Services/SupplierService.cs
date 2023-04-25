@@ -87,4 +87,17 @@ public class SupplierService: ISupplierService
         _context.ChangeTracker.Clear();
         return _mapper.Map<Supplier, SupplierPublic>(supplier);
     }
+    public async Task<StatusMessage> Delete(ulong supplierId)
+    {
+        var supplier = await _context.Suppliers
+            .FirstOrDefaultAsync(s => s.Id == supplierId);
+        if (supplier == null)
+        {
+            return _statusMessage.NotFound404<Supplier>(supplierId);
+        }
+        _context.Suppliers.Remove(supplier);
+        _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return _statusMessage.Deleted200<Supplier>(supplierId);
+    }
 }

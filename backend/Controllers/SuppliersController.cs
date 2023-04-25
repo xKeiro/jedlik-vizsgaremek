@@ -1,5 +1,6 @@
 ﻿using backend.Dtos.Supplires;
 using backend.Interfaces.Services;
+using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,5 +34,15 @@ public class SuppliersController: ApiControllerBase
     [Route("{id}")]
     public async Task<ActionResult<SupplierPublic>> Update(ulong id, SupplierRegister supplierRegister)
         => (await _service.Update(id, supplierRegister)).Match(Ok, Problem);
+    [HttpDelete]
+    [Authorize (Roles = "Admin")]
+    [Route("{id}")]
+    public async Task<ActionResult<StatusMessage>> Delete(ulong id)
+    {
+        var result = await _service.Delete(id);
+        return result.StatusCode == 200
+            ? Ok(result)
+            : Problem(result);
+    }
 
 }
