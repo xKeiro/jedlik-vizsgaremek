@@ -64,5 +64,9 @@ public class SuppliersController: ApiControllerBase
             ? Ok(result)
             : Problem(result);
     }
+    [HttpPatch("{supplierId}/Product/{productId}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<ProductSupplierPublic>> UpdateProductSupplier(ulong productId, ulong supplierId, ProductSupplierUpdate productSupplierUpdate)
+        => (await _productSupplierService.Update(productId, supplierId, productSupplierUpdate)).Match(Ok, Problem);
 
 }

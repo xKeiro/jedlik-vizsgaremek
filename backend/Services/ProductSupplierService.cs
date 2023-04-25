@@ -76,4 +76,18 @@ public class ProductSupplierService: IProductSupplierService
         return _statusMessage.Deleted200<ProductSupplier>(productSupplier.Id);
     }
 
+    public async Task<OneOf<ProductSupplierPublic, StatusMessage>> Update(ulong productId, ulong supplierId, ProductSupplierUpdate productSupplierUpdate)
+    {
+        var productSupplier = await _context.ProductSuppliers
+            .FirstOrDefaultAsync(ps => ps.Product.Id == productId && ps.Supplier.Id == supplierId);
+        if (productSupplier == null)
+        {
+            return _statusMessage.NotFound404<ProductSupplier>();
+        }
+        productSupplier.PurchasePrice = productSupplierUpdate.PurchasePrice;
+        _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return _mapper.Map<ProductSupplier, ProductSupplierPublic>(productSupplier);
+    }
+
 }
