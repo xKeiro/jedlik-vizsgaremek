@@ -47,13 +47,13 @@ public class SuppliersController: ApiControllerBase
             ? Ok(result)
             : Problem(result);
     }
-    [HttpGet("Product/")]
+    [HttpGet("Product/{productId}")]
     [Authorize(Roles = "Admin")]
-    public ActionResult<IAsyncEnumerable<ProductSupplierPublic>> GetAllProductSuppliers()
-        => Ok(_productSupplierService.GetAll());
-    [HttpPost("Product/{id}")]
+    public ActionResult<IAsyncEnumerable<ProductSupplierPublic>> GetAllSuppliersForProduct(ulong productId)
+        => Ok(_productSupplierService.GetAllForProduct(productId));
+    [HttpPost("Product/{productId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<ProductSupplierLimited>> AddProductSupplier(ulong id, ProductSupplierRegister productSupplierRegister)
-        => (await _productSupplierService.Add(id, productSupplierRegister)).Match(Created, Problem);
+    public async Task<ActionResult<ProductSupplierLimited>> AddProductSupplier(ulong productId, ProductSupplierRegister productSupplierRegister)
+        => (await _productSupplierService.Add(productId, productSupplierRegister)).Match(Created, Problem);
 
 }

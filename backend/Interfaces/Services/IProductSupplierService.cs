@@ -6,6 +6,6 @@ namespace backend.Interfaces.Services;
 
 public interface IProductSupplierService
 {
-    IAsyncEnumerable<ProductSupplierPublic> GetAll();
+    IAsyncEnumerable<ProductSupplierLimited> GetAllForProduct(ulong productId);
     Task<OneOf<ProductSupplierLimited, StatusMessage>> Add(ulong productId, ProductSupplierRegister productSupplierRegister);
 }

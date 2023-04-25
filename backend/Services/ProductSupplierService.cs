@@ -19,16 +19,16 @@ public class ProductSupplierService: IProductSupplierService
         _mapper = mapper;
         _statusMessage = statusMessage;
     }
-    public async IAsyncEnumerable<ProductSupplierPublic> GetAll()
+    public async IAsyncEnumerable<ProductSupplierLimited> GetAllForProduct(ulong productId)
     {
         var productSuppliers = _context.ProductSuppliers
-            .Include(ps => ps.Product)
+            .Where(ps => ps.Product.Id == productId)
             .OrderBy(ps => ps.Product.Title)
             .ThenBy(ps => ps.PurchasePrice)
             .AsAsyncEnumerable();
         await foreach (var productSupplier in productSuppliers)
         {
-            yield return _mapper.Map<ProductSupplier, ProductSupplierPublic>(productSupplier);
+            yield return _mapper.Map<ProductSupplier, ProductSupplierLimited>(productSupplier);
         }
     }
     public async Task<OneOf<ProductSupplierLimited, StatusMessage>> Add(ulong productId, ProductSupplierRegister productSupplierRegister)
