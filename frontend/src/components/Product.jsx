@@ -98,7 +98,9 @@ export default function Product() {
                     <CardContent>
                       <Paper elevation={3}>
                         <Typography gutterBottom variant="h4" component="div">
-                          {product.title}
+                          {!product.discontinued
+                            ? product.title
+                            : product.title + "(Discontinued)"}
                         </Typography>
                       </Paper>
                       <Typography gutterBottom variant="h6" component="div">
@@ -119,7 +121,9 @@ export default function Product() {
                         fullWidth
                         color="primary"
                         variant="outlined"
-                        disabled={product.stock ? false : true}
+                        disabled={
+                          product.stock && !product.discontinued ? false : true
+                        }
                         onClick={() => shop.addProductToCart(product)}
                       >
                         Add to cart

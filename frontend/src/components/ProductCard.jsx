@@ -59,7 +59,7 @@ export default function ProductCard({ product }) {
             <Button
               size="small"
               color="primary"
-              disabled={product.stock ? false : true}
+              disabled={product.stock && !product.discontinued ? false : true}
               onClick={() => shop.addProductToCart(product)}
             >
               Add to cart
