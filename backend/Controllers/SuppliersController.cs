@@ -1,4 +1,5 @@
-﻿using backend.Dtos.Products.ProductSuppliers;
+﻿using backend.Conventions;
+using backend.Dtos.Products.ProductSuppliers;
 using backend.Dtos.Supplires;
 using backend.Interfaces.Services;
 using backend.Models;
@@ -9,6 +10,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[ApiConventionType(typeof(SupplierConventions<SupplierRegister, ProductSupplierRegister, ProductSupplierUpdate>))]
 public class SuppliersController: ApiControllerBase
 {
     private readonly ISupplierService _supplierService;
@@ -49,7 +51,7 @@ public class SuppliersController: ApiControllerBase
     }
     [HttpGet("Product/{productId}")]
     [Authorize(Roles = "Admin")]
-    public ActionResult<IAsyncEnumerable<ProductSupplierPublic>> GetAllSuppliersForProduct(ulong productId)
+    public ActionResult<IAsyncEnumerable<ProductSupplierLimited>> GetAllSuppliersForProduct(ulong productId)
         => Ok(_productSupplierService.GetAllForProduct(productId));
     [HttpPost("Product/{productId}")]
     [Authorize(Roles = "Admin")]
