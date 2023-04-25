@@ -23,4 +23,10 @@ public class SuppliersController: ApiControllerBase
     [Authorize (Roles = "Admin")]
     public async Task<ActionResult<SupplierPublic>> Add(SupplierRegister supplierRegister)
         => (await _service.Add(supplierRegister)).Match(Created, Problem);
+    [HttpGet]
+    [Authorize (Roles = "Admin")]
+    [Route("{id}")]
+    public async Task<ActionResult<SupplierPublic>> Find(ulong id)
+        => (await _service.Find(id)).Match(Ok, Problem);
+
 }

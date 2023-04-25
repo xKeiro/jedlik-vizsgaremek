@@ -44,4 +44,14 @@ public class SupplierService: ISupplierService
         _context.ChangeTracker.Clear();
         return _mapper.Map<Supplier, SupplierPublic>(supplier);
     }
+    public async Task<OneOf<SupplierPublic, StatusMessage>> Find(ulong supplierId)
+    {
+        var supplier = await _context.Suppliers
+            .FirstOrDefaultAsync(s => s.Id == supplierId);
+        if (supplier == null)
+        {
+            return _statusMessage.NotFound404<Supplier>(supplierId);
+        }
+        return _mapper.Map<Supplier, SupplierPublic>(supplier);
+    }
 }
