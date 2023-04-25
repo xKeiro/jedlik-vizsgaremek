@@ -1,13 +1,16 @@
-﻿using backend.Dtos.Products.ProductReviews;
+﻿using backend.Conventions;
+using backend.Dtos.Products.ProductReviews;
 using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[ApiConventionType(typeof(ProductReviewConventions<ProductReviewRegister>))]
 public class ProductReviewsController : ApiControllerBase
 {
     private readonly IProductReviewService _service;
@@ -34,5 +37,16 @@ public class ProductReviewsController : ApiControllerBase
         return result.StatusCode == 200
             ? Ok(result)
             : Problem(result);
+    }
+    [HttpGet]
+    [Route("Product/{productId}")]
+    public async Task<ActionResult<List<ProductReviewPublic>>> GetByProductId(ulong productId)
+        => (await _service.GetByProductId(productId)).Match(Ok, Problem);
+    [HttpPost]
+    [Authorize]
+    public async Task<ActionResult<ProductReviewPublic>> Add(ProductReviewRegister productReviewRegister)
+    {
+        var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return (await _service.Add(userId, productReviewRegister)).Match(Created, Problem);
     }
 }

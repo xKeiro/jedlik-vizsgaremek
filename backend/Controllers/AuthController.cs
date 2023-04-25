@@ -9,7 +9,7 @@ using System.Security.Claims;
 namespace backend.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-[ApiConventionType(typeof(AuthConventions))]
+[ApiConventionType(typeof(AuthConventions<UserRegister, UserLogin>))]
 public class AuthController : ApiControllerBase
 {
     private readonly IAuthService _service;

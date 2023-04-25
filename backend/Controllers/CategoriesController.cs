@@ -8,7 +8,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[ApiConventionType(typeof(JedlikBasicApiConventions<ProductCategoryPublic, ProductCategoryWithoutId>))]
+[ApiConventionType(typeof(ProductCategoryConventions<ProductCategoryWithoutId>))]
 public class CategoriesController : ApiControllerBase
 {
     private readonly IProductCategoryService _service;
@@ -31,8 +31,8 @@ public class CategoriesController : ApiControllerBase
     public async Task<ActionResult<ProductCategoryPublic>> Get(ulong id)
         => (await _service.Find(id)).Match(Ok, Problem);
 
-    [HttpPut]
+    [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<ProductCategoryPublic>> Update(ProductCategoryPublic productCategoryPublic)
-        => (await _service.Update(productCategoryPublic)).Match(Ok, Problem);
+    public async Task<ActionResult<ProductCategoryPublic>> Update(ulong id, ProductCategoryWithoutId productCategoryPublic)
+        => (await _service.Update(id, productCategoryPublic)).Match(Ok, Problem);
 }

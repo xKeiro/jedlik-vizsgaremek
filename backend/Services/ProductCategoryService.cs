@@ -24,7 +24,7 @@ public class ProductCategoryService : IProductCategoryService
     public async Task<OneOf<ProductCategoryPublic, StatusMessage>> Add(ProductCategoryWithoutId productCategoryWithoutId)
     {
         var productCategory = _mapper.Map<ProductCategoryWithoutId, ProductCategory>(productCategoryWithoutId);
-        (var result, var notUniquePropertyNames) = await IsUnique(productCategory);
+        (var result, var notUniquePropertyNames) = await IsUnique(productCategoryWithoutId);
         if (!result)
         {
             return _statusMessage.NotUnique409<ProductCategory>(notUniquePropertyNames);
@@ -52,36 +52,38 @@ public class ProductCategoryService : IProductCategoryService
         .ToListAsync();
         return _mapper.Map<List<ProductCategory>, List<ProductCategoryPublic>>(productCategories);
     }
-    public async Task<OneOf<ProductCategoryPublic, StatusMessage>> Update(ProductCategoryPublic productCategoryPublic)
+    public async Task<OneOf<ProductCategoryPublic, StatusMessage>> Update(ulong productCategoryId, ProductCategoryWithoutId productCategoryWithoutId)
     {
-        var productCategoryExists = _context.ProductCategories
+        var productCategory = await _context.ProductCategories
             .AsNoTracking()
-            .Any(c => c.Id == productCategoryPublic.Id);
-        if (!productCategoryExists)
+            .FirstOrDefaultAsync(c => c.Id == productCategoryId);
+        if (productCategory == null)
         {
-            return _statusMessage.NotFound404<ProductCategory>(productCategoryPublic.Id);
+            return _statusMessage.NotFound404<ProductCategory>(productCategoryId);
         }
-
-        var productCategory = _mapper.Map<ProductCategoryPublic, ProductCategory>(productCategoryPublic);
-        var (result, notUniquePropertyNames) = await IsUnique(productCategory);
-        if (!result)
+        if (productCategoryWithoutId.Title != productCategory.Title)
         {
-            return _statusMessage.NotUnique409<ProductCategory>(notUniquePropertyNames);
+            var (result, notUniquePropertyNames) = await IsUnique(productCategoryWithoutId);
+            if (!result)
+            {
+                return _statusMessage.NotUnique409<ProductCategory>(notUniquePropertyNames);
+            }
         }
-        productCategory.Id = productCategoryPublic.Id;
+        productCategory = _mapper.Map<ProductCategoryWithoutId, ProductCategory>(productCategoryWithoutId);
+        productCategory.Id = productCategoryId;
         _ = _context.Update(productCategory);
         _ = await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
         return _mapper.Map<ProductCategory, ProductCategoryPublic>(productCategory);
     }
 
-    private async Task<(bool result, List<string> notUniquePropertyNames)> IsUnique(ProductCategory productCategory)
+    private async Task<(bool result, List<string> notUniquePropertyNames)> IsUnique(ProductCategoryWithoutId productCategoryWithoutId)
     {
         List<string> notUniquePropertyNames = new();
-        var isUnique = !await _context.ProductCategories.AnyAsync(c => c.Title.ToLower() == productCategory.Title.ToLower());
+        var isUnique = !await _context.ProductCategories.AnyAsync(c => c.Title.ToLower() == productCategoryWithoutId.Title.ToLower());
         if (!isUnique)
         {
-            notUniquePropertyNames.Add(nameof(productCategory.Title));
+            notUniquePropertyNames.Add(nameof(productCategoryWithoutId.Title));
             return (false, notUniquePropertyNames);
         }
         return (true, notUniquePropertyNames);
