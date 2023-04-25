@@ -27,6 +27,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 );
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.AddHealthChecks();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddDbContext<JedlikContext>(options =>
     options.UseSqlServer(EnvironmentVariableHelper.ConnectionString));
@@ -45,6 +46,7 @@ builder.Services.AddScoped<IProductReviewService, ProductReviewService>();
 
 var app = builder.Build();
 app.UseExceptionHandler("/Error");
+app.MapHealthChecks("/api/HealthChecker");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
