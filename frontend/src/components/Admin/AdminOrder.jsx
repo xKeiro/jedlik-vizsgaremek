@@ -2,7 +2,9 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import AlertMessage from "../AlertMessage";
+import { Link as RouterLink } from "react-router-dom";
 
+import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -14,6 +16,21 @@ import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Typography from "@mui/material/Typography";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import OrderForm from "../Shared/OrderForm";
 
 export default function AdminOrder() {
   const navigate = useNavigate();
@@ -21,6 +38,13 @@ export default function AdminOrder() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [successText, setSuccessText] = useState("");
+
+  const orderStates = [
+    "InProgress",
+    "UnderProcurement",
+    "Fulfilled",
+    "Deleted",
+  ];
 
   const [order, setOrder] = useState(null);
 
@@ -68,7 +92,7 @@ export default function AdminOrder() {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/orders/${id}/Status`,
+        `http://localhost:5000/api/orders/${id}/status?status=${order.status}`,
         {
           method: "PATCH",
           mode: "cors",
@@ -76,7 +100,6 @@ export default function AdminOrder() {
             "Content-type": "application/json",
           },
           credentials: "include",
-          body: JSON.stringify(""), //todo
         }
       );
       const responseBody = await response.json();
@@ -102,7 +125,7 @@ export default function AdminOrder() {
     <div className="AdminOrder">
       <Box>
         <Paper elevation={2}>
-          <h3>Order Editor (WIP)</h3>
+          <h3>Order Editor</h3>
         </Paper>
       </Box>
       <Box
@@ -114,111 +137,62 @@ export default function AdminOrder() {
           alignItems: "center",
         }}
       >
+        {successText && <AlertMessage type="success" message={successText} />}
+        {errorText && <AlertMessage type="error" message={errorText} />}
+        {isLoading ? <CircularProgress /> : ""}
         {order ? (
           <Card key={order.id} sx={{}}>
             {/* <CardMedia /> */}
             <CardContent>
+              <OrderForm order={order} />
               <Grid
                 container
                 direction="row"
                 justifyContent="center"
                 alignItems="center"
                 spacing={2}
+                sx={{ marginTop: 1 }}
               >
-                <Grid item xs={11} md={8}>
-                  {successText && (
-                    <AlertMessage type="success" message={successText} />
-                  )}
-                  {errorText && (
-                    <AlertMessage type="error" message={errorText} />
-                  )}
-                  {isLoading ? <CircularProgress /> : ""}
+                <Grid item xs={12} md={12}>
+                  <Typography>Order Status</Typography>
                 </Grid>
                 <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="ID"
-                    id="id"
-                    name="id"
-                    type="text"
-                    value={order.id}
-                    disabled={true}
-                    autoComplete="off"
-                  />
+                  <FormControl fullWidth required>
+                    <InputLabel id="status">Status</InputLabel>
+                    <Select
+                      sx={{ textAlign: "left" }}
+                      labelId="status"
+                      id="status"
+                      name="status"
+                      value={order.status}
+                      label="Status"
+                      onChange={handleChange}
+                      disabled={isLoading}
+                      autoComplete="off"
+                    >
+                      <MenuItem value={"select"}>Select Status...</MenuItem>
+                      {orderStates ? (
+                        orderStates.map((state) => (
+                          <MenuItem key={state} value={state}>
+                            {state}
+                          </MenuItem>
+                        ))
+                      ) : (
+                        <MenuItem value={order.status}>Loading...</MenuItem>
+                      )}
+                    </Select>
+                  </FormControl>
                 </Grid>
-                <Grid item xs={12} md={12}>
-                  Ordered products (WIP)
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Order ID"
-                    id="id"
-                    name="id"
-                    type="text"
-                    value={order.id}
-                    onChange={handleChange}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    multiline
-                    minRows={5}
-                    label="Order Date"
-                    id="dorderDate"
-                    name="orderDate"
-                    type="text"
-                    value={order.orderDate}
-                    onChange={handleChange}
-                    disabled={isLoading}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Shipper Name"
-                    id="shipper"
-                    name="shipper"
-                    type="text"
-                    value={order.shipper.company_name}
-                    onChange={handleChange}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Status"
-                    id="status"
-                    name="status"
-                    type="text"
-                    value={order.status}
-                    onChange={handleChange}
-                    disabled={isLoading}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}></Grid>
               </Grid>
             </CardContent>
             <CardActions>
               <Button
                 fullWidth
                 variant="contained"
-                disabled={isLoading}
+                disabled={isLoading || order.status === "select"}
                 onClick={handleOrderStatusUpdate}
               >
-                Save Order (WIP)
+                Change Status
               </Button>
             </CardActions>
           </Card>

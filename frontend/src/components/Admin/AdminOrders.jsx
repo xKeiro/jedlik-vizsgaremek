@@ -84,8 +84,9 @@ export default function AdminOrders() {
               <Table sx={{ minWidth: 600 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>ID</TableCell>
+                    <TableCell>Order Number</TableCell>
                     <TableCell align="right">Status</TableCell>
+                    <TableCell align="right">Client</TableCell>
                     <TableCell align="right">Date</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
@@ -110,6 +111,15 @@ export default function AdminOrders() {
                         </TableCell>
                         <TableCell align="right">{order.status}</TableCell>
                         <TableCell align="right">
+                          {" "}
+                          <Link
+                            component={RouterLink}
+                            to={"/admin/user/" + order.user.id}
+                          >
+                            {order.user.firstName} {order.user.lastName}
+                          </Link>
+                        </TableCell>
+                        <TableCell align="right">
                           {new Date(
                             Date.parse(order.orderDate)
                           ).toLocaleString()}
@@ -120,7 +130,7 @@ export default function AdminOrders() {
                             component={RouterLink}
                             to={"/admin/order/" + order.id}
                           >
-                            View (WIP)
+                            View
                           </Button>
                         </TableCell>
                       </TableRow>

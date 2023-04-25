@@ -1,0 +1,233 @@
+import React from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import AlertMessage from "../AlertMessage";
+import { Link as RouterLink } from "react-router-dom";
+
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+//import CardMedia from "@mui/material/CardMedia";
+//import Typography from "@mui/material/Typography";
+import CardActions from "@mui/material/CardActions";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Typography from "@mui/material/Typography";
+import TableContainer from "@mui/material/TableContainer";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
+export default function OrderForm({ order }) {
+  return (
+    <Grid
+      container
+      direction="row"
+      justifyContent="center"
+      alignItems="center"
+      spacing={2}
+    >
+      <Grid item xs={12} md={12}>
+        <Typography>Order details</Typography>
+      </Grid>
+      <Grid item xs={12} md={12}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="Order Number"
+          id="id"
+          name="id"
+          type="text"
+          value={order.id}
+          disabled={true}
+          autoComplete="off"
+        />
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="Order Status"
+          id="status"
+          name="status"
+          type="text"
+          value={order.status}
+          disabled={true}
+          autoComplete="off"
+        />
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="Order Date"
+          id="dorderDate"
+          name="orderDate"
+          type="text"
+          value={new Date(Date.parse(order.orderDate)).toLocaleString()}
+          disabled={true}
+          autoComplete="off"
+        />
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="Client Name"
+          id="client"
+          name=""
+          type="text"
+          value={order.user.firstName + " " + order.user.lastName}
+          disabled={true}
+          autoComplete="off"
+        />
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="VAT"
+          id="vat"
+          name="vat"
+          type="text"
+          value={order.vat + " %"}
+          disabled={true}
+          autoComplete="off"
+        />
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="Subtotal"
+          id="orderTotal"
+          name="orderTotal"
+          type="text"
+          value={order.orderTotal.toLocaleString("en-US", {
+            style: "currency",
+            currency: "EUR",
+          })}
+          disabled={true}
+          autoComplete="off"
+        />
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="Total"
+          id="orderTotalWithShipping"
+          name="orderTotalWithShipping"
+          type="text"
+          value={order.orderTotalWithShipping.toLocaleString("en-US", {
+            style: "currency",
+            currency: "EUR",
+          })}
+          disabled={true}
+          autoComplete="off"
+        />
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <Typography>Ordered products</Typography>
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <TableContainer component={Paper}>
+          <Table aria-label="Ordered products">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="right">Qty</TableCell>
+                <TableCell align="right">Price</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {order.productOrders ? (
+                order.productOrders.map((productOrder) => (
+                  <TableRow
+                    key={productOrder.product.id}
+                    sx={{
+                      "&:last-child td, &:last-child th": {
+                        border: 0,
+                      },
+                    }}
+                    hover
+                  >
+                    <TableCell component="th" scope="row">
+                      <Link
+                        component={RouterLink}
+                        to={"/product/" + productOrder.product.id}
+                      >
+                        {productOrder.product.title}
+                      </Link>
+                    </TableCell>
+                    <TableCell align="right">{productOrder.quantity}</TableCell>
+                    <TableCell align="right">
+                      {productOrder.basePrice.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "EUR",
+                      })}
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                  }}
+                >
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    align="center"
+                    colSpan={4}
+                  >
+                    <CircularProgress />
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <Typography>Shipping</Typography>
+      </Grid>
+
+      <Grid item xs={12} md={12}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="Shipper"
+          id="shipper"
+          name="shipper"
+          type="text"
+          value={order.shipperId}
+          disabled={true}
+          autoComplete="off"
+        />
+      </Grid>
+    </Grid>
+  );
+}
