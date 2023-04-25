@@ -15,4 +15,5 @@ public interface IStatusMessageService
     StatusMessage ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime400();
     StatusMessage ProductDiscontinued200(ulong id);
     StatusMessage UserAlreadyHaveAReview409(string username, string productTitle);
+    StatusMessage ProductAlreadyHaveThisSupplierRegistered409(ulong productId, ulong supplierId);
 }

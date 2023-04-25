@@ -51,5 +51,9 @@ public class SuppliersController: ApiControllerBase
     [Authorize(Roles = "Admin")]
     public ActionResult<IAsyncEnumerable<ProductSupplierPublic>> GetAllProductSuppliers()
         => Ok(_productSupplierService.GetAll());
+    [HttpPost("Product/{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult<ProductSupplierLimited>> AddProductSupplier(ulong id, ProductSupplierRegister productSupplierRegister)
+        => (await _productSupplierService.Add(id, productSupplierRegister)).Match(Created, Problem);
 
 }
