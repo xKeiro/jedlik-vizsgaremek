@@ -31,13 +31,19 @@ public class SupplierService: ISupplierService
     }
     public async Task<OneOf<SupplierPublic, StatusMessage>> Add(SupplierRegister supplierRegister)
     {
-        var supplier = _mapper.Map<SupplierRegister, Supplier>(supplierRegister);
+        var isUnique = !await _context.Suppliers
+            .AnyAsync(s => s.CompanyName.ToLower() == supplierRegister.CompanyName.ToLower());
+        if (!isUnique)
+        {
+            return _statusMessage.NotUnique409<Supplier>(new List<string>() { nameof(supplierRegister.CompanyName) });
+        }
         var countryWithVat = await _context.CountriesWithVat
             .FirstOrDefaultAsync(cwv => cwv.Country.ToLower() == supplierRegister.Address.Country.ToLower());
         if (countryWithVat == null)
         {
             return _statusMessage.DoesNotExist404(nameof(supplierRegister.Address.Country), supplierRegister.Address.Country);
         }
+        var supplier = _mapper.Map<SupplierRegister, Supplier>(supplierRegister);
         supplier.Address.CountryWithVat = countryWithVat;
         _context.Suppliers.Add(supplier);
         _ = await _context.SaveChangesAsync();
