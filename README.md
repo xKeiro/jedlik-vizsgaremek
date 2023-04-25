@@ -6,14 +6,14 @@
 
 - Github: [Link](https://github.com/xKeiro/jedlik-vizsgaremek)
 - Documentation: [Link](https://docs.google.com/document/d/1Yr7cOVb5YnQZE8FiTCjsjiG3QIeLOKl3hKt94gyOdZ8/edit?usp=sharing)
-- Database: PostgreSQL v15
-- Backend: FastAPI
+- Database: MSSQL
+- Backend: ASP.NET 7
 - Frontend: React v18
 - Design: Material UI v5
 
 ### Requirements
 
-- Python 3.10.8+ [Link](https://www.python.org/downloads/)
+- ASP.NET 7 [Link](https://www.python.org/downloads/](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 - Node.js 18.12+ [Link](https://nodejs.org/en/)
 - Docker [Link](https://www.docker.com/)
 
@@ -28,16 +28,16 @@
 
 ### Database
 
-Start the docker container
+UNDER CONSTRUCTION
 
 ### Backend
 
 ```
-source .venv/bin/activate
-uvicorn backend.main:app --host localhost --port 8000 --reload
+cd ./backend/
+dotnet run
 ```
 
-Backend shortcut: [http://localhost:8000](http://localhost:8000/)
+Backend shortcut: [http://localhost:5000](http://localhost:5000/)
 
 ### Frontend
 
@@ -50,77 +50,7 @@ Frontend shortcut: [http://localhost:3000](http://localhost:3000/)
 
 ## How to set up the backend and database
 
-0. Install the latest Python
-
-```
-# or set up WSL environment:
-
-sudo apt update && sudo apt upgrade
-sudo apt upgrade python3
-sudo apt install python3-pip
-sudo apt install python3-dev
-sudo apt install python3-venv
-python3 --version
-
-# if default python version is smaller than 3.10,
-# update python 3.x to 3.10
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt-get update
-sudo apt-get install python3.10
-sudo apt-get install python3.10-dev
-sudo apt-get install python3.10-venv
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 2
-sudo update-alternatives --config python3
-# select python3.10 here
-python3 --version
-```
-
-1. Create a copy of the `.env.sample` file as `.env` in the backend folder, and fill out the fields.
-2. Create a new virtual environment:
-
-```
-py -m venv env
-.\env\Scripts\activate
-
-# or in WSL:
-
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-3. Install the requirements:
-
-```
-pip install -r ./backend/requirements.txt
-```
-
-4. Create a new docker container for the database, install the UUID extension, seed database:
-
-```
-sh initdb.sh
-```
-
-5. Run the app:
-
-```
-uvicorn backend.main:app --host localhost --port 8000 --reload
-```
-
-**Userful commands:**
-
-- `python3 --version` Check current Python version in use
-- On database model change use alembic to create a new revision of the database:
-
-```
-alembic revision --autogenerate -m "[name of the revision]"
-alembic upgrade head
-```
-
-**Useful links:**
-
-- [Online RSA Key Generator](http://travistidwell.com/jsencrypt/demo/)
-- [Encode RSA Key to Base64](https://www.base64encode.org/)
+UNDER CONSTRUCTION
 
 ## How to set up the frontend
 
@@ -139,7 +69,7 @@ nvm install node
 
 ```
 cd ./frontend/
-npm i
+npm ci
 ```
 
 2. Run the app:
