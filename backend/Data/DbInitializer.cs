@@ -76,7 +76,7 @@ public static class DbInitializer
                 City = "Sopron",
                 Region = "Győr-Moson-Sopron",
                 PostalCode = "9404",
-                CountryWithVat = countriesWithVat[9]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -94,7 +94,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1111",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -103,7 +103,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1046",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -112,7 +112,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1086",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -121,7 +121,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1097",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -130,7 +130,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1194",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -139,7 +139,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1158",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -148,7 +148,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1239",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -157,7 +157,7 @@ public static class DbInitializer
                 City = "Sopron",
                 Region = "Győr-Moson-Sopron",
                 PostalCode = "9404",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -166,7 +166,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1024",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -175,7 +175,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1122",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -184,7 +184,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1046",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -193,7 +193,7 @@ public static class DbInitializer
                 City = "Budapest",
                 Region = "Budapest",
                 PostalCode = "1111",
-                CountryWithVat = countriesWithVat[0]
+                CountryWithVat = countriesWithVat[12]
             },
             new Address()
             {
@@ -624,7 +624,7 @@ public static class DbInitializer
             new(){
                 Id = 4,
                 Category = context.ProductCategories.Where(x => x.Id == 7).First(),
-                Title = "Seasonic Focus Plus 750W",
+                Title = "Seasonic Focus Plus 550W",
                 Description = "80+ Gold rated power supply for high-performance PCs",
                 BasePrice = 79.99m,
                 Stock = 20,
@@ -680,7 +680,7 @@ public static class DbInitializer
                 Id = 9,
                 Category = context.ProductCategories.Where(x => x.Id == 3).First(),
                 Title = "Intel Core i9-11900K",
-                Description = "High-performance CPU for gaming and content creation",
+                Description = "Very-High performance CPU for gaming and content creation",
                 BasePrice = 399.99m,
                 Stock = 10,
                 Discount = 0,
@@ -733,7 +733,7 @@ public static class DbInitializer
             },
             new(){
                 Id = 14,
-                Category = context.ProductCategories.Where(x => x.Id == 1).First(),
+                Category = context.ProductCategories.Where(x => x.Id == 9).First(),
                 Title = "AMD Radeon RX 6900 XT",
                 Description = "High-end graphics card for gaming and content creation",
                 BasePrice = 149.99m,
@@ -747,7 +747,7 @@ public static class DbInitializer
                 Category = context.ProductCategories.Where(x => x.Id == 9).First(),
                 Title = "NVIDIA GeForce RTX 3070",
                 Description = "High-performance graphics card for gaming and content creation",
-                BasePrice = 319.99m,
+                BasePrice = 399.99m,
                 Stock = 9,
                 Discount = 0,
                 Featured = false,
@@ -767,8 +767,8 @@ public static class DbInitializer
             new(){
                 Id = 17,
                 Category = context.ProductCategories.Where(x => x.Id == 7).First(),
-                Title = "Seasonic FOCUS Plus 550W",
-                Description = "80+ Gold rated power supply for high-performance PCs",
+                Title = "Seasonic Focus Plus 750W",
+                Description = "80+ Gold rated high capacity power supply for high-performance PCs",
                 BasePrice = 89.99m,
                 Stock = 25,
                 Discount = 0,
@@ -887,7 +887,7 @@ public static class DbInitializer
             },
             new(){
                 Id = 28,
-                Category = context.ProductCategories.Where(x => x.Id == 3).First(),
+                Category = context.ProductCategories.Where(x => x.Id == 6).First(),
                 Title = "ASRock Z490 Phantom Gaming",
                 Description = "High-performance motherboard for gaming and content creation",
                 BasePrice = 179.99m,
@@ -909,13 +909,101 @@ public static class DbInitializer
             },
             new(){
                 Id = 30,
-                Category = context.ProductCategories.Where(x => x.Id == 1).First(),
+                Category = context.ProductCategories.Where(x => x.Id == 9).First(),
                 Title = "AMD Radeon RX 6800 XT",
-                Description = "Full Tower case with Tempered Glass Window",
+                Description = "High-end graphics card for gaming and content creation",
                 BasePrice = 599.99m,
                 Stock = 5,
                 Discount = 0,
                 Featured = false,
+                Discontinued = false,
+            },
+            new(){
+                Id = 31,
+                Category = context.ProductCategories.Where(x => x.Id == 1).First(),
+                Title = "CoolerMaster NR200",
+                Description = "ITX case with good airflow",
+                BasePrice = 99.99m,
+                Stock = 9,
+                Discount = 0,
+                Featured = false,
+                Discontinued = false,
+            },
+            new(){
+                Id = 32,
+                Category = context.ProductCategories.Where(x => x.Id == 6).First(),
+                Title = "ASUS B560-I",
+                Description = "ITX motherboard with a lot of features",
+                BasePrice = 149.99m,
+                Stock = 9,
+                Discount = 0,
+                Featured = false,
+                Discontinued = false,
+            },
+            new(){
+                Id = 33,
+                Category = context.ProductCategories.Where(x => x.Id == 3).First(),
+                Title = "Intel Core i5-11400",
+                Description = "Medium-performance CPU for gaming and work",
+                BasePrice = 89.99m,
+                Stock = 10,
+                Discount = 0,
+                Featured = false,
+                Discontinued = false,
+            },
+            new(){
+                Id = 34,
+                Category = context.ProductCategories.Where(x => x.Id == 3).First(),
+                Title = "Intel Core i3-10100",
+                Description = "Entry-level performance CPU for gaming and work",
+                BasePrice = 59.99m,
+                Stock = 14,
+                Discount = 0,
+                Featured = false,
+                Discontinued = false,
+            },
+            new(){
+                Id = 35,
+                Category = context.ProductCategories.Where(x => x.Id == 6).First(),
+                Title = "ASUS H570M-M PLUS",
+                Description = "mATX motherboard with a good range of features",
+                BasePrice = 109.99m,
+                Stock = 10,
+                Discount = 0,
+                Featured = false,
+                Discontinued = false,
+            },
+            new(){
+                Id = 36,
+                Category = context.ProductCategories.Where(x => x.Id == 9).First(),
+                Title = "NVIDIA GeForce RTX 3060",
+                Description = "Medium-performance graphics card for gaming",
+                BasePrice = 319.99m,
+                Stock = 11,
+                Discount = 0,
+                Featured = false,
+                Discontinued = false,
+            },
+            new(){
+                Id = 37,
+                Category = context.ProductCategories.Where(x => x.Id == 9).First(),
+                Title = "NVIDIA GeForce RTX 3070 Ti",
+                Description = "High-performance graphics card for gaming and content creation",
+                BasePrice = 449.99m,
+                Stock = 4,
+                Discount = 0,
+                Featured = false,
+                Discontinued = false,
+            },
+            new(){
+                Id = 38,
+                Category = context.ProductCategories.Where(x => x.Id == 9).First(),
+                Title = "NVIDIA GeForce RTX 4080",
+                Description = "Next generation High-end graphics card for gaming and content creation",
+                BasePrice = 799.99m,
+                Stock = 3,
+                Discount = 0,
+                Featured = true,
                 Discontinued = false,
             },
 
@@ -937,7 +1025,7 @@ public static class DbInitializer
             City = "Sopron",
             Region = "Győr-Moson-Sopron",
             PostalCode = "9404",
-            CountryWithVat = countriesWithVat[9],
+            CountryWithVat = countriesWithVat[12],
             },
         };
         context.AddRangeAsync(ordersAddresses);
