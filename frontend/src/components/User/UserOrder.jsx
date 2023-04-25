@@ -53,14 +53,14 @@ export default function UserOrder() {
   }, [id]);
 
   return (
-    <div className="AdminOrder">
+    <div className="UserOrder">
       <Box>
         <Paper elevation={2}>
           <h3>Your Order</h3>
         </Paper>
       </Box>
       <Box
-        className="AdminOrder__Form"
+        className="UserOrder__Form"
         sx={{
           display: "flex",
           flexDirection: "column",

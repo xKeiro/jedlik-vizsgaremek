@@ -130,7 +130,7 @@ export default function AdminCategory() {
     <div className="AdminCategory">
       <Box>
         <Paper elevation={2}>
-          <h3>{id ? "Category Editor" : "Add new category"} (WIP)</h3>
+          <h3>{id ? "Category Editor" : "Add new category"}</h3>
         </Paper>
       </Box>
       <Box

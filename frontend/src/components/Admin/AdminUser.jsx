@@ -161,7 +161,7 @@ export default function AdminUser() {
                       sx={{ marginY: "20px", paddingY: "10px" }}
                       onClick={handleUserPromote}
                     >
-                      Toggle Privileges
+                      Toggle Admin Privileges
                     </Button>{" "}
                   </Grid>
                 </Grid>

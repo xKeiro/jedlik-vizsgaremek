@@ -35,7 +35,6 @@ export default function OrderForm({ order }) {
           name="id"
           type="text"
           value={order.id}
-          disabled={true}
           autoComplete="off"
         />
       </Grid>
@@ -49,7 +48,6 @@ export default function OrderForm({ order }) {
           name="status"
           type="text"
           value={order.status}
-          disabled={true}
           autoComplete="off"
         />
       </Grid>
@@ -63,7 +61,6 @@ export default function OrderForm({ order }) {
           name="orderDate"
           type="text"
           value={new Date(Date.parse(order.orderDate)).toLocaleString()}
-          disabled={true}
           autoComplete="off"
         />
       </Grid>
@@ -77,7 +74,6 @@ export default function OrderForm({ order }) {
           name=""
           type="text"
           value={order.user.firstName + " " + order.user.lastName}
-          disabled={true}
           autoComplete="off"
         />
       </Grid>
@@ -91,7 +87,6 @@ export default function OrderForm({ order }) {
           name="vat"
           type="text"
           value={order.vat + " %"}
-          disabled={true}
           autoComplete="off"
         />
       </Grid>
@@ -108,7 +103,6 @@ export default function OrderForm({ order }) {
             style: "currency",
             currency: "EUR",
           })}
-          disabled={true}
           autoComplete="off"
         />
       </Grid>
@@ -125,7 +119,6 @@ export default function OrderForm({ order }) {
             style: "currency",
             currency: "EUR",
           })}
-          disabled={true}
           autoComplete="off"
         />
       </Grid>
@@ -207,7 +200,6 @@ export default function OrderForm({ order }) {
           name="shipper"
           type="text"
           value={order.shipperId}
-          disabled={true}
           autoComplete="off"
         />
       </Grid>

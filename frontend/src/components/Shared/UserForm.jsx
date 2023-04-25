@@ -104,11 +104,10 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
             <TextField
               fullWidth
               disabled
-              label="id"
+              label="Client ID"
               id="id"
               name="id"
               type="text"
-              helperText="For debug purposes only."
               value={userForm.id}
               onChange={handleFormChange}
               autoComplete="off"
