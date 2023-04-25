@@ -60,5 +60,6 @@ public class JedlikContext : DbContext
         _ = modelBuilder.Entity<Product>().Navigation(p => p.Category).AutoInclude();
         _ = modelBuilder.Entity<ProductReview>().Navigation(pr => pr.Product).AutoInclude();
         _ = modelBuilder.Entity<ProductReview>().Navigation(pr => pr.User).AutoInclude();
+        _ = modelBuilder.Entity<Supplier>().Navigation(s => s.Address).AutoInclude();
     }
 }
