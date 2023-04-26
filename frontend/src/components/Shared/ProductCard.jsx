@@ -36,9 +36,13 @@ export default function ProductCard({ product }) {
           <CardActionArea component={RouterLink} to={"/product/" + product.id}>
             <CardMedia
               component="img"
-              height="150"
-              image="/images/placeholder.png"
-              alt={product.title}
+              sx={{ height: 150 }}
+              image={
+                product.imagePath
+                  ? "http://localhost:5000/" + product.imagePath
+                  : "/images/placeholder.png"
+              }
+              title={product.title}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">

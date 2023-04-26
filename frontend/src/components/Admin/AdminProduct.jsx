@@ -2,13 +2,14 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import AlertMessage from "../Shared/AlertMessage";
+import ImageUpload from "../Shared/ImageUpload";
 
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-//import CardMedia from "@mui/material/CardMedia";
+import CardMedia from "@mui/material/CardMedia";
 //import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
@@ -39,7 +40,6 @@ export default function AdminProduct() {
       basePrice: "",
       title: "",
       description: "",
-      photo: null,
       stock: "",
       discontinued: false,
       featured: false,
@@ -146,7 +146,6 @@ export default function AdminProduct() {
             basePrice: product.basePrice,
             title: product.title,
             description: product.description,
-            photo: product.photo,
             stock: product.stock,
             discount: product.discount,
             discontinued: product.discontinued,
@@ -195,7 +194,11 @@ export default function AdminProduct() {
       >
         {product ? (
           <Card key={product.id} sx={{}}>
-            {/* <CardMedia /> */}
+            <CardMedia
+              sx={{ height: 400 }}
+              image={"http://localhost:5000/" + product.imagePath}
+              title={product.title}
+            />
             <CardContent>
               <Grid
                 container
@@ -212,6 +215,37 @@ export default function AdminProduct() {
                     <AlertMessage type="error" message={errorText} />
                   )}
                   {isLoading ? <CircularProgress /> : ""}
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    label="Image"
+                    id="imagePath"
+                    name="imagePath"
+                    type="text"
+                    value={product.imagePath ? product.imagePath : "N/A"}
+                    onChange={handleChange}
+                    disabled={true}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <ImageUpload endpoint="products" id={product.id} />
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Title"
+                    id="title"
+                    name="title"
+                    type="text"
+                    value={product.title}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                    autoComplete="off"
+                  />
                 </Grid>
                 <Grid item xs={12} md={12}>
                   <FormControl fullWidth required>
@@ -241,33 +275,6 @@ export default function AdminProduct() {
                       )}
                     </Select>
                   </FormControl>
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    label="Photo"
-                    id="photo"
-                    name="photo"
-                    type="text"
-                    value={product.photo ? product.photo : "N/A"}
-                    onChange={handleChange}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Title"
-                    id="title"
-                    name="title"
-                    type="text"
-                    value={product.title}
-                    onChange={handleChange}
-                    disabled={isLoading}
-                    autoComplete="off"
-                  />
                 </Grid>
                 <Grid item xs={12} md={12}>
                   <TextField

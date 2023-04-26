@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import AlertMessage from "../Shared/AlertMessage";
+import ImageUpload from "../Shared/ImageUpload";
 
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -14,7 +15,6 @@ import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import ImageUpload from "../Shared/ImageUpload";
 // import InputLabel from "@mui/material/InputLabel";
 // import MenuItem from "@mui/material/MenuItem";
 // import FormControl from "@mui/material/FormControl";

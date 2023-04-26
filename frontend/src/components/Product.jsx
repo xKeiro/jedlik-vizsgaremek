@@ -92,7 +92,11 @@ export default function Product() {
                     <CardMedia
                       sx={{ height: 400 }}
                       component="img"
-                      image={"/images/placeholder.png"}
+                      image={
+                        product.imagePath
+                          ? "http://localhost:5000/" + product.imagePath
+                          : "/images/placeholder.png"
+                      }
                       alt={product.title}
                     />
                     <CardContent>
