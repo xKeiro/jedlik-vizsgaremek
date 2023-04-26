@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
 import CartContext from "../contexts/CartContext";
@@ -28,6 +29,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Cart() {
+  const navigate = useNavigate();
   const auth = useContext(AuthContext);
   const shop = useContext(CartContext);
 
@@ -114,17 +116,23 @@ export default function Cart() {
     setShipping(item.price);
   }
 
-  async function handleCheckoutButton(item) {
+  function handleEmptyCart() {
+    shop.cart.forEach((item) => {
+      shop.removeProductsFromCart(item);
+    });
+  }
+
+  async function handleCheckoutButton() {
     setErrorText("");
     setSuccessText("");
     setIsLoading(true);
     const productOrders = [];
-    shop.cart.forEach((product) => {
-      let item = {
-        productId: product.id,
-        quantity: product.quantity,
+    shop.cart.forEach((item) => {
+      const po = {
+        productId: item.id,
+        quantity: item.quantity,
       };
-      productOrders.push(item);
+      productOrders.push(po);
     });
     const checkoutRequestBody = {
       shipperId: selectedShipperId,
@@ -153,10 +161,16 @@ export default function Cart() {
         setErrorText(errorMessage);
         return;
       }
+      handleEmptyCart();
       setIsLoading(false);
       setSuccessText(
-        "Order Successful, you order number is: " + responseBody.id
+        "Order Successful, you order number is: " +
+          responseBody.id +
+          " Redirecting to your orders..."
       );
+      setTimeout(() => {
+        navigate("/orders/");
+      }, 3000);
     } catch (error) {
       console.log(error);
       return;
@@ -269,7 +283,7 @@ export default function Cart() {
                         align="center"
                         colSpan={4}
                       >
-                        The cart is empty.
+                        Your cart is empty.
                       </TableCell>
                     </TableRow>
                   )}
@@ -374,7 +388,7 @@ export default function Cart() {
                             primary={`VAT of your country: ${VAT}%`}
                           />
                         ) : (
-                          <ListItemText primary={`VAT of Hungary: ${VAT}`} />
+                          <ListItemText primary={`VAT of Hungary: ${VAT}%`} />
                         )}
                       </ListItemButton>
                     </ListItem>
@@ -382,9 +396,7 @@ export default function Cart() {
                     <ListItem disablePadding>
                       <ListItemButton>
                         <ListItemIcon></ListItemIcon>
-                        <ListItemText
-                          primary={`Total amount of items: ${amount}`}
-                        />
+                        <ListItemText primary={`Amount of items: ${amount}`} />
                       </ListItemButton>
                     </ListItem>
 
