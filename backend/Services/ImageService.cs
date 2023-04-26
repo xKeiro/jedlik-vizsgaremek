@@ -26,6 +26,7 @@ public class ImageService: IImageService
         }
         var relativePath = $"Images/{nameOfModel}/{id}.webp";
         var path = Path.Combine(_webHostEnvironment.WebRootPath, relativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
 
         await using (var webpFileStream = new FileStream(path, FileMode.Create))
         {
