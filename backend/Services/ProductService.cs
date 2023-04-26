@@ -40,6 +40,12 @@ public class ProductService : IProductService
         {
             return _statusMessage.NotUnique409<Product>(notUniquePropertyNames);
         }
+        var supplier = await _context.Suppliers
+            .FirstOrDefaultAsync(s => s.Id == productRegister.SupplierId);
+        if (supplier == null)
+        {
+            return _statusMessage.NotFound404<Supplier>(productRegister.SupplierId);
+        }
         if (IsDiscontinuedAndFeaturedAtTheSameTime(product))
         {
             return _statusMessage.ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime400();
@@ -51,7 +57,13 @@ public class ProductService : IProductService
             return _statusMessage.NotFound404<ProductCategory>(productRegister.CategoryId);
         }
         product.Category = category;
-        _ = await _context.Products.AddAsync(product);
+        ProductSupplier productSupplier = new()
+        {
+            Product = product,
+            PurchasePrice = productRegister.PurchasePrice,
+            Supplier = supplier
+        };
+        _ = await _context.ProductSuppliers.AddAsync(productSupplier);
         _ = await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
         return _mapper.Map<Product, ProductPublic>(product);

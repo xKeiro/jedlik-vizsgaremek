@@ -43,7 +43,7 @@ namespace backend.Migrations
                     b.HasIndex("Country")
                         .IsUnique();
 
-                    b.ToTable("CountriesWithVat");
+                    b.ToTable("CountriesWithVat", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Orders.Order", b =>
@@ -99,7 +99,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Orders.ProductOrder", b =>
@@ -141,7 +141,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ProductOrders");
+                    b.ToTable("ProductOrders", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Products.Product", b =>
@@ -193,7 +193,7 @@ namespace backend.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("Products", t =>
+                    b.ToTable("Products", null, t =>
                         {
                             t.HasCheckConstraint("CK_Products_Featured_Discontinued", "NOT (Featured=1 AND Discontinued=1)");
                         });
@@ -227,7 +227,7 @@ namespace backend.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("ProductCategories", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Products.ProductReview", b =>
@@ -262,7 +262,7 @@ namespace backend.Migrations
                     b.HasIndex("ProductId", "UserId")
                         .IsUnique();
 
-                    b.ToTable("ProductReviews");
+                    b.ToTable("ProductReviews", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Products.ProductSupplier", b =>
@@ -290,7 +290,7 @@ namespace backend.Migrations
                     b.HasIndex("SupplierId", "ProductId")
                         .IsUnique();
 
-                    b.ToTable("ProductSuppliers");
+                    b.ToTable("ProductSuppliers", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Shipper", b =>
@@ -338,7 +338,7 @@ namespace backend.Migrations
                     b.HasIndex("CompanyName")
                         .IsUnique();
 
-                    b.ToTable("Shippers");
+                    b.ToTable("Shippers", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Supplier", b =>
@@ -404,7 +404,7 @@ namespace backend.Migrations
 
                     b.HasIndex("CountryWithVatId");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.User", b =>
@@ -488,7 +488,7 @@ namespace backend.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Orders.Order", b =>

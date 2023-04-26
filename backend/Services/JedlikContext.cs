@@ -45,6 +45,11 @@ public class JedlikContext : DbContext
 
         modelBuilder.Entity<Product>()
             .ToTable(t => t.HasCheckConstraint("CK_Products_Featured_Discontinued", "NOT (Featured=1 AND Discontinued=1)"));
+        modelBuilder.Entity<Product>()
+            .HasMany(p => p.ProductSuppliers)
+            .WithOne(ps => ps.Product)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.Cascade);
 
     _ = modelBuilder
             .Entity<Order>()
