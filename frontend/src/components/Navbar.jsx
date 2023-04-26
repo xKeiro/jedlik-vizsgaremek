@@ -204,7 +204,13 @@ export default function Navbar() {
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar
                         alt={auth.user.username}
-                        src={auth.user.imagePath}
+                        src={
+                          auth.user.imagePath
+                            ? process.env.REACT_APP_API +
+                              "/" +
+                              auth.user.imagePath
+                            : null
+                        }
                       />
                     </IconButton>
                   </Tooltip>
