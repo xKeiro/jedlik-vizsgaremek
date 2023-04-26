@@ -153,9 +153,9 @@ export default function AdminShippers() {
                             variant="outlined"
                             sx={{ marginLeft: 1 }}
                             onClick={() => handleRemove(shipper.id)}
-                            disabled={shipper.disabled}
+                            disabled={false}
                           >
-                            {shipper.disabled ? "Disabled" : "Disable"}
+                            Delete
                           </Button>
                         </TableCell>
                       </TableRow>

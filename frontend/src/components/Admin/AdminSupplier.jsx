@@ -162,19 +162,6 @@ export default function AdminSupplier() {
                   <TextField
                     fullWidth
                     required
-                    label="Supplier ID"
-                    id="id"
-                    name="id"
-                    type="text"
-                    value={supplier.id}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
                     label="Company Name"
                     id="companyName"
                     name="companyName"
