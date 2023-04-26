@@ -1,5 +1,6 @@
 ﻿using backend.Dtos.Shippers;
 using backend.Interfaces.Services;
+using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,4 +32,14 @@ public class ShippersController: ApiControllerBase
     [Route("{id}")]
     public async Task<ActionResult<ShipperPublic>> Update(ulong id, ShipperRegister shipperRegister)
         => (await _shipperService.Update(id, shipperRegister)).Match(Ok, Problem);
+    [HttpDelete]
+    [Authorize (Roles = "Admin")]
+    [Route("{id}")]
+    public async Task<ActionResult<StatusMessage>> Delete(ulong id)
+    {
+        var result = await _shipperService.Delete(id);
+        return result.StatusCode == 200
+            ? Ok(result)
+            : Problem(result);
+    }
 }

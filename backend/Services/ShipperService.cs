@@ -73,4 +73,17 @@ public class ShipperService: IShipperService
         _context.ChangeTracker.Clear();
         return _mapper.Map<Shipper, ShipperPublic>(shipper);
     }
+    public async Task<StatusMessage> Delete(ulong shipperId)
+    {
+        var shipper = await _context.Shippers
+            .FirstOrDefaultAsync(s => s.Id == shipperId);
+        if (shipper == null)
+        {
+            return _statusMessage.NotFound404<Shipper>(shipperId);
+        }
+        _context.Shippers.Remove(shipper);
+        _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return _statusMessage.Deleted200<Shipper>(shipperId);
+    }
 }

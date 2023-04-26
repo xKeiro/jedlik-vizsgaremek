@@ -10,4 +10,5 @@ public interface IShipperService
     Task<OneOf<ShipperPublic, StatusMessage>> Add(ShipperRegister shipperRegister);
     Task<OneOf<ShipperPublic, StatusMessage>> Find(ulong shipperId);
     Task<OneOf<ShipperPublic, StatusMessage>> Update(ulong shipperId, ShipperRegister shipperRegister);
+    Task<StatusMessage> Delete(ulong shipperId);
 }
