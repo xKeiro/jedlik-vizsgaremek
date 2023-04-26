@@ -19,7 +19,6 @@ import UserRegistration from "./User/UserRegistration";
 import UserAccount from "./User/UserAccount";
 import UserOrders from "./User/UserOrders";
 import UserOrder from "./User/UserOrder";
-import UserCheckout from "./User/UserCheckout";
 import Admin from "./Admin/Admin";
 import AdminHome from "./Admin/AdminHome";
 import AdminOrders from "./Admin/AdminOrders";
@@ -71,7 +70,6 @@ export default function Layout() {
                 <Route path="account" element={<UserAccount />} />
                 <Route path="orders" element={<UserOrders />} />
                 <Route path="order/:id" element={<UserOrder />} />
-                <Route path="checkout" element={<UserCheckout />} />
               </>
             )}
             {auth.loggedIn && auth.user.isAdmin && (
