@@ -8,12 +8,13 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-//import CardMedia from "@mui/material/CardMedia";
+import CardMedia from "@mui/material/CardMedia";
 //import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
+import ImageUpload from "../Shared/ImageUpload";
 // import InputLabel from "@mui/material/InputLabel";
 // import MenuItem from "@mui/material/MenuItem";
 // import FormControl from "@mui/material/FormControl";
@@ -36,7 +37,7 @@ export default function AdminCategory() {
       id: "New category ID",
       title: "",
       description: "",
-      photo: null,
+      imagePath: null,
     };
 
     async function getCategory() {
@@ -62,6 +63,7 @@ export default function AdminCategory() {
           console.log(errorMessage);
           return;
         }
+        console.log(responseBody);
         setCategory(responseBody);
       } catch (error) {
         console.log(error);
@@ -100,7 +102,6 @@ export default function AdminCategory() {
           body: JSON.stringify({
             title: category.title,
             description: category.description,
-            photo: category.photo,
           }),
         }
       );
@@ -144,7 +145,11 @@ export default function AdminCategory() {
       >
         {category ? (
           <Card key={category.id} sx={{}}>
-            {/* <CardMedia /> */}
+            <CardMedia
+              sx={{ height: 150 }}
+              image={"http://localhost:5000/" + category.imagePath}
+              title={category.title}
+            />
             <CardContent>
               <Grid
                 container
@@ -166,15 +171,18 @@ export default function AdminCategory() {
                 <Grid item xs={12} md={12}>
                   <TextField
                     fullWidth
-                    label="Photo"
-                    id="photo"
-                    name="photo"
+                    label="Image"
+                    id="imagePath"
+                    name="imagePath"
                     type="text"
-                    value={category.photo ? category.photo : "N/A"}
+                    value={category.imagePath ? category.imagePath : "N/A"}
                     onChange={handleChange}
                     disabled={true}
                     autoComplete="off"
                   />
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <ImageUpload endpoint="categories" id={category.id} />
                 </Grid>
                 <Grid item xs={12} md={12}>
                   <TextField

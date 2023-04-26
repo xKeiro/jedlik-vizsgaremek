@@ -72,7 +72,11 @@ export default function Categories() {
                       <CardMedia
                         component="img"
                         height="150"
-                        image="/images/placeholder.png"
+                        image={
+                          category.imagePath
+                            ? "http://localhost:5000/" + category.imagePath
+                            : "/images/placeholder.png"
+                        }
                         alt={category.title}
                       />
                       <CardContent sx={{ minHeight: 160 }}>
