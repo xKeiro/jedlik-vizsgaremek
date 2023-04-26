@@ -47,4 +47,14 @@ public static class ProductCategoryConventions<TProductWithoutId>
     {
         // Method intentionally left empty.
     }
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public static void SaveImage(ulong productCategoryId, IFormFile image)
+    {
+        // Method intentionally left empty.
+    }
 }

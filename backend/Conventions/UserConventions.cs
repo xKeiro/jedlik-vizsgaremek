@@ -62,4 +62,13 @@ public static class UserConventions<TUserRegister> where TUserRegister : class
     {
         // Method intentionally left empty.
     }
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(void), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    public static void SaveImage(ulong userId, IFormFile image)
+    {
+        // Method intentionally left empty.
+    }
 }
