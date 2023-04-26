@@ -355,7 +355,7 @@ export default function AdminProduct() {
                               checked={product.discontinued}
                             />
                           }
-                          label="Discontinued (Removed)"
+                          label="Discontinued (Disabled)"
                         />
                       </FormGroup>
                     </Grid>

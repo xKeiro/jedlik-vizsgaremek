@@ -65,15 +65,28 @@ export default function OrderForm({ order }) {
         />
       </Grid>
 
-      <Grid item xs={12} md={12}>
+      <Grid item xs={12} md={6}>
         <TextField
           variant="filled"
           fullWidth
-          label="Client Name"
-          id="client"
-          name=""
+          label="Client First Name"
+          id="user.firstName"
+          name="user.firstName"
           type="text"
-          value={order.user.firstName + " " + order.user.lastName}
+          value={order.user.firstName}
+          autoComplete="off"
+        />
+      </Grid>
+
+      <Grid item xs={12} md={6}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="Client Last Name"
+          id="user.lastName"
+          name="user.lastName"
+          type="text"
+          value={order.user.lastName}
           autoComplete="off"
         />
       </Grid>
@@ -91,7 +104,7 @@ export default function OrderForm({ order }) {
         />
       </Grid>
 
-      <Grid item xs={12} md={12}>
+      <Grid item xs={12} md={6}>
         <TextField
           variant="filled"
           fullWidth
@@ -100,6 +113,22 @@ export default function OrderForm({ order }) {
           name="orderTotal"
           type="text"
           value={order.orderTotal.toLocaleString("en-US", {
+            style: "currency",
+            currency: "EUR",
+          })}
+          autoComplete="off"
+        />
+      </Grid>
+
+      <Grid item xs={12} md={6}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="Subtotal with VAT"
+          id="orderTotalWithVat"
+          name="orderTotalWithVat"
+          type="text"
+          value={order.orderTotalWithVat.toLocaleString("en-US", {
             style: "currency",
             currency: "EUR",
           })}

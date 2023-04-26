@@ -45,10 +45,7 @@ export default function AdminProducts() {
     getAllProducts();
   }, []);
 
-  async function handleRemove(e) {
-    //const title = e.target.parentNode.parentNode.dataset.title;
-    const id = e.target.parentNode.parentNode.dataset.id;
-
+  async function handleRemove(id) {
     try {
       const response = await fetch(
         `http://localhost:5000/api/products/${id}/Discontinue`,
@@ -159,10 +156,10 @@ export default function AdminProducts() {
                           <Button
                             variant="outlined"
                             sx={{ marginLeft: 1 }}
-                            onClick={handleRemove}
+                            onClick={() => handleRemove(product.id)}
                             disabled={product.discontinued}
                           >
-                            Remove
+                            {product.discontinued ? "Disabled" : "Disable"}
                           </Button>
                         </TableCell>
                       </TableRow>
