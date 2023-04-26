@@ -2,6 +2,7 @@
 using backend.Dtos.Auth;
 using backend.Dtos.Users;
 using backend.Interfaces.Services;
+using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -57,4 +58,13 @@ public class UsersController : ApiControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<UserPublic>> LoseAdmin(ulong userId)
         => (await _service.SetUserAdminStatus(userId, false)).Match(Ok, Problem);
+    [HttpPost("{userId}/Image")]
+    [Authorize]
+    public async Task<ActionResult<StatusMessage>> SaveImage(ulong userId, IFormFile image)
+    {
+        var result = await _service.SaveImage(userId, image);
+        return result.StatusCode == StatusCodes.Status200OK
+            ? Ok(result) 
+            : Problem(result);
+    }
 }
