@@ -26,7 +26,9 @@ public class MappingProfile : Profile
 
         _ = CreateMap<UserRegister, User>();
         _ = CreateMap<UserUpdate, User>();
-        _ = CreateMap<User, UserPublic>();
+        _ = CreateMap<User, UserPublic>()
+            .ForMember(up => up.Vat, opt => opt.MapFrom(u => u.CountryWithVat.Vat))
+            .ForMember(up => up.Country, opt => opt.MapFrom(u => u.CountryWithVat.Country));
         _ = CreateMap<User, UserPublicLimited>();
 
         _ = CreateMap<ProductRegister, Product>();
