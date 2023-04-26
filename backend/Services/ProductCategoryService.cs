@@ -84,7 +84,6 @@ public class ProductCategoryService : IProductCategoryService
     public async Task<StatusMessage> SaveImage(ulong productCategoryId, IFormFile image)
     {
         var productCategory = await _context.ProductCategories
-            .AsNoTracking()
             .FirstOrDefaultAsync(c => c.Id == productCategoryId);
         if (productCategory == null)
         {
@@ -97,6 +96,8 @@ public class ProductCategoryService : IProductCategoryService
             return imageSaveResult.AsT1;
         }
         productCategory.ImagePath = imageSaveResult.AsT0;
+        await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
         return _statusMessage.ImageSuccessfullySaved200();
     }
 
