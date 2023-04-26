@@ -26,6 +26,8 @@ public class Product : BaseModel
     public required bool Discontinued { get; set; }
     [Required]
     public required bool Featured { get; set; }
+    [MinLength(3), MaxLength(200)]
+    public string ImagePath { get; set; } = $"Images/{nameof(ProductCategory)}/default.webp";
     public ICollection<ProductReview>? ProductReviews { get; set; }
     public ICollection<ProductOrder>? ProductOrders { get; set; }
     public decimal DiscountedPrice => BasePrice - (BasePrice * Discount / 100);

@@ -5,6 +5,11 @@ using backend.Services;
 using backend_tests.Utils;
 using NUnit.Framework;
 using FluentAssertions;
+using Moq;
+using backend.Interfaces.Services;
+using backend.Models;
+using Microsoft.AspNetCore.Http;
+using OneOf;
 
 namespace backend_tests.Services;
 
@@ -15,6 +20,8 @@ public class ProductCategoryServiceTests
     private IMapper _mapper;
     private ProductCategoryService _productCategoryService;
     private StatusMessageService _statusMessage;
+    private Mock<IImageService> _imageService;
+    private const string _imagePath = $"Image/{nameof(ProductCategory)}/default.webp";
 
     [SetUp]
     public void Setup()
@@ -22,11 +29,14 @@ public class ProductCategoryServiceTests
         _context = InMemoryDatabaseHelper.GetInMemoryDatabaseContext("ProductCategoriesDb");
         _mapper = MapperHelper.GetMapper();
         _statusMessage = new StatusMessageService();
+        _imageService = new Mock<IImageService>();
+        _imageService.Setup(service => service.SaveImage(It.IsAny<IFormFile>(), It.IsAny<ulong>(), It.IsAny<string>()))
+                .ReturnsAsync(OneOf<string, StatusMessage>.FromT0("Image/Path/0.webp"));
         _context.ChangeTracker.Clear();
         _context.ProductCategories.AddRange(TestData.productCategories);
         _context.SaveChanges();
         _context.ChangeTracker.Clear();
-        _productCategoryService = new ProductCategoryService(_context, _mapper, _statusMessage);
+        _productCategoryService = new ProductCategoryService(_context, _mapper, _statusMessage, _imageService.Object);
     }
 
     [TearDown]
@@ -76,7 +86,7 @@ public class ProductCategoryServiceTests
     public async Task Add_ShouldCreateNewProductCategoryAndReturnItInTheFormOfOneOfProductCategoryPublic()
     {
         // Arrange
-        var newProductCategory = new ProductCategoryWithoutId()
+        var newProductCategory = new ProductCategoryRegister()
         {
             Title = "New Title",
             Description = "New Description",
@@ -88,6 +98,7 @@ public class ProductCategoryServiceTests
             Id = expectedId,
             Title = newProductCategory.Title,
             Description = newProductCategory.Description,
+            ImagePath = _imagePath,
         };
 
         // Act
@@ -102,7 +113,7 @@ public class ProductCategoryServiceTests
     public async Task Add_ShouldReturnOneOfStatusMessageNotUniqueIfAlreadyExistingTitleProvidedAndShouldNotBeAddedToTheDatabase()
     {
         // Arrange
-        var newProductCategory = new ProductCategoryWithoutId()
+        var newProductCategory = new ProductCategoryRegister()
         {
             Title = TestData.productCategories[0].Title,
             Description = "New Description",
@@ -121,7 +132,7 @@ public class ProductCategoryServiceTests
     public async Task Update_ShouldUpdateProductCategoryAndReturnItInTheFormOfOneOfProductCategoryPublic()
     {
         // Arrange
-        var updatedProductCategory = new ProductCategoryWithoutId()
+        var updatedProductCategory = new ProductCategoryRegister()
         {
             Title = "Updated Title",
             Description = "Updated Description",
@@ -131,6 +142,7 @@ public class ProductCategoryServiceTests
             Id = 1,
             Title = updatedProductCategory.Title,
             Description = updatedProductCategory.Description,
+            ImagePath = _imagePath,
         };
         // Act
         var actual = await _productCategoryService.Update(expected.Id, updatedProductCategory);
@@ -143,7 +155,7 @@ public class ProductCategoryServiceTests
     public async Task Update_ShouldReturnOneOfStatusMessageNotFoundIfNotExistingIdProvided()
     {
         // Arrange
-        var updatedProductCategory = new ProductCategoryWithoutId()
+        var updatedProductCategory = new ProductCategoryRegister()
         {
             Title = "Updated Title",
             Description = "Updated Description",
@@ -161,7 +173,7 @@ public class ProductCategoryServiceTests
     public async Task Update_ShouldReturnOneOfStatusMessageNotUniqueIfAlreadyExistingTitleProvided()
     {
         // Arrange
-        var updatedProductCategory = new ProductCategoryWithoutId()
+        var updatedProductCategory = new ProductCategoryRegister()
         {
             Title = TestData.productCategories[1].Title,
             Description = "Updated Description",
@@ -178,7 +190,7 @@ public class ProductCategoryServiceTests
     public async Task Update_ShouldReturnOneOfProductCategoryPublicIfTheSameTitleProvidedAsTheOriginal()
     {
         // Arrange
-        var updatedProductCategory = new ProductCategoryWithoutId()
+        var updatedProductCategory = new ProductCategoryRegister()
         {
             Title = TestData.productCategories[0].Title,
             Description = "Updated Description",
@@ -189,6 +201,7 @@ public class ProductCategoryServiceTests
             Id = id,
             Title = updatedProductCategory.Title,
             Description = updatedProductCategory.Description,
+            ImagePath = _imagePath,
         };
         // Act
         var actual = await _productCategoryService.Update(id, updatedProductCategory);

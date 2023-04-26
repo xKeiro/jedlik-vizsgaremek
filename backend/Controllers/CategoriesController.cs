@@ -1,4 +1,5 @@
 ﻿using backend.Conventions;
+using backend.Dtos.Images;
 using backend.Dtos.Products.ProductCategories;
 using backend.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[ApiConventionType(typeof(ProductCategoryConventions<ProductCategoryWithoutId>))]
+[ApiConventionType(typeof(ProductCategoryConventions<ProductCategoryRegister>))]
 public class CategoriesController : ApiControllerBase
 {
     private readonly IProductCategoryService _service;
@@ -24,7 +25,7 @@ public class CategoriesController : ApiControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<ProductCategoryPublic>> Add(ProductCategoryWithoutId productCategoryWithoutId)
+    public async Task<ActionResult<ProductCategoryPublic>> Add(ProductCategoryRegister productCategoryWithoutId)
         => (await _service.Add(productCategoryWithoutId)).Match(Created, Problem);
 
     [HttpGet("{id}")]
@@ -33,6 +34,15 @@ public class CategoriesController : ApiControllerBase
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<ProductCategoryPublic>> Update(ulong id, ProductCategoryWithoutId productCategoryPublic)
+    public async Task<ActionResult<ProductCategoryPublic>> Update(ulong id, ProductCategoryRegister productCategoryPublic)
         => (await _service.Update(id, productCategoryPublic)).Match(Ok, Problem);
+    [HttpPost("{id}/Image")]
+    [Authorize(Roles = "Admin")]
+    public async Task<ActionResult> SaveImage(ulong id, IFormFile image)
+    {
+        var result = await _service.SaveImage(id, image);
+        return result.StatusCode == 200
+            ? Ok(result)
+            : Problem(result);
+    }
 }

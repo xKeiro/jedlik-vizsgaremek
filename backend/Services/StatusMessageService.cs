@@ -97,5 +97,22 @@ public class StatusMessageService : IStatusMessageService
             Message = $"Product with id:'{productId}' already have this supplier with this id '{supplierId}' registered!",
             StatusCode = StatusCodes.Status409Conflict
         };
+    public StatusMessage WrongImageType400(string[] allowed_image_types)
+    {
+        var sb = new StringBuilder()
+            .Append("Wrong image type! Allowed image types are: ")
+            .AppendJoin(", ", allowed_image_types);
+        return new()
+        {
+            Message = sb.ToString(),
+            StatusCode = StatusCodes.Status400BadRequest
+        };
+    }
+    public StatusMessage ImageSuccessfullySaved200()
+        => new()
+        {
+            Message = "Image successfully saved!",
+            StatusCode = StatusCodes.Status200OK
+        };
 
 }

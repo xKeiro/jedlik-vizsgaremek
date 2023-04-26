@@ -76,7 +76,7 @@ public static class SupplierConventions<TSupplierRegister, TProductSupplierRegis
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void AddProductSupplier(ulong productId, ProductSupplierRegister productSupplierRegister)
+    public static void AddProductSupplier(ulong productId, TProductSupplierRegister productSupplierRegister)
     {
         // Method intentionally left empty.
     }
@@ -96,7 +96,7 @@ public static class SupplierConventions<TSupplierRegister, TProductSupplierRegis
     [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void UpdateProductSupplier(ulong productId, ulong supplierId, ProductSupplierUpdate productSupplierUpdate)
+    public static void UpdateProductSupplier(ulong productId, ulong supplierId, TProductSupplierUpdate productSupplierUpdate)
     {
         // Method intentionally left empty.
     }
