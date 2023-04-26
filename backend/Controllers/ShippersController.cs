@@ -1,5 +1,6 @@
 ﻿using backend.Dtos.Shippers;
 using backend.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers;
@@ -17,4 +18,8 @@ public class ShippersController: ApiControllerBase
     [HttpGet]
     public ActionResult<IAsyncEnumerable<ShipperPublic>> GetAll()
         => Ok(_shipperService.GetAll());
+    [HttpPost]
+    [Authorize (Roles = "Admin")]
+    public async Task<ActionResult<ShipperPublic>> Add(ShipperRegister shipperRegister)
+        => (await _shipperService.Add(shipperRegister)).Match(Created, Problem);
 }
