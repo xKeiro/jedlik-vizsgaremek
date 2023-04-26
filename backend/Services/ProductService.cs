@@ -13,12 +13,14 @@ public class ProductService : IProductService
     private readonly JedlikContext _context;
     private readonly IMapper _mapper;
     private readonly IStatusMessageService _statusMessage;
+    private readonly IImageService _imageService;
 
-    public ProductService(JedlikContext context, IMapper mapper, IStatusMessageService statusMessage, IJwtTokenGeneratorService jwtTokenGeneratorService)
+    public ProductService(JedlikContext context, IMapper mapper, IStatusMessageService statusMessage, IJwtTokenGeneratorService jwtTokenGeneratorService, IImageService imageService)
     {
         _context = context;
         _mapper = mapper;
         _statusMessage = statusMessage;
+        _imageService = imageService;
     }
 
     public IAsyncEnumerable<ProductPublic> GetNotDiscontinued()
@@ -138,6 +140,24 @@ public class ProductService : IProductService
         _ = await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
         return _statusMessage.ProductDiscontinued200(productId);
+    }
+    public async Task<StatusMessage> SaveImage(ulong productId, IFormFile image)
+    {
+        var product = await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == productId);
+        if (product == null)
+        {
+            return _statusMessage.NotFound404<Product>(productId);
+        }
+        var imageSaveResult = await _imageService.SaveImage(image, productId, nameof(Product));
+        if (imageSaveResult.IsT1)
+        {
+            return imageSaveResult.AsT1;
+        }
+        product.ImagePath = imageSaveResult.AsT0;
+        await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return _statusMessage.ImageSuccessfullySaved200();
     }
 
 

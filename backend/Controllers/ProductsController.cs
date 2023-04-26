@@ -26,30 +26,25 @@ public class ProductsController : ApiControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductPublic>> Add(ProductRegister productRegister)
      => (await _service.Add(productRegister)).Match(Created, Problem);
-    [HttpGet]
-    [Route("Category/{categoryId}")]
+    [HttpGet("Category/{categoryId}")]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetNotDiscontinuedByCategoryId(ulong categoryId)
         => Ok(_service.GetNotDiscontinuedByCategoryId(categoryId));
-    [HttpGet]
-    [Route("Featured")]
+    [HttpGet("Featured")]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetFeatured()
         => Ok(_service.GetFeatured());
-    [HttpGet]
-    [Route("All")]
+    [HttpGet("All")]
     [Authorize(Roles = "Admin")]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetAll()
         => Ok(_service.GetAll());
-    [HttpGet]
-    [Route("{productId}")]
+    [HttpGet("{productId}")]
+
     public async Task<ActionResult<ProductPublic>> GetById(ulong productId)
         => (await _service.FindById(productId)).Match(Ok, Problem);
-    [HttpPut]
-    [Route("{productId}")]
+    [HttpPut("{productId}")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductPublic>> Update(ulong productId, ProductRegister productRegister)
         => (await _service.Update(productId, productRegister)).Match(Ok, Problem);
-    [HttpPatch]
-    [Route("{productId}/Discontinue")]
+    [HttpPatch("{productId}/Discontinue")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<StatusMessage>> Discontinue(ulong productId)
     {
@@ -62,5 +57,15 @@ public class ProductsController : ApiControllerBase
         {
             return Problem(result);
         }
+    }
+    [HttpPost("{productId}/Image")]
+    [Authorize(Roles = "Admin")]
+
+    public async Task<ActionResult> SaveImage(ulong productId, IFormFile image)
+    {
+        var result = await _service.SaveImage(productId, image);
+        return result.StatusCode == 200
+            ? Ok(result)
+            : Problem(result);
     }
 }

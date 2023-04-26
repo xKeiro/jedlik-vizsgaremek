@@ -25,4 +25,7 @@ public class ProductPublic
     public required bool Discontinued { get; set; }
     [Required]
     public required bool Featured { get; set; }
+    [Required]
+    [MinLength(3), MaxLength(200)]
+    public required string ImagePath { get; set; }
 }
