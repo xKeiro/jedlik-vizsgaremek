@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Avatar from "@mui/material/Avatar";
 
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -32,6 +33,7 @@ export default function Reviews({ productId }) {
         console.log(errorMessage);
         return;
       }
+      console.log(responseBody);
       setReviews(responseBody);
     } catch (error) {
       console.log(error);
@@ -78,7 +80,7 @@ export default function Reviews({ productId }) {
             direction="row-reverse"
             justifyContent="center"
             spacing={2}
-            sx={{ marginBottom: 3 }}
+            sx={{ marginY: 3 }}
           >
             {reviews ? (
               reviews.map((review) => (
@@ -86,29 +88,84 @@ export default function Reviews({ productId }) {
                   <Card key={review.id}>
                     <Paper elevation={3}>
                       <CardContent>
-                        <Box width={100}>
-                          <Paper elevation={3}>
-                            <Typography
-                              gutterBottom
-                              variant="h6"
-                              component="div"
-                            >
-                              {review.score} ☆
-                            </Typography>
-                          </Paper>
-                        </Box>
-                        <Typography gutterBottom variant="text" component="div">
-                          "{review.text}"
-                        </Typography>
-                        <Typography
-                          variant="text"
-                          color="text.secondary"
-                          align="right"
+                        <Grid
+                          container
+                          justifyContent="center"
+                          alignItems="center"
+                          spacing={1}
                         >
-                          {review.user.firstName} at{" "}
-                          {new Date(
-                            Date.parse(review.createdAt)
-                          ).toLocaleString()}
+                          <Grid item xs={12} md={1}>
+                            <Paper elevation={3}>
+                              <Box sx={{ minHeight: 50, padding: 1 }}>
+                                <Typography
+                                  gutterBottom
+                                  variant="h6"
+                                  component="div"
+                                  align="center"
+                                >
+                                  {review.score} ☆
+                                </Typography>
+                              </Box>
+                            </Paper>
+                          </Grid>
+                          <Grid item xs={12} md={6}>
+                            <Paper elevation={3}>
+                              <Box sx={{ minHeight: 50, padding: 1 }}>
+                                <Grid container>
+                                  <Grid item xs={4} md={2}>
+                                    <Avatar
+                                      alt={review.user.firstName}
+                                      src={
+                                        review.user.imagePath
+                                          ? process.env.REACT_APP_API +
+                                            "/" +
+                                            review.user.imagePath
+                                          : null
+                                      }
+                                    />
+                                  </Grid>
+                                  <Grid item xs={8} md={10}>
+                                    <Typography
+                                      gutterBottom
+                                      variant="h6"
+                                      component="div"
+                                      align="left"
+                                    >
+                                      {review.user.firstName}
+                                    </Typography>
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                            </Paper>
+                          </Grid>
+                          <Grid item xs={12} md={5}>
+                            <Paper elevation={3}>
+                              <Box
+                                sx={{
+                                  minHeight: 50,
+                                  padding: 1,
+                                }}
+                              >
+                                <Typography
+                                  gutterBottom
+                                  variant="h6"
+                                  component="div"
+                                >
+                                  {" "}
+                                  {new Date(
+                                    Date.parse(review.createdAt)
+                                  ).toLocaleString()}
+                                </Typography>
+                              </Box>
+                            </Paper>
+                          </Grid>
+                        </Grid>
+                        <Typography
+                          sx={{ marginY: 2 }}
+                          variant="text"
+                          component="div"
+                        >
+                          "{review.text}"
                         </Typography>
                       </CardContent>
                     </Paper>

@@ -7,7 +7,7 @@ const AuthService = (props) => {
   const emptyUser = {
     id: "",
     username: "",
-    imagePath: "",
+    imagePath: null,
     isAdmin: false,
   };
   const loggedInCookie = "logged_in";

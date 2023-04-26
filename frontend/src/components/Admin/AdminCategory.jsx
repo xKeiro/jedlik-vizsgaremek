@@ -63,7 +63,6 @@ export default function AdminCategory() {
           console.log(errorMessage);
           return;
         }
-        console.log(responseBody);
         setCategory(responseBody);
       } catch (error) {
         console.log(error);
