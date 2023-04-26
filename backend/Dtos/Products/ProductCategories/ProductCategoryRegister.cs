@@ -2,7 +2,7 @@
 
 namespace backend.Dtos.Products.ProductCategories;
 
-public class ProductCategoryWithoutId
+public class ProductCategoryRegister
 {
     [Required]
     [MinLength(3), MaxLength(150)]

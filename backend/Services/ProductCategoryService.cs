@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using backend.Dtos.Images;
 using backend.Dtos.Products.ProductCategories;
 using backend.Interfaces.Services;
 using backend.Models;
@@ -13,18 +14,20 @@ public class ProductCategoryService : IProductCategoryService
     private readonly JedlikContext _context;
     private readonly IMapper _mapper;
     private readonly IStatusMessageService _statusMessage;
+    private readonly IImageService _imageService;
 
-    public ProductCategoryService(JedlikContext context, IMapper mapper, IStatusMessageService statusMessage)
+    public ProductCategoryService(JedlikContext context, IMapper mapper, IStatusMessageService statusMessage, IImageService imageService)
     {
         _context = context;
         _mapper = mapper;
         _statusMessage = statusMessage;
+        _imageService = imageService;
     }
 
-    public async Task<OneOf<ProductCategoryPublic, StatusMessage>> Add(ProductCategoryWithoutId productCategoryWithoutId)
+    public async Task<OneOf<ProductCategoryPublic, StatusMessage>> Add(ProductCategoryRegister productCategoryRegister)
     {
-        var productCategory = _mapper.Map<ProductCategoryWithoutId, ProductCategory>(productCategoryWithoutId);
-        (var result, var notUniquePropertyNames) = await IsUnique(productCategoryWithoutId);
+        var productCategory = _mapper.Map<ProductCategoryRegister, ProductCategory>(productCategoryRegister);
+        (var result, var notUniquePropertyNames) = await IsUnique(productCategoryRegister);
         if (!result)
         {
             return _statusMessage.NotUnique409<ProductCategory>(notUniquePropertyNames);
@@ -40,7 +43,9 @@ public class ProductCategoryService : IProductCategoryService
         var productCategory = await _context.ProductCategories
         .AsNoTracking()
         .FirstOrDefaultAsync(c => c.Id == id);
-        return productCategory == null ? (OneOf<ProductCategoryPublic, StatusMessage>)_statusMessage.NotFound404<ProductCategory>(id) : (OneOf<ProductCategoryPublic, StatusMessage>)_mapper.Map<ProductCategory, ProductCategoryPublic>(productCategory);
+        return productCategory == null 
+            ? _statusMessage.NotFound404<ProductCategory>(id) 
+            : _mapper.Map<ProductCategory, ProductCategoryPublic>(productCategory);
     }
 
     public async Task<List<ProductCategoryPublic>> GetAll()
@@ -52,7 +57,7 @@ public class ProductCategoryService : IProductCategoryService
         .ToListAsync();
         return _mapper.Map<List<ProductCategory>, List<ProductCategoryPublic>>(productCategories);
     }
-    public async Task<OneOf<ProductCategoryPublic, StatusMessage>> Update(ulong productCategoryId, ProductCategoryWithoutId productCategoryWithoutId)
+    public async Task<OneOf<ProductCategoryPublic, StatusMessage>> Update(ulong productCategoryId, ProductCategoryRegister productCategoryRegister)
     {
         var productCategory = await _context.ProductCategories
             .AsNoTracking()
@@ -61,23 +66,41 @@ public class ProductCategoryService : IProductCategoryService
         {
             return _statusMessage.NotFound404<ProductCategory>(productCategoryId);
         }
-        if (productCategoryWithoutId.Title != productCategory.Title)
+        if (productCategoryRegister.Title != productCategory.Title)
         {
-            var (result, notUniquePropertyNames) = await IsUnique(productCategoryWithoutId);
+            var (result, notUniquePropertyNames) = await IsUnique(productCategoryRegister);
             if (!result)
             {
                 return _statusMessage.NotUnique409<ProductCategory>(notUniquePropertyNames);
             }
         }
-        productCategory = _mapper.Map<ProductCategoryWithoutId, ProductCategory>(productCategoryWithoutId);
+        productCategory = _mapper.Map<ProductCategoryRegister, ProductCategory>(productCategoryRegister);
         productCategory.Id = productCategoryId;
         _ = _context.Update(productCategory);
         _ = await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
         return _mapper.Map<ProductCategory, ProductCategoryPublic>(productCategory);
     }
+    public async Task<StatusMessage> SaveImage(ulong productCategoryId, IFormFile image)
+    {
+        var productCategory = await _context.ProductCategories
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.Id == productCategoryId);
+        if (productCategory == null)
+        {
+            return _statusMessage.NotFound404<ProductCategory>(productCategoryId);
+        }
 
-    private async Task<(bool result, List<string> notUniquePropertyNames)> IsUnique(ProductCategoryWithoutId productCategoryWithoutId)
+        var imageSaveResult = await _imageService.SaveImage(image, productCategoryId, nameof(ProductCategory));
+        if (imageSaveResult.IsT1)
+        {
+            return imageSaveResult.AsT1;
+        }
+        productCategory.ImagePath = imageSaveResult.AsT0;
+        return _statusMessage.ImageSuccessfullySaved200();
+    }
+
+    private async Task<(bool result, List<string> notUniquePropertyNames)> IsUnique(ProductCategoryRegister productCategoryWithoutId)
     {
         List<string> notUniquePropertyNames = new();
         var isUnique = !await _context.ProductCategories.AnyAsync(c => c.Title.ToLower() == productCategoryWithoutId.Title.ToLower());

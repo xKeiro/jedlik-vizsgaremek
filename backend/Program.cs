@@ -46,8 +46,10 @@ builder.Services.AddScoped<IProductReviewService, ProductReviewService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IProductSupplierService, ProductSupplierService>();
 builder.Services.AddScoped<IShipperService, ShipperService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
+app.UseStaticFiles();
 app.UseExceptionHandler("/Error");
 app.MapHealthChecks("/api/HealthChecker");
 
