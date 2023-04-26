@@ -9,7 +9,9 @@ public class Product : BaseModel
 {
     [Required]
     public required ProductCategory Category { get; set; }
-    public ICollection<ProductSupplier>? ProductSuppliers { get; set; }
+    [Required]
+    [MinLength(1)]
+    public ICollection<ProductSupplier> ProductSuppliers { get; set; } = new List<ProductSupplier>();
     [Required]
     [Precision(18, 2)]
     public required decimal BasePrice { get; set; }

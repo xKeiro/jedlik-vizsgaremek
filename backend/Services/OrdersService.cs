@@ -89,7 +89,8 @@ public class OrdersService: IOrdersService
             PostalCode = user.PostalCode,
             CountryWithVat = user.CountryWithVat,
             User = user,
-            Shipper = shipper,
+            ShippingPrice = shipper.Price,
+            ShipperName = shipper.CompanyName,
         };
         foreach (var productOrderRegister in orderRegister.ProductOrders)
         {

@@ -45,6 +45,11 @@ public class JedlikContext : DbContext
 
         modelBuilder.Entity<Product>()
             .ToTable(t => t.HasCheckConstraint("CK_Products_Featured_Discontinued", "NOT (Featured=1 AND Discontinued=1)"));
+        modelBuilder.Entity<Product>()
+            .HasMany(p => p.ProductSuppliers)
+            .WithOne(ps => ps.Product)
+            .IsRequired(true)
+            .OnDelete(DeleteBehavior.Cascade);
 
     _ = modelBuilder
             .Entity<Order>()
@@ -55,7 +60,6 @@ public class JedlikContext : DbContext
         _ = modelBuilder.Entity<ProductSupplier>().Navigation(ps => ps.Supplier).AutoInclude();
         _ = modelBuilder.Entity<Order>().Navigation(o => o.ProductOrders).AutoInclude();
         _ = modelBuilder.Entity<Order>().Navigation(o => o.User).AutoInclude();
-        _ = modelBuilder.Entity<Order>().Navigation(o => o.Shipper).AutoInclude();
         _ = modelBuilder.Entity<Order>().Navigation(o => o.CountryWithVat).AutoInclude();
         _ = modelBuilder.Entity<Product>().Navigation(p => p.Category).AutoInclude();
         _ = modelBuilder.Entity<ProductReview>().Navigation(pr => pr.Product).AutoInclude();

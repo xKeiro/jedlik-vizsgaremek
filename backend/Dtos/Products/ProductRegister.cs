@@ -22,4 +22,9 @@ public class ProductRegister
     public required bool Discontinued { get; set; }
     [Required]
     public required bool Featured { get; set; }
+    [Required]
+    [Precision(18, 2)]
+    public required decimal PurchasePrice { get; set; }
+    [Required]
+    public ulong SupplierId { get; set; }
 }

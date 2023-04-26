@@ -37,7 +37,7 @@ public class MappingProfile : Profile
         _ = CreateMap<ProductReview, ProductReviewPublic>();
 
         _ = CreateMap<OrderRegister, Order>();
-        _ = CreateMap<Order, OrderPublic>().ForMember(op => op.ShipperId, opt => opt.MapFrom(o => o.Shipper.Id));
+        _ = CreateMap<Order, OrderPublic>();
         _ = CreateMap<ProductOrderPublic, ProductOrder>();
         _ = CreateMap<ProductOrder, ProductOrderPublic>();
         _ = CreateMap<ProductOrder, ProductOrderAdmin>();
