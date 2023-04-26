@@ -49,7 +49,6 @@ public class User : BaseModel
     public required CountryWithVat CountryWithVat { get; set; }
     [MinLength(3), MaxLength(200)]
     public string? ImagePath { get; set; }
-    public string Country => CountryWithVat.Country;
     public ICollection<ProductReview>? ProductReviews { get; set; }
     public ICollection<ProductOrder>? ProductOrders { get; set; }
 }

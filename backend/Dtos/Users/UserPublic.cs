@@ -40,6 +40,9 @@ public class UserPublic
     [Required]
     [MinLength(3), MaxLength(100)]
     public required string Country { get; set; }
+    [Required]
+    [Range(0, 100)]
+    public required byte Vat { get; set; }
     [MinLength(3), MaxLength(200)]
     public required string? ImagePath { get; set; }
 }
