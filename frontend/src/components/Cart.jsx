@@ -67,7 +67,13 @@ export default function Cart() {
 
   useEffect(() => {
     getAllShippers();
-  }, []);
+    setShipping(0);
+    if (auth.loggedIn) {
+      setVAT(auth.user.vat);
+    } else {
+      setVAT(27);
+    }
+  }, [auth.loggedIn, auth.user.vat]);
 
   const [VAT, setVAT] = useState(0);
   const [shipping, setShipping] = useState(0.0);
@@ -79,8 +85,6 @@ export default function Cart() {
 
   useEffect(() => {
     setAmount(shop.cart.reduce((acc, curr) => acc + curr.quantity, 0));
-    setVAT(27);
-    setShipping(0);
   }, [shop.cart]);
 
   useEffect(() => {
@@ -388,10 +392,10 @@ export default function Cart() {
                         <ListItemIcon></ListItemIcon>
                         {auth.loggedIn ? (
                           <ListItemText
-                            primary={`VAT of your country: ${VAT}%`}
+                            primary={`VAT in your country: ${VAT}%`}
                           />
                         ) : (
-                          <ListItemText primary={`VAT of Hungary: ${VAT}%`} />
+                          <ListItemText primary={`VAT in Hungary: ${VAT}%`} />
                         )}
                       </ListItemButton>
                     </ListItem>

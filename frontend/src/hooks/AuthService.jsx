@@ -7,6 +7,7 @@ const AuthService = (props) => {
   const emptyUser = {
     id: "",
     username: "",
+    vat: null,
     imagePath: null,
     isAdmin: false,
   };
@@ -57,6 +58,7 @@ const AuthService = (props) => {
     }
     updateUser("id", responseBody.id);
     updateUser("username", responseBody.username);
+    updateUser("vat", responseBody.vat);
     updateUser("imagePath", responseBody.imagePath);
     updateUser("isAdmin", responseBody.isAdmin);
     setLoggedIn(true);

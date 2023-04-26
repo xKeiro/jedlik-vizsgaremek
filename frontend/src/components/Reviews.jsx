@@ -14,36 +14,35 @@ import CircularProgress from "@mui/material/CircularProgress";
 export default function Reviews({ productId }) {
   const [reviews, setReviews] = useState(null);
 
-  async function getReviews() {
-    try {
-      const response = await fetch(
-        process.env.REACT_APP_API + `/api/reviews/product/${productId}`,
-        {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
+  useEffect(() => {
+    async function getReviews() {
+      try {
+        const response = await fetch(
+          process.env.REACT_APP_API + `/api/reviews/product/${productId}`,
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+        const responseBody = await response.json();
+        if (!response.ok) {
+          const errorMessage = responseBody.title;
+          console.log(errorMessage);
+          return;
         }
-      );
-      const responseBody = await response.json();
-      if (!response.ok) {
-        const errorMessage = responseBody.title;
-        console.log(errorMessage);
+        setReviews(responseBody);
+      } catch (error) {
+        console.log(error);
         return;
       }
-      console.log(responseBody);
-      setReviews(responseBody);
-    } catch (error) {
-      console.log(error);
-      return;
     }
-  }
 
-  useEffect(() => {
     getReviews();
-  }, []);
+  }, [productId]);
 
   return (
     <>
