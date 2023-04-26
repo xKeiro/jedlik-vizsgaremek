@@ -5,6 +5,7 @@ using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using OneOf;
 using System.Security.Claims;
 
@@ -25,29 +26,27 @@ public class OrdersController : ApiControllerBase
     [Authorize(Roles = "Admin")]
     public ActionResult<IAsyncEnumerable<OrderAdmin>> GetAll()
         => Ok(_service.GetAll());
-    [HttpGet]
-    [Route("Me")]
+    [HttpGet("Me")]
     [Authorize]
+    [OutputCache(Duration = 60)]
     public ActionResult<IAsyncEnumerable<OrderPublic>> GetAllOfMine()
     {
         var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         return Ok(_service.GetAllByUserId(userId));
     }
-    [HttpGet]
-    [Route("Me/{orderId}")]
+    [HttpGet("Me/{orderId}")]
     [Authorize]
+    [OutputCache(Duration = 120)]
     public async Task<ActionResult<OneOf<OrderPublic, StatusMessage>>> FindMyOrder(ulong orderId)
     {
         var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         return (await _service.FindMyOrder(userId, orderId)).Match(Ok, Problem);
     }
-    [HttpGet]
-    [Route("{orderId}")]
+    [HttpGet("{orderId}")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<OneOf<OrderAdmin, StatusMessage>>> FindByOrderId(ulong orderId)
         => (await _service.FindByOrderId(orderId)).Match(Ok, Problem);
-    [HttpPatch]
-    [Route("{orderId}/Status")]
+    [HttpPatch("{orderId}/Status")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<OneOf<OrderAdmin, StatusMessage>>> SetOrderStatus(ulong orderId, OrderStatus status)
         => (await _service.SetOrderStatus(orderId, status)).Match(Ok, Problem);

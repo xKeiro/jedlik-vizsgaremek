@@ -4,6 +4,7 @@ using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using System.Security.Claims;
 
 namespace backend.Controllers;
@@ -40,6 +41,7 @@ public class ReviewsController : ApiControllerBase
     }
     [HttpGet]
     [Route("Product/{productId}")]
+    [OutputCache(Duration = 120)]
     public async Task<ActionResult<List<ProductReviewPublic>>> GetByProductId(ulong productId)
         => (await _service.GetByProductId(productId)).Match(Ok, Problem);
     [HttpPost]

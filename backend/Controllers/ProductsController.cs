@@ -5,6 +5,7 @@ using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace backend.Controllers;
 
@@ -20,6 +21,7 @@ public class ProductsController : ApiControllerBase
         _service = service;
     }
     [HttpGet]
+    [OutputCache(Duration = 120)]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetNotDiscontinued()
         => Ok(_service.GetNotDiscontinued());
     [HttpPost]
@@ -30,6 +32,7 @@ public class ProductsController : ApiControllerBase
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetNotDiscontinuedByCategoryId(ulong categoryId)
         => Ok(_service.GetNotDiscontinuedByCategoryId(categoryId));
     [HttpGet("Featured")]
+    [OutputCache(Duration = 120)]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetFeatured()
         => Ok(_service.GetFeatured());
     [HttpGet("All")]
@@ -37,6 +40,7 @@ public class ProductsController : ApiControllerBase
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetAll()
         => Ok(_service.GetAll());
     [HttpGet("{productId}")]
+    [OutputCache(Duration = 60)]
 
     public async Task<ActionResult<ProductPublic>> GetById(ulong productId)
         => (await _service.FindById(productId)).Match(Ok, Problem);

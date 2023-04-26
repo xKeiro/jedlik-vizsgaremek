@@ -3,6 +3,7 @@ using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace backend.Controllers;
 
@@ -17,6 +18,7 @@ public class ShippersController: ApiControllerBase
         _shipperService = shipperService;
     }
     [HttpGet]
+    [OutputCache(Duration = 120)]
     public ActionResult<IAsyncEnumerable<ShipperPublic>> GetAll()
         => Ok(_shipperService.GetAll());
     [HttpPost]
@@ -25,6 +27,7 @@ public class ShippersController: ApiControllerBase
         => (await _shipperService.Add(shipperRegister)).Match(Created, Problem);
     [HttpGet]
     [Route("{id}")]
+    [OutputCache(Duration = 60)]
     public async Task<ActionResult<ShipperPublic>> Get(ulong id)
         => (await _shipperService.Find(id)).Match(Ok, Problem);
     [HttpPut]

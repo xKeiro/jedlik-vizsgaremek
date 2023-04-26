@@ -5,6 +5,7 @@ using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace backend.Controllers;
 
@@ -21,6 +22,7 @@ public class CategoriesController : ApiControllerBase
     }
 
     [HttpGet]
+    [OutputCache(Duration = 120)]
     public async Task<ActionResult<IAsyncEnumerable<ProductCategoryPublic>>> GetAll()
         => Ok(await _service.GetAll());
 
@@ -30,6 +32,7 @@ public class CategoriesController : ApiControllerBase
         => (await _service.Add(productCategoryWithoutId)).Match(Created, Problem);
 
     [HttpGet("{id}")]
+    [OutputCache(Duration = 120)]
     public async Task<ActionResult<ProductCategoryPublic>> Get(ulong id)
         => (await _service.Find(id)).Match(Ok, Problem);
 
