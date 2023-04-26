@@ -103,7 +103,7 @@ public class ProductService : IProductService
             ? _statusMessage.NotFound404<Product>(productId) 
             : _mapper.Map<Product, ProductPublic>(product);
     }
-    public async Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductRegister productRegister)
+    public async Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductUpdate productUpdate)
     {
         var product = await _context.Products
             .Include(p => p.Category)
@@ -112,25 +112,25 @@ public class ProductService : IProductService
         {
             return _statusMessage.NotFound404<Product>(productId);
         }
-        if (productRegister.Title != product.Title)
+        if (productUpdate.Title != product.Title)
         {
-            var productToCheck = _mapper.Map<ProductRegister, Product>(productRegister);
+            var productToCheck = _mapper.Map<ProductUpdate, Product>(productUpdate);
             (var isUnique, var notUniquePropertyNames) = await IsUnique(productToCheck);
             if (!isUnique)
             {
                 return _statusMessage.NotUnique409<Product>(notUniquePropertyNames);
             }
         }
-        var productToUpdate = _mapper.Map(productRegister, product);
+        var productToUpdate = _mapper.Map(productUpdate, product);
         if (IsDiscontinuedAndFeaturedAtTheSameTime(productToUpdate))
         {
             return _statusMessage.ProductCannotBeDiscontinuedAndFeaturedAtTheSameTime400();
         }
         var category = await _context.ProductCategories
-            .FirstOrDefaultAsync(c => c.Id == productRegister.CategoryId);
+            .FirstOrDefaultAsync(c => c.Id == productUpdate.CategoryId);
         if (category == null)
         {
-            return _statusMessage.NotFound404<ProductCategory>(productRegister.CategoryId);
+            return _statusMessage.NotFound404<ProductCategory>(productUpdate.CategoryId);
         }
         productToUpdate.Category = category;
         _ = _context.Products.Update(productToUpdate);

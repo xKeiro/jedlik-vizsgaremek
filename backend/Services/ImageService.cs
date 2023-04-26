@@ -1,18 +1,16 @@
-﻿using AutoMapper;
-using backend.Dtos.Images;
-using backend.Interfaces.Services;
+﻿using backend.Interfaces.Services;
 using backend.Models;
-using ImageProcessor.Plugins.WebP.Imaging.Formats;
 using ImageProcessor;
+using ImageProcessor.Plugins.WebP.Imaging.Formats;
 using OneOf;
 
 namespace backend.Services;
 
-public class ImageService: IImageService
+public class ImageService : IImageService
 {
     private readonly IStatusMessageService _statusMessage;
     private readonly IWebHostEnvironment _webHostEnvironment;
-    private readonly string[] ALLOWED_IMAGE_TYPES = new string[] { "image/jpeg", "image/png" };
+    private readonly string[] ALLOWED_IMAGE_TYPES = new string[] { "image/jpeg", "image/png", "image/gif", "image/tiff" };
     public ImageService(IStatusMessageService statusMessage, IWebHostEnvironment webHostEnvironment)
     {
         _statusMessage = statusMessage;
@@ -24,22 +22,25 @@ public class ImageService: IImageService
         {
             return _statusMessage.WrongImageType400(ALLOWED_IMAGE_TYPES);
         }
-        var relativePath = $"Images/{nameOfModel}/{id}.webp";
-        var path = Path.Combine(_webHostEnvironment.WebRootPath, relativePath);
-        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-
+        var (relativePath, path) = GetImagePath(id, nameOfModel);
+        _ = Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         await using (var webpFileStream = new FileStream(path, FileMode.Create))
         {
-            using (ImageFactory imageFactory = new ImageFactory(preserveExifData: false))
-            {
-                imageFactory.Load(image.OpenReadStream())
-                            .Format(new WebPFormat())
-                            .Quality(50)
-                            .Save(webpFileStream);
-            }
+            using var imageFactory = new ImageFactory(preserveExifData: false);
+            _ = imageFactory.Load(image.OpenReadStream())
+                        .Format(new WebPFormat())
+                        .Quality(50)
+                        .Save(webpFileStream);
         }
         return relativePath;
     }
-    
+
+    private (string relativePath, string path) GetImagePath(ulong id, string nameOfModel)
+    {
+        var relativePath = $"Images/{nameOfModel}/{id}.webp";
+        var path = Path.Combine(_webHostEnvironment.WebRootPath, relativePath);
+        return (relativePath, path);
+    }
+
 
 }

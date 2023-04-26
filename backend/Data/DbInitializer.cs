@@ -152,7 +152,6 @@ public static class DbInitializer
                 Phone = "-",
                 Email = "-",
                 Price = 0,
-                Disabled = false,
             },
             new(){
                 Id = 2,
@@ -162,7 +161,6 @@ public static class DbInitializer
                 Phone = "+36556667777",
                 Email = "contact@hungarianpost.com",
                 Price = 9.99m,
-                Disabled = false,
             },
             new(){
                 Id = 3,
@@ -172,7 +170,6 @@ public static class DbInitializer
                 Phone = "+36557778888",
                 Email = "fedex@fedexeu.com",
                 Price = 14.99m,
-                Disabled = false,
             },
             new(){
                 Id = 4,
@@ -182,7 +179,6 @@ public static class DbInitializer
                 Phone = "+36558889999",
                 Email = "contact@glseu.com",
                 Price = 18.99m,
-                Disabled = true,
             },
             };
         context.AddRangeAsync(shippers);

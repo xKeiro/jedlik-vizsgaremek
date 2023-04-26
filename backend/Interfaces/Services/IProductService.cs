@@ -12,7 +12,7 @@ public interface IProductService
     IAsyncEnumerable<ProductPublic> GetFeatured();
     IAsyncEnumerable<ProductPublic> GetAll();
     Task<OneOf<ProductPublic, StatusMessage>> FindById(ulong productId);
-    Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductRegister productRegister);
+    Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductUpdate productUpdate);
     Task<StatusMessage> Discontinue(ulong productId);
     Task<StatusMessage> SaveImage(ulong productId, IFormFile image);
 }

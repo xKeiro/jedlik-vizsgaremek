@@ -26,5 +26,4 @@ public class Shipper : BaseModel
     [Required]
     [Precision(18, 2)]
     public required decimal Price { get; set; }
-    public bool Disabled { get; set; } = false;
 }
