@@ -1,4 +1,5 @@
 ﻿using backend.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,7 +10,11 @@ public class Order : BaseModel
     [Required]
     public required User User { get; set; }
     [Required]
-    public required Shipper Shipper { get; set; }
+    [MinLength(3), MaxLength(75)]
+    public required string ShipperName { get; set; }
+    [Required]
+    [Precision(18,2)]
+    public required decimal ShippingPrice { get; set; }
     [Required]
     [MinLength(1)]
     public ICollection<ProductOrder> ProductOrders { get; set; } = null!;
@@ -37,7 +42,7 @@ public class Order : BaseModel
     public byte Vat => CountryWithVat.Vat;
     public decimal OrderTotal => ProductOrders.Sum(po => po.TotalPrice);
     public decimal OrderTotalWithVat => OrderTotal * (1 + ((decimal)Vat / 100));
-    public decimal OrderTotalWithShipping => OrderTotalWithVat + Shipper.Price;
+    public decimal OrderTotalWithShipping => OrderTotalWithVat + ShippingPrice;
     public decimal Profit
         => OrderTotal - ProductOrders.Sum(po => po.CostPrice * po.Quantity);
 

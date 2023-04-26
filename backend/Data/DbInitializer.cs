@@ -822,7 +822,8 @@ public static class DbInitializer
             new(){
                 Id = 1,
                 User = context.Users.Where(x => x.Id == 2).First(),
-                Shipper = context.Shippers.Where(x => x.Id == 2).First(),
+                ShipperName = "Hungarian Post",
+                ShippingPrice = 9.99m,
                 Status = OrderStatus.Fulfilled,
                 Street = "62 Amoth Trail",
                 City = "Sopron",
