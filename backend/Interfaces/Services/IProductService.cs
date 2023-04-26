@@ -14,4 +14,5 @@ public interface IProductService
     Task<OneOf<ProductPublic, StatusMessage>> FindById(ulong productId);
     Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductRegister productRegister);
     Task<StatusMessage> Discontinue(ulong productId);
+    Task<StatusMessage> SaveImage(ulong productId, IFormFile image);
 }
