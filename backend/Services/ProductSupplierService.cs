@@ -79,6 +79,7 @@ public class ProductSupplierService: IProductSupplierService
     public async Task<OneOf<ProductSupplierPublic, StatusMessage>> Update(ulong productId, ulong supplierId, ProductSupplierUpdate productSupplierUpdate)
     {
         var productSupplier = await _context.ProductSuppliers
+            .Include(ps => ps.Product)
             .FirstOrDefaultAsync(ps => ps.Product.Id == productId && ps.Supplier.Id == supplierId);
         if (productSupplier == null)
         {
