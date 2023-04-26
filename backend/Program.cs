@@ -45,6 +45,7 @@ builder.Services.AddScoped<IOrdersService, OrdersService>();
 builder.Services.AddScoped<IProductReviewService, ProductReviewService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IProductSupplierService, ProductSupplierService>();
+builder.Services.AddScoped<IShipperService, ShipperService>();
 
 var app = builder.Build();
 app.UseExceptionHandler("/Error");
