@@ -70,13 +70,11 @@ export default function UserRegistration() {
           phone: userForm.phone,
           password: userForm.password,
           passwordConfirm: userForm.passwordConfirm,
-          address: {
-            street: userForm.street,
-            city: userForm.city,
-            region: userForm.region,
-            postalCode: userForm.postalCode,
-            country: userForm.country,
-          },
+          street: userForm.street,
+          city: userForm.city,
+          region: userForm.region,
+          postalCode: userForm.postalCode,
+          country: userForm.country,
         }),
       });
       const responseBody = await response.json();

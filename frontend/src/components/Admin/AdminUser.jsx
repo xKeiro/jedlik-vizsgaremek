@@ -60,17 +60,15 @@ export default function AdminUser() {
       lastName: user.lastName,
       email: user.email,
       phone: user.phone,
-
       id: user.id,
       isAdmin: user.isAdmin,
       //password: "",
       //passwordConfirm: "",
-
-      street: user.address.street,
-      city: user.address.city,
-      region: user.address.region,
-      postalCode: user.address.postalCode,
-      country: user.address.country,
+      street: user.street,
+      city: user.city,
+      region: user.region,
+      postalCode: user.postalCode,
+      country: user.country,
     });
     setIsLoading(false);
   }, [user]);

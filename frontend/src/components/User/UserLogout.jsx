@@ -37,7 +37,6 @@ export default function UserLogout() {
         setErrorText(errorMessage);
         return;
       }
-      console.log(response);
       //setIsLoading(false);
       setSuccessText("Successfully logged out, redirecting...");
       setTimeout(() => {

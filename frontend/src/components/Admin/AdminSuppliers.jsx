@@ -131,7 +131,7 @@ export default function AdminSuppliers() {
                         <TableCell component="th" scope="row">
                           <Link
                             component={RouterLink}
-                            to={"/supplier/" + supplier.id}
+                            to={"/admin/supplier/" + supplier.id}
                           >
                             {supplier.companyName}
                           </Link>

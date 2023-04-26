@@ -55,17 +55,15 @@ export default function UserAccount() {
       lastName: user.lastName,
       email: user.email,
       phone: user.phone,
-
       id: user.id,
       isAdmin: user.isAdmin,
       //password: "",
       //passwordConfirm: "",
-
-      street: user.address.street,
-      city: user.address.city,
-      region: user.address.region,
-      postalCode: user.address.postalCode,
-      country: user.address.country,
+      street: user.street,
+      city: user.city,
+      region: user.region,
+      postalCode: user.postalCode,
+      country: user.country,
     });
     setIsLoading(false);
   }, [user]);
@@ -91,13 +89,11 @@ export default function UserAccount() {
           phone: userForm.phone,
           //password: userForm.password,
           //passwordConfirm: userForm.passwordConfirm,
-          address: {
-            street: userForm.street,
-            city: userForm.city,
-            region: userForm.region,
-            postalCode: userForm.postalCode,
-            country: userForm.country,
-          },
+          street: userForm.street,
+          city: userForm.city,
+          region: userForm.region,
+          postalCode: userForm.postalCode,
+          country: userForm.country,
         }),
       });
       const responseBody = await response.json();
