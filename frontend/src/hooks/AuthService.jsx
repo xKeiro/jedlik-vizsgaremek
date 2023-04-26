@@ -4,14 +4,15 @@ import Cookies from "js-cookie";
 import AuthContext from "../contexts/AuthContext";
 
 const AuthService = (props) => {
-  const loggedInCookie = "logged_in";
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState({
+  const emptyUser = {
     id: "",
     username: "",
-    photo: "",
+    imagePath: "",
     isAdmin: false,
-  });
+  };
+  const loggedInCookie = "logged_in";
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState(emptyUser);
 
   function updateUser(key, value) {
     setUser((prevState) => ({
@@ -21,12 +22,7 @@ const AuthService = (props) => {
   }
 
   function resetUser() {
-    setUser({
-      id: "",
-      username: "",
-      photo: "",
-      isAdmin: false,
-    });
+    setUser(emptyUser);
   }
 
   async function refreshUser() {
@@ -58,7 +54,7 @@ const AuthService = (props) => {
     }
     updateUser("id", responseBody.id);
     updateUser("username", responseBody.username);
-    updateUser("photo", responseBody.photo);
+    updateUser("imagePath", responseBody.imagePath);
     updateUser("isAdmin", responseBody.isAdmin);
     setLoggedIn(true);
     Cookies.set(loggedInCookie, true, { expires: 7 });
