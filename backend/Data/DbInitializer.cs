@@ -358,6 +358,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = true,
+                ImagePath = $"Images/{nameof(ProductCategory)}/1.webp",
             },
             new(){
                 Id = 2,
@@ -369,6 +370,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = true,
+                ImagePath = $"Images/{nameof(ProductCategory)}/2.webp",
             },
             new(){
                 Id = 3,
@@ -380,6 +382,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = true,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/3.webp",
             },
             new(){
                 Id = 4,
@@ -391,6 +394,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = true,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/4.webp",
             },
             new(){
                 Id = 5,
@@ -402,6 +406,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = true,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/5.webp",
             },
             new(){
                 Id = 6,
@@ -413,6 +418,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/6.webp",
             },
             new(){
                 Id = 7,
@@ -424,6 +430,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/7.webp",
             },
             new(){
                 Id = 8,
@@ -435,6 +442,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/8.webp",
             },
             new(){
                 Id = 9,
@@ -446,6 +454,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/9.webp",
             },
             new(){
                 Id = 10,
@@ -457,6 +466,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/10.webp",
             },
             new(){
                 Id = 11,
@@ -468,6 +478,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/11.webp",
             },
             new(){
                 Id = 12,
@@ -479,6 +490,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/12.webp",
             },
             new(){
                 Id = 13,
@@ -490,6 +502,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/13.webp",
             },
             new(){
                 Id = 14,
@@ -501,6 +514,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/14.webp",
             },
             new(){
                 Id = 15,
@@ -512,6 +526,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/15.webp",
             },
             new(){
                 Id = 16,
@@ -523,6 +538,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/16.webp",
             },
             new(){
                 Id = 17,
@@ -534,6 +550,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/17.webp",
             },
             new(){
                 Id = 18,
@@ -545,6 +562,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/18.webp",
             },
             new(){
                 Id = 19,
@@ -556,6 +574,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/19.webp",
             },
             new(){
                 Id = 20,
@@ -567,6 +586,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/20.webp",
             },
             new(){
                 Id = 21,
@@ -578,6 +598,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/21.webp",
             },
             new(){
                 Id = 22,
@@ -589,6 +610,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/22.webp",
             },
             new(){
                 Id = 23,
@@ -600,6 +622,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/23.webp",
             },
             new(){
                 Id = 24,
@@ -611,6 +634,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/24.webp",
             },
             new(){
                 Id = 25,
@@ -622,6 +646,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/25.webp",
             },
             new(){
                 Id = 26,
@@ -633,6 +658,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/26.webp",
             },
             new(){
                 Id = 27,
@@ -644,6 +670,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/27.webp",
             },
             new(){
                 Id = 28,
@@ -655,6 +682,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/28.webp",
             },
             new(){
                 Id = 29,
@@ -666,6 +694,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/29.webp",
             },
             new(){
                 Id = 30,
@@ -677,6 +706,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/30.webp",
             },
             new(){
                 Id = 31,
@@ -688,6 +718,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/31.webp",
             },
             new(){
                 Id = 32,
@@ -699,6 +730,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/32.webp",
             },
             new(){
                 Id = 33,
@@ -710,6 +742,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/33.webp",
             },
             new(){
                 Id = 34,
@@ -721,6 +754,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/34.webp",
             },
             new(){
                 Id = 35,
@@ -732,6 +766,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/35.webp",
             },
             new(){
                 Id = 36,
@@ -743,6 +778,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/36.webp",
             },
             new(){
                 Id = 37,
@@ -754,6 +790,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = false,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/37.webp",
             },
             new(){
                 Id = 38,
@@ -765,6 +802,7 @@ public static class DbInitializer
                 Discount = 0,
                 Featured = true,
                 Discontinued = false,
+                ImagePath = $"Images/{nameof(ProductCategory)}/38.webp",
             },
 
         };
