@@ -26,11 +26,11 @@ export default function AdminSupplier() {
 
   useEffect(() => {
     const newSupplier = {
-      company_name: "",
-      contact_first_name: "",
-      contact_last_name: "",
-      email: "",
+      companyName: "",
+      contactFirstName: "",
+      contactLastName: "",
       phone: "",
+      email: "",
     };
 
     async function getSupplier() {
@@ -84,18 +84,18 @@ export default function AdminSupplier() {
           ? `http://localhost:5000/api/suppliers/${id}`
           : `http://localhost:5000/api/suppliers/`,
         {
-          method: id ? "PATCH" : "POST",
+          method: id ? "PUT" : "POST",
           mode: "cors",
           headers: {
             "Content-type": "application/json",
           },
           credentials: "include",
           body: JSON.stringify({
-            company_name: supplier.company_name,
-            contact_first_name: supplier.contact_first_name,
-            contact_last_name: supplier.contact_last_name,
-            email: supplier.email,
+            companyName: supplier.companyName,
+            contactFirstName: supplier.contactFirstName,
+            contactLastName: supplier.contactLastName,
             phone: supplier.phone,
+            email: supplier.email,
             price: supplier.price,
           }),
         }
@@ -126,7 +126,7 @@ export default function AdminSupplier() {
     <div className="AdminSupplier">
       <Box>
         <Paper elevation={2}>
-          <h3>{id ? "Supplier Editor" : "Add new supplier"} (WIP)</h3>
+          <h3>{id ? "Supplier Editor" : "Add new supplier"}</h3>
         </Paper>
       </Box>
       <Box
@@ -176,60 +176,44 @@ export default function AdminSupplier() {
                     fullWidth
                     required
                     label="Company Name"
-                    id="cname"
-                    name="company_name"
+                    id="companyName"
+                    name="companyName"
                     type="text"
-                    value={supplier.company_name}
+                    value={supplier.companyName}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
                     required
                     label="Contact First Name"
-                    id="contact_first_name
-                    "
-                    name="contact_first_name
-                    "
+                    id="contactFirstName"
+                    name="contactFirstName"
                     type="text"
-                    value={supplier.contact_first_name}
+                    value={supplier.contactFirstName}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
                     required
                     label="Contact Last Name"
-                    id="contact_last_name"
-                    name="contact_last_name"
+                    id="contactLastName"
+                    name="contactLastName"
                     type="text"
-                    value={supplier.contact_last_name}
+                    value={supplier.contactLastName}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Email"
-                    id="email"
-                    name="email"
-                    type="text"
-                    value={supplier.email}
-                    onChange={handleChange}
-                    disabled={isLoading}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
                     required
@@ -238,6 +222,20 @@ export default function AdminSupplier() {
                     name="phone"
                     type="text"
                     value={supplier.phone}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Email"
+                    id="email"
+                    name="email"
+                    type="text"
+                    value={supplier.email}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"

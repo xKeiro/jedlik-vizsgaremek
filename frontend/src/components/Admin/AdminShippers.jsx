@@ -16,19 +16,7 @@ import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function AdminShippers() {
-  //const [shippers, setShippers] = useState(null);
-
-  const mockShippers = [
-    {
-      company_name: "mock shipper Inc.",
-      contact_first_name: "John",
-      contact_last_name: "Doe",
-      email: "shipper1@example.com",
-      id: "1",
-      phone: "+36301111111",
-      price: 9.99,
-    },
-  ];
+  const [shippers, setShippers] = useState(null);
 
   async function getAllShippers() {
     try {
@@ -46,7 +34,7 @@ export default function AdminShippers() {
         console.log(errorMessage);
         return;
       }
-      //setShippers(responseBody);
+      setShippers(responseBody);
     } catch (error) {
       console.log(error);
       return;
@@ -54,25 +42,19 @@ export default function AdminShippers() {
   }
 
   useEffect(() => {
-    //getAllShippers();
+    getAllShippers();
   }, []);
 
-  async function handleRemove(e) {
-    //const title = e.target.parentNode.parentNode.dataset.title;
-    const id = e.target.parentNode.parentNode.dataset.id;
-
+  async function handleRemove(id) {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/shippers/${id}/disable`,
-        {
-          method: "PATCH",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`http://localhost:5000/api/shippers/${id}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: {
+          "Content-type": "application/json",
+        },
+        credentials: "include",
+      });
       const responseBody = await response.json();
       console.log(responseBody);
       if (!response.ok) {
@@ -91,7 +73,7 @@ export default function AdminShippers() {
     <div className="AdminShippers">
       <Box>
         <Paper elevation={2}>
-          <h3>Shippers Management (WIP)</h3>
+          <h3>Shippers Management</h3>
         </Paper>
       </Box>
       <Box
@@ -132,8 +114,8 @@ export default function AdminShippers() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {mockShippers ? (
-                    mockShippers.map((shipper) => (
+                  {shippers ? (
+                    shippers.map((shipper) => (
                       <TableRow
                         key={shipper.id}
                         data-id={shipper.id}
@@ -146,9 +128,9 @@ export default function AdminShippers() {
                         <TableCell component="th" scope="row">
                           <Link
                             component={RouterLink}
-                            to={"/shipper/" + shipper.id}
+                            to={"/admin/shipper/" + shipper.id}
                           >
-                            {shipper.company_name}
+                            {shipper.companyName}
                           </Link>
                         </TableCell>
                         <TableCell align="right">{shipper.email}</TableCell>
@@ -164,10 +146,10 @@ export default function AdminShippers() {
                           <Button
                             variant="outlined"
                             sx={{ marginLeft: 1 }}
-                            onClick={handleRemove}
-                            disabled={false}
+                            onClick={() => handleRemove(shipper.id)}
+                            disabled={shipper.disabled}
                           >
-                            Disable (WIP)
+                            {shipper.disabled ? "Disabled" : "Disable"}
                           </Button>
                         </TableCell>
                       </TableRow>

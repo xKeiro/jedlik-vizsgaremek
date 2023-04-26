@@ -16,18 +16,7 @@ import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function AdminSuppliers() {
-  //const [suppliers, setSuppliers] = useState(null);
-
-  const mockSuppliers = [
-    {
-      id: "1",
-      company_name: "Mock supplier Inc.",
-      contact_first_name: "John",
-      contact_last_name: "Doe",
-      email: "suppliers@example.com",
-      phone: "+36302222222",
-    },
-  ];
+  const [suppliers, setSuppliers] = useState(null);
 
   async function getAllSuppliers() {
     try {
@@ -45,7 +34,7 @@ export default function AdminSuppliers() {
         console.log(errorMessage);
         return;
       }
-      //setSuppliers(responseBody.suppliers);
+      setSuppliers(responseBody);
     } catch (error) {
       console.log(error);
       return;
@@ -53,18 +42,15 @@ export default function AdminSuppliers() {
   }
 
   useEffect(() => {
-    //getAllSuppliers();
+    getAllSuppliers();
   }, []);
 
-  async function handleRemove(e) {
-    //const title = e.target.parentNode.parentNode.dataset.title;
-    const id = e.target.parentNode.parentNode.dataset.id;
-
+  async function handleRemove(id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/suppliers/${id}/disable`,
+        `http://localhost:5000/api/suppliers/${id}`,
         {
-          method: "PATCH",
+          method: "DELETE",
           mode: "cors",
           headers: {
             "Content-type": "application/json",
@@ -90,7 +76,7 @@ export default function AdminSuppliers() {
     <div className="AdminSuppliers">
       <Box>
         <Paper elevation={2}>
-          <h3>Suppliers Management (WIP)</h3>
+          <h3>Suppliers Management</h3>
         </Paper>
       </Box>
       <Box
@@ -126,13 +112,13 @@ export default function AdminSuppliers() {
                   <TableRow>
                     <TableCell>Company</TableCell>
                     <TableCell align="right">Email</TableCell>
-                    <TableCell align="right">Price</TableCell>
+                    <TableCell align="right">Phone</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {mockSuppliers ? (
-                    mockSuppliers.map((supplier) => (
+                  {suppliers ? (
+                    suppliers.map((supplier) => (
                       <TableRow
                         key={supplier.id}
                         data-id={supplier.id}
@@ -147,11 +133,11 @@ export default function AdminSuppliers() {
                             component={RouterLink}
                             to={"/supplier/" + supplier.id}
                           >
-                            {supplier.company_name}
+                            {supplier.companyName}
                           </Link>
                         </TableCell>
                         <TableCell align="right">{supplier.email}</TableCell>
-                        <TableCell align="right">{supplier.price}</TableCell>
+                        <TableCell align="right">{supplier.phone}</TableCell>
                         <TableCell align="right">
                           <Button
                             variant="outlined"
@@ -163,10 +149,10 @@ export default function AdminSuppliers() {
                           <Button
                             variant="outlined"
                             sx={{ marginLeft: 1 }}
-                            onClick={handleRemove}
+                            onClick={() => handleRemove(supplier.id)}
                             disabled={false}
                           >
-                            Disable (WIP)
+                            Delete
                           </Button>
                         </TableCell>
                       </TableRow>
