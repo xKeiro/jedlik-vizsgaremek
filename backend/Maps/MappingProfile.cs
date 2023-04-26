@@ -32,6 +32,7 @@ public class MappingProfile : Profile
         _ = CreateMap<User, UserPublicLimited>();
 
         _ = CreateMap<ProductRegister, Product>();
+        _ = CreateMap<ProductUpdate, Product>();
         _ = CreateMap<Product, ProductPublic>().ForMember(pb => pb.CategoryId, opt => opt.MapFrom(p => p.Category.Id));
         _ = CreateMap<Product, ProductPublicLimited>();
 

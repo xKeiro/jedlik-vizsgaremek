@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace backend.Conventions;
 
-public static class ProductConventions<TProductRegister> where TProductRegister : class
+public static class ProductConventions<TProductRegister, TProductUpdate> 
+    where TProductRegister : class
+    where TProductUpdate : class
 {
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -60,7 +62,7 @@ public static class ProductConventions<TProductRegister> where TProductRegister 
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void Update([ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] ulong productId, [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] TProductRegister productRegister)
+    public static void Update([ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] ulong productId, [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] TProductUpdate productUpdate)
     {
         // Method intentionally left empty.
     }

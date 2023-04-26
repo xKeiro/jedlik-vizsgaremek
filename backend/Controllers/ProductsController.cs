@@ -11,7 +11,7 @@ namespace backend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[ApiConventionType(typeof(ProductConventions<ProductRegister>))]
+[ApiConventionType(typeof(ProductConventions<ProductRegister, ProductUpdate>))]
 public class ProductsController : ApiControllerBase
 {
     private readonly IProductService _service;
@@ -46,8 +46,8 @@ public class ProductsController : ApiControllerBase
         => (await _service.FindById(productId)).Match(Ok, Problem);
     [HttpPut("{productId}")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<ProductPublic>> Update(ulong productId, ProductRegister productRegister)
-        => (await _service.Update(productId, productRegister)).Match(Ok, Problem);
+    public async Task<ActionResult<ProductPublic>> Update(ulong productId, ProductUpdate productUpdate)
+        => (await _service.Update(productId, productUpdate)).Match(Ok, Problem);
     [HttpPatch("{productId}/Discontinue")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<StatusMessage>> Discontinue(ulong productId)
