@@ -53,4 +53,24 @@ public class ShipperService: IShipperService
         }
         return _mapper.Map<Shipper, ShipperPublic>(shipper);
     }
+    public async Task<OneOf<ShipperPublic, StatusMessage>> Update(ulong shipperId, ShipperRegister shipperRegister)
+    {
+        var shipper = await _context.Shippers
+            .FirstOrDefaultAsync(s => s.Id == shipperId);
+        if (shipper == null)
+        {
+            return _statusMessage.NotFound404<Shipper>(shipperId);
+        }
+        var isUnique = !await _context.Shippers
+            .AnyAsync(s => s.CompanyName.ToLower() == shipperRegister.CompanyName.ToLower() && s.Id != shipperId);
+        if (!isUnique)
+        {
+            return _statusMessage.NotUnique409<Shipper>(new List<string>() { nameof(shipperRegister.CompanyName) });
+        }
+        _mapper.Map(shipperRegister, shipper);
+        _context.Shippers.Update(shipper);
+        _ = await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return _mapper.Map<Shipper, ShipperPublic>(shipper);
+    }
 }
