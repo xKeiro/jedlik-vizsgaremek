@@ -22,4 +22,8 @@ public class ShippersController: ApiControllerBase
     [Authorize (Roles = "Admin")]
     public async Task<ActionResult<ShipperPublic>> Add(ShipperRegister shipperRegister)
         => (await _shipperService.Add(shipperRegister)).Match(Created, Problem);
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<ActionResult<ShipperPublic>> Get(ulong id)
+        => (await _shipperService.Find(id)).Match(Ok, Problem);
 }

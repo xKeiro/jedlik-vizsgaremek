@@ -43,4 +43,14 @@ public class ShipperService: IShipperService
         _context.ChangeTracker.Clear();
         return _mapper.Map<Shipper, ShipperPublic>(shipper);
     }
+    public async Task<OneOf<ShipperPublic, StatusMessage>> Find(ulong shipperId)
+    {
+        var shipper = await _context.Shippers
+            .FirstOrDefaultAsync(s => s.Id == shipperId);
+        if (shipper == null)
+        {
+            return _statusMessage.NotFound404<Shipper>(shipperId);
+        }
+        return _mapper.Map<Shipper, ShipperPublic>(shipper);
+    }
 }
