@@ -47,7 +47,7 @@ export default function AdminCategory() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/categories/${id}`,
+          process.env.REACT_APP_API + `/api/categories/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -90,8 +90,8 @@ export default function AdminCategory() {
     try {
       const response = await fetch(
         id
-          ? `http://localhost:5000/api/categories/${id}`
-          : `http://localhost:5000/api/categories/`,
+          ? process.env.REACT_APP_API + `/api/categories/${id}`
+          : process.env.REACT_APP_API + `/api/categories/`,
         {
           method: id ? "PUT" : "POST",
           mode: "cors",
@@ -147,7 +147,7 @@ export default function AdminCategory() {
           <Card key={category.id} sx={{}}>
             <CardMedia
               sx={{ height: 150 }}
-              image={"http://localhost:5000/" + category.imagePath}
+              image={process.env.REACT_APP_API + "/" + category.imagePath}
               title={category.title}
             />
             <CardContent>

@@ -32,7 +32,7 @@ export default function UserReview({ productId }) {
     setErrorText("");
     setSuccessText("");
     try {
-      const response = await fetch("http://localhost:5000/api/reviews", {
+      const response = await fetch(process.env.REACT_APP_API + "/api/reviews", {
         method: "POST",
         mode: "cors",
         headers: {

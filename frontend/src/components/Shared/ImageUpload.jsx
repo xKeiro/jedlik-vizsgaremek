@@ -14,11 +14,11 @@ export default function ImageUpload({ endpoint, id }) {
   const [successText, setSuccessText] = useState("");
 
   const [url, setUrl] = useState(
-    `http://localhost:5000/api/${endpoint}/${id}/Image`
+    process.env.REACT_APP_API + `/api/${endpoint}/${id}/Image`
   );
 
   useEffect(() => {
-    setUrl(`http://localhost:5000/api/${endpoint}/${id}/Image`);
+    setUrl(process.env.REACT_APP_API + `/api/${endpoint}/${id}/Image`);
   }, [id, endpoint]);
 
   const [filesToUpload, setFilesToUpload] = useState([]);

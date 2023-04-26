@@ -19,7 +19,7 @@ export default function AdminReviews() {
 
   async function getAllReviews() {
     try {
-      const response = await fetch(`http://localhost:5000/api/reviews/`, {
+      const response = await fetch(process.env.REACT_APP_API + "/reviews/", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -46,14 +46,17 @@ export default function AdminReviews() {
 
   async function handleRemove(id) {
     try {
-      const response = await fetch(`http://localhost:5000/api/reviews/${id}`, {
-        method: "DELETE",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + `/api/reviews/${id}`,
+        {
+          method: "DELETE",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       console.log(responseBody);
       if (!response.ok) {

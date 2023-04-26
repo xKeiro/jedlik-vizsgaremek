@@ -41,7 +41,7 @@ export default function AdminShipper() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/shippers/${id}`,
+          process.env.REACT_APP_API + `/api/shippers/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -82,8 +82,8 @@ export default function AdminShipper() {
     try {
       const response = await fetch(
         id
-          ? `http://localhost:5000/api/shippers/${id}`
-          : `http://localhost:5000/api/shippers/`,
+          ? process.env.REACT_APP_API + `/shippers/${id}`
+          : process.env.REACT_APP_API + `/api/shippers/`,
         {
           method: id ? "PUT" : "POST",
           mode: "cors",

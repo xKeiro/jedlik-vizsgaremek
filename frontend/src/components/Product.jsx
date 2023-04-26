@@ -34,7 +34,7 @@ export default function Product() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/products/${id}`,
+          process.env.REACT_APP_API + `/api/products/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -94,7 +94,7 @@ export default function Product() {
                       component="img"
                       image={
                         product.imagePath
-                          ? "http://localhost:5000/" + product.imagePath
+                          ? process.env.REACT_APP_API + "/" + product.imagePath
                           : "/images/placeholder.png"
                       }
                       alt={product.title}

@@ -28,7 +28,7 @@ export default function AdminReview() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/reviews/${id}`,
+          process.env.REACT_APP_API + `/api/reviews/${id}`,
           {
             method: "GET",
             mode: "cors",

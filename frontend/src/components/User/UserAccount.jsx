@@ -20,14 +20,17 @@ export default function UserAccount() {
   useEffect(() => {
     async function getUser() {
       try {
-        const response = await fetch(`http://localhost:5000/api/users/me`, {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        });
+        const response = await fetch(
+          process.env.REACT_APP_API + "/api/users/me",
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
         const responseBody = await response.json();
         if (!response.ok) {
           const errorMessage = responseBody.title;
@@ -74,28 +77,31 @@ export default function UserAccount() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/me", {
-        method: "PUT",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          username: userForm.username,
-          firstName: userForm.firstName,
-          lastName: userForm.lastName,
-          email: userForm.email,
-          phone: userForm.phone,
-          //password: userForm.password,
-          //passwordConfirm: userForm.passwordConfirm,
-          street: userForm.street,
-          city: userForm.city,
-          region: userForm.region,
-          postalCode: userForm.postalCode,
-          country: userForm.country,
-        }),
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/users/me",
+        {
+          method: "PUT",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            username: userForm.username,
+            firstName: userForm.firstName,
+            lastName: userForm.lastName,
+            email: userForm.email,
+            phone: userForm.phone,
+            //password: userForm.password,
+            //passwordConfirm: userForm.passwordConfirm,
+            street: userForm.street,
+            city: userForm.city,
+            region: userForm.region,
+            postalCode: userForm.postalCode,
+            country: userForm.country,
+          }),
+        }
+      );
       const responseBody = await response.json();
 
       if (!response.ok) {

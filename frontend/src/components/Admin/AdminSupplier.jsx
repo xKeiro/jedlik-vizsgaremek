@@ -40,7 +40,7 @@ export default function AdminSupplier() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/suppliers/${id}`,
+          process.env.REACT_APP_API + `/api/suppliers/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -81,8 +81,8 @@ export default function AdminSupplier() {
     try {
       const response = await fetch(
         id
-          ? `http://localhost:5000/api/suppliers/${id}`
-          : `http://localhost:5000/api/suppliers/`,
+          ? process.env.REACT_APP_API + `/api/suppliers/${id}`
+          : process.env.REACT_APP_API + `/api/suppliers/`,
         {
           method: id ? "PUT" : "POST",
           mode: "cors",
