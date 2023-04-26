@@ -2,6 +2,7 @@
 using backend.Dtos.Images;
 using backend.Dtos.Products.ProductCategories;
 using backend.Interfaces.Services;
+using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,9 +39,9 @@ public class CategoriesController : ApiControllerBase
         => (await _service.Update(id, productCategoryPublic)).Match(Ok, Problem);
     [HttpPost("{id}/Image")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult> SaveImage(ulong id, IFormFile image)
+    public async Task<ActionResult<StatusMessage>> SaveImage(ulong productCategoryId, IFormFile image)
     {
-        var result = await _service.SaveImage(id, image);
+        var result = await _service.SaveImage(productCategoryId, image);
         return result.StatusCode == 200
             ? Ok(result)
             : Problem(result);

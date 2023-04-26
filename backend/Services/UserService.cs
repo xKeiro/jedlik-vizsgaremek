@@ -13,11 +13,13 @@ public class UserService : IUserService
     private readonly JedlikContext _context;
     private readonly IMapper _mapper;
     private readonly IStatusMessageService _statusMessage;
-    public UserService(JedlikContext context, IStatusMessageService statusMessage, IMapper mapper)
+    private readonly IImageService _imageService;
+    public UserService(JedlikContext context, IStatusMessageService statusMessage, IMapper mapper, IImageService imageService)
     {
         _context = context;
         _statusMessage = statusMessage;
         _mapper = mapper;
+        _imageService = imageService;
     }
     public async Task<OneOf<UserPublic, StatusMessage>> FindById(ulong userId)
     {
@@ -81,6 +83,25 @@ public class UserService : IUserService
         _ = await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
         return _mapper.Map<User, UserPublic>(user);
+    }
+
+    public async Task<StatusMessage> SaveImage(ulong userId, IFormFile image)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(p => p.Id == userId);
+        if (user == null)
+        {
+            return _statusMessage.NotFound404<User>(userId);
+        }
+        var imageSaveResult = await _imageService.SaveImage(image, userId, nameof(User));
+        if (imageSaveResult.IsT1)
+        {
+            return imageSaveResult.AsT1;
+        }
+        user.ImagePath = imageSaveResult.AsT0;
+        await _context.SaveChangesAsync();
+        _context.ChangeTracker.Clear();
+        return _statusMessage.ImageSuccessfullySaved200();
     }
 
     private async Task<(bool result, List<string> notUniquePropertyNames)> IsUnique

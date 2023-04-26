@@ -19,4 +19,6 @@ public class UserPublicLimited
     [Phone]
     [MinLength(3), MaxLength(20)]
     public required string Phone { get; set; }
+    [MinLength(3), MaxLength(200)]
+    public required string? ImagePath { get; set; }
 }

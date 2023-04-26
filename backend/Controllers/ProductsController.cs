@@ -61,7 +61,7 @@ public class ProductsController : ApiControllerBase
     [HttpPost("{productId}/Image")]
     [Authorize(Roles = "Admin")]
 
-    public async Task<ActionResult> SaveImage(ulong productId, IFormFile image)
+    public async Task<ActionResult<StatusMessage>> SaveImage(ulong productId, IFormFile image)
     {
         var result = await _service.SaveImage(productId, image);
         return result.StatusCode == 200
