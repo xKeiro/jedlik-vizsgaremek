@@ -72,6 +72,7 @@ export default function AdminUser() {
       region: user.region,
       postalCode: user.postalCode,
       country: user.country,
+      imagePath: user.imagePath,
     });
     setIsLoading(false);
   }, [user]);
@@ -138,7 +139,7 @@ export default function AdminUser() {
           alignItems="center"
           spacing={2}
         >
-          <Grid item xs={11} md={9}>
+          <Grid item xs={12} md={12}>
             <Paper elevation={3}>
               {successText && (
                 <AlertMessage type="success" message={successText} />

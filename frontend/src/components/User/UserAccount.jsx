@@ -2,11 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import AlertMessage from "../Shared/AlertMessage";
 import UserForm from "../Shared/UserForm";
+import ImageUpload from "../Shared/ImageUpload";
 
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function UserAccount() {
@@ -67,6 +69,7 @@ export default function UserAccount() {
       region: user.region,
       postalCode: user.postalCode,
       country: user.country,
+      imagePath: user.imagePath,
     });
     setIsLoading(false);
   }, [user]);
@@ -173,6 +176,12 @@ export default function UserAccount() {
                     >
                       Save
                     </Button>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Typography gutterBottom>User Avatar</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <ImageUpload endpoint="users" id={user.id} />
                   </Grid>
                 </Grid>
               )}

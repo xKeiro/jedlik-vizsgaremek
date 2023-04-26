@@ -87,7 +87,12 @@ export default function ImageUpload({ endpoint, id }) {
         }}
       />
 
-      <Button variant="contained" sx={{ marginY: 2 }} onClick={uploadFiles}>
+      <Button
+        variant="contained"
+        fullWidth
+        sx={{ marginY: 2 }}
+        onClick={uploadFiles}
+      >
         Upload Image
       </Button>
     </>

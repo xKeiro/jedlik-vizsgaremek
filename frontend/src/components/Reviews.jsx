@@ -122,8 +122,8 @@ export default function Reviews({ productId }) {
                                             review.user.imagePath
                                           : null
                                       }
-                                    />{" "}
-                                  </Grid>{" "}
+                                    />
+                                  </Grid>
                                   <Grid item xs={8} md={10}>
                                     <Typography
                                       gutterBottom
@@ -132,7 +132,7 @@ export default function Reviews({ productId }) {
                                       align="left"
                                     >
                                       {review.user.firstName}
-                                    </Typography>{" "}
+                                    </Typography>
                                   </Grid>
                                 </Grid>
                               </Box>
