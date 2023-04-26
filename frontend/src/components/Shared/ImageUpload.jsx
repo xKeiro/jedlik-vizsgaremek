@@ -74,6 +74,7 @@ export default function ImageUpload({ endpoint, id }) {
         disabled={isLoading}
         maxUploadFiles={1}
         acceptedType={"image/*"}
+        allowedExtensions={["png", "jpg", "jpeg", "gif", "tiff"]}
         onFilesChange={handleFilesChange}
         onContextReady={(context) => {}}
         BannerProps={{
