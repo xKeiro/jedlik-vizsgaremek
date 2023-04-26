@@ -52,7 +52,7 @@ export default function AdminProduct() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/products/${id}`,
+          process.env.REACT_APP_API + `/api/products/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -77,14 +77,17 @@ export default function AdminProduct() {
 
     async function getCategories() {
       try {
-        const response = await fetch("http://localhost:5000/api/categories", {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        });
+        const response = await fetch(
+          process.env.REACT_APP_API + "/api/categories",
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
         const responseBody = await response.json();
         if (!response.ok) {
           const errorMessage = responseBody.title;
@@ -132,8 +135,8 @@ export default function AdminProduct() {
     try {
       const response = await fetch(
         id
-          ? `http://localhost:5000/api/products/${id}`
-          : `http://localhost:5000/api/products/`,
+          ? process.env.REACT_APP_API + `/api/products/${id}`
+          : process.env.REACT_APP_API + `/api/products/`,
         {
           method: id ? "PUT" : "POST",
           mode: "cors",
@@ -196,7 +199,7 @@ export default function AdminProduct() {
           <Card key={product.id} sx={{}}>
             <CardMedia
               sx={{ height: 400 }}
-              image={"http://localhost:5000/" + product.imagePath}
+              image={process.env.REACT_APP_API + "/" + product.imagePath}
               title={product.title}
             />
             <CardContent>

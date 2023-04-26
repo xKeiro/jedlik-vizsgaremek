@@ -56,27 +56,30 @@ export default function UserRegistration() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: userForm.username,
-          firstName: userForm.firstName,
-          lastName: userForm.lastName,
-          email: userForm.email,
-          phone: userForm.phone,
-          password: userForm.password,
-          passwordConfirm: userForm.passwordConfirm,
-          street: userForm.street,
-          city: userForm.city,
-          region: userForm.region,
-          postalCode: userForm.postalCode,
-          country: userForm.country,
-        }),
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/auth/register",
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            username: userForm.username,
+            firstName: userForm.firstName,
+            lastName: userForm.lastName,
+            email: userForm.email,
+            phone: userForm.phone,
+            password: userForm.password,
+            passwordConfirm: userForm.passwordConfirm,
+            street: userForm.street,
+            city: userForm.city,
+            region: userForm.region,
+            postalCode: userForm.postalCode,
+            country: userForm.country,
+          }),
+        }
+      );
       const responseBody = await response.json();
 
       if (!response.ok) {

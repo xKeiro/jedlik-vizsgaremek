@@ -21,7 +21,7 @@ export default function Category() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/products/category/${id}`,
+          process.env.REACT_APP_API + `/api/products/category/${id}`,
           {
             method: "GET",
             mode: "cors",

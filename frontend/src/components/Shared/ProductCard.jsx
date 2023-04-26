@@ -39,7 +39,7 @@ export default function ProductCard({ product }) {
               sx={{ height: 150 }}
               image={
                 product.imagePath
-                  ? "http://localhost:5000/" + product.imagePath
+                  ? process.env.REACT_APP_API + "/" + product.imagePath
                   : "/images/placeholder.png"
               }
               title={product.title}

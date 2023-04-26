@@ -16,7 +16,7 @@ export default function Reviews({ productId }) {
   async function getReviews() {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/reviews/product/${productId}`,
+        process.env.REACT_APP_API + `/api/reviews/product/${productId}`,
         {
           method: "GET",
           mode: "cors",

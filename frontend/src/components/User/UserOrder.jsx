@@ -26,7 +26,7 @@ export default function UserOrder() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/orders/me/${id}`,
+          process.env.REACT_APP_API + `/api/orders/me/${id}`,
           {
             method: "GET",
             mode: "cors",

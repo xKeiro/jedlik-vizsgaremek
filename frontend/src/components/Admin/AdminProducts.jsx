@@ -20,14 +20,17 @@ export default function AdminProducts() {
 
   async function getAllProducts() {
     try {
-      const response = await fetch("http://localhost:5000/api/products/all", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/products/all",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       if (!response.ok) {
         const errorMessage = responseBody.title;
@@ -48,7 +51,7 @@ export default function AdminProducts() {
   async function handleRemove(id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/products/${id}/Discontinue`,
+        process.env.REACT_APP_API + `/api/products/${id}/Discontinue`,
         {
           method: "PATCH",
           mode: "cors",

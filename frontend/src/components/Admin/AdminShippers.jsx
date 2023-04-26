@@ -20,14 +20,17 @@ export default function AdminShippers() {
 
   async function getAllShippers() {
     try {
-      const response = await fetch("http://localhost:5000/api/shippers", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/shippers",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       if (!response.ok) {
         const errorMessage = responseBody.title;
@@ -47,14 +50,17 @@ export default function AdminShippers() {
 
   async function handleRemove(id) {
     try {
-      const response = await fetch(`http://localhost:5000/api/shippers/${id}`, {
-        method: "DELETE",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + `/api/shippers/${id}`,
+        {
+          method: "DELETE",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       console.log(responseBody);
       if (!response.ok) {

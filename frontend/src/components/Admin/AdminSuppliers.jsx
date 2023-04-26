@@ -20,14 +20,17 @@ export default function AdminSuppliers() {
 
   async function getAllSuppliers() {
     try {
-      const response = await fetch("http://localhost:5000/api/suppliers", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/suppliers",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       if (!response.ok) {
         const errorMessage = responseBody.title;
@@ -48,7 +51,7 @@ export default function AdminSuppliers() {
   async function handleRemove(id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/suppliers/${id}`,
+        process.env.REACT_APP_API + `/api/suppliers/${id}`,
         {
           method: "DELETE",
           mode: "cors",

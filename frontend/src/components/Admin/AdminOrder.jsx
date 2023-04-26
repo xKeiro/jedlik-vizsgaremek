@@ -42,14 +42,17 @@ export default function AdminOrder() {
         return;
       }
       try {
-        const response = await fetch(`http://localhost:5000/api/orders/${id}`, {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        });
+        const response = await fetch(
+          process.env.REACT_APP_API + `/api/orders/${id}`,
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
         const responseBody = await response.json();
         if (!response.ok) {
           const errorMessage = responseBody.title;
@@ -80,7 +83,8 @@ export default function AdminOrder() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/orders/${id}/status?status=${order.status}`,
+        process.env.REACT_APP_API +
+          `/api/orders/${id}/status?status=${order.status}`,
         {
           method: "PATCH",
           mode: "cors",

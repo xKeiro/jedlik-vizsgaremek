@@ -26,14 +26,17 @@ export default function AdminUser() {
         return;
       }
       try {
-        const response = await fetch(`http://localhost:5000/api/users/${id}`, {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        });
+        const response = await fetch(
+          process.env.REACT_APP_API + `/api/users/${id}`,
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
         const responseBody = await response.json();
         if (!response.ok) {
           const errorMessage = responseBody.title;
@@ -81,8 +84,8 @@ export default function AdminUser() {
     try {
       const response = await fetch(
         user.isAdmin
-          ? `http://localhost:5000/api/users/demote/${user.id}`
-          : `http://localhost:5000/api/users/promote/${user.id}`,
+          ? process.env.REACT_APP_API + `/api/users/demote/${user.id}`
+          : process.env.REACT_APP_API + `/api/users/promote/${user.id}`,
         {
           method: "PATCH",
           mode: "cors",

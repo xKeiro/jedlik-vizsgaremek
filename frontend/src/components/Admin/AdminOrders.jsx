@@ -20,7 +20,7 @@ export default function AdminOrders() {
 
   async function getOrders() {
     try {
-      const response = await fetch("http://localhost:5000/api/orders", {
+      const response = await fetch(process.env.REACT_APP_API + "/api/orders", {
         method: "GET",
         mode: "cors",
         headers: {
