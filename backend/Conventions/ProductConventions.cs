@@ -10,7 +10,7 @@ public static class ProductConventions<TProductRegister, TProductUpdate>
 {
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void GetNotDiscontinued()
+    public static void GetNotDiscontinued(int page, int pageSize)
     {
         // Method intentionally left empty.
     }
@@ -28,7 +28,7 @@ public static class ProductConventions<TProductRegister, TProductUpdate>
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public static void GetNotDiscontinuedByCategoryId([ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)] ulong categoryId)
+    public static void GetNotDiscontinuedByCategoryId(ulong categoryId, int page, int pageSize)
     {
         // Method intentionally left empty.
     }
