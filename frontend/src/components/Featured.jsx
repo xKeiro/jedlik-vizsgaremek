@@ -13,7 +13,7 @@ export default function Featured() {
   async function getProducts() {
     try {
       const response = await fetch(
-        "http://localhost:8000/api/products/featured",
+        "http://localhost:5000/api/products/featured",
         {
           method: "GET",
           mode: "cors",
@@ -25,11 +25,11 @@ export default function Featured() {
       );
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
         return;
       }
-      setProducts(responseBody.products);
+      setProducts(responseBody);
     } catch (error) {
       console.log(error);
       return;

@@ -23,7 +23,7 @@ export default function PriceList() {
 
   async function getProducts() {
     try {
-      const response = await fetch("http://localhost:8000/api/products", {
+      const response = await fetch("http://localhost:5000/api/products", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -33,11 +33,11 @@ export default function PriceList() {
       });
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
         return;
       }
-      setProducts(responseBody.products);
+      setProducts(responseBody);
     } catch (error) {
       console.log(error);
       return;
@@ -106,7 +106,7 @@ export default function PriceList() {
                           </Link>
                         </TableCell>
                         <TableCell align="right">
-                          {product.base_price.toLocaleString("en-US", {
+                          {product.basePrice.toLocaleString("en-US", {
                             style: "currency",
                             currency: "EUR",
                           })}
@@ -137,7 +137,7 @@ export default function PriceList() {
                         component="th"
                         scope="row"
                         align="center"
-                        colSpan={3}
+                        colSpan={4}
                       >
                         <CircularProgress />
                       </TableCell>

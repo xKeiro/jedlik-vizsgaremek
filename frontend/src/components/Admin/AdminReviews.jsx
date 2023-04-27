@@ -104,7 +104,7 @@ export default function AdminReviews() {
                         component="th"
                         scope="row"
                         align="center"
-                        colSpan={3}
+                        colSpan={4}
                       >
                         <CircularProgress />
                       </TableCell>

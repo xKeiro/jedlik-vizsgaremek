@@ -1,6 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
+import AuthContext from "../../contexts/AuthContext";
 import AlertMessage from "../AlertMessage";
 import UserForm from "./UserForm";
 
@@ -12,30 +14,33 @@ import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function UserRegistration() {
+  const navigate = useNavigate();
+  const auth = useContext(AuthContext);
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [successText, setSuccessText] = useState("");
 
   const emptyForm = {
     username: "",
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     phone: "",
     password: "",
     passwordConfirm: "",
-    address: "",
+    street: "",
     city: "",
     region: "",
-    postal_code: "",
-    country: "HU",
+    postalCode: "",
+    country: "Hungary",
   };
 
   const [userForm, setUserForm] = useState(emptyForm);
 
   async function handleUserRegistration() {
-    setErrorText(null);
-    setSuccessText(null);
+    setErrorText("");
+    setSuccessText("");
     setIsLoading(true);
 
     if (userForm.password !== userForm.passwordConfirm) {
@@ -51,7 +56,7 @@ export default function UserRegistration() {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/api/auth/register", {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         mode: "cors",
         headers: {
@@ -59,25 +64,25 @@ export default function UserRegistration() {
         },
         body: JSON.stringify({
           username: userForm.username,
-          first_name: userForm.first_name,
-          last_name: userForm.last_name,
+          firstName: userForm.firstName,
+          lastName: userForm.lastName,
           email: userForm.email,
           phone: userForm.phone,
           password: userForm.password,
           passwordConfirm: userForm.passwordConfirm,
           address: {
-            address: userForm.address,
+            street: userForm.street,
             city: userForm.city,
             region: userForm.region,
-            postal_code: userForm.postal_code,
+            postalCode: userForm.postalCode,
             country: userForm.country,
           },
         }),
       });
-      const responseData = await response.json();
+      const responseBody = await response.json();
 
       if (!response.ok) {
-        const errorMsg = responseData.detail[0].msg;
+        const errorMsg = responseBody.title;
         console.log(errorMsg);
 
         setIsLoading(false);
@@ -86,8 +91,12 @@ export default function UserRegistration() {
       }
 
       clearInputs();
-      setIsLoading(false);
-      setSuccessText("Registration successful.");
+      //setIsLoading(false);
+      setSuccessText("Registration successful, logging in...");
+      auth.login(responseBody);
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (err) {
       console.log(err);
       setErrorText("Registration failed.");

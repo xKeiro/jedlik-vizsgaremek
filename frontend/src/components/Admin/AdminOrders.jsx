@@ -20,7 +20,7 @@ export default function AdminOrders() {
 
   async function getOrders() {
     try {
-      const response = await fetch("http://localhost:8000/api/orders", {
+      const response = await fetch("http://localhost:5000/api/orders", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -30,12 +30,12 @@ export default function AdminOrders() {
       });
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
         return;
       }
-      console.log(responseBody.orders);
-      setOrders(responseBody.orders);
+      console.log(responseBody);
+      setOrders(responseBody);
     } catch (error) {
       console.log(error);
       return;
@@ -111,7 +111,7 @@ export default function AdminOrders() {
                         <TableCell align="right">{order.status}</TableCell>
                         <TableCell align="right">
                           {new Date(
-                            Date.parse(order.order_date)
+                            Date.parse(order.orderDate)
                           ).toLocaleString()}
                         </TableCell>
                         <TableCell align="right">
@@ -135,7 +135,7 @@ export default function AdminOrders() {
                         component="th"
                         scope="row"
                         align="center"
-                        colSpan={3}
+                        colSpan={4}
                       >
                         <CircularProgress />
                       </TableCell>

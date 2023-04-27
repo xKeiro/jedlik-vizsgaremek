@@ -15,98 +15,123 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function AdminOrder() {
+export default function AdminShipper() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [successText, setSuccessText] = useState("");
 
-  const [order, setOrder] = useState(null);
+  const [shipper, setShipper] = useState(null);
 
   useEffect(() => {
-    async function getOrder() {
+    const newShipper = {
+      company_name: "",
+      contact_first_name: "",
+      contact_last_name: "",
+      email: "",
+      phone: "",
+      price: 0.0,
+    };
+
+    async function getShipper() {
       if (!id) {
+        setShipper(newShipper);
         return;
       }
       try {
-        const response = await fetch(`http://localhost:5000/api/orders/${id}`, {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        });
+        const response = await fetch(
+          `http://localhost:5000/api/shippers/${id}`,
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
         const responseBody = await response.json();
         if (!response.ok) {
           const errorMessage = responseBody.title;
           console.log(errorMessage);
           return;
         }
-        setOrder(responseBody);
+        setShipper(responseBody);
       } catch (error) {
         console.log(error);
         return;
       }
     }
-    getOrder();
+    getShipper();
   }, [id]);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setOrder((prevState) => ({
+    setShipper((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   }
 
-  async function handleOrderStatusUpdate() {
+  async function handleProductUpdate() {
     setErrorText(null);
     setSuccessText(null);
     setIsLoading(true);
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/orders/${id}/Status`,
+        id
+          ? `http://localhost:5000/api/shippers/${id}`
+          : `http://localhost:5000/api/shippers/`,
         {
-          method: "PATCH",
+          method: id ? "PUT" : "POST",
           mode: "cors",
           headers: {
             "Content-type": "application/json",
           },
           credentials: "include",
-          body: JSON.stringify(""), //todo
+          body: JSON.stringify({
+            company_name: shipper.company_name,
+            contact_first_name: shipper.contact_first_name,
+            contact_last_name: shipper.contact_last_name,
+            email: shipper.email,
+            phone: shipper.phone,
+            price: shipper.price,
+          }),
         }
       );
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.title;
+        const errorMessage = responseBody.detail[0].msg;
         console.log(errorMessage);
+
         setIsLoading(false);
         setErrorText(errorMessage);
         return;
       }
-      setOrder(responseBody);
-      setSuccessText("Update request successful.");
+      setSuccessText((id ? "Update" : "Add") + " request successful.");
       setIsLoading(false);
+      if (!id) {
+        navigate("/admin/shipper/" + responseBody.id);
+      }
     } catch (error) {
       console.log(error);
-      setErrorText("Update request failed.");
+      setErrorText((id ? "Update" : "Add") + " request failed.");
       setIsLoading(false);
       return;
     }
   }
 
   return (
-    <div className="AdminOrder">
+    <div className="AdminShipper">
       <Box>
         <Paper elevation={2}>
-          <h3>Order Editor (WIP)</h3>
+          <h3>{id ? "Shipper Editor" : "Add new shipper"} (WIP)</h3>
         </Paper>
       </Box>
       <Box
-        className="AdminOrder__Form"
+        className="AdminShipper__Form"
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -114,8 +139,8 @@ export default function AdminOrder() {
           alignItems: "center",
         }}
       >
-        {order ? (
-          <Card key={order.id} sx={{}}>
+        {shipper ? (
+          <Card key={shipper.id} sx={{}}>
             {/* <CardMedia /> */}
             <CardContent>
               <Grid
@@ -138,28 +163,11 @@ export default function AdminOrder() {
                   <TextField
                     fullWidth
                     required
-                    label="ID"
+                    label="Shipper ID"
                     id="id"
                     name="id"
                     type="text"
-                    value={order.id}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  Ordered products (WIP)
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Order ID"
-                    id="id"
-                    name="id"
-                    type="text"
-                    value={order.id}
-                    onChange={handleChange}
+                    value={shipper.id}
                     disabled={true}
                     autoComplete="off"
                   />
@@ -168,13 +176,11 @@ export default function AdminOrder() {
                   <TextField
                     fullWidth
                     required
-                    multiline
-                    minRows={5}
-                    label="Order Date"
-                    id="dorderDate"
-                    name="orderDate"
+                    label="Company Name"
+                    id="cname"
+                    name="company_name"
                     type="text"
-                    value={order.orderDate}
+                    value={shipper.company_name}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
@@ -184,13 +190,15 @@ export default function AdminOrder() {
                   <TextField
                     fullWidth
                     required
-                    label="Shipper Name"
-                    id="shipper"
-                    name="shipper"
+                    label="Contact First Name"
+                    id="contact_first_name
+                    "
+                    name="contact_first_name
+                    "
                     type="text"
-                    value={order.shipper.company_name}
+                    value={shipper.contact_first_name}
                     onChange={handleChange}
-                    disabled={true}
+                    disabled={isLoading}
                     autoComplete="off"
                   />
                 </Grid>
@@ -198,17 +206,44 @@ export default function AdminOrder() {
                   <TextField
                     fullWidth
                     required
-                    label="Status"
-                    id="status"
-                    name="status"
+                    label="Contact Last Name"
+                    id="contact_last_name"
+                    name="contact_last_name"
                     type="text"
-                    value={order.status}
+                    value={shipper.contact_last_name}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12} md={12}></Grid>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Email"
+                    id="email"
+                    name="email"
+                    type="text"
+                    value={shipper.email}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Phone"
+                    id="phone"
+                    name="phone"
+                    type="text"
+                    value={shipper.phone}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                    autoComplete="off"
+                  />
+                </Grid>
               </Grid>
             </CardContent>
             <CardActions>
@@ -216,9 +251,9 @@ export default function AdminOrder() {
                 fullWidth
                 variant="contained"
                 disabled={isLoading}
-                onClick={handleOrderStatusUpdate}
+                onClick={handleProductUpdate}
               >
-                Save Order (WIP)
+                {id ? "Save" : "Add"} Shipper
               </Button>
             </CardActions>
           </Card>

@@ -21,7 +21,7 @@ export default function Category() {
       }
       try {
         const response = await fetch(
-          `http://localhost:8000/api/categories/${id}`,
+          `http://localhost:5000/api/products/category/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -33,12 +33,11 @@ export default function Category() {
         );
         const responseBody = await response.json();
         if (!response.ok) {
-          const errorMessage = responseBody.detail[0].msg;
+          const errorMessage = responseBody.title;
           console.log(errorMessage);
           return;
         }
-
-        setProducts(responseBody.products);
+        setProducts(responseBody);
       } catch (error) {
         console.log(error);
         return;
@@ -86,7 +85,7 @@ export default function Category() {
           </Grid>
           <Grid item xs={12} md={3}>
             <CategoryBar
-              currentCategoryId={products ? products[0].category_id : null}
+              currentCategoryId={products ? products[0].categoryId : null}
             />
           </Grid>
         </Grid>

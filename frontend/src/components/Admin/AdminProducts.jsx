@@ -20,7 +20,7 @@ export default function AdminProducts() {
 
   async function getAllProducts() {
     try {
-      const response = await fetch("http://localhost:8000/api/products/all", {
+      const response = await fetch("http://localhost:5000/api/products/all", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -30,11 +30,11 @@ export default function AdminProducts() {
       });
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
         return;
       }
-      setProducts(responseBody.products);
+      setProducts(responseBody);
     } catch (error) {
       console.log(error);
       return;
@@ -50,18 +50,21 @@ export default function AdminProducts() {
     const id = e.target.parentNode.parentNode.dataset.id;
 
     try {
-      const response = await fetch(`http://localhost:8000/api/products/${id}`, {
-        method: "DELETE",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/products/${id}/Discontinue`,
+        {
+          method: "PATCH",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       console.log(responseBody);
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
         return;
       }
@@ -139,7 +142,7 @@ export default function AdminProducts() {
                           </Link>
                         </TableCell>
                         <TableCell align="right">
-                          {product.base_price.toLocaleString("en-US", {
+                          {product.basePrice.toLocaleString("en-US", {
                             style: "currency",
                             currency: "EUR",
                           })}
@@ -174,7 +177,7 @@ export default function AdminProducts() {
                         component="th"
                         scope="row"
                         align="center"
-                        colSpan={3}
+                        colSpan={4}
                       >
                         <CircularProgress />
                       </TableCell>

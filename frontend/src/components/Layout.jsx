@@ -28,14 +28,17 @@ import AdminProduct from "./Admin/AdminProduct";
 import AdminCategories from "./Admin/AdminCategories";
 import AdminCategory from "./Admin/AdminCategory";
 import AdminSuppliers from "./Admin/AdminSuppliers";
+import AdminSupplier from "./Admin/AdminSupplier";
 import AdminShippers from "./Admin/AdminShippers";
+import AdminShipper from "./Admin/AdminShipper";
 import AdminReviews from "./Admin/AdminReviews";
 import AdminUsers from "./Admin/AdminUsers";
+import AdminUser from "./Admin/AdminUser";
 
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import AdminUser from "./Admin/AdminUser";
+import UserOrder from "./User/UserOrder";
 
 export default function Layout() {
   const auth = useContext(AuthContext);
@@ -59,17 +62,18 @@ export default function Layout() {
             <Route path="contact" element={<Contact />} />
             <Route path="registration" element={<UserRegistration />} />
             <Route path="cart" element={<Cart />} />
-            {!auth.token && <Route path="login" element={<UserLogin />} />}
+            <Route path="logout" element={<UserLogout />} />
+            <Route path="login" element={<UserLogin />} />
 
-            {auth.token && (
+            {auth.loggedIn && (
               <>
                 <Route path="account" element={<UserAccount />} />
                 <Route path="orders" element={<UserOrders />} />
+                <Route path="order/:id" element={<UserOrder />} />
                 <Route path="checkout" element={<UserCheckout />} />
-                <Route path="logout" element={<UserLogout />} />
               </>
             )}
-            {auth.token && auth.user.is_admin && (
+            {auth.loggedIn && auth.user.isAdmin && (
               <Route path="admin" element={<Admin />}>
                 <Route index element={<AdminHome />} />
                 <Route path="orders" element={<AdminOrders />} />
@@ -81,7 +85,11 @@ export default function Layout() {
                 <Route path="category/:id" element={<AdminCategory />} />
                 <Route path="category" element={<AdminCategory />} />
                 <Route path="suppliers" element={<AdminSuppliers />} />
+                <Route path="supplier/:id" element={<AdminSupplier />} />
+                <Route path="supplier" element={<AdminSupplier />} />
                 <Route path="shippers" element={<AdminShippers />} />
+                <Route path="shipper/:id" element={<AdminShipper />} />
+                <Route path="shipper" element={<AdminShipper />} />
                 <Route path="reviews" element={<AdminReviews />} />
                 <Route path="users" element={<AdminUsers />} />
                 <Route path="user/:id" element={<AdminUser />} />

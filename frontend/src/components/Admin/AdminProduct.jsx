@@ -35,8 +35,8 @@ export default function AdminProduct() {
   useEffect(() => {
     const newProduct = {
       id: "New product ID",
-      category_id: "select",
-      base_price: "",
+      categoryId: "select",
+      basePrice: "",
       title: "",
       description: "",
       photo: null,
@@ -52,7 +52,7 @@ export default function AdminProduct() {
       }
       try {
         const response = await fetch(
-          `http://localhost:8000/api/products/${id}`,
+          `http://localhost:5000/api/products/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -64,7 +64,7 @@ export default function AdminProduct() {
         );
         const responseBody = await response.json();
         if (!response.ok) {
-          const errorMessage = responseBody.detail[0].msg;
+          const errorMessage = responseBody.title;
           console.log(errorMessage);
           return;
         }
@@ -77,7 +77,7 @@ export default function AdminProduct() {
 
     async function getCategories() {
       try {
-        const response = await fetch("http://localhost:8000/api/categories", {
+        const response = await fetch("http://localhost:5000/api/categories", {
           method: "GET",
           mode: "cors",
           headers: {
@@ -87,11 +87,11 @@ export default function AdminProduct() {
         });
         const responseBody = await response.json();
         if (!response.ok) {
-          const errorMessage = responseBody.detail[0].msg;
+          const errorMessage = responseBody.title;
           console.log(errorMessage);
           return;
         }
-        setCategories(responseBody.categories);
+        setCategories(responseBody);
       } catch (error) {
         console.log(error);
         return;
@@ -132,22 +132,23 @@ export default function AdminProduct() {
     try {
       const response = await fetch(
         id
-          ? `http://localhost:8000/api/products/${id}`
-          : `http://localhost:8000/api/products/`,
+          ? `http://localhost:5000/api/products/${id}`
+          : `http://localhost:5000/api/products/`,
         {
-          method: id ? "PATCH" : "POST",
+          method: id ? "PUT" : "POST",
           mode: "cors",
           headers: {
             "Content-type": "application/json",
           },
           credentials: "include",
           body: JSON.stringify({
-            category_id: product.category_id,
-            base_price: product.base_price,
+            categoryId: product.categoryId,
+            basePrice: product.basePrice,
             title: product.title,
             description: product.description,
             photo: product.photo,
             stock: product.stock,
+            discount: product.discount,
             discontinued: product.discontinued,
             featured: product.featured,
           }),
@@ -155,8 +156,9 @@ export default function AdminProduct() {
       );
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
+        console.log(responseBody);
 
         setIsLoading(false);
         setErrorText(errorMessage);
@@ -212,27 +214,14 @@ export default function AdminProduct() {
                   {isLoading ? <CircularProgress /> : ""}
                 </Grid>
                 <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="ID"
-                    id="id"
-                    name="id"
-                    type="text"
-                    value={product.id}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
                   <FormControl fullWidth required>
                     <InputLabel id="category_id">Category</InputLabel>
                     <Select
                       sx={{ textAlign: "left" }}
-                      labelId="category_id"
-                      id="category_id"
-                      name="category_id"
-                      value={product.category_id}
+                      labelId="categoryId"
+                      id="categoryId"
+                      name="categoryId"
+                      value={product.categoryId}
                       label="Categories"
                       onChange={handleChange}
                       disabled={isLoading}
@@ -246,7 +235,7 @@ export default function AdminProduct() {
                           </MenuItem>
                         ))
                       ) : (
-                        <MenuItem value={product.category_id}>
+                        <MenuItem value={product.categoryId}>
                           Loading...
                         </MenuItem>
                       )}
@@ -315,10 +304,24 @@ export default function AdminProduct() {
                     fullWidth
                     required
                     label="Base price"
-                    id="base_price"
-                    name="base_price"
+                    id="basePrice"
+                    name="basPrice"
                     type="number"
-                    value={product.base_price}
+                    value={product.basePrice}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Discount"
+                    id="discount"
+                    name="discount"
+                    type="number"
+                    value={product.discount}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
@@ -364,7 +367,7 @@ export default function AdminProduct() {
               <Button
                 fullWidth
                 variant="contained"
-                disabled={isLoading}
+                disabled={isLoading || product.categoryId === "select"}
                 onClick={handleProductUpdate}
               >
                 {id ? "Save" : "Add"} Product

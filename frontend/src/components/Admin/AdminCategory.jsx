@@ -46,7 +46,7 @@ export default function AdminCategory() {
       }
       try {
         const response = await fetch(
-          `http://localhost:8000/api/categories/category/${id}`,
+          `http://localhost:5000/api/categories/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -58,11 +58,11 @@ export default function AdminCategory() {
         );
         const responseBody = await response.json();
         if (!response.ok) {
-          const errorMessage = responseBody.detail[0].msg;
+          const errorMessage = responseBody.title;
           console.log(errorMessage);
           return;
         }
-        setCategory(responseBody.category);
+        setCategory(responseBody);
       } catch (error) {
         console.log(error);
         return;
@@ -80,14 +80,6 @@ export default function AdminCategory() {
     }));
   }
 
-  //   function handleCheckboxChange(e) {
-  //     const { name, checked } = e.target;
-  //     setCategory((prevState) => ({
-  //       ...prevState,
-  //       [name]: checked,
-  //     }));
-  //   }
-
   async function handleCategoryUpdate() {
     setErrorText(null);
     setSuccessText(null);
@@ -96,10 +88,10 @@ export default function AdminCategory() {
     try {
       const response = await fetch(
         id
-          ? `http://localhost:8000/api/categories/category/${id}`
-          : `http://localhost:8000/api/categories/`,
+          ? `http://localhost:5000/api/categories/${id}`
+          : `http://localhost:5000/api/categories/`,
         {
-          method: id ? "PATCH" : "POST",
+          method: id ? "PUT" : "POST",
           mode: "cors",
           headers: {
             "Content-type": "application/json",
@@ -114,7 +106,7 @@ export default function AdminCategory() {
       );
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
 
         setIsLoading(false);
@@ -138,7 +130,7 @@ export default function AdminCategory() {
     <div className="AdminCategory">
       <Box>
         <Paper elevation={2}>
-          <h3>{id ? "Category Editor" : "Add new category"}</h3>
+          <h3>{id ? "Category Editor" : "Add new category"} (WIP)</h3>
         </Paper>
       </Box>
       <Box
@@ -170,19 +162,7 @@ export default function AdminCategory() {
                   )}
                   {isLoading ? <CircularProgress /> : ""}
                 </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="ID"
-                    id="id"
-                    name="id"
-                    type="text"
-                    value={category.id}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
+
                 <Grid item xs={12} md={12}>
                   <TextField
                     fullWidth

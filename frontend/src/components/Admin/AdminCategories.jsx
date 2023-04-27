@@ -20,7 +20,7 @@ export default function AdminCategories() {
 
   async function getAllCategories() {
     try {
-      const response = await fetch("http://localhost:8000/api/categories", {
+      const response = await fetch("http://localhost:5000/api/categories", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -30,11 +30,11 @@ export default function AdminCategories() {
       });
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
         return;
       }
-      setCategories(responseBody.categories);
+      setCategories(responseBody);
     } catch (error) {
       console.log(error);
       return;
@@ -112,9 +112,9 @@ export default function AdminCategories() {
                             variant="outlined"
                             component={RouterLink}
                             to={"/admin/category/" + category.id}
-                            disabled={true} // todo: no category id endpoint
+                            disabled={false}
                           >
-                            Edit (WIP)
+                            Edit
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -129,7 +129,7 @@ export default function AdminCategories() {
                         component="th"
                         scope="row"
                         align="center"
-                        colSpan={3}
+                        colSpan={2}
                       >
                         <CircularProgress />
                       </TableCell>

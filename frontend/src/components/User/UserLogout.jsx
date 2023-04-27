@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import AlertMessage from "../AlertMessage";
 
-import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function UserLogout() {
@@ -14,13 +15,12 @@ export default function UserLogout() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
+  const [successText, setSuccessText] = useState("");
 
   async function handleLogout() {
-    setErrorText(null);
     setIsLoading(true);
-
     try {
-      const response = await fetch("http://localhost:8000/api/auth/logout", {
+      const response = await fetch("http://localhost:5000/api/auth/logout", {
         method: "GET",
         mode: "cors",
         headers: {
@@ -28,18 +28,21 @@ export default function UserLogout() {
         },
         credentials: "include",
       });
-      const responseBody = await response.json();
 
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = response.statusText;
         console.log(errorMessage);
 
         setIsLoading(false);
         setErrorText(errorMessage);
         return;
       }
-
-      setIsLoading(false);
+      console.log(response);
+      //setIsLoading(false);
+      setSuccessText("Successfully logged out, redirecting...");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (err) {
       console.log(err);
       setErrorText("Logout failed.");
@@ -48,21 +51,41 @@ export default function UserLogout() {
   }
 
   useEffect(() => {
-    handleLogout();
     auth.logout();
-    navigate("/");
-  }, [auth, navigate]);
+    handleLogout();
+  }, []);
 
   return (
     <div className="Logout">
       <Box>
         <Paper elevation={2}>
-          <h2>Logging out...</h2>
+          <h2>Logging out</h2>
         </Paper>
       </Box>
-      <Box>
-        {errorText && <AlertMessage type="error" message={errorText} />}
-        {isLoading ? <CircularProgress /> : ""}
+
+      <Box
+        className="Logout__Box"
+        sx={{
+          margin: "20px",
+          display: "flex",
+          flexWrap: "wrap",
+          flexDirection: "column",
+          alignContent: "center",
+        }}
+      >
+        <Grid container direction="row" justifyContent="center" spacing={2}>
+          <Grid item md={5} xs={11}>
+            <Box>
+              <Paper elevation={3}>
+                {successText && (
+                  <AlertMessage type="success" message={successText} />
+                )}
+                {errorText && <AlertMessage type="error" message={errorText} />}
+                {isLoading ? <CircularProgress /> : ""}
+              </Paper>
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
     </div>
   );
