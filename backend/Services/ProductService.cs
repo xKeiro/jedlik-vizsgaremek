@@ -3,6 +3,7 @@ using backend.Dtos.Products;
 using backend.Interfaces.Services;
 using backend.Models;
 using backend.Models.Products;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using OneOf;
 
@@ -23,15 +24,28 @@ public class ProductService : IProductService
         _imageService = imageService;
     }
 
-    public IAsyncEnumerable<ProductPublic> GetNotDiscontinued()
-        => _context.Products
+    public async Task<ProductPublicWithPagination> GetNotDiscontinued(int page, int pageSize)
+    {
+        var maxPage = Math.Ceiling(_context.Products.Where(p => !p.Discontinued).Count() / (decimal)pageSize);
+        int? nextPage = maxPage - page > 0
+            ? page + 1
+            : null;
+        var productPublics = _context.Products
             .Include(p => p.Category)
             .Where(p => !p.Discontinued)
             .OrderByDescending(p => p.ProductOrders!.Count)
             .ThenByDescending(p => p.BasePrice * (1 - (p.Discount / 100)))
             .ThenBy(p => p.Title)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .Select(p => _mapper.Map<Product, ProductPublic>(p))
-            .AsAsyncEnumerable();
+            .ToListAsync();
+        return new ProductPublicWithPagination()
+        {
+            NextPage = nextPage,
+            Products = await productPublics
+        };
+    }
     public async Task<OneOf<ProductPublic, StatusMessage>> Add(ProductRegister productRegister)
     {
         var product = _mapper.Map<ProductRegister, Product>(productRegister);

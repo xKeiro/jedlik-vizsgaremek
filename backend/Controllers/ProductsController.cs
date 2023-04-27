@@ -3,7 +3,6 @@ using backend.Dtos.Products;
 using backend.Interfaces.Services;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 
@@ -22,8 +21,8 @@ public class ProductsController : ApiControllerBase
     }
     [HttpGet]
     [OutputCache(Duration = 120)]
-    public ActionResult<IAsyncEnumerable<ProductPublic>> GetNotDiscontinued()
-        => Ok(_service.GetNotDiscontinued());
+    public async Task<ActionResult<IAsyncEnumerable<ProductPublicWithPagination>>> GetNotDiscontinued(int page = 1, int pageSize = 10)
+        => Ok(await _service.GetNotDiscontinued(page,pageSize));
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductPublic>> Add(ProductRegister productRegister)

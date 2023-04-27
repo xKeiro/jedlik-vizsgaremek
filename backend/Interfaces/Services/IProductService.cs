@@ -1,12 +1,13 @@
 ﻿using backend.Dtos.Products;
 using backend.Models;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OneOf;
 
 namespace backend.Interfaces.Services;
 
 public interface IProductService
 {
-    IAsyncEnumerable<ProductPublic> GetNotDiscontinued();
+    Task<ProductPublicWithPagination> GetNotDiscontinued(int page, int pageSize);
     Task<OneOf<ProductPublic, StatusMessage>> Add(ProductRegister productRegister);
     IAsyncEnumerable<ProductPublic> GetNotDiscontinuedByCategoryId(ulong categoryId);
     IAsyncEnumerable<ProductPublic> GetFeatured();
