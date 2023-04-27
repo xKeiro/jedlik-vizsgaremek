@@ -15,16 +15,19 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import CircularProgress from "@mui/material/CircularProgress";
+import InfiniteScroll from 'react-infinite-scroller';
 
 export default function PriceList() {
   const shop = useContext(CartContext);
+  const pageSize = 10;
 
   const [products, setProducts] = useState(null);
+  const [nextPage, setNextPage] = useState(1);
 
-  async function getProducts() {
+  async function getProducts(pageToLoad) {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API + "/api/products",
+        process.env.REACT_APP_API + `/api/products?page=${pageToLoad}&size=${pageSize}`,
         {
           method: "GET",
           mode: "cors",
@@ -40,7 +43,13 @@ export default function PriceList() {
         console.log(errorMessage);
         return;
       }
-      setProducts(responseBody);
+      if (products === null) {
+        setProducts(responseBody.products);
+      }
+      else {
+        setProducts(products.concat(responseBody.products));
+      }
+      setNextPage(responseBody.nextPage);
     } catch (error) {
       console.log(error);
       return;
@@ -48,7 +57,7 @@ export default function PriceList() {
   }
 
   useEffect(() => {
-    getProducts();
+    getProducts(nextPage);
   }, []);
 
   return (
@@ -76,14 +85,20 @@ export default function PriceList() {
           spacing={2}
         >
           <Grid item xs={12} md={12}>
+          <InfiniteScroll
+                    pageStart={0}
+                    loadMore={() => getProducts(nextPage)}
+                    hasMore={nextPage !== null}
+                    loader={<CircularProgress key="loading"/>}
+                    >
             <TableContainer component={Paper}>
               <Table
                 sx={{ minWidth: 600 }}
                 size="small"
                 aria-label="simple table"
               >
-                <TableHead>
-                  <TableRow>
+                <TableHead key="header">
+                  <TableRow key="headerRow">
                     <TableCell>Name</TableCell>
                     <TableCell align="right">Price</TableCell>
                     <TableCell align="right">Stock</TableCell>
@@ -91,6 +106,7 @@ export default function PriceList() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
+                  
                   {products ? (
                     products.map((product) => (
                       <TableRow
@@ -139,6 +155,7 @@ export default function PriceList() {
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
                       }}
+                      key={"firstload"}
                     >
                       <TableCell
                         component="th"
@@ -146,13 +163,13 @@ export default function PriceList() {
                         align="center"
                         colSpan={4}
                       >
-                        <CircularProgress />
                       </TableCell>
                     </TableRow>
                   )}
                 </TableBody>
               </Table>
             </TableContainer>
+            </InfiniteScroll>
           </Grid>
         </Grid>
       </Box>
