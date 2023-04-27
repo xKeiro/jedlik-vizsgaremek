@@ -1,8 +1,10 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
 import CartContext from "../contexts/CartContext";
+import AlertMessage from "./Shared/AlertMessage";
 
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
@@ -15,23 +17,67 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Cart() {
+  const navigate = useNavigate();
   const auth = useContext(AuthContext);
   const shop = useContext(CartContext);
 
-  const shippers = [
-    { id: 1, title: "Personal collection", price: 0.0 },
-    { id: 2, title: "Post", price: 9.99 },
-    { id: 3, title: "Courier", price: 14.99 },
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const [successText, setSuccessText] = useState("");
+
+  const [shippers, setShippers] = useState(null);
+
+  async function getAllShippers() {
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/shippers",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const responseBody = await response.json();
+      if (!response.ok) {
+        const errorMessage = responseBody.title;
+        console.log(errorMessage);
+        return;
+      }
+      setShippers(responseBody);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  }
+
+  useEffect(() => {
+    getAllShippers();
+    setShipping(0);
+    if (auth.loggedIn) {
+      setVAT(auth.user.vat);
+    } else {
+      setVAT(27);
+    }
+  }, [auth.loggedIn, auth.user.vat]);
 
   const [VAT, setVAT] = useState(0);
   const [shipping, setShipping] = useState(0.0);
-  const [shipperId, setShipperId] = useState(1);
+  const [selectedShipperId, setSelectedShipperId] = useState(1);
   const [amount, setAmount] = useState(0);
   const [subtotal, setSubtotal] = useState(0.0);
   const [totalVAT, setTotalVAT] = useState(0.0);
@@ -39,8 +85,6 @@ export default function Cart() {
 
   useEffect(() => {
     setAmount(shop.cart.reduce((acc, curr) => acc + curr.quantity, 0));
-    setVAT(27);
-    setShipping(0);
   }, [shop.cart]);
 
   useEffect(() => {
@@ -75,8 +119,69 @@ export default function Cart() {
   }
 
   function handleShippingSelect(item) {
-    setShipperId(item.id);
+    setSelectedShipperId(item.id);
     setShipping(item.price);
+  }
+
+  function handleEmptyCart() {
+    shop.cart.forEach((item) => {
+      shop.removeProductsFromCart(item);
+    });
+  }
+
+  async function handleCheckoutButton() {
+    setErrorText("");
+    setSuccessText("");
+    setIsLoading(true);
+    const productOrders = [];
+    shop.cart.forEach((item) => {
+      const po = {
+        productId: item.id,
+        quantity: item.quantity,
+      };
+      productOrders.push(po);
+    });
+    const checkoutRequestBody = {
+      shipperId: selectedShipperId,
+      productOrders: productOrders,
+    };
+    console.log("Checkout Request Body:", checkoutRequestBody);
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/orders/checkout",
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(checkoutRequestBody),
+        }
+      );
+      const responseBody = await response.json();
+      if (!response.ok) {
+        const errorMessage = responseBody.title;
+        console.log(errorMessage);
+        console.log(responseBody);
+        setIsLoading(false);
+        setErrorText(errorMessage);
+        return;
+      }
+      handleEmptyCart();
+      setIsLoading(false);
+      setSuccessText(
+        "Order Successful, you order number is: " +
+          responseBody.id +
+          " Redirecting to your orders..."
+      );
+      setTimeout(() => {
+        navigate("/orders/");
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
   }
 
   return (
@@ -185,7 +290,7 @@ export default function Cart() {
                         align="center"
                         colSpan={4}
                       >
-                        The cart is empty.
+                        Your cart is empty.
                       </TableCell>
                     </TableRow>
                   )}
@@ -196,20 +301,20 @@ export default function Cart() {
           <Grid item xs={12} md={12}>
             <Box>
               <Paper elevation={2}>
-                <h3>Shipping (WIP)</h3>
+                <h3>Shipping</h3>
               </Paper>
             </Box>
             <TableContainer component={Paper}>
               <Table size="small" aria-label="shiping">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Method</TableCell>
+                    <TableCell>Shipping Method</TableCell>
                     <TableCell align="right">Price</TableCell>
                     <TableCell align="right">Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {shippers.length > 0 ? (
+                  {shippers && shippers.length > 0 ? (
                     shippers.map((shipper) => (
                       <TableRow
                         key={shipper.id}
@@ -219,7 +324,7 @@ export default function Cart() {
                         hover
                       >
                         <TableCell component="th" scope="row">
-                          {shipper.title}
+                          {shipper.companyName}
                         </TableCell>
                         <TableCell align="right">
                           {shipper.price !== 0.0
@@ -235,9 +340,11 @@ export default function Cart() {
                             variant="outlined"
                             size="small"
                             onClick={() => handleShippingSelect(shipper)}
-                            disabled={shipperId === shipper.id}
+                            disabled={selectedShipperId === shipper.id}
                           >
-                            {shipperId === shipper.id ? "Selected" : "Select"}
+                            {selectedShipperId === shipper.id
+                              ? "Selected"
+                              : "Select"}
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -263,77 +370,136 @@ export default function Cart() {
             </TableContainer>
           </Grid>
 
-          {shop.cart.length > 0 ? (
-            <Grid item xs={12} md={12} paddingBottom={2}>
-              <Paper elevation={3}>
-                <Box>
-                  <Paper elevation={2}>
-                    <h3>Order Summary</h3>
-                  </Paper>
-                </Box>
-                <p>Total amount of items: {amount}</p>
-                <p>
-                  Subtotal:{" "}
-                  {subtotal.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "EUR",
-                  })}
-                </p>
-                <p>
-                  + VAT:{" "}
-                  {totalVAT.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "EUR",
-                  })}{" "}
-                  ({VAT}%)
-                </p>
-                <p>
-                  + Shipping:{" "}
-                  {shipping.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "EUR",
-                  })}{" "}
-                </p>
-                <p>
-                  <b>
-                    Total:{" "}
-                    {total.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "EUR",
-                    })}
-                  </b>
-                </p>
-
-                {auth.loggedIn ? (
+          <Grid item xs={12} md={12} paddingBottom={2}>
+            <Paper elevation={3}>
+              <Box>
+                <Paper elevation={2}>
+                  <h3>Order Summary</h3>
+                </Paper>
+              </Box>
+              <Box>
+                {successText && (
+                  <AlertMessage type="success" message={successText} />
+                )}
+                {errorText && <AlertMessage type="error" message={errorText} />}
+                {isLoading && <CircularProgress />}
+              </Box>
+              <List>
+                {shop.cart.length > 0 ? (
                   <>
-                    <Button
-                      disabled={shop.cart.length < 1}
-                      variant="contained"
-                      component={RouterLink}
-                      to={"/checkout"}
-                      sx={{ marginY: "10px", paddingY: "10px" }}
-                    >
-                      Checkout (WIP)
-                    </Button>
-                    <Box paddingY={1}>
-                      <p>
-                        Please note that clicking on the Checkout button entails
-                        payment obligation.
-                      </p>
-                    </Box>
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon></ListItemIcon>
+                        {auth.loggedIn ? (
+                          <ListItemText
+                            primary={`VAT in your country: ${VAT}%`}
+                          />
+                        ) : (
+                          <ListItemText primary={`VAT in Hungary: ${VAT}%`} />
+                        )}
+                      </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon></ListItemIcon>
+                        <ListItemText primary={`Amount of items: ${amount}`} />
+                      </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon></ListItemIcon>
+                        <ListItemText
+                          primary={`Subtotal: ${subtotal.toLocaleString(
+                            "en-US",
+                            {
+                              style: "currency",
+                              currency: "EUR",
+                            }
+                          )}`}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+
+                    <Divider />
+
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>+</ListItemIcon>
+                        <ListItemText
+                          primary={`VAT: ${totalVAT.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                          })} (${VAT}%)`}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon>+</ListItemIcon>
+                        <ListItemText
+                          primary={`Shipping: ${shipping.toLocaleString(
+                            "en-US",
+                            {
+                              style: "currency",
+                              currency: "EUR",
+                            }
+                          )}`}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+
+                    <Divider />
+
+                    <ListItem disablePadding>
+                      <ListItemButton>
+                        <ListItemIcon></ListItemIcon>
+                        <ListItemText
+                          primary={`Total: ${total.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                          })}`}
+                        />
+                      </ListItemButton>
+                    </ListItem>
                   </>
                 ) : (
-                  <Box paddingY={2}>
-                    <Link component={RouterLink} to={"/login"}>
-                      Checkout requires signing in.
-                    </Link>
-                  </Box>
+                  <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon></ListItemIcon>
+                      <ListItemText primary="Your cart is empty." />
+                    </ListItemButton>
+                  </ListItem>
                 )}
-              </Paper>
-            </Grid>
-          ) : (
-            ""
-          )}
+              </List>
+              {auth.loggedIn ? (
+                <>
+                  <Button
+                    disabled={shop.cart.length < 1 || !selectedShipperId}
+                    variant="contained"
+                    onClick={handleCheckoutButton}
+                    sx={{ marginY: "10px", paddingY: "10px" }}
+                  >
+                    Checkout
+                  </Button>
+                  <Box paddingY={1}>
+                    <p>
+                      Please note that clicking on the Checkout button entails
+                      payment obligation.
+                    </p>
+                  </Box>
+                </>
+              ) : (
+                <Box paddingY={2}>
+                  <Link component={RouterLink} to={"/login"}>
+                    Checkout requires signing in.
+                  </Link>
+                </Box>
+              )}
+            </Paper>
+          </Grid>
         </Grid>
       </Box>
     </div>

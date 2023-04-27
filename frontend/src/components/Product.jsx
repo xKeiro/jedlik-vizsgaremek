@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState, useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useParams } from "react-router";
-import CategoryBar from "./CategoryBar";
+import CategoryBar from "./Shared/CategoryBar";
 import Reviews from "./Reviews";
 import AuthContext from "../contexts/AuthContext";
 import CartContext from "../contexts/CartContext";
@@ -34,7 +34,7 @@ export default function Product() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/products/${id}`,
+          process.env.REACT_APP_API + `/api/products/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -92,13 +92,19 @@ export default function Product() {
                     <CardMedia
                       sx={{ height: 400 }}
                       component="img"
-                      image={"/images/placeholder.png"}
+                      image={
+                        product.imagePath
+                          ? process.env.REACT_APP_API + "/" + product.imagePath
+                          : "/images/placeholder.png"
+                      }
                       alt={product.title}
                     />
                     <CardContent>
                       <Paper elevation={3}>
                         <Typography gutterBottom variant="h4" component="div">
-                          {product.title}
+                          {!product.discontinued
+                            ? product.title
+                            : product.title + "(Discontinued)"}
                         </Typography>
                       </Paper>
                       <Typography gutterBottom variant="h6" component="div">
@@ -119,7 +125,9 @@ export default function Product() {
                         fullWidth
                         color="primary"
                         variant="outlined"
-                        disabled={product.stock ? false : true}
+                        disabled={
+                          product.stock && !product.discontinued ? false : true
+                        }
                         onClick={() => shop.addProductToCart(product)}
                       >
                         Add to cart

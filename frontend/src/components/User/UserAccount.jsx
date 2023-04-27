@@ -1,12 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import AlertMessage from "../AlertMessage";
-import UserForm from "./UserForm";
+import AlertMessage from "../Shared/AlertMessage";
+import UserForm from "../Shared/UserForm";
+import ImageUpload from "../Shared/ImageUpload";
 
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function UserAccount() {
@@ -20,14 +22,17 @@ export default function UserAccount() {
   useEffect(() => {
     async function getUser() {
       try {
-        const response = await fetch(`http://localhost:5000/api/users/me`, {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        });
+        const response = await fetch(
+          process.env.REACT_APP_API + "/api/users/me",
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
         const responseBody = await response.json();
         if (!response.ok) {
           const errorMessage = responseBody.title;
@@ -55,17 +60,16 @@ export default function UserAccount() {
       lastName: user.lastName,
       email: user.email,
       phone: user.phone,
-
       id: user.id,
       isAdmin: user.isAdmin,
       //password: "",
       //passwordConfirm: "",
-
-      street: user.address.street,
-      city: user.address.city,
-      region: user.address.region,
-      postalCode: user.address.postalCode,
-      country: user.address.country,
+      street: user.street,
+      city: user.city,
+      region: user.region,
+      postalCode: user.postalCode,
+      country: user.country,
+      imagePath: user.imagePath,
     });
     setIsLoading(false);
   }, [user]);
@@ -76,30 +80,31 @@ export default function UserAccount() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/users/me", {
-        method: "PUT",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          username: userForm.username,
-          firstName: userForm.firstName,
-          lastName: userForm.lastName,
-          email: userForm.email,
-          phone: userForm.phone,
-          //password: userForm.password,
-          //passwordConfirm: userForm.passwordConfirm,
-          address: {
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/users/me",
+        {
+          method: "PUT",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            username: userForm.username,
+            firstName: userForm.firstName,
+            lastName: userForm.lastName,
+            email: userForm.email,
+            phone: userForm.phone,
+            //password: userForm.password,
+            //passwordConfirm: userForm.passwordConfirm,
             street: userForm.street,
             city: userForm.city,
             region: userForm.region,
             postalCode: userForm.postalCode,
             country: userForm.country,
-          },
-        }),
-      });
+          }),
+        }
+      );
       const responseBody = await response.json();
 
       if (!response.ok) {
@@ -171,6 +176,12 @@ export default function UserAccount() {
                     >
                       Save
                     </Button>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <Typography gutterBottom>User Avatar</Typography>
+                  </Grid>
+                  <Grid item xs={12} md={12}>
+                    <ImageUpload endpoint="users" id={user.id} />
                   </Grid>
                 </Grid>
               )}

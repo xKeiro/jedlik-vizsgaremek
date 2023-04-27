@@ -17,14 +17,17 @@ export default function CategoryBar({ currentCategoryId }) {
 
   async function getCategories() {
     try {
-      const response = await fetch("http://localhost:5000/api/categories", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/categories",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       if (!response.ok) {
         const errorMessage = responseBody.title;

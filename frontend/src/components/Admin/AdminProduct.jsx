@@ -1,14 +1,15 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import AlertMessage from "../AlertMessage";
+import AlertMessage from "../Shared/AlertMessage";
+import ImageUpload from "../Shared/ImageUpload";
 
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-//import CardMedia from "@mui/material/CardMedia";
+import CardMedia from "@mui/material/CardMedia";
 //import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
@@ -39,7 +40,6 @@ export default function AdminProduct() {
       basePrice: "",
       title: "",
       description: "",
-      photo: null,
       stock: "",
       discontinued: false,
       featured: false,
@@ -52,7 +52,7 @@ export default function AdminProduct() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/products/${id}`,
+          process.env.REACT_APP_API + `/api/products/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -77,14 +77,17 @@ export default function AdminProduct() {
 
     async function getCategories() {
       try {
-        const response = await fetch("http://localhost:5000/api/categories", {
-          method: "GET",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          credentials: "include",
-        });
+        const response = await fetch(
+          process.env.REACT_APP_API + "/api/categories",
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
         const responseBody = await response.json();
         if (!response.ok) {
           const errorMessage = responseBody.title;
@@ -132,8 +135,8 @@ export default function AdminProduct() {
     try {
       const response = await fetch(
         id
-          ? `http://localhost:5000/api/products/${id}`
-          : `http://localhost:5000/api/products/`,
+          ? process.env.REACT_APP_API + `/api/products/${id}`
+          : process.env.REACT_APP_API + `/api/products/`,
         {
           method: id ? "PUT" : "POST",
           mode: "cors",
@@ -146,7 +149,6 @@ export default function AdminProduct() {
             basePrice: product.basePrice,
             title: product.title,
             description: product.description,
-            photo: product.photo,
             stock: product.stock,
             discount: product.discount,
             discontinued: product.discontinued,
@@ -195,7 +197,11 @@ export default function AdminProduct() {
       >
         {product ? (
           <Card key={product.id} sx={{}}>
-            {/* <CardMedia /> */}
+            <CardMedia
+              sx={{ height: 400 }}
+              image={process.env.REACT_APP_API + "/" + product.imagePath}
+              title={product.title}
+            />
             <CardContent>
               <Grid
                 container
@@ -212,6 +218,37 @@ export default function AdminProduct() {
                     <AlertMessage type="error" message={errorText} />
                   )}
                   {isLoading ? <CircularProgress /> : ""}
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    label="Image"
+                    id="imagePath"
+                    name="imagePath"
+                    type="text"
+                    value={product.imagePath ? product.imagePath : "N/A"}
+                    onChange={handleChange}
+                    disabled={true}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <ImageUpload endpoint="products" id={product.id} />
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Title"
+                    id="title"
+                    name="title"
+                    type="text"
+                    value={product.title}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                    autoComplete="off"
+                  />
                 </Grid>
                 <Grid item xs={12} md={12}>
                   <FormControl fullWidth required>
@@ -241,33 +278,6 @@ export default function AdminProduct() {
                       )}
                     </Select>
                   </FormControl>
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    label="Photo"
-                    id="photo"
-                    name="photo"
-                    type="text"
-                    value={product.photo ? product.photo : "N/A"}
-                    onChange={handleChange}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Title"
-                    id="title"
-                    name="title"
-                    type="text"
-                    value={product.title}
-                    onChange={handleChange}
-                    disabled={isLoading}
-                    autoComplete="off"
-                  />
                 </Grid>
                 <Grid item xs={12} md={12}>
                   <TextField
@@ -355,7 +365,7 @@ export default function AdminProduct() {
                               checked={product.discontinued}
                             />
                           }
-                          label="Discontinued (Removed)"
+                          label="Discontinued (Disabled)"
                         />
                       </FormGroup>
                     </Grid>

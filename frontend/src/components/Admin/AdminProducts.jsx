@@ -20,14 +20,17 @@ export default function AdminProducts() {
 
   async function getAllProducts() {
     try {
-      const response = await fetch("http://localhost:5000/api/products/all", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/products/all",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       if (!response.ok) {
         const errorMessage = responseBody.title;
@@ -45,13 +48,10 @@ export default function AdminProducts() {
     getAllProducts();
   }, []);
 
-  async function handleRemove(e) {
-    //const title = e.target.parentNode.parentNode.dataset.title;
-    const id = e.target.parentNode.parentNode.dataset.id;
-
+  async function handleRemove(id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/products/${id}/Discontinue`,
+        process.env.REACT_APP_API + `/api/products/${id}/Discontinue`,
         {
           method: "PATCH",
           mode: "cors",
@@ -159,10 +159,10 @@ export default function AdminProducts() {
                           <Button
                             variant="outlined"
                             sx={{ marginLeft: 1 }}
-                            onClick={handleRemove}
+                            onClick={() => handleRemove(product.id)}
                             disabled={product.discontinued}
                           >
-                            Remove
+                            {product.discontinued ? "Disabled" : "Disable"}
                           </Button>
                         </TableCell>
                       </TableRow>

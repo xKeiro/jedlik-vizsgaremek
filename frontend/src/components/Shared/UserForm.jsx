@@ -1,11 +1,14 @@
 import React from "react";
 
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Avatar from "@mui/material/Avatar";
 
 export default function UserForm({ userForm, setUserForm, isNew }) {
   const countries = [
@@ -49,10 +52,22 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={12}>
-        <span>User information</span>
+        <Typography>User information</Typography>
+      </Grid>
+      <Grid item xs={3} md={1}>
+        <Box sx={{ paddingLeft: 1, paddingTop: 1 }}>
+          <Avatar
+            alt={userForm.username}
+            src={
+              userForm.imagePath
+                ? process.env.REACT_APP_API + "/" + userForm.imagePath
+                : null
+            }
+          />
+        </Box>
       </Grid>
 
-      <Grid item xs={12} md={12}>
+      <Grid item xs={9} md={11}>
         <TextField
           fullWidth
           required
@@ -104,11 +119,10 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
             <TextField
               fullWidth
               disabled
-              label="id"
+              label="Client ID"
               id="id"
               name="id"
               type="text"
-              helperText="For debug purposes only."
               value={userForm.id}
               onChange={handleFormChange}
               autoComplete="off"
@@ -187,7 +201,7 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
       </Grid>
 
       <Grid item xs={12} md={12}>
-        <span>Address details</span>
+        <Typography>Address details</Typography>
       </Grid>
 
       <Grid item xs={12} md={12}>

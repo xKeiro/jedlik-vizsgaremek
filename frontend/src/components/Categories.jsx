@@ -17,14 +17,17 @@ export default function Categories() {
 
   async function getCategories() {
     try {
-      const response = await fetch("http://localhost:5000/api/categories", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/categories",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       if (!response.ok) {
         const errorMessage = responseBody.title;
@@ -72,7 +75,13 @@ export default function Categories() {
                       <CardMedia
                         component="img"
                         height="150"
-                        image="/images/placeholder.png"
+                        image={
+                          category.imagePath
+                            ? process.env.REACT_APP_API +
+                              "/" +
+                              category.imagePath
+                            : "/images/placeholder.png"
+                        }
                         alt={category.title}
                       />
                       <CardContent sx={{ minHeight: 160 }}>

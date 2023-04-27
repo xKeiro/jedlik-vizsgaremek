@@ -4,14 +4,16 @@ import Cookies from "js-cookie";
 import AuthContext from "../contexts/AuthContext";
 
 const AuthService = (props) => {
-  const loggedInCookie = "logged_in";
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState({
+  const emptyUser = {
     id: "",
     username: "",
-    photo: "",
+    vat: null,
+    imagePath: null,
     isAdmin: false,
-  });
+  };
+  const loggedInCookie = "logged_in";
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState(emptyUser);
 
   function updateUser(key, value) {
     setUser((prevState) => ({
@@ -21,24 +23,22 @@ const AuthService = (props) => {
   }
 
   function resetUser() {
-    setUser({
-      id: "",
-      username: "",
-      photo: "",
-      isAdmin: false,
-    });
+    setUser(emptyUser);
   }
 
   async function refreshUser() {
     try {
-      const response = await fetch("http://localhost:5000/api/users/me", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/users/me",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       if (!response.ok) {
         const errorMessage = responseBody.detail;
@@ -58,7 +58,8 @@ const AuthService = (props) => {
     }
     updateUser("id", responseBody.id);
     updateUser("username", responseBody.username);
-    updateUser("photo", responseBody.photo);
+    updateUser("vat", responseBody.vat);
+    updateUser("imagePath", responseBody.imagePath);
     updateUser("isAdmin", responseBody.isAdmin);
     setLoggedIn(true);
     Cookies.set(loggedInCookie, true, { expires: 7 });

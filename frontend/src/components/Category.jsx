@@ -1,13 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import ProductCard from "./ProductCard";
+import ProductCard from "./Shared/ProductCard";
 
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
-import CategoryBar from "./CategoryBar";
+import CategoryBar from "./Shared/CategoryBar";
 
 export default function Category() {
   const { id } = useParams();
@@ -21,7 +21,7 @@ export default function Category() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/products/category/${id}`,
+          process.env.REACT_APP_API + `/api/products/category/${id}`,
           {
             method: "GET",
             mode: "cors",

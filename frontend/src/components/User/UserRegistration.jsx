@@ -1,10 +1,10 @@
 import React from "react";
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
-import AlertMessage from "../AlertMessage";
-import UserForm from "./UserForm";
+import AlertMessage from "../Shared/AlertMessage";
+import UserForm from "../Shared/UserForm";
 
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
@@ -56,29 +56,30 @@ export default function UserRegistration() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/register", {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          username: userForm.username,
-          firstName: userForm.firstName,
-          lastName: userForm.lastName,
-          email: userForm.email,
-          phone: userForm.phone,
-          password: userForm.password,
-          passwordConfirm: userForm.passwordConfirm,
-          address: {
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/auth/register",
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            username: userForm.username,
+            firstName: userForm.firstName,
+            lastName: userForm.lastName,
+            email: userForm.email,
+            phone: userForm.phone,
+            password: userForm.password,
+            passwordConfirm: userForm.passwordConfirm,
             street: userForm.street,
             city: userForm.city,
             region: userForm.region,
             postalCode: userForm.postalCode,
             country: userForm.country,
-          },
-        }),
-      });
+          }),
+        }
+      );
       const responseBody = await response.json();
 
       if (!response.ok) {

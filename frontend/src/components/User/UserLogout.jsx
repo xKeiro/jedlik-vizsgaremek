@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
-import AlertMessage from "../AlertMessage";
+import AlertMessage from "../Shared/AlertMessage";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -20,14 +20,17 @@ export default function UserLogout() {
   async function handleLogout() {
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/auth/logout", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/auth/logout",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
 
       if (!response.ok) {
         const errorMessage = response.statusText;
@@ -37,7 +40,6 @@ export default function UserLogout() {
         setErrorText(errorMessage);
         return;
       }
-      console.log(response);
       //setIsLoading(false);
       setSuccessText("Successfully logged out, redirecting...");
       setTimeout(() => {

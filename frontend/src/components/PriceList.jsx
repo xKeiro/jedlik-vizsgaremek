@@ -23,14 +23,17 @@ export default function PriceList() {
 
   async function getProducts() {
     try {
-      const response = await fetch("http://localhost:5000/api/products", {
-        method: "GET",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/products",
+        {
+          method: "GET",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const responseBody = await response.json();
       if (!response.ok) {
         const errorMessage = responseBody.title;
@@ -119,7 +122,11 @@ export default function PriceList() {
                             variant="outlined"
                             size="small"
                             color="primary"
-                            disabled={product.stock ? false : true}
+                            disabled={
+                              product.stock && !product.discontinued
+                                ? false
+                                : true
+                            }
                             onClick={() => shop.addProductToCart(product)}
                           >
                             Add to cart

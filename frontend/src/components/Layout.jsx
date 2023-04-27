@@ -18,7 +18,7 @@ import UserLogout from "./User/UserLogout";
 import UserRegistration from "./User/UserRegistration";
 import UserAccount from "./User/UserAccount";
 import UserOrders from "./User/UserOrders";
-import UserCheckout from "./User/UserCheckout";
+import UserOrder from "./User/UserOrder";
 import Admin from "./Admin/Admin";
 import AdminHome from "./Admin/AdminHome";
 import AdminOrders from "./Admin/AdminOrders";
@@ -32,13 +32,13 @@ import AdminSupplier from "./Admin/AdminSupplier";
 import AdminShippers from "./Admin/AdminShippers";
 import AdminShipper from "./Admin/AdminShipper";
 import AdminReviews from "./Admin/AdminReviews";
+import AdminReview from "./Admin/AdminReview";
 import AdminUsers from "./Admin/AdminUsers";
 import AdminUser from "./Admin/AdminUser";
 
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import UserOrder from "./User/UserOrder";
 
 export default function Layout() {
   const auth = useContext(AuthContext);
@@ -70,7 +70,6 @@ export default function Layout() {
                 <Route path="account" element={<UserAccount />} />
                 <Route path="orders" element={<UserOrders />} />
                 <Route path="order/:id" element={<UserOrder />} />
-                <Route path="checkout" element={<UserCheckout />} />
               </>
             )}
             {auth.loggedIn && auth.user.isAdmin && (
@@ -91,6 +90,7 @@ export default function Layout() {
                 <Route path="shipper/:id" element={<AdminShipper />} />
                 <Route path="shipper" element={<AdminShipper />} />
                 <Route path="reviews" element={<AdminReviews />} />
+                <Route path="review/:id" element={<AdminReview />} />
                 <Route path="users" element={<AdminUsers />} />
                 <Route path="user/:id" element={<AdminUser />} />
                 <Route path="*" element={<AdminHome />} />

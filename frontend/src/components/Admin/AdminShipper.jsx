@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import AlertMessage from "../AlertMessage";
+import AlertMessage from "../Shared/AlertMessage";
 
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -26,11 +26,11 @@ export default function AdminShipper() {
 
   useEffect(() => {
     const newShipper = {
-      company_name: "",
-      contact_first_name: "",
-      contact_last_name: "",
-      email: "",
+      companyName: "",
+      contactFirstName: "",
+      contactLastName: "",
       phone: "",
+      email: "",
       price: 0.0,
     };
 
@@ -41,7 +41,7 @@ export default function AdminShipper() {
       }
       try {
         const response = await fetch(
-          `http://localhost:5000/api/shippers/${id}`,
+          process.env.REACT_APP_API + `/api/shippers/${id}`,
           {
             method: "GET",
             mode: "cors",
@@ -82,8 +82,8 @@ export default function AdminShipper() {
     try {
       const response = await fetch(
         id
-          ? `http://localhost:5000/api/shippers/${id}`
-          : `http://localhost:5000/api/shippers/`,
+          ? process.env.REACT_APP_API + `/shippers/${id}`
+          : process.env.REACT_APP_API + `/api/shippers/`,
         {
           method: id ? "PUT" : "POST",
           mode: "cors",
@@ -92,18 +92,18 @@ export default function AdminShipper() {
           },
           credentials: "include",
           body: JSON.stringify({
-            company_name: shipper.company_name,
-            contact_first_name: shipper.contact_first_name,
-            contact_last_name: shipper.contact_last_name,
-            email: shipper.email,
+            companyName: shipper.companyName,
+            contactFirstName: shipper.contactFirstName,
+            contactLastName: shipper.contactLastName,
             phone: shipper.phone,
+            email: shipper.email,
             price: shipper.price,
           }),
         }
       );
       const responseBody = await response.json();
       if (!response.ok) {
-        const errorMessage = responseBody.detail[0].msg;
+        const errorMessage = responseBody.title;
         console.log(errorMessage);
 
         setIsLoading(false);
@@ -127,7 +127,7 @@ export default function AdminShipper() {
     <div className="AdminShipper">
       <Box>
         <Paper elevation={2}>
-          <h3>{id ? "Shipper Editor" : "Add new shipper"} (WIP)</h3>
+          <h3>{id ? "Shipper Editor" : "Add new shipper"}</h3>
         </Paper>
       </Box>
       <Box
@@ -163,74 +163,45 @@ export default function AdminShipper() {
                   <TextField
                     fullWidth
                     required
-                    label="Shipper ID"
-                    id="id"
-                    name="id"
-                    type="text"
-                    value={shipper.id}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
                     label="Company Name"
-                    id="cname"
-                    name="company_name"
+                    id="companyName"
+                    name="companyName"
                     type="text"
-                    value={shipper.company_name}
+                    value={shipper.companyName}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
                     required
                     label="Contact First Name"
-                    id="contact_first_name
-                    "
-                    name="contact_first_name
-                    "
+                    id="contactFirstName"
+                    name="contactFirstName"
                     type="text"
-                    value={shipper.contact_first_name}
+                    value={shipper.contactFirstName}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
                     required
                     label="Contact Last Name"
-                    id="contact_last_name"
-                    name="contact_last_name"
+                    id="contactLastName"
+                    name="contactLastName"
                     type="text"
-                    value={shipper.contact_last_name}
+                    value={shipper.contactLastName}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
                   />
                 </Grid>
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    required
-                    label="Email"
-                    id="email"
-                    name="email"
-                    type="text"
-                    value={shipper.email}
-                    onChange={handleChange}
-                    disabled={isLoading}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={6}>
                   <TextField
                     fullWidth
                     required
@@ -239,6 +210,20 @@ export default function AdminShipper() {
                     name="phone"
                     type="text"
                     value={shipper.phone}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Email"
+                    id="email"
+                    name="email"
+                    type="text"
+                    value={shipper.email}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"

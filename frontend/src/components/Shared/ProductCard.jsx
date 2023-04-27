@@ -1,7 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import CartContext from "../contexts/CartContext";
+import CartContext from "../../contexts/CartContext";
 
 import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
@@ -36,9 +36,13 @@ export default function ProductCard({ product }) {
           <CardActionArea component={RouterLink} to={"/product/" + product.id}>
             <CardMedia
               component="img"
-              height="150"
-              image="/images/placeholder.png"
-              alt={product.title}
+              sx={{ height: 150 }}
+              image={
+                product.imagePath
+                  ? process.env.REACT_APP_API + "/" + product.imagePath
+                  : "/images/placeholder.png"
+              }
+              title={product.title}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
@@ -59,7 +63,7 @@ export default function ProductCard({ product }) {
             <Button
               size="small"
               color="primary"
-              disabled={product.stock ? false : true}
+              disabled={product.stock && !product.discontinued ? false : true}
               onClick={() => shop.addProductToCart(product)}
             >
               Add to cart

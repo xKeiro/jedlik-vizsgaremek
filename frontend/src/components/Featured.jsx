@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import ProductCard from "./ProductCard";
+import ProductCard from "./Shared/ProductCard";
 
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -13,7 +13,7 @@ export default function Featured() {
   async function getProducts() {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/products/featured",
+        process.env.REACT_APP_API + "/api/products/featured",
         {
           method: "GET",
           mode: "cors",

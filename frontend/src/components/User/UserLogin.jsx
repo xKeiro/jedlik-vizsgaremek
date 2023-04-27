@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
-import AlertMessage from "../AlertMessage";
+import AlertMessage from "../Shared/AlertMessage";
 
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
@@ -28,18 +28,21 @@ export default function UserLogin() {
     setErrorText("");
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          identifier: loginUser,
-          password: loginPassword,
-        }),
-      });
+      const response = await fetch(
+        process.env.REACT_APP_API + "/api/auth/login",
+        {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            identifier: loginUser,
+            password: loginPassword,
+          }),
+        }
+      );
       const responseBody = await response.json();
 
       if (!response.ok) {
