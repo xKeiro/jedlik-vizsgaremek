@@ -27,7 +27,7 @@ export default function PriceList() {
   async function getProducts(pageToLoad) {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API + `/api/products?page=${pageToLoad}&size=${pageSize}`,
+        process.env.REACT_APP_API + `/api/products?page=${pageToLoad}&pageSize=${pageSize}`,
         {
           method: "GET",
           mode: "cors",
