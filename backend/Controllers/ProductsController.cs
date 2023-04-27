@@ -21,15 +21,15 @@ public class ProductsController : ApiControllerBase
     }
     [HttpGet]
     [OutputCache(Duration = 120)]
-    public async Task<ActionResult<IAsyncEnumerable<ProductPublicWithPagination>>> GetNotDiscontinued(int page = 1, int pageSize = 10)
+    public async Task<ActionResult<ProductPublicWithPagination>> GetNotDiscontinued(int page = 1, int pageSize = 10)
         => Ok(await _service.GetNotDiscontinued(page,pageSize));
     [HttpPost]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductPublic>> Add(ProductRegister productRegister)
      => (await _service.Add(productRegister)).Match(Created, Problem);
     [HttpGet("Category/{categoryId}")]
-    public ActionResult<IAsyncEnumerable<ProductPublic>> GetNotDiscontinuedByCategoryId(ulong categoryId)
-        => Ok(_service.GetNotDiscontinuedByCategoryId(categoryId));
+    public async Task<ActionResult<ProductPublicWithPagination>> GetNotDiscontinuedByCategoryId(ulong categoryId, int page = 1, int pageSize = 10)
+        => Ok(await _service.GetNotDiscontinuedByCategoryId(categoryId, page, pageSize));
     [HttpGet("Featured")]
     [OutputCache(Duration = 120)]
     public ActionResult<IAsyncEnumerable<ProductPublic>> GetFeatured()

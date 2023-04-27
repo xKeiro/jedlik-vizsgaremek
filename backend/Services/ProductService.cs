@@ -26,10 +26,8 @@ public class ProductService : IProductService
 
     public async Task<ProductPublicWithPagination> GetNotDiscontinued(int page, int pageSize)
     {
-        var maxPage = Math.Ceiling(_context.Products.Where(p => !p.Discontinued).Count() / (decimal)pageSize);
-        int? nextPage = maxPage - page > 0
-            ? page + 1
-            : null;
+        var maxPage = (int)Math.Ceiling(_context.Products.Where(p => !p.Discontinued).Count() / (decimal)pageSize);
+        var nextPage = GetNextPage(page, maxPage);
         var productPublics = _context.Products
             .Include(p => p.Category)
             .Where(p => !p.Discontinued)
@@ -83,15 +81,29 @@ public class ProductService : IProductService
         return _mapper.Map<Product, ProductPublic>(product);
     }
 
-    public IAsyncEnumerable<ProductPublic> GetNotDiscontinuedByCategoryId(ulong categoryId)
-        => _context.Products
+    public async Task<ProductPublicWithPagination> GetNotDiscontinuedByCategoryId(ulong categoryId, int page, int pageSize)
+    {
+        var maxPage = (int)Math.Ceiling(
+            _context.Products
+            .Where(p => !p.Discontinued && p.Category.Id == categoryId)
+            .Count() / (decimal)pageSize);
+        var nextPage = GetNextPage(page, maxPage);
+        var productsPublic = _context.Products
             .Include(p => p.Category)
             .Where(p => !p.Discontinued && p.Category.Id == categoryId)
             .OrderByDescending(p => p.ProductOrders!.Count)
             .ThenByDescending(p => p.BasePrice * (1 - (p.Discount / 100)))
             .ThenBy(p => p.Title)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .Select(p => _mapper.Map<Product, ProductPublic>(p))
-            .AsAsyncEnumerable();
+            .ToListAsync();
+        return new ProductPublicWithPagination() 
+        {
+            NextPage = nextPage,
+            Products = await productsPublic
+        };
+    }
 
     public IAsyncEnumerable<ProductPublic> GetFeatured()
         => _context.Products
@@ -184,6 +196,14 @@ public class ProductService : IProductService
         await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
         return _statusMessage.ImageSuccessfullySaved200();
+    }
+
+    private int? GetNextPage(int page, int maxPage)
+    {
+        int? nextPage = maxPage - page > 0
+            ? page + 1
+            : null;
+        return nextPage;
     }
 
 

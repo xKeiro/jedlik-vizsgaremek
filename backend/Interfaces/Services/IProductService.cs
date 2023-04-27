@@ -9,7 +9,7 @@ public interface IProductService
 {
     Task<ProductPublicWithPagination> GetNotDiscontinued(int page, int pageSize);
     Task<OneOf<ProductPublic, StatusMessage>> Add(ProductRegister productRegister);
-    IAsyncEnumerable<ProductPublic> GetNotDiscontinuedByCategoryId(ulong categoryId);
+    Task<ProductPublicWithPagination> GetNotDiscontinuedByCategoryId(ulong categoryId, int page, int pageSize);
     IAsyncEnumerable<ProductPublic> GetFeatured();
     IAsyncEnumerable<ProductPublic> GetAll();
     Task<OneOf<ProductPublic, StatusMessage>> FindById(ulong productId);
