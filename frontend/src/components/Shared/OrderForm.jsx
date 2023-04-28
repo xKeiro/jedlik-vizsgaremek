@@ -228,7 +228,19 @@ export default function OrderForm({ order }) {
           id="shipper"
           name="shipper"
           type="text"
-          value={order.shipperId}
+          value={order.shipperName}
+          autoComplete="off"
+        />
+      </Grid>
+      <Grid item xs={12} md={12}>
+        <TextField
+          variant="filled"
+          fullWidth
+          label="Shipping Price"
+          id="shippingPrice"
+          name="shippingPrice"
+          type="text"
+          value={order.shippingPrice}
           autoComplete="off"
         />
       </Grid>
