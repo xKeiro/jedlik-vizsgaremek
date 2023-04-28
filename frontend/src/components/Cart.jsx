@@ -387,90 +387,73 @@ export default function Cart() {
               <List>
                 {shop.cart.length > 0 ? (
                   <>
-                    <ListItem disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon></ListItemIcon>
-                        {auth.loggedIn ? (
-                          <ListItemText
-                            primary={`VAT in your country: ${VAT}%`}
-                          />
-                        ) : (
-                          <ListItemText primary={`VAT in Hungary: ${VAT}%`} />
-                        )}
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon></ListItemIcon>
-                        <ListItemText primary={`Amount of items: ${amount}`} />
-                      </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                      <ListItemButton>
+                    {auth.loggedIn ? (
+                      <ListItem>
                         <ListItemIcon></ListItemIcon>
                         <ListItemText
-                          primary={`Subtotal: ${subtotal.toLocaleString(
-                            "en-US",
-                            {
-                              style: "currency",
-                              currency: "EUR",
-                            }
-                          )}`}
+                          primary={`VAT in your country: ${VAT}%`}
                         />
-                      </ListItemButton>
+                      </ListItem>
+                    ) : (
+                      <ListItem>
+                        <ListItemIcon></ListItemIcon>
+                        <ListItemText primary={`VAT in Hungary: ${VAT}%`} />
+                      </ListItem>
+                    )}
+
+                    <ListItem>
+                      <ListItemIcon></ListItemIcon>
+                      <ListItemText primary={`Amount of items: ${amount}`} />
+                    </ListItem>
+
+                    <ListItem>
+                      <ListItemIcon></ListItemIcon>
+                      <ListItemText
+                        primary={`Subtotal: ${subtotal.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "EUR",
+                        })}`}
+                      />
                     </ListItem>
 
                     <Divider />
 
-                    <ListItem disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>+</ListItemIcon>
-                        <ListItemText
-                          primary={`VAT: ${totalVAT.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "EUR",
-                          })} (${VAT}%)`}
-                        />
-                      </ListItemButton>
+                    <ListItem>
+                      <ListItemIcon>+</ListItemIcon>
+                      <ListItemText
+                        primary={`VAT: ${totalVAT.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "EUR",
+                        })} (${VAT}%)`}
+                      />
                     </ListItem>
 
-                    <ListItem disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon>+</ListItemIcon>
-                        <ListItemText
-                          primary={`Shipping: ${shipping.toLocaleString(
-                            "en-US",
-                            {
-                              style: "currency",
-                              currency: "EUR",
-                            }
-                          )}`}
-                        />
-                      </ListItemButton>
+                    <ListItem>
+                      <ListItemIcon>+</ListItemIcon>
+                      <ListItemText
+                        primary={`Shipping: ${shipping.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "EUR",
+                        })}`}
+                      />
                     </ListItem>
 
                     <Divider />
 
-                    <ListItem disablePadding>
-                      <ListItemButton>
-                        <ListItemIcon></ListItemIcon>
-                        <ListItemText
-                          primary={`Total: ${total.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "EUR",
-                          })}`}
-                        />
-                      </ListItemButton>
+                    <ListItem>
+                      <ListItemIcon></ListItemIcon>
+                      <ListItemText
+                        primary={`Total: ${total.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "EUR",
+                        })}`}
+                      />
                     </ListItem>
                   </>
                 ) : (
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemIcon></ListItemIcon>
-                      <ListItemText primary="Your cart is empty." />
-                    </ListItemButton>
+                  <ListItem>
+                    <ListItemIcon></ListItemIcon>
+                    <ListItemText primary="Your cart is empty." />
                   </ListItem>
                 )}
               </List>
