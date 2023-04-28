@@ -51,12 +51,37 @@ export default function ProductCard({ product }) {
               <Typography variant="body2" color="text.secondary">
                 {product.stock ? "In stock" : "Out of stock"}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {product.basePrice.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "EUR",
-                })}
-              </Typography>
+
+              {product.discount ? (
+                <>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ textDecoration: "line-through" }}
+                  >
+                    {product.basePrice.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "EUR",
+                    })}
+                  </Typography>
+                  <Typography variant="body1" color="primary">
+                    {(
+                      product.basePrice -
+                      product.basePrice * (product.discount / 100)
+                    ).toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "EUR",
+                    })}
+                  </Typography>
+                </>
+              ) : (
+                <Typography variant="body1" color="text.secondary">
+                  {product.basePrice.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "EUR",
+                  })}
+                </Typography>
+              )}
             </CardContent>
           </CardActionArea>
           <CardActions>

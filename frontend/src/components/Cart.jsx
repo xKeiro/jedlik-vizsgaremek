@@ -17,9 +17,9 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
@@ -83,20 +83,34 @@ export default function Cart() {
   const [totalVAT, setTotalVAT] = useState(0.0);
   const [total, setTotal] = useState(0.0);
 
+  function calcDiscountedPrice(base, discount) {
+    if (!discount) return base;
+    return base - base * (discount / 100);
+  }
+
   useEffect(() => {
     setAmount(shop.cart.reduce((acc, curr) => acc + curr.quantity, 0));
   }, [shop.cart]);
 
   useEffect(() => {
     setSubtotal(
-      shop.cart.reduce((acc, curr) => acc + curr.basePrice * curr.quantity, 0)
+      shop.cart.reduce(
+        (acc, curr) =>
+          acc +
+          calcDiscountedPrice(curr.basePrice, curr.discount) * curr.quantity,
+        0
+      )
     );
   }, [shop.cart, amount]);
 
   useEffect(() => {
     setTotalVAT(
       shop.cart.reduce(
-        (acc, curr) => acc + curr.basePrice * (VAT / 100) * curr.quantity,
+        (acc, curr) =>
+          acc +
+          calcDiscountedPrice(curr.basePrice, curr.discount) *
+            (VAT / 100) *
+            curr.quantity,
         0
       )
     );
@@ -244,10 +258,36 @@ export default function Cart() {
                           </Link>
                         </TableCell>
                         <TableCell align="right">
-                          {item.basePrice.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "EUR",
-                          })}
+                          {item.discount ? (
+                            <>
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                                sx={{ textDecoration: "line-through" }}
+                              >
+                                {item.basePrice.toLocaleString("en-US", {
+                                  style: "currency",
+                                  currency: "EUR",
+                                })}
+                              </Typography>
+                              <Typography variant="body1" color="primary">
+                                {(
+                                  item.basePrice -
+                                  item.basePrice * (item.discount / 100)
+                                ).toLocaleString("en-US", {
+                                  style: "currency",
+                                  currency: "EUR",
+                                })}
+                              </Typography>
+                            </>
+                          ) : (
+                            <Typography variant="body1" color="text.secondary">
+                              {item.basePrice.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "EUR",
+                              })}
+                            </Typography>
+                          )}
                         </TableCell>
                         <TableCell align="right">
                           <IconButton

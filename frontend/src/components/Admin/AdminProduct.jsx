@@ -482,7 +482,7 @@ export default function AdminProduct() {
                     <TextField
                       fullWidth
                       required
-                      label="Discount"
+                      label="Discount (%)"
                       id="discount"
                       name="discount"
                       type="number"
