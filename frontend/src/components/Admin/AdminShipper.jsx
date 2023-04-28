@@ -31,7 +31,7 @@ export default function AdminShipper() {
       contactLastName: "",
       phone: "",
       email: "",
-      price: 0.0,
+      price: 0,
     };
 
     async function getShipper() {
@@ -168,6 +168,20 @@ export default function AdminShipper() {
                     name="companyName"
                     type="text"
                     value={shipper.companyName}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Price"
+                    id="price"
+                    name="price"
+                    type="number"
+                    value={shipper.price}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"
