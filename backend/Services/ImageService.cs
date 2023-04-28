@@ -37,7 +37,7 @@ public class ImageService : IImageService
 
     private (string relativePath, string path) GetImagePath(ulong id, string nameOfModel)
     {
-        var relativePath = $"Images/{nameOfModel}/{id}.webp";
+        var relativePath = $"api/Images/{nameOfModel}/{id}.webp";
         var path = Path.Combine(_webHostEnvironment.WebRootPath, relativePath);
         return (relativePath, path);
     }

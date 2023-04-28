@@ -14,5 +14,5 @@ public class ProductCategory : BaseModel
     public required string Description { get; set; }
     public ICollection<Product>? Products { get; set; }
     [MinLength(3), MaxLength(200)]
-    public string ImagePath { get; set; } = $"Images/{nameof(ProductCategory)}/default.webp";
+    public string ImagePath { get; set; } = $"api/Images/{nameof(ProductCategory)}/default.webp";
 }
