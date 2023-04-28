@@ -1,4 +1,5 @@
-﻿using backend.Dtos.Products;
+﻿using backend.Dtos.Images;
+using backend.Dtos.Products;
 using backend.Models;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OneOf;
@@ -15,5 +16,5 @@ public interface IProductService
     Task<OneOf<ProductPublic, StatusMessage>> FindById(ulong productId);
     Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductUpdate productUpdate);
     Task<StatusMessage> Discontinue(ulong productId);
-    Task<StatusMessage> SaveImage(ulong productId, IFormFile image);
+    Task<OneOf<ImagePublic,StatusMessage>> SaveImage(ulong productId, IFormFile image);
 }

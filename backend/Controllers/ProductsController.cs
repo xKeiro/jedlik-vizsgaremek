@@ -1,4 +1,5 @@
 ﻿using backend.Conventions;
+using backend.Dtos.Images;
 using backend.Dtos.Products;
 using backend.Interfaces.Services;
 using backend.Models;
@@ -64,11 +65,6 @@ public class ProductsController : ApiControllerBase
     [HttpPost("{productId}/Image")]
     [Authorize(Roles = "Admin")]
 
-    public async Task<ActionResult<StatusMessage>> SaveImage(ulong productId, IFormFile image)
-    {
-        var result = await _service.SaveImage(productId, image);
-        return result.StatusCode == 200
-            ? Ok(result)
-            : Problem(result);
-    }
+    public async Task<ActionResult<ImagePublic>> SaveImage(ulong productId, IFormFile image)
+        => (await _service.SaveImage(productId, image)).Match(Ok, Problem);
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.Dtos.Auth;
+using backend.Dtos.Images;
 using backend.Dtos.Users;
 using backend.Interfaces.Services;
 using backend.Models;
@@ -85,7 +86,7 @@ public class UserService : IUserService
         return _mapper.Map<User, UserPublic>(user);
     }
 
-    public async Task<StatusMessage> SaveImage(ulong userId, IFormFile image)
+    public async Task<OneOf<ImagePublic, StatusMessage>> SaveImage(ulong userId, IFormFile image)
     {
         var user = await _context.Users
             .FirstOrDefaultAsync(p => p.Id == userId);
@@ -101,7 +102,7 @@ public class UserService : IUserService
         user.ImagePath = imageSaveResult.AsT0;
         await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
-        return _statusMessage.ImageSuccessfullySaved200();
+        return new ImagePublic() { ImagePath = user.ImagePath };
     }
 
     private async Task<(bool result, List<string> notUniquePropertyNames)> IsUnique

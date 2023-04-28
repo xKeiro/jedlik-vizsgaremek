@@ -18,5 +18,4 @@ public interface IStatusMessageService
     StatusMessage UserAlreadyHaveAReview409(string username, string productTitle);
     StatusMessage ProductAlreadyHaveThisSupplierRegistered409(ulong productId, ulong supplierId);
     StatusMessage WrongImageType400(string[] allowed_image_types);
-    StatusMessage ImageSuccessfullySaved200();
 }
