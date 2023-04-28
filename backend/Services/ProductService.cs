@@ -88,7 +88,7 @@ public class ProductService : IProductService
             .Where(p => !p.Discontinued && p.Category.Id == categoryId)
             .Count() / (decimal)pageSize);
         var nextPage = GetNextPage(page, maxPage);
-        var productsPublic = _context.Products
+        var productsPublic = _context.Products 
             .Include(p => p.Category)
             .Where(p => !p.Discontinued && p.Category.Id == categoryId)
             .OrderByDescending(p => p.ProductOrders!.Count)

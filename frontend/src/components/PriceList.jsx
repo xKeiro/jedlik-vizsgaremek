@@ -93,9 +93,9 @@ export default function PriceList() {
                     >
             <TableContainer component={Paper}>
               <Table
-                sx={{ minWidth: 600 }}
                 size="small"
                 aria-label="simple table"
+                className="ResponsiveTable"
               >
                 <TableHead key="header">
                   <TableRow key="headerRow">
@@ -116,7 +116,7 @@ export default function PriceList() {
                         }}
                         hover
                       >
-                        <TableCell component="th" scope="row">
+                        <TableCell scope="row" data-label="Name">
                           <Link
                             component={RouterLink}
                             to={"/product/" + product.id}
@@ -124,13 +124,13 @@ export default function PriceList() {
                             {product.title}
                           </Link>
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="right" data-label="Price">
                           {product.basePrice.toLocaleString("en-US", {
                             style: "currency",
                             currency: "EUR",
                           })}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="right" data-label="Stock">
                           {product.stock ? "In stock" : "Out of stock"}
                         </TableCell>
                         <TableCell align="right">
