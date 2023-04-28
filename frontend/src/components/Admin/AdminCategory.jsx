@@ -37,7 +37,6 @@ export default function AdminCategory() {
       id: "New category ID",
       title: "",
       description: "",
-      imagePath: null,
     };
 
     async function getCategory() {
@@ -144,11 +143,15 @@ export default function AdminCategory() {
       >
         {category ? (
           <Card key={category.id} sx={{}}>
-            <CardMedia
-              sx={{ height: 150 }}
-              image={process.env.REACT_APP_API + "/" + category.imagePath}
-              title={category.title}
-            />
+            {id ? (
+              <CardMedia
+                sx={{ height: 150 }}
+                image={process.env.REACT_APP_API + "/" + category.imagePath}
+                title={category.title}
+              />
+            ) : (
+              ""
+            )}
             <CardContent>
               <Grid
                 container
@@ -166,23 +169,28 @@ export default function AdminCategory() {
                   )}
                   {isLoading ? <CircularProgress /> : ""}
                 </Grid>
-
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    label="Image"
-                    id="imagePath"
-                    name="imagePath"
-                    type="text"
-                    value={category.imagePath ? category.imagePath : "N/A"}
-                    onChange={handleChange}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <ImageUpload endpoint="categories" id={category.id} />
-                </Grid>
+                {id ? (
+                  <>
+                    <Grid item xs={12} md={12}>
+                      <TextField
+                        fullWidth
+                        label="Image"
+                        id="imagePath"
+                        name="imagePath"
+                        type="text"
+                        value={category.imagePath ? category.imagePath : "N/A"}
+                        onChange={handleChange}
+                        disabled={true}
+                        autoComplete="off"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                      <ImageUpload endpoint="categories" id={category.id} />
+                    </Grid>
+                  </>
+                ) : (
+                  ""
+                )}
                 <Grid item xs={12} md={12}>
                   <TextField
                     fullWidth
@@ -219,7 +227,11 @@ export default function AdminCategory() {
               <Button
                 fullWidth
                 variant="contained"
-                disabled={isLoading}
+                disabled={
+                  isLoading ||
+                  category.title === "" ||
+                  category.description === ""
+                }
                 onClick={handleCategoryUpdate}
               >
                 {id ? "Save" : "Add"} Category

@@ -32,6 +32,7 @@ export default function AdminProduct() {
 
   const [product, setProduct] = useState(null);
   const [categories, setCategories] = useState(null);
+  const [suppliers, setSuppliers] = useState(null);
 
   useEffect(() => {
     const newProduct = {
@@ -41,8 +42,11 @@ export default function AdminProduct() {
       title: "",
       description: "",
       stock: "",
+      discount: "",
       discontinued: false,
       featured: false,
+      purchasePrice: "",
+      supplierId: "select",
     };
 
     async function getProduct() {
@@ -100,9 +104,35 @@ export default function AdminProduct() {
         return;
       }
     }
+    async function getAllSuppliers() {
+      try {
+        const response = await fetch(
+          process.env.REACT_APP_API + "/api/suppliers",
+          {
+            method: "GET",
+            mode: "cors",
+            headers: {
+              "Content-type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+        const responseBody = await response.json();
+        if (!response.ok) {
+          const errorMessage = responseBody.title;
+          console.log(errorMessage);
+          return;
+        }
+        setSuppliers(responseBody);
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    }
 
     getProduct();
     getCategories();
+    getAllSuppliers();
   }, [id]);
 
   function handleChange(e) {
@@ -125,13 +155,6 @@ export default function AdminProduct() {
     setErrorText(null);
     setSuccessText(null);
     setIsLoading(true);
-
-    if (product.category_id === "select") {
-      setErrorText("Please select a category");
-      setIsLoading(false);
-      return;
-    }
-
     try {
       const response = await fetch(
         id
@@ -153,6 +176,8 @@ export default function AdminProduct() {
             discount: product.discount,
             discontinued: product.discontinued,
             featured: product.featured,
+            purchasePrice: product.purchasePrice,
+            supplierId: product.supplierId,
           }),
         }
       );
@@ -197,11 +222,15 @@ export default function AdminProduct() {
       >
         {product ? (
           <Card key={product.id} sx={{}}>
-            <CardMedia
-              sx={{ height: 400 }}
-              image={process.env.REACT_APP_API + "/" + product.imagePath}
-              title={product.title}
-            />
+            {id ? (
+              <CardMedia
+                sx={{ height: 400 }}
+                image={process.env.REACT_APP_API + "/" + product.imagePath}
+                title={product.title}
+              />
+            ) : (
+              ""
+            )}
             <CardContent>
               <Grid
                 container
@@ -218,24 +247,30 @@ export default function AdminProduct() {
                     <AlertMessage type="error" message={errorText} />
                   )}
                   {isLoading ? <CircularProgress /> : ""}
-                </Grid>
+                </Grid>{" "}
+                {id ? (
+                  <>
+                    <Grid item xs={12} md={12}>
+                      <TextField
+                        fullWidth
+                        label="Image"
+                        id="imagePath"
+                        name="imagePath"
+                        type="text"
+                        value={product.imagePath ? product.imagePath : "N/A"}
+                        onChange={handleChange}
+                        disabled={true}
+                        autoComplete="off"
+                      />
+                    </Grid>
 
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    label="Image"
-                    id="imagePath"
-                    name="imagePath"
-                    type="text"
-                    value={product.imagePath ? product.imagePath : "N/A"}
-                    onChange={handleChange}
-                    disabled={true}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12} md={12}>
-                  <ImageUpload endpoint="products" id={product.id} />
-                </Grid>
+                    <Grid item xs={12} md={12}>
+                      <ImageUpload endpoint="products" id={product.id} />
+                    </Grid>
+                  </>
+                ) : (
+                  ""
+                )}
                 <Grid item xs={12} md={12}>
                   <TextField
                     fullWidth
@@ -315,7 +350,7 @@ export default function AdminProduct() {
                     required
                     label="Base price"
                     id="basePrice"
-                    name="basPrice"
+                    name="basePrice"
                     type="number"
                     value={product.basePrice}
                     onChange={handleChange}
@@ -337,6 +372,55 @@ export default function AdminProduct() {
                     autoComplete="off"
                   />
                 </Grid>
+                {!id ? (
+                  <>
+                    <Grid item xs={12} md={12}>
+                      <FormControl fullWidth required>
+                        <InputLabel id="supplier_id">Supplier</InputLabel>
+                        <Select
+                          sx={{ textAlign: "left" }}
+                          labelId="supplierId"
+                          id="supplierId"
+                          name="supplierId"
+                          value={product.supplierId}
+                          label="Supplier"
+                          onChange={handleChange}
+                          disabled={isLoading}
+                          autoComplete="off"
+                        >
+                          <MenuItem value={"select"}>
+                            Select Supplier...
+                          </MenuItem>
+                          {suppliers ? (
+                            suppliers.map((supplier) => (
+                              <MenuItem key={supplier.id} value={supplier.id}>
+                                {supplier.companyName}
+                              </MenuItem>
+                            ))
+                          ) : (
+                            <MenuItem value={""}>Loading...</MenuItem>
+                          )}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                      <TextField
+                        fullWidth
+                        required
+                        label="Supplier Price"
+                        id="purchasePrice"
+                        name="purchasePrice"
+                        type="number"
+                        value={product.purchasePrice}
+                        onChange={handleChange}
+                        disabled={isLoading}
+                        autoComplete="off"
+                      />
+                    </Grid>
+                  </>
+                ) : (
+                  ""
+                )}
                 <Grid item xs={12} md={12}>
                   <Grid container spacing={2}>
                     <Grid item xs={6} md={6}>
@@ -377,7 +461,17 @@ export default function AdminProduct() {
               <Button
                 fullWidth
                 variant="contained"
-                disabled={isLoading || product.categoryId === "select"}
+                disabled={
+                  isLoading ||
+                  product.categoryId === "select" ||
+                  product.supplierId === "select" ||
+                  product.title === "" ||
+                  product.description === "" ||
+                  product.stock === "" ||
+                  product.basePrice === "" ||
+                  product.discount === "" ||
+                  product.purchasePrice === ""
+                }
                 onClick={handleProductUpdate}
               >
                 {id ? "Save" : "Add"} Product
