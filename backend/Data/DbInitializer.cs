@@ -56,7 +56,7 @@ public static class DbInitializer
             new CountryWithVat { Id = 26, Country = "Spain", Vat = 21 },
             new CountryWithVat { Id = 27, Country = "Sweden", Vat = 25 }
         };
-        
+
         context.AddRangeAsync(countriesWithVat);
         context.Database.OpenConnection();
         context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT CountriesWithVat ON");
@@ -74,7 +74,7 @@ public static class DbInitializer
                 Title = "Cases",
                 Description = "A computer case, also known as a computer chassis, is the enclosure that contains most of the components of a personal computer (usually excluding the display, keyboard, and mouse)",
                 ImagePath = $"Images/{nameof(ProductCategory)}/1.webp"
-                
+
             },
             new()
             {
@@ -840,226 +840,282 @@ public static class DbInitializer
         #region ProductSuppliers
         var productSuppliers = new List<ProductSupplier>(){
             new(){
-                Id= 1,
+                Id = 1,
                 Product = context.Products.Where(x => x.Id == 1).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 1).First().BasePrice*0.7m,
             },
             new(){
-                Id= 2,
+                Id = 2,
                 Product = context.Products.Where(x => x.Id == 2).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 2).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 3,
+                Id = 3,
                 Product = context.Products.Where(x => x.Id == 3).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 3).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 4,
+                Id = 4,
                 Product = context.Products.Where(x => x.Id == 4).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 4).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 5,
+                Id = 5,
                 Product = context.Products.Where(x => x.Id == 5).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 5).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 6,
+                Id = 6,
                 Product = context.Products.Where(x => x.Id == 6).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 6).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 7,
+                Id = 7,
                 Product = context.Products.Where(x => x.Id == 7).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 7).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 8,
+                Id = 8,
                 Product = context.Products.Where(x => x.Id == 8).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 8).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 9,
+                Id = 9,
                 Product = context.Products.Where(x => x.Id == 9).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 9).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 10,
+                Id = 10,
                 Product = context.Products.Where(x => x.Id == 10).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 10).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 11,
+                Id = 11,
                 Product = context.Products.Where(x => x.Id == 11).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 11).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 12,
+                Id = 12,
                 Product = context.Products.Where(x => x.Id == 12).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 12).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 13,
+                Id = 13,
                 Product = context.Products.Where(x => x.Id == 13).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 13).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 14,
+                Id = 14,
                 Product = context.Products.Where(x => x.Id == 14).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 14).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 15,
+                Id = 15,
                 Product = context.Products.Where(x => x.Id == 15).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 15).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 16,
+                Id = 16,
                 Product = context.Products.Where(x => x.Id == 16).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 16).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 17,
+                Id = 17,
                 Product = context.Products.Where(x => x.Id == 17).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 17).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 18,
+                Id = 18,
                 Product = context.Products.Where(x => x.Id == 18).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 18).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 19,
+                Id = 19,
                 Product = context.Products.Where(x => x.Id == 19).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 19).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 20,
+                Id = 20,
                 Product = context.Products.Where(x => x.Id == 20).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 2).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 20).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 21,
+                Id = 21,
                 Product = context.Products.Where(x => x.Id == 21).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 21).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 22,
+                Id = 22,
                 Product = context.Products.Where(x => x.Id == 22).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 22).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 23,
+                Id = 23,
                 Product = context.Products.Where(x => x.Id == 23).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 23).First().BasePrice*0.7m,
             },
             new()
             {
-                Id= 24,
+                Id = 24,
                 Product = context.Products.Where(x => x.Id == 24).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 24).First().BasePrice*0.8m,
             },
             new()
             {
-                Id= 25,
+                Id = 25,
                 Product = context.Products.Where(x => x.Id == 25).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 25).First().BasePrice*0.8m,
             },
             new()
             {
-                Id= 26,
+                Id = 26,
                 Product = context.Products.Where(x => x.Id == 26).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 26).First().BasePrice*0.8m,
             },
             new()
             {
-                Id= 27,
+                Id = 27,
                 Product = context.Products.Where(x => x.Id == 27).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 27).First().BasePrice*0.8m,
             },
             new()
             {
-                Id= 28,
+                Id = 28,
                 Product = context.Products.Where(x => x.Id == 28).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 3).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 28).First().BasePrice*0.8m,
             },
             new()
             {
-                Id= 29,
+                Id = 29,
                 Product = context.Products.Where(x => x.Id == 29).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 4).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 29).First().BasePrice*0.6m,
             },
             new()
             {
-                Id= 30,
+                Id = 30,
                 Product = context.Products.Where(x => x.Id == 30).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 4).First(),
                 PurchasePrice = context.Products.Where(x => x.Id == 30).First().BasePrice*0.6m,
             },
             new()
             {
-                Id= 31,
-                Product = context.Products.Where(x => x.Id == 2).First(),
-                Supplier = context.Suppliers.Where(x => x.Id == 4).First(),
-                PurchasePrice = context.Products.Where(x => x.Id == 2).First().BasePrice*0.8m,
+                Id = 31,
+                Product = context.Products.Where(x => x.Id == 31).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 31).First().BasePrice*0.6m,
             },
             new()
             {
-                Id= 32,
-                Product = context.Products.Where(x => x.Id == 1).First(),
+                Id = 32,
+                Product = context.Products.Where(x => x.Id == 32).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 32).First().BasePrice*0.6m,
+            },
+            new()
+            {
+                Id = 33,
+                Product = context.Products.Where(x => x.Id == 33).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 33).First().BasePrice*0.6m,
+            },
+            new()
+            {
+                Id = 34,
+                Product = context.Products.Where(x => x.Id == 34).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 34).First().BasePrice*0.6m,
+            },
+            new()
+            {
+                Id = 35,
+                Product = context.Products.Where(x => x.Id == 35).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 35).First().BasePrice*0.6m,
+            },
+            new()
+            {
+                Id = 36,
+                Product = context.Products.Where(x => x.Id == 36).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 36).First().BasePrice*0.6m,
+            },
+            new()
+            {
+                Id = 37,
+                Product = context.Products.Where(x => x.Id == 37).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 37).First().BasePrice*0.6m,
+            },
+            new()
+            {
+                Id = 38,
+                Product = context.Products.Where(x => x.Id == 38).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 1).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 38).First().BasePrice*0.6m,
+            },
+            new()
+            {
+                Id= 39,
+                Product = context.Products.Where(x => x.Id == 3).First(),
                 Supplier = context.Suppliers.Where(x => x.Id == 4).First(),
-                PurchasePrice = context.Products.Where(x => x.Id == 1).First().BasePrice*0.6m,
+                PurchasePrice = context.Products.Where(x => x.Id == 3).First().BasePrice*0.8m,
+            },
+            new()
+            {
+                Id= 40,
+                Product = context.Products.Where(x => x.Id == 4).First(),
+                Supplier = context.Suppliers.Where(x => x.Id == 4).First(),
+                PurchasePrice = context.Products.Where(x => x.Id == 4).First().BasePrice*0.6m,
             },
         };
         context.AddRangeAsync(productSuppliers);
