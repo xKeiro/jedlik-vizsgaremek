@@ -8,6 +8,7 @@ import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -15,7 +16,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import CircularProgress from "@mui/material/CircularProgress";
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from "react-infinite-scroller";
 
 export default function PriceList() {
   const shop = useContext(CartContext);
@@ -27,7 +28,8 @@ export default function PriceList() {
   async function getProducts(pageToLoad) {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API + `/api/products?page=${pageToLoad}&pageSize=${pageSize}`,
+        process.env.REACT_APP_API +
+          `/api/products?page=${pageToLoad}&pageSize=${pageSize}`,
         {
           method: "GET",
           mode: "cors",
@@ -45,8 +47,7 @@ export default function PriceList() {
       }
       if (products === null) {
         setProducts(responseBody.products);
-      }
-      else {
+      } else {
         setProducts(products.concat(responseBody.products));
       }
       setNextPage(responseBody.nextPage);
@@ -85,90 +86,117 @@ export default function PriceList() {
           spacing={2}
         >
           <Grid item xs={12} md={12}>
-          <InfiniteScroll
-                    pageStart={0}
-                    loadMore={() => getProducts(nextPage)}
-                    hasMore={nextPage !== null}
-                    loader={<CircularProgress key="loading"/>}
-                    >
-            <TableContainer component={Paper}>
-              <Table
-                size="small"
-                aria-label="simple table"
-                className="ResponsiveTable"
-              >
-                <TableHead key="header">
-                  <TableRow key="headerRow">
-                    <TableCell>Name</TableCell>
-                    <TableCell align="right">Price</TableCell>
-                    <TableCell align="right">Stock</TableCell>
-                    <TableCell align="right">Action</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  
-                  {products ? (
-                    products.map((product) => (
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={() => getProducts(nextPage)}
+              hasMore={nextPage !== null}
+              loader={<CircularProgress key="loading" />}
+            >
+              <TableContainer component={Paper}>
+                <Table
+                  size="small"
+                  aria-label="simple table"
+                  className="ResponsiveTable"
+                >
+                  <TableHead key="header">
+                    <TableRow key="headerRow">
+                      <TableCell>Name</TableCell>
+                      <TableCell align="right">Price</TableCell>
+                      <TableCell align="right">Stock</TableCell>
+                      <TableCell align="right">Action</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {products ? (
+                      products.map((product) => (
+                        <TableRow
+                          key={product.id}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
+                          hover
+                        >
+                          <TableCell scope="row" data-label="Name">
+                            <Link
+                              component={RouterLink}
+                              to={"/product/" + product.id}
+                            >
+                              {product.title}
+                            </Link>
+                          </TableCell>
+                          <TableCell align="right" data-label="Price">
+                            {product.discount ? (
+                              <>
+                                <Typography
+                                  variant="body2"
+                                  color="text.secondary"
+                                  sx={{ textDecoration: "line-through" }}
+                                >
+                                  {product.basePrice.toLocaleString("en-US", {
+                                    style: "currency",
+                                    currency: "EUR",
+                                  })}
+                                </Typography>
+                                <Typography variant="body1" color="primary">
+                                  {(
+                                    product.basePrice -
+                                    product.basePrice * (product.discount / 100)
+                                  ).toLocaleString("en-US", {
+                                    style: "currency",
+                                    currency: "EUR",
+                                  })}
+                                </Typography>
+                              </>
+                            ) : (
+                              <Typography
+                                variant="body1"
+                                color="text.secondary"
+                              >
+                                {product.basePrice.toLocaleString("en-US", {
+                                  style: "currency",
+                                  currency: "EUR",
+                                })}
+                              </Typography>
+                            )}
+                          </TableCell>
+                          <TableCell align="right" data-label="Stock">
+                            {product.stock ? "In stock" : "Out of stock"}
+                          </TableCell>
+                          <TableCell align="right">
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              color="primary"
+                              disabled={
+                                product.stock && !product.discontinued
+                                  ? false
+                                  : true
+                              }
+                              onClick={() => shop.addProductToCart(product)}
+                            >
+                              Add to cart
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
                       <TableRow
-                        key={product.id}
                         sx={{
                           "&:last-child td, &:last-child th": { border: 0 },
                         }}
-                        hover
+                        key={"firstload"}
                       >
-                        <TableCell scope="row" data-label="Name">
-                          <Link
-                            component={RouterLink}
-                            to={"/product/" + product.id}
-                          >
-                            {product.title}
-                          </Link>
-                        </TableCell>
-                        <TableCell align="right" data-label="Price">
-                          {product.basePrice.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "EUR",
-                          })}
-                        </TableCell>
-                        <TableCell align="right" data-label="Stock">
-                          {product.stock ? "In stock" : "Out of stock"}
-                        </TableCell>
-                        <TableCell align="right">
-                          <Button
-                            variant="outlined"
-                            size="small"
-                            color="primary"
-                            disabled={
-                              product.stock && !product.discontinued
-                                ? false
-                                : true
-                            }
-                            onClick={() => shop.addProductToCart(product)}
-                          >
-                            Add to cart
-                          </Button>
-                        </TableCell>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          align="center"
+                          colSpan={4}
+                        ></TableCell>
                       </TableRow>
-                    ))
-                  ) : (
-                    <TableRow
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                      }}
-                      key={"firstload"}
-                    >
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        align="center"
-                        colSpan={4}
-                      >
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </InfiniteScroll>
           </Grid>
         </Grid>
