@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using backend.Dtos.Images;
 using backend.Dtos.Products;
 using backend.Interfaces.Services;
 using backend.Models;
@@ -179,7 +180,7 @@ public class ProductService : IProductService
         _context.ChangeTracker.Clear();
         return _statusMessage.ProductDiscontinued200(productId);
     }
-    public async Task<StatusMessage> SaveImage(ulong productId, IFormFile image)
+    public async Task<OneOf<ImagePublic, StatusMessage>> SaveImage(ulong productId, IFormFile image)
     {
         var product = await _context.Products
             .FirstOrDefaultAsync(p => p.Id == productId);
@@ -195,7 +196,7 @@ public class ProductService : IProductService
         product.ImagePath = imageSaveResult.AsT0;
         await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
-        return _statusMessage.ImageSuccessfullySaved200();
+        return new ImagePublic() { ImagePath = product.ImagePath };
     }
 
     private int? GetNextPage(int page, int maxPage)

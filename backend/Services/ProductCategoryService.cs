@@ -81,7 +81,7 @@ public class ProductCategoryService : IProductCategoryService
         _context.ChangeTracker.Clear();
         return _mapper.Map<ProductCategory, ProductCategoryPublic>(productCategory);
     }
-    public async Task<StatusMessage> SaveImage(ulong productCategoryId, IFormFile image)
+    public async Task<OneOf<ImagePublic, StatusMessage>> SaveImage(ulong productCategoryId, IFormFile image)
     {
         var productCategory = await _context.ProductCategories
             .FirstOrDefaultAsync(c => c.Id == productCategoryId);
@@ -98,7 +98,7 @@ public class ProductCategoryService : IProductCategoryService
         productCategory.ImagePath = imageSaveResult.AsT0;
         await _context.SaveChangesAsync();
         _context.ChangeTracker.Clear();
-        return _statusMessage.ImageSuccessfullySaved200();
+        return new ImagePublic() { ImagePath = productCategory.ImagePath };
     }
 
     private async Task<(bool result, List<string> notUniquePropertyNames)> IsUnique(ProductCategoryRegister productCategoryWithoutId)

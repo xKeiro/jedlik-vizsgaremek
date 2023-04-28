@@ -11,5 +11,5 @@ public interface IProductCategoryService
     Task<OneOf<ProductCategoryPublic, StatusMessage>> Add(ProductCategoryRegister productCategoryRegister);
     Task<OneOf<ProductCategoryPublic, StatusMessage>> Find(ulong id);
     Task<OneOf<ProductCategoryPublic, StatusMessage>> Update(ulong productCategoryId, ProductCategoryRegister productCategoryRegister);
-    Task<StatusMessage> SaveImage(ulong productCategoryId, IFormFile image);
+    Task<OneOf<ImagePublic, StatusMessage>> SaveImage(ulong productCategoryId, IFormFile image);
 }

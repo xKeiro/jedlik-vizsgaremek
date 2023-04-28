@@ -1,5 +1,6 @@
 ﻿using backend.Conventions;
 using backend.Dtos.Auth;
+using backend.Dtos.Images;
 using backend.Dtos.Users;
 using backend.Interfaces.Services;
 using backend.Models;
@@ -60,11 +61,6 @@ public class UsersController : ApiControllerBase
         => (await _service.SetUserAdminStatus(userId, false)).Match(Ok, Problem);
     [HttpPost("{userId}/Image")]
     [Authorize]
-    public async Task<ActionResult<StatusMessage>> SaveImage(ulong userId, IFormFile image)
-    {
-        var result = await _service.SaveImage(userId, image);
-        return result.StatusCode == StatusCodes.Status200OK
-            ? Ok(result) 
-            : Problem(result);
-    }
+    public async Task<ActionResult<ImagePublic>> SaveImage(ulong userId, IFormFile image)
+        => (await _service.SaveImage(userId, image)).Match(Ok, Problem);
 }

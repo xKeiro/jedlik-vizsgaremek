@@ -42,11 +42,6 @@ public class CategoriesController : ApiControllerBase
         => (await _service.Update(id, productCategoryPublic)).Match(Ok, Problem);
     [HttpPost("{id}/Image")]
     [Authorize(Roles = "Admin")]
-    public async Task<ActionResult<StatusMessage>> SaveImage(ulong productCategoryId, IFormFile image)
-    {
-        var result = await _service.SaveImage(productCategoryId, image);
-        return result.StatusCode == 200
-            ? Ok(result)
-            : Problem(result);
-    }
+    public async Task<ActionResult<ImagePublic>> SaveImage(ulong productCategoryId, IFormFile image)
+        => (await _service.SaveImage(productCategoryId, image)).Match(Ok, Problem);
 }

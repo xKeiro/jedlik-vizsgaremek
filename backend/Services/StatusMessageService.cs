@@ -108,11 +108,4 @@ public class StatusMessageService : IStatusMessageService
             StatusCode = StatusCodes.Status400BadRequest
         };
     }
-    public StatusMessage ImageSuccessfullySaved200()
-        => new()
-        {
-            Message = "Image successfully saved!",
-            StatusCode = StatusCodes.Status200OK
-        };
-
 }
