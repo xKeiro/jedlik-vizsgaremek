@@ -44,7 +44,7 @@ export default function ProductCard({ product }) {
               }
               title={product.title}
             />
-            <CardContent>
+            <CardContent sx={{ minHeight: 140 }}>
               <Typography gutterBottom variant="h5" component="div">
                 {product.title}
               </Typography>
