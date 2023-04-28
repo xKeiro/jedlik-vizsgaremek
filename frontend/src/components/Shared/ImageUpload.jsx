@@ -13,12 +13,11 @@ export default function ImageUpload({ endpoint, id }) {
   const [errorText, setErrorText] = useState("");
   const [successText, setSuccessText] = useState("");
 
-  const [url, setUrl] = useState(
-    process.env.REACT_APP_API + `/api/${endpoint}/${id}/Image`
-  );
+  const [endpointUrl, setEndpointUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
-    setUrl(process.env.REACT_APP_API + `/api/${endpoint}/${id}/Image`);
+    setEndpointUrl(process.env.REACT_APP_API + `/api/${endpoint}/${id}/Image`);
   }, [id, endpoint]);
 
   const [filesToUpload, setFilesToUpload] = useState([]);
@@ -35,7 +34,7 @@ export default function ImageUpload({ endpoint, id }) {
     let formData = new FormData();
     filesToUpload.forEach((file) => formData.append("image", file));
 
-    const response = await fetch(url, {
+    const response = await fetch(endpointUrl, {
       method: "POST",
       body: formData,
       credentials: "include",
@@ -51,20 +50,29 @@ export default function ImageUpload({ endpoint, id }) {
     }
     console.log(responseBody);
     setIsLoading(false);
-    setSuccessText(responseBody.message + " Redirecting...");
+    refreshImage(responseBody.imagePath);
+    setSuccessText("Successful image upload, redirecting...");
     setTimeout(() => {
       navigate(0);
     }, 3000);
   };
 
+  const refreshImage = async (imagePath) => {
+    const randomQuery = Math.random().toString(36).substring(7);
+    setImageUrl(
+      process.env.REACT_APP_API + "/" + imagePath + `?${randomQuery}`
+    );
+  };
+
   return (
     <>
+      <img hidden src={imageUrl} alt="" />
       {successText && <AlertMessage type="success" message={successText} />}
       {errorText && <AlertMessage type="error" message={errorText} />}
       {isLoading ? <CircularProgress /> : ""}
       <FileUpload
         title={"Upload new image"}
-        header="Drag to drop"
+        header="Drag and drop"
         leftLabel="or"
         rightLabel="to select a file"
         buttonLabel="click here"
