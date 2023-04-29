@@ -21,7 +21,7 @@ public class ProductCategoryServiceTests
     private ProductCategoryService _productCategoryService;
     private StatusMessageService _statusMessage;
     private Mock<IImageService> _imageService;
-    private const string _imagePath = $"Image/{nameof(ProductCategory)}/default.webp";
+    private const string _imagePath = $"api/Images/{nameof(ProductCategory)}/default.webp";
 
     [SetUp]
     public void Setup()
