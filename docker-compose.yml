@@ -1,14 +1,60 @@
 version: '3'
 services:
-  postgres:
-    image: postgres
-    container_name: postgres
-    ports:
-      - '6500:5432'
-    restart: always
-    env_file:
-      - ./backend/.env
+  db:
+    image: mcr.microsoft.com/azure-sql-edge:1.0.7
+    user: root
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: StrongDbPassword123
+    expose:
+      - 1433
+    healthcheck:
+        test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P", "StrongDbPassword123", "-Q", "SELECT 1"]
+        interval: 10s
+        retries: 60
     volumes:
-      - postgres-db:/var/lib/postgresql/data
+      - db-data:/var/opt/mssql/
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    expose:
+      - 80
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      JWT_TOKEN_KEY: The-Jedlik-Secret-Key
+      JWT_TOKEN_ISSUER: KevinAndDavid
+      JWT_TOKEN_AUDIENCE: nginx
+      JWT_TOKEN_EXPIRATION_DAY: 7
+      FRONTEND_URL: nginx
+      ASPNETCORE_ENVIRONMENT: Production
+      DB_SERVER: db
+      DB_DATABASE: JedlikVizsgaremek
+      DB_ID: sa
+      DB_PASSWORD: StrongDbPassword123
+    volumes:
+      - backend-images:/app/wwwroot/Images/
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    expose:
+      - 80
+    depends_on:
+      - backend
+  nginx:
+    image: nginx
+    depends_on:
+      - frontend
+      - backend
+    ports:
+      - 80:80
+    # command: tail -F anything
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
 volumes:
-  postgres-db:
+  db-data:
+  backend-images:
+
