@@ -1,7 +1,5 @@
 ﻿using backend.Interfaces.Services;
 using backend.Models;
-using ImageProcessor;
-using ImageProcessor.Plugins.WebP.Imaging.Formats;
 using OneOf;
 
 namespace backend.Services;
@@ -26,11 +24,15 @@ public class ImageService : IImageService
         _ = Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         await using (var webpFileStream = new FileStream(path, FileMode.Create))
         {
-            using var imageFactory = new ImageFactory(preserveExifData: false);
-            _ = imageFactory.Load(image.OpenReadStream())
-                        .Format(new WebPFormat())
-                        .Quality(50)
-                        .Save(webpFileStream);
+            using (Image newImage = Image.Load(image.OpenReadStream()))
+            {
+                int width = newImage.Width;
+                if (width > 800)
+                {
+                    newImage.Mutate(x => x.Resize(800, 0, KnownResamplers.Lanczos3));
+                }
+                await newImage.SaveAsWebpAsync(webpFileStream);
+            }
         }
         return relativePath;
     }

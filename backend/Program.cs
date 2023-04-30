@@ -1,10 +1,7 @@
 using backend.Data;
 using backend.Extensions;
 using backend.Maps;
-using backend.Services;
-using backend.Utils;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
+using SixLabors.ImageSharp.Web.DependencyInjection;
 
 DotNetEnv.Env.Load();
 
@@ -13,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 JwtTokenConfiguration.ConfigureJwtAuthentication(builder.Services);
 CustomServicesExtension.ConfigureCors(builder.Services);
+ImageSharpConfiguration.ConfigureImageSharp(builder.Services);
 builder.Services.AddOutputCache();
 CustomServicesExtension.ConfigureJsonSerializer(builder.Services);
 builder.Services.AddHealthChecks();
@@ -24,6 +22,7 @@ CustomServicesExtension.AddCustomServices(builder.Services);
 
 var app = builder.Build();
 app.UseStaticFiles();
+app.UseImageSharp();
 app.UseExceptionHandler("/Error");
 app.MapHealthChecks("/api/HealthChecker");
 
