@@ -14,6 +14,8 @@ services:
         retries: 60
     volumes:
       - db-data:/var/opt/mssql/
+    networks:
+      - net
   backend:
     build:
       context: backend
@@ -38,6 +40,8 @@ services:
       LETSENCRYPT_HOST: store.kevins.works
     volumes:
       - backend-images:/app/wwwroot/Images/
+    networks:
+      - net
   frontend:
     build:
       context: frontend
@@ -49,7 +53,12 @@ services:
     environment:
       VIRTUAL_HOST: store.kevins.works
       LETSENCRYPT_HOST: store.kevins.works
+    networks:
+      - net
 volumes:
   db-data:
   backend-images:
+networks:
+  net:
+    external: true
 
