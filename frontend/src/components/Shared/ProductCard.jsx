@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import CartContext from "../../contexts/CartContext";
 
+import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -15,16 +16,15 @@ import CardActions from "@mui/material/CardActions";
 export default function ProductCard({ product }) {
   const shop = useContext(CartContext);
   return (
-    <>
+    <Box>
       <Card
         key={product.id}
         sx={
           product.featured
             ? {
                 border: "1px solid",
-                borderColor: "primary.main",
+                borderColor: "text.secondary",
                 maxWidth: 400,
-                width: "auto",
               }
             : {
                 border: "1px solid transparent",
@@ -51,7 +51,6 @@ export default function ProductCard({ product }) {
               <Typography variant="body2" color="text.secondary">
                 {product.stock ? "In stock" : "Out of stock"}
               </Typography>
-
               {product.discount ? (
                 <>
                   <Typography
@@ -96,6 +95,6 @@ export default function ProductCard({ product }) {
           </CardActions>
         </Paper>
       </Card>
-    </>
+    </Box>
   );
 }
