@@ -24,7 +24,7 @@ export default function Home() {
         }}
       >
         <Grid container direction="row" justifyContent="center" spacing={2}>
-          <Grid item md={7} xs={12}>
+          <Grid item md={8} xs={12}>
             <Box>
               <Paper elevation={2}>
                 <h3>ITWebshop News</h3>
@@ -45,6 +45,10 @@ export default function Home() {
                 it's never been easier to find and purchase the PC parts you
                 need. Browse our selection today and start building your dream
                 system!
+              </p>
+              <p>
+                Please note that product prices does not include VAT. Gross
+                prices are shown during checkout.
               </p>
             </Box>
             <Box marginTop={20}>
@@ -77,7 +81,7 @@ export default function Home() {
               </p>
             </Box>
           </Grid>
-          <Grid item md={5} xs={12}>
+          <Grid item md={4} xs={12}>
             <Featured />
           </Grid>
         </Grid>

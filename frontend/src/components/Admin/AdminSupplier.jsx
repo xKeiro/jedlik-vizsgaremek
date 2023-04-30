@@ -14,6 +14,10 @@ import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export default function AdminSupplier() {
   const navigate = useNavigate();
@@ -31,6 +35,11 @@ export default function AdminSupplier() {
       contactLastName: "",
       phone: "",
       email: "",
+      street: "",
+      city: "",
+      region: "",
+      postalCode: "",
+      country: "Hungary",
     };
 
     async function getSupplier() {
@@ -97,6 +106,11 @@ export default function AdminSupplier() {
             phone: supplier.phone,
             email: supplier.email,
             price: supplier.price,
+            street: supplier.street,
+            city: supplier.city,
+            region: supplier.region,
+            postalCode: supplier.postalCode,
+            country: supplier.country,
           }),
         }
       );
@@ -121,6 +135,36 @@ export default function AdminSupplier() {
       return;
     }
   }
+
+  const countries = [
+    "Austria",
+    "Belgium",
+    "Bulgaria",
+    "Croatia",
+    "Cyprus",
+    "Czechia",
+    "Denmark",
+    "Estonia",
+    "Finland",
+    "France",
+    "Germany",
+    "Greece",
+    "Hungary",
+    "Ireland",
+    "Italy",
+    "Latvia",
+    "Lithuania",
+    "Luxembourg",
+    "Malta",
+    "Netherlands",
+    "Poland",
+    "Portugal",
+    "Romania",
+    "Slovakia",
+    "Slovenia",
+    "Spain",
+    "Sweden",
+  ];
 
   return (
     <div className="AdminSupplier">
@@ -227,6 +271,83 @@ export default function AdminSupplier() {
                     disabled={isLoading}
                     autoComplete="off"
                   />
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Street"
+                    id="street"
+                    name="street"
+                    type="text"
+                    value={supplier.street}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="City"
+                    id="city"
+                    name="city"
+                    type="text"
+                    value={supplier.city}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Region"
+                    id="region"
+                    name="region"
+                    type="text"
+                    value={supplier.region}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Postal Code"
+                    id="postalCode"
+                    name="postalCode"
+                    type="text"
+                    value={supplier.postalCode}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                  <FormControl fullWidth required>
+                    <InputLabel id="country">Country</InputLabel>
+                    <Select
+                      sx={{ textAlign: "left" }}
+                      labelId="country"
+                      id="country"
+                      name="country"
+                      value={supplier.country}
+                      label="Countries"
+                      onChange={handleChange}
+                      autoComplete="off"
+                    >
+                      {countries.map((country) => (
+                        <MenuItem key={country} value={country}>
+                          {country}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
               </Grid>
             </CardContent>

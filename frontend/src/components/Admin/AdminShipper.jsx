@@ -8,12 +8,17 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-//import CardMedia from "@mui/material/CardMedia";
 //import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export default function AdminShipper() {
   const navigate = useNavigate();
@@ -31,7 +36,7 @@ export default function AdminShipper() {
       contactLastName: "",
       phone: "",
       email: "",
-      price: 0.0,
+      price: 0,
     };
 
     async function getShipper() {
@@ -168,6 +173,20 @@ export default function AdminShipper() {
                     name="companyName"
                     type="text"
                     value={shipper.companyName}
+                    onChange={handleChange}
+                    disabled={isLoading}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    required
+                    label="Price"
+                    id="price"
+                    name="price"
+                    type="number"
+                    value={shipper.price}
                     onChange={handleChange}
                     disabled={isLoading}
                     autoComplete="off"

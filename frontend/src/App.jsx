@@ -1,8 +1,9 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "./components/Layout";
 import AuthProvider from "./hooks/AuthService";
 import CartProvider from "./hooks/CartService";
+import Cookies from "js-cookie";
 import { ColorModeContext } from "./contexts/ColorModeContext";
 
 import "@fontsource/roboto/300.css";
@@ -16,8 +17,18 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { grey, blue } from "@mui/material/colors/";
 
 function App() {
+  const colorModeCookie = "color_mode";
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const [mode, setMode] = React.useState(prefersDarkMode ? "dark" : "light");
+  const colorModeCookieFound = Cookies.get(colorModeCookie);
+  let foundColorMode = "";
+  if (colorModeCookieFound) {
+    foundColorMode = Cookies.get(colorModeCookie);
+  } else {
+    foundColorMode = prefersDarkMode ? "dark" : "light";
+  }
+  Cookies.set(colorModeCookie, foundColorMode, { expires: 7 });
+
+  const [mode, setMode] = React.useState(foundColorMode);
   const colorMode = React.useMemo(
     () => ({
       toggleColorMode: () => {
@@ -26,6 +37,10 @@ function App() {
     }),
     []
   );
+
+  useEffect(() => {
+    Cookies.set(colorModeCookie, mode, { expires: 7 });
+  }, [mode]);
 
   const getDesignTokens = (mode) => ({
     palette: {

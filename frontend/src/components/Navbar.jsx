@@ -142,14 +142,14 @@ export default function Navbar() {
               noWrap
               component={RouterLink}
               to={"/"}
-              href=""
+              //href=""
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
                 flexGrow: 1,
                 fontFamily: "monospace",
                 fontWeight: 700,
-                letterSpacing: ".2rem",
+                //letterSpacing: ".2rem",
                 color: "inherit",
                 textDecoration: "none",
               }}
@@ -183,7 +183,11 @@ export default function Navbar() {
                   ))
                 : ""}
             </Box>
-            <Box sx={{ flexGrow: 0 }} component={RouterLink} to={"/cart"}>
+            <Box
+              sx={{ flexGrow: 0, width: 40 }}
+              component={RouterLink}
+              to={"/cart"}
+            >
               <Tooltip title="Cart">
                 <IconButton
                   color="primary"
