@@ -24,20 +24,14 @@ public class OrdersService: IOrdersService
         _statusMessage = statusMessage;
     }
 
-    public async IAsyncEnumerable<OrderAdmin> GetAll()
-    {
-        await foreach (var order in _context.Orders.AsAsyncEnumerable())
-        {
-            yield return _mapper.Map<Order, OrderAdmin>(order);
-        }
-    }
-    public async IAsyncEnumerable<OrderPublic> GetAllByUserId(ulong userId)
-    {
-        await foreach (var order in _context.Orders.Where(order => order.User.Id == userId).AsAsyncEnumerable())
-        {
-            yield return _mapper.Map<Order, OrderPublic>(order);
-        }
-    }
+    public async Task<List<OrderAdmin>> GetAll() 
+        => await _context.Orders
+        .Select(o => _mapper.Map<Order, OrderAdmin>(o))
+        .ToListAsync();
+    public async Task<List<OrderPublic>> GetAllByUserId(ulong userId)
+        => await _context.Orders
+        .Where(order => order.User.Id == userId)
+        .Select(o => _mapper.Map<Order, OrderPublic>(o)).ToListAsync();
     public async Task<OneOf<OrderPublic, StatusMessage>> FindMyOrder(ulong userId, ulong orderId)
     {
         var order = await _context.Orders.FirstOrDefaultAsync(order => order.User.Id == userId && order.Id == orderId);

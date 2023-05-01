@@ -19,8 +19,8 @@ public class ShippersController: ApiControllerBase
     }
     [HttpGet]
     [OutputCache(Duration = 120)]
-    public ActionResult<IAsyncEnumerable<ShipperPublic>> GetAll()
-        => Ok(_shipperService.GetAll());
+    public async Task<ActionResult<List<ShipperPublic>>> GetAll()
+        => Ok(await _shipperService.GetAll());
     [HttpPost]
     [Authorize (Roles = "Admin")]
     public async Task<ActionResult<ShipperPublic>> Add(ShipperRegister shipperRegister)

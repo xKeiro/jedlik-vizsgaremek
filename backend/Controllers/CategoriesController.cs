@@ -23,7 +23,7 @@ public class CategoriesController : ApiControllerBase
 
     [HttpGet]
     [OutputCache(Duration = 120)]
-    public async Task<ActionResult<IAsyncEnumerable<ProductCategoryPublic>>> GetAll()
+    public async Task<ActionResult<List<ProductCategoryPublic>>> GetAll()
         => Ok(await _service.GetAll());
 
     [HttpPost]

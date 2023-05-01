@@ -33,12 +33,12 @@ public class ProductsController : ApiControllerBase
         => Ok(await _service.GetNotDiscontinuedByCategoryId(categoryId, page, pageSize));
     [HttpGet("Featured")]
     [OutputCache(Duration = 120)]
-    public ActionResult<IAsyncEnumerable<ProductPublic>> GetFeatured()
-        => Ok(_service.GetFeatured());
+    public async Task<ActionResult<List<ProductPublic>>> GetFeatured()
+        => Ok(await _service.GetFeatured());
     [HttpGet("All")]
     [Authorize(Roles = "Admin")]
-    public ActionResult<IAsyncEnumerable<ProductPublic>> GetAll()
-        => Ok(_service.GetAll());
+    public async Task<ActionResult<List<ProductPublic>>> GetAll()
+        => Ok(await _service.GetAll());
     [HttpGet("{productId}")]
     [OutputCache(Duration = 60)]
 

@@ -23,8 +23,8 @@ public class ReviewsController : ApiControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public ActionResult<IAsyncEnumerable<ProductReviewPublic>> GetAll()
-        => Ok(_service.GetAll());
+    public async Task<ActionResult<List<ProductReviewPublic>>> GetAll()
+        => Ok(await _service.GetAll());
     [HttpGet]
     [Route("{id}")]
     public async Task<ActionResult<ProductReviewPublic>> Get(ulong id)

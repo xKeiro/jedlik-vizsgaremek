@@ -106,7 +106,7 @@ public class ProductService : IProductService
         };
     }
 
-    public IAsyncEnumerable<ProductPublic> GetFeatured()
+    public Task<List<ProductPublic>> GetFeatured()
         => _context.Products
             .Include(p => p.Category)
             .Where(p => p.Featured)
@@ -114,13 +114,13 @@ public class ProductService : IProductService
             .ThenByDescending(p => p.BasePrice * (1 - (p.Discount / 100)))
             .ThenBy(p => p.Title)
             .Select(p => _mapper.Map<Product, ProductPublic>(p))
-            .AsAsyncEnumerable();
-    public IAsyncEnumerable<ProductPublic> GetAll()
+            .ToListAsync();
+    public Task<List<ProductPublic>> GetAll()
         => _context.Products
             .Include(p => p.Category)
             .OrderBy(p => p.Title)
             .Select(p => _mapper.Map<Product, ProductPublic>(p))
-            .AsAsyncEnumerable();
+            .ToListAsync();
     public async Task<OneOf<ProductPublic, StatusMessage>> FindById(ulong productId)
     {
         var product = await _context.Products

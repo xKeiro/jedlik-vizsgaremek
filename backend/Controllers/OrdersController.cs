@@ -24,15 +24,15 @@ public class OrdersController : ApiControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public ActionResult<IAsyncEnumerable<OrderAdmin>> GetAll()
-        => Ok(_service.GetAll());
+    public async Task<ActionResult<List<OrderAdmin>>> GetAll()
+        => Ok(await _service.GetAll());
     [HttpGet("Me")]
     [Authorize]
     [OutputCache(Duration = 60)]
-    public ActionResult<IAsyncEnumerable<OrderPublic>> GetAllOfMine()
+    public async Task<ActionResult<List<OrderPublic>>> GetAllOfMine()
     {
         var userId = ulong.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(_service.GetAllByUserId(userId));
+        return Ok(await _service.GetAllByUserId(userId));
     }
     [HttpGet("Me/{orderId}")]
     [Authorize]

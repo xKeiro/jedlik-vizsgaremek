@@ -6,7 +6,7 @@ namespace backend.Interfaces.Services;
 
 public interface IProductReviewService
 {
-    IAsyncEnumerable<ProductReviewPublic> GetAll();
+    Task<List<ProductReviewPublic>> GetAll();
     Task<OneOf<ProductReviewPublic, StatusMessage>> Find(ulong productReviewId);
     Task<StatusMessage> Delete(ulong productReviewId);
     Task<OneOf<List<ProductReviewPublic>, StatusMessage>> GetByProductId(ulong productId);
