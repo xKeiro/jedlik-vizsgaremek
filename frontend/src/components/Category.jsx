@@ -54,8 +54,8 @@ export default function Category() {
   }
   useEffect(() => {
     setProducts(null);
-    getCategoryProducts(nextPage);
     setNextPage(1);
+    getCategoryProducts(1);
   }, [id]);
 
   return (
