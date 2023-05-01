@@ -184,7 +184,7 @@ export default function Navbar() {
                 : ""}
             </Box>
             <Box
-              sx={{ flexGrow: 0, width: 40 }}
+              sx={{ flexGrow: 0, width: 40, marginRight: 1 }}
               component={RouterLink}
               to={"/cart"}
             >
@@ -193,9 +193,9 @@ export default function Navbar() {
                   color="primary"
                   aria-label="cart"
                   component="span"
-                  sx={{ pr: 2, color: "white" }}
+                  sx={{ color: "white" }}
                 >
-                  <Badge badgeContent={shop.cart.length} color="primary">
+                  <Badge badgeContent={shop.cart.length} color="secondary">
                     <ShoppingCartIcon />
                   </Badge>
                 </IconButton>
