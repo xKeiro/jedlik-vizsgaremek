@@ -47,8 +47,8 @@ export default function Home() {
                 system!
               </p>
               <p>
-                Please note that product prices does not include VAT. Gross
-                prices are shown during checkout.
+                Please note that product prices do not include VAT. Gross prices
+                are shown during checkout.
               </p>
             </Box>
             <Box marginTop={20}>

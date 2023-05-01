@@ -240,7 +240,10 @@ export default function OrderForm({ order }) {
           id="shippingPrice"
           name="shippingPrice"
           type="text"
-          value={order.shippingPrice}
+          value={order.shippingPrice.toLocaleString("en-US", {
+            style: "currency",
+            currency: "EUR",
+          })}
           autoComplete="off"
         />
       </Grid>

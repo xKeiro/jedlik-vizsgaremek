@@ -49,8 +49,14 @@ export default function UserRegistration() {
       return;
     }
 
-    if (userForm.password.length < 8) {
-      setErrorText("Password length must be at least 8 charaters");
+    if (userForm.password.length < 5) {
+      setErrorText("Password length must be at least 5 charaters");
+      setIsLoading(false);
+      return;
+    }
+
+    if (userForm.password.length > 60) {
+      setErrorText("Password length must be maximum 60 charaters");
       setIsLoading(false);
       return;
     }
@@ -153,6 +159,17 @@ export default function UserRegistration() {
                       variant="contained"
                       sx={{ marginY: "20px", paddingY: "10px" }}
                       onClick={handleUserRegistration}
+                      disabled={
+                        userForm.password < 5 ||
+                        userForm.passwordConfirm < 5 ||
+                        userForm.email < 5 ||
+                        userForm.username < 3 ||
+                        userForm.firstName < 3 ||
+                        userForm.lastName < 3 ||
+                        userForm.phone < 3 ||
+                        userForm.city < 3 ||
+                        userForm.region < 3
+                      }
                     >
                       Register
                     </Button>
