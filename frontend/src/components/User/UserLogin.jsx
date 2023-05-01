@@ -57,7 +57,6 @@ export default function UserLogin() {
 
       clearInputs();
       //setIsLoading(false);
-      console.log(responseBody);
       auth.login(responseBody);
       setSuccessText("Successfully logged in, redirecting...");
       setTimeout(() => {
@@ -141,6 +140,9 @@ export default function UserLogin() {
                       variant="contained"
                       sx={{ marginY: "20px", paddingY: "10px" }}
                       onClick={handleLogin}
+                      disabled={
+                        loginUser.length < 3 || loginPassword.length < 3
+                      }
                     >
                       Login
                     </Button>

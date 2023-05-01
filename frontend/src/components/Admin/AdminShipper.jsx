@@ -186,6 +186,7 @@ export default function AdminShipper() {
                     id="price"
                     name="price"
                     type="number"
+                    inputProps={{ min: 0 }}
                     value={shipper.price}
                     onChange={handleChange}
                     disabled={isLoading}

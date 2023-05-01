@@ -135,7 +135,7 @@ export default function AdminReviews() {
                             component={RouterLink}
                             to={"/admin/review/" + review.id}
                           >
-                            View
+                            Read
                           </Button>
                           <Button
                             variant="outlined"

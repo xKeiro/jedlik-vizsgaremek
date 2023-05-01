@@ -175,7 +175,6 @@ export default function AdminProduct() {
         console.log(errorMessage);
         return;
       }
-      console.log(responseBody);
       setSuppliers(responseBody);
     } catch (error) {
       console.log(error);
@@ -458,6 +457,7 @@ export default function AdminProduct() {
                       id="stock"
                       name="stock"
                       type="number"
+                      inputProps={{ min: 0 }}
                       value={product.stock}
                       onChange={handleChange}
                       disabled={isLoading}
@@ -472,6 +472,7 @@ export default function AdminProduct() {
                       id="basePrice"
                       name="basePrice"
                       type="number"
+                      inputProps={{ min: 0 }}
                       value={product.basePrice}
                       onChange={handleChange}
                       disabled={isLoading}
@@ -486,6 +487,7 @@ export default function AdminProduct() {
                       id="discount"
                       name="discount"
                       type="number"
+                      inputProps={{ min: 0 }}
                       value={product.discount}
                       onChange={handleChange}
                       disabled={isLoading}
@@ -531,6 +533,7 @@ export default function AdminProduct() {
                           id="purchasePrice"
                           name="purchasePrice"
                           type="number"
+                          inputProps={{ min: 0 }}
                           value={product.purchasePrice}
                           onChange={handleChange}
                           disabled={isLoading}
@@ -589,8 +592,11 @@ export default function AdminProduct() {
                     product.description === "" ||
                     product.stock === "" ||
                     product.basePrice === "" ||
+                    product.basePrice < 1 ||
                     product.discount === "" ||
-                    product.purchasePrice === ""
+                    product.discount < 1 ||
+                    product.purchasePrice === "" ||
+                    product.purchasePrice < 1
                   }
                   onClick={handleProductUpdate}
                 >

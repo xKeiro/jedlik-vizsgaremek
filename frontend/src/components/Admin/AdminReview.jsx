@@ -105,7 +105,8 @@ export default function AdminReview() {
                     label="Score"
                     id="score"
                     name="score"
-                    type="text"
+                    type="number"
+                    inputProps={{ min: 0, max: 5 }}
                     value={review.score}
                     autoComplete="off"
                   />

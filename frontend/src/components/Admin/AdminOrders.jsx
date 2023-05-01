@@ -34,7 +34,6 @@ export default function AdminOrders() {
         console.log(errorMessage);
         return;
       }
-      console.log(responseBody);
       setOrders(responseBody);
     } catch (error) {
       console.log(error);
