@@ -75,7 +75,7 @@ export default function UserForm({ userForm, setUserForm, isNew }) {
           id="username"
           name="username"
           type="text"
-          helperText="This name will be shown under reviews."
+          helperText="This name will be used to log in."
           value={userForm.username}
           onChange={handleFormChange}
           autoComplete="off"

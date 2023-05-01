@@ -101,16 +101,10 @@ export default function AdminOrders() {
                         hover
                       >
                         <TableCell component="th" scope="row">
-                          <Link
-                            component={RouterLink}
-                            to={"/admin/order/" + order.id}
-                          >
-                            {order.id}
-                          </Link>
+                          {order.id}
                         </TableCell>
                         <TableCell align="right">{order.status}</TableCell>
                         <TableCell align="right">
-                          {" "}
                           <Link
                             component={RouterLink}
                             to={"/admin/user/" + order.user.id}

@@ -140,7 +140,12 @@ export default function AdminShippers() {
                           </Link>
                         </TableCell>
                         <TableCell align="right">{shipper.email}</TableCell>
-                        <TableCell align="right">{shipper.price}</TableCell>
+                        <TableCell align="right">
+                          {shipper.price.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                          })}
+                        </TableCell>
                         <TableCell align="right">
                           <Button
                             variant="outlined"

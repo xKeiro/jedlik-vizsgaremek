@@ -81,7 +81,7 @@ export default function UserReview({ productId }) {
     <>
       <Box>
         <Paper elevation={3}>
-          <h3>Send review (WIP)</h3>
+          <h3>Send review</h3>
         </Paper>
       </Box>{" "}
       {successText && <AlertMessage type="success" message={successText} />}

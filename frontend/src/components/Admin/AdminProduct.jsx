@@ -604,167 +604,180 @@ export default function AdminProduct() {
                 </Button>
               </CardActions>
             </Card>
-            <Box>
-              <Paper elevation={2}>
-                <h3>Product Suppliers</h3>
-              </Paper>
-            </Box>
-            <Grid
-              container
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              spacing={2}
-            >
-              <Grid item xs={12} md={12}>
-                <TableContainer component={Paper}>
-                  <Table aria-label="Ordered products">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell align="right">Price</TableCell>
-                        <TableCell align="right">Actions</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {suppliers && allSuppliers ? (
-                        <>
-                          {suppliers.map((productSupplier) => (
+            {id ? (
+              <>
+                <Box>
+                  <Paper elevation={2}>
+                    <h3>Product Suppliers</h3>
+                  </Paper>
+                </Box>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                  spacing={2}
+                >
+                  <Grid item xs={12} md={12}>
+                    <TableContainer component={Paper}>
+                      <Table aria-label="Ordered products">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell align="right">Price</TableCell>
+                            <TableCell align="right">Actions</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {suppliers && allSuppliers ? (
+                            <>
+                              {suppliers.map((productSupplier) => (
+                                <TableRow
+                                  key={productSupplier.supplier.id}
+                                  sx={{
+                                    "&:last-child td, &:last-child th": {
+                                      border: 0,
+                                    },
+                                  }}
+                                  hover
+                                >
+                                  <TableCell component="th" scope="row">
+                                    <Link
+                                      component={RouterLink}
+                                      to={
+                                        "/admin/supplier/" +
+                                        productSupplier.supplier.id
+                                      }
+                                    >
+                                      {productSupplier.supplier.companyName}
+                                    </Link>
+                                  </TableCell>
+                                  <TableCell align="right">
+                                    {productSupplier.purchasePrice.toLocaleString(
+                                      "en-US",
+                                      {
+                                        style: "currency",
+                                        currency: "EUR",
+                                      }
+                                    )}
+                                  </TableCell>
+                                  <TableCell align="right">
+                                    <Button
+                                      variant="outlined"
+                                      sx={{ marginLeft: 1 }}
+                                      onClick={() =>
+                                        handleProductSupplierDelete(
+                                          productSupplier.supplier.id
+                                        )
+                                      }
+                                      disabled={false}
+                                    >
+                                      Delete
+                                    </Button>
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                              <TableRow>
+                                <TableCell component="th" scope="row">
+                                  <Grid item xs={12} md={12}>
+                                    <FormControl fullWidth required>
+                                      <InputLabel id="newSupplierId">
+                                        Supplier
+                                      </InputLabel>
+                                      <Select
+                                        size="small"
+                                        sx={{ textAlign: "left" }}
+                                        labelId="newSupplierId"
+                                        id="newSupplierId"
+                                        name="supplierId"
+                                        value={newProductSupplier.supplierId}
+                                        label="Supplier"
+                                        onChange={
+                                          handleNewProductSupplierChange
+                                        }
+                                        disabled={isLoading}
+                                        autoComplete="off"
+                                      >
+                                        <MenuItem value={"select"}>
+                                          Select Supplier...
+                                        </MenuItem>
+                                        {allSuppliers ? (
+                                          allSuppliers.map((supplier) => (
+                                            <MenuItem
+                                              key={supplier.id}
+                                              value={supplier.id}
+                                            >
+                                              {supplier.companyName}
+                                            </MenuItem>
+                                          ))
+                                        ) : (
+                                          <MenuItem value={""}>
+                                            Loading...
+                                          </MenuItem>
+                                        )}
+                                      </Select>
+                                    </FormControl>
+                                  </Grid>
+                                </TableCell>
+                                <TableCell align="right">
+                                  <TextField
+                                    size="small"
+                                    fullWidth
+                                    required
+                                    label="New Supplier Price"
+                                    id="newPurchasePrice"
+                                    name="purchasePrice"
+                                    type="number"
+                                    value={newProductSupplier.purchasePrice}
+                                    onChange={handleNewProductSupplierChange}
+                                    disabled={isLoading}
+                                    autoComplete="off"
+                                  />
+                                </TableCell>
+                                <TableCell align="right">
+                                  {" "}
+                                  <Button
+                                    fullWidth
+                                    variant="outlined"
+                                    onClick={() => handleProductSupplierAdd()}
+                                    disabled={
+                                      newProductSupplier.supplierId ===
+                                        "select" ||
+                                      newProductSupplier.purchasePrice === ""
+                                    }
+                                  >
+                                    Add
+                                  </Button>
+                                </TableCell>
+                              </TableRow>
+                            </>
+                          ) : (
                             <TableRow
-                              key={productSupplier.supplier.id}
                               sx={{
                                 "&:last-child td, &:last-child th": {
                                   border: 0,
                                 },
                               }}
-                              hover
                             >
-                              <TableCell component="th" scope="row">
-                                <Link
-                                  component={RouterLink}
-                                  to={
-                                    "/admin/supplier/" +
-                                    productSupplier.supplier.id
-                                  }
-                                >
-                                  {productSupplier.supplier.companyName}
-                                </Link>
-                              </TableCell>
-                              <TableCell align="right">
-                                {productSupplier.purchasePrice.toLocaleString(
-                                  "en-US",
-                                  {
-                                    style: "currency",
-                                    currency: "EUR",
-                                  }
-                                )}
-                              </TableCell>
-                              <TableCell align="right">
-                                <Button
-                                  variant="outlined"
-                                  sx={{ marginLeft: 1 }}
-                                  onClick={() =>
-                                    handleProductSupplierDelete(
-                                      productSupplier.supplier.id
-                                    )
-                                  }
-                                  disabled={false}
-                                >
-                                  Delete
-                                </Button>
+                              <TableCell
+                                component="th"
+                                scope="row"
+                                align="center"
+                                colSpan={3}
+                              >
+                                <CircularProgress />
                               </TableCell>
                             </TableRow>
-                          ))}
-                          <TableRow>
-                            <TableCell component="th" scope="row">
-                              <Grid item xs={12} md={12}>
-                                <FormControl fullWidth required>
-                                  <InputLabel id="newSupplierId">
-                                    Supplier
-                                  </InputLabel>
-                                  <Select
-                                    size="small"
-                                    sx={{ textAlign: "left" }}
-                                    labelId="newSupplierId"
-                                    id="newSupplierId"
-                                    name="supplierId"
-                                    value={newProductSupplier.supplierId}
-                                    label="Supplier"
-                                    onChange={handleNewProductSupplierChange}
-                                    disabled={isLoading}
-                                    autoComplete="off"
-                                  >
-                                    <MenuItem value={"select"}>
-                                      Select Supplier...
-                                    </MenuItem>
-                                    {allSuppliers ? (
-                                      allSuppliers.map((supplier) => (
-                                        <MenuItem
-                                          key={supplier.id}
-                                          value={supplier.id}
-                                        >
-                                          {supplier.companyName}
-                                        </MenuItem>
-                                      ))
-                                    ) : (
-                                      <MenuItem value={""}>Loading...</MenuItem>
-                                    )}
-                                  </Select>
-                                </FormControl>
-                              </Grid>
-                            </TableCell>
-                            <TableCell align="right">
-                              <TextField
-                                size="small"
-                                fullWidth
-                                required
-                                label="New Supplier Price"
-                                id="newPurchasePrice"
-                                name="purchasePrice"
-                                type="number"
-                                value={newProductSupplier.purchasePrice}
-                                onChange={handleNewProductSupplierChange}
-                                disabled={isLoading}
-                                autoComplete="off"
-                              />
-                            </TableCell>
-                            <TableCell align="right">
-                              {" "}
-                              <Button
-                                fullWidth
-                                variant="outlined"
-                                onClick={() => handleProductSupplierAdd()}
-                                disabled={
-                                  newProductSupplier.supplierId === "select" ||
-                                  newProductSupplier.purchasePrice === ""
-                                }
-                              >
-                                Add
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        </>
-                      ) : (
-                        <TableRow
-                          sx={{
-                            "&:last-child td, &:last-child th": { border: 0 },
-                          }}
-                        >
-                          <TableCell
-                            component="th"
-                            scope="row"
-                            align="center"
-                            colSpan={3}
-                          >
-                            <CircularProgress />
-                          </TableCell>
-                        </TableRow>
-                      )}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Grid>
-            </Grid>
+                          )}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Grid>
+                </Grid>{" "}
+              </>
+            ) : (
+              ""
+            )}
           </>
         ) : (
           <CircularProgress />
