@@ -21,16 +21,11 @@ public class ProductReviewService: IProductReviewService
         _statusMessage = statusMessage;
     }
 
-    public async IAsyncEnumerable<ProductReviewPublic> GetAll()
-    {
-        var productReviews = _context.ProductReviews
-            .OrderByDescending(pr => pr.CreatedAt)
-            .AsAsyncEnumerable();
-        await foreach (var productReview in productReviews)
-        {
-            yield return _mapper.Map<ProductReview, ProductReviewPublic>(productReview);
-        }
-    }
+    public async Task<List<ProductReviewPublic>> GetAll()
+        => await _context.ProductReviews
+        .OrderByDescending(pr => pr.CreatedAt)
+        .Select(pr => _mapper.Map<ProductReview, ProductReviewPublic>(pr))
+        .ToListAsync();
     public async Task<OneOf<ProductReviewPublic, StatusMessage>> Find(ulong productReviewId)
     {
         var productReview = await _context.ProductReviews

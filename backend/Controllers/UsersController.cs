@@ -40,8 +40,8 @@ public class UsersController : ApiControllerBase
 
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public ActionResult<IAsyncEnumerable<UserPublic>> GetAll()
-        => Ok(_service.GetAll());
+    public async Task<ActionResult<List<UserPublic>>> GetAll()
+        => Ok(await _service.GetAll());
 
     [HttpGet]
     [Route("{userId}")]

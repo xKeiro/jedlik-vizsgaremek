@@ -18,17 +18,12 @@ public class ShipperService: IShipperService
         _mapper = mapper;
         _statusMessage = statusMessage;
     }
-    public async IAsyncEnumerable<ShipperPublic> GetAll()
-    {
-        var shippers = _context.Shippers
-            .OrderBy(s => s.Price)
-            .ThenBy(s => s.CompanyName)
-            .AsAsyncEnumerable();
-        await foreach (var shipper in shippers)
-        {
-            yield return _mapper.Map<Shipper, ShipperPublic>(shipper);
-        }
-    }
+    public async Task<List<ShipperPublic>> GetAll() 
+        => await _context.Shippers
+        .OrderBy(s => s.Price)
+        .ThenBy(s => s.CompanyName)
+        .Select(s => _mapper.Map<Shipper, ShipperPublic>(s))
+        .ToListAsync();
     public async Task<OneOf<ShipperPublic, StatusMessage>> Add(ShipperRegister shipperRegister)
     {
         var isUnique = !await _context.Shippers

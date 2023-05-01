@@ -19,18 +19,13 @@ public class ProductSupplierService: IProductSupplierService
         _mapper = mapper;
         _statusMessage = statusMessage;
     }
-    public async IAsyncEnumerable<ProductSupplierLimited> GetAllForProduct(ulong productId)
-    {
-        var productSuppliers = _context.ProductSuppliers
-            .Where(ps => ps.Product.Id == productId)
-            .OrderBy(ps => ps.Product.Title)
-            .ThenBy(ps => ps.PurchasePrice)
-            .AsAsyncEnumerable();
-        await foreach (var productSupplier in productSuppliers)
-        {
-            yield return _mapper.Map<ProductSupplier, ProductSupplierLimited>(productSupplier);
-        }
-    }
+    public async Task<List<ProductSupplierLimited>> GetAllForProduct(ulong productId) => 
+        await _context.ProductSuppliers
+        .Where(ps => ps.Product.Id == productId)
+        .OrderBy(ps => ps.Product.Title)
+        .ThenBy(ps => ps.PurchasePrice)
+        .Select(ps => _mapper.Map<ProductSupplier, ProductSupplierLimited>(ps))
+        .ToListAsync();
     public async Task<OneOf<ProductSupplierLimited, StatusMessage>> Add(ulong productId, ProductSupplierRegister productSupplierRegister)
     {
         var isUnique = !await _context.ProductSuppliers

@@ -23,8 +23,8 @@ public class SuppliersController: ApiControllerBase
     }
     [HttpGet]
     [Authorize (Roles = "Admin")]
-    public ActionResult<IAsyncEnumerable<SupplierPublic>> GetAll()
-        => Ok(_supplierService.GetAll());
+    public async Task<ActionResult<List<SupplierPublic>>> GetAll()
+        => Ok(await _supplierService.GetAll());
     [HttpPost]
     [Authorize (Roles = "Admin")]
     public async Task<ActionResult<SupplierPublic>> Add(SupplierRegister supplierRegister)
@@ -51,8 +51,8 @@ public class SuppliersController: ApiControllerBase
     }
     [HttpGet("Product/{productId}")]
     [Authorize(Roles = "Admin")]
-    public ActionResult<IAsyncEnumerable<ProductSupplierLimited>> GetAllSuppliersForProduct(ulong productId)
-        => Ok(_productSupplierService.GetAllForProduct(productId));
+    public async Task<ActionResult<List<ProductSupplierLimited>>> GetAllSuppliersForProduct(ulong productId)
+        => Ok(await _productSupplierService.GetAllForProduct(productId));
     [HttpPost("Product/{productId}")]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProductSupplierLimited>> AddProductSupplier(ulong productId, ProductSupplierRegister productSupplierRegister)

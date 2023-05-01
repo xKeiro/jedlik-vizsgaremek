@@ -19,16 +19,10 @@ public class SupplierService: ISupplierService
         _mapper = mapper;
         _statusMessage = statusMessage;
     }
-    public async IAsyncEnumerable<SupplierPublic> GetAll()
-    {
-        var suppliers = _context.Suppliers
-            .OrderBy(s => s.CompanyName)
-            .AsAsyncEnumerable();
-        await foreach (var supplier in suppliers)
-        {
-            yield return _mapper.Map<Supplier, SupplierPublic>(supplier);
-        }
-    }
+    public async Task<List<SupplierPublic>> GetAll() => await _context.Suppliers
+        .OrderBy(s => s.CompanyName)
+        .Select(s => _mapper.Map<Supplier, SupplierPublic>(s))
+        .ToListAsync();
     public async Task<OneOf<SupplierPublic, StatusMessage>> Add(SupplierRegister supplierRegister)
     {
         var isUnique = !await _context.Suppliers

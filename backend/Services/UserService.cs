@@ -65,13 +65,8 @@ public class UserService : IUserService
         return _mapper.Map<User, UserPublic>(user);
     }
 
-    public async IAsyncEnumerable<UserPublic> GetAll()
-    {
-        await foreach (var user in _context.Users.AsAsyncEnumerable())
-        {
-            yield return _mapper.Map<User, UserPublic>(user);
-        }
-    }
+    public async Task<List<UserPublic>> GetAll() 
+        => await _context.Users.Select(u => _mapper.Map<User, UserPublic>(u)).ToListAsync();
     public async Task<OneOf<UserPublic, StatusMessage>> SetUserAdminStatus(ulong userId, bool shouldBeAdmin)
     {
         var user = await _context.Users.FindAsync(userId);

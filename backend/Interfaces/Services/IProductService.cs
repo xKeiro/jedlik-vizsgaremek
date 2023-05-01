@@ -11,8 +11,8 @@ public interface IProductService
     Task<ProductPublicWithPagination> GetNotDiscontinued(int page, int pageSize);
     Task<OneOf<ProductPublic, StatusMessage>> Add(ProductRegister productRegister);
     Task<ProductPublicWithPagination> GetNotDiscontinuedByCategoryId(ulong categoryId, int page, int pageSize);
-    IAsyncEnumerable<ProductPublic> GetFeatured();
-    IAsyncEnumerable<ProductPublic> GetAll();
+    Task<List<ProductPublic>> GetFeatured();
+    Task<List<ProductPublic>> GetAll();
     Task<OneOf<ProductPublic, StatusMessage>> FindById(ulong productId);
     Task<OneOf<ProductPublic, StatusMessage>> Update(ulong productId, ProductUpdate productUpdate);
     Task<StatusMessage> Discontinue(ulong productId);
