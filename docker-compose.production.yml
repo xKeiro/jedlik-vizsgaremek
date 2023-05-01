@@ -37,6 +37,7 @@ services:
       DB_ID: sa
       DB_PASSWORD: StrongDbPassword123
       VIRTUAL_HOST: store.kevins.works
+      VIRTUAL_PATH: /api
       LETSENCRYPT_HOST: store.kevins.works
     volumes:
       - backend-images:/app/wwwroot/Images/
@@ -52,6 +53,7 @@ services:
       - backend
     environment:
       VIRTUAL_HOST: store.kevins.works
+      VIRTUAL_PATH: /
       LETSENCRYPT_HOST: store.kevins.works
     networks:
       - net
