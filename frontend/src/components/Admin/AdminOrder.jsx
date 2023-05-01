@@ -7,6 +7,7 @@ import OrderForm from "../Shared/OrderForm";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 //import CardMedia from "@mui/material/CardMedia";
@@ -145,6 +146,22 @@ export default function AdminOrder() {
                 spacing={2}
                 sx={{ marginTop: 1 }}
               >
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    variant="filled"
+                    fullWidth
+                    label="Profit on order"
+                    id="profit"
+                    name="profit"
+                    type="text"
+                    value={order.profit.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "EUR",
+                    })}
+                    autoComplete="off"
+                  />
+                </Grid>
+
                 <Grid item xs={12} md={12}>
                   <Typography>Order Status</Typography>
                 </Grid>
