@@ -2,6 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import App from "../App";
 
+jest.mock("react-mui-fileuploader", () => jest.fn());
+
 describe("App component", () => {
   test("renders Navbar component on load", () => {
     render(

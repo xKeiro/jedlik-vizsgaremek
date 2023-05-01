@@ -1,21 +1,19 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import CategoryBar from "../components/CategoryBar";
+import CategoryBar from "../components/Shared/CategoryBar";
 
 jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
 beforeEach(() => {
-  const mockResponse = {
-    categories: [
-      {
-        id: "1",
-        title: "test title",
-        description: "test description",
-        photo: null,
-      },
-    ],
-  };
+  const mockResponse = [
+    {
+      id: 1,
+      title: "test title",
+      description: "test description",
+      imagePath: null,
+    },
+  ];
 
   jest.spyOn(global, "fetch").mockResolvedValue({
     ok: true,

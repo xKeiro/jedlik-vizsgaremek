@@ -7,18 +7,19 @@ jest.mock("react-router-dom", () => ({
 
 beforeEach(() => {
   const mockResponse = {
+    nextPage: 2,
     products: [
       {
-        category_id: "1",
-        base_price: 99,
+        categoryId: 1,
+        basePrice: 99,
         title: "test title",
         description: "test description",
-        photo: null,
+        imagePath: null,
         stock: 11,
         discount: 0,
         discontinued: false,
         featured: false,
-        id: "1",
+        id: 1,
       },
     ],
   };
@@ -51,7 +52,7 @@ describe("Category component", () => {
   test("shows product price", async () => {
     render(<PriceList />);
     await waitFor(() => {
-      expect(screen.getByText(/99.00/i)).toBeInTheDocument();
+      expect(screen.getByText(/99/i)).toBeInTheDocument();
     });
   });
 });

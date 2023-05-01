@@ -1,21 +1,21 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "../components/Shared/ProductCard";
 
 jest.mock("react-router-dom", () => ({
   useNavigate: jest.fn(),
 }));
 
 const mockProduct = {
-  category_id: "1",
-  base_price: 99,
+  categoryId: 1,
+  basePrice: 99,
   title: "test title",
   description: "test description",
-  photo: null,
+  imagePath: null,
   stock: 11,
   discount: 0,
   discontinued: false,
   featured: false,
-  id: "1",
+  id: 1,
 };
 
 afterEach(() => {
@@ -40,7 +40,7 @@ describe("ProductCard component", () => {
   test("shows product price", async () => {
     render(<ProductCard product={mockProduct} />);
     await waitFor(() => {
-      expect(screen.getByText(/99.00/i)).toBeInTheDocument();
+      expect(screen.getByText(/99/i)).toBeInTheDocument();
     });
   });
 });

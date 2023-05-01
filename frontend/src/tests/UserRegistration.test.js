@@ -30,7 +30,7 @@ describe("UserRegistration component", () => {
     const lastname = screen.getByLabelText(/last name/i);
     const email = screen.getByLabelText(/email/i);
     const phone = screen.getByLabelText(/phone/i);
-    const address = screen.getByLabelText(/address line/i);
+    const address = screen.getByLabelText(/street/i);
     const city = screen.getByLabelText(/city/i);
     const region = screen.getByLabelText(/region/i);
     expect(firstname).toBeInTheDocument();
