@@ -10,8 +10,9 @@ services:
       - 1433
     healthcheck:
         test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P", "StrongDbPassword123", "-Q", "SELECT 1"]
-        interval: 10s
-        retries: 60
+        interval: 2m
+        retries: 2
+    restart: "on-failure"
     volumes:
       - db-data:/var/opt/mssql/
     networks:
@@ -39,8 +40,19 @@ services:
       VIRTUAL_HOST: store.kevins.works
       VIRTUAL_PATH: /api
       LETSENCRYPT_HOST: store.kevins.works
+    restart: "on-failure"
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 180s
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/api/healthchecker"]
+      interval: 2m
+      timeout: 10s
+      retries: 2
     volumes:
-      - backend-images:/app/wwwroot/Images/
+      - backend-images:/app/wwwroot/api/Images/
     networks:
       - net
   frontend:
@@ -50,11 +62,13 @@ services:
     expose:
       - 80
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     environment:
       VIRTUAL_HOST: store.kevins.works
       VIRTUAL_PATH: /
       LETSENCRYPT_HOST: store.kevins.works
+    restart: "on-failure"
     networks:
       - net
 volumes:

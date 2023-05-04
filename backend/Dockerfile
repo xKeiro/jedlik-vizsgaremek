@@ -16,5 +16,6 @@ RUN dotnet publish "backend.csproj" -c Release -o /app/publish /p:UseAppHost=fal
 
 FROM base AS final
 WORKDIR /app
+RUN apt-get update && apt-get install -y curl
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "backend.dll"]
