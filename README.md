@@ -1,5 +1,7 @@
 # jedlik-vizsgaremek
 
+Visit the site at: https://store.kevins.works/
+
 ## IT Webshop project
 
 ### Content
